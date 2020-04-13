@@ -1,0 +1,12 @@
+1. Hệ thống sẽ được xây dựng trên cả web và winform hay chỉ 1 trong 2?
+2. Hệ thống có chức năng đăng nhập khi người dùng sử dụng hệ thống không ạ?
+3. Quản lý hồ sơ, phần tính chất của hồ sơ là gồm các tính chất như thế nào ạ? khi người dùng tạo mới một hồ sơ 
+thì tính chất của hồ sơ sẽ do cho người dùng chọn hay là hệ thống tự động làm công việc này?
+4. Trong phần giải thuật kmeans thì các nhóm mình cân phân nhóm là mình dựa trên tính chất của hồ sơ để phần nhóm
+hay là một thuộc tính nào khác ạ? và làm thế nào để e có thể chuyển đổi data dạng raw lấy từ database lên thành dạng
+tọa độ dùng trong quá trình phân nhóm ạ?
+5. Chức năng gởi ý nơi lưu trữ, khi người dùng tạo một 1 hồ sơ mới và có nhu cầu lưu trữ thì cho e hỏi mức độ ưu tiên
+nơi lưu trữ (hộp, kệ, kho còn trống hay cùng tính chất hồ sơ) như thế nào ạ?
+6. Trong bài nghiên cứu thì nhóm em cần làm những gì để bài nghiên cứu của nhóm em đủ tiêu chuẩn ạ?
+7. Trọng tâm nghiên cứu của bọn em trong đề tài ngoài thuật toán kmeans ra còn phần khác không ạ?
+8. Cô cho bọn em add zalo để có thể tiện trong việc liên lạc ạ?

@@ -1,0 +1,13 @@
+1. khi lưu trữ 1 tài liệu thì có số lượng tài liệu hay mỗi tài liệu chỉ có 1 bản duy nhất khi lưu?
+2. khi mượn văn bản tài liệu thì trong 1 thời gian người này mượn rồi thì người khác không được mượn?
+3. Hệ thống mình có bao nhiêu quyền? bọn e dự định sẽ có 3 quyền với thứ bậc quyền truy cập theo thứ tự giảm dần 
+(Admin - thủ kho - cán bộ) cô xem có cần bổ sung thêm hoặc xóa bớt quyền nào không ạ?
+4. Khi mượn người mượn có giới hạn số lượng tài liệu/văn bản khi mượn không ạ?
+5. Trước khi trả lại những tài liệu/văn bản mà người dùng đã mượn trước đó thì người mượn có thể mượn tiếp tài liệu khác
+hay bắt buộc phải trả lại trước những tài liệu/văn bản đã mượn rồi mới được phép mượn tiếp tài liệu khác?
+6. Có giới hạn thời gian mượn tài liệu/văn bản của người dùng không ạ? nếu có thì giới hạn thời gian mượn là bao lâu? và có
+hình phạt khi người dùng mượn quá thời hạn? nếu có thì hình phạt như thế nào ạ?
+7. Khi trả tài liệu/văn bản nếu tài liệu/văn bản có hư hại trong quá trình người dung mượn thì hình phạt đối với người 
+mượn là gì ạ? 
+8. Các thuộc tính (văn bản đến/văn bản đi và mượn văn bản đến/mượn văn bản đi) các thuộc tính này có ý nghĩa như thế nào ạ?
+và những cái này có phải là 1 quy trình nghiệp vụ không ạ hay chỉ là 1 thuộc tính phân loại của văn bản?

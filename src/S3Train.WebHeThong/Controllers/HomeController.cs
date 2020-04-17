@@ -26,5 +26,12 @@ namespace S3Train.WebHeThong.Controllers
 
             return View();
         }
+
+        public ActionResult demo()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
     }
 }

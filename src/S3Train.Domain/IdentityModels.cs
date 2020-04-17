@@ -20,6 +20,10 @@ namespace S3Train.Domain
         public string FullName { get; set; }
         public string Avatar { get; set; }
         public virtual ICollection<TaiLieuVanBan> TaiLieuVanBans { get; set; }
+        public virtual ICollection<Hop> Hops { get; set; }
+        public virtual ICollection<HoSo> HoSos { get; set; }
+        public virtual ICollection<Ke> Kes { get; set; }
+        public virtual ICollection<MuonTra> MuonTras { get; set; }
     }
 
     public class ApplicationRole : IdentityRole<string, ApplicationUserRole>

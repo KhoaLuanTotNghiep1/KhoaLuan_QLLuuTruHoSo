@@ -15,15 +15,18 @@ namespace S3Train.Domain
         public int ThoiGianBaoQuan { get; set; }
         public string GhiChu { get; set; }
         public string BienMucHoSo { get; set; }
-        public Guid? HoSoChaId { get; set; }
-        public string UserId { get; set; }
+        public string HoSoChaId { get; set; }
 
         [ForeignKey("Hop")]
         public string HopId { get; set; }
         [ForeignKey("LoaiHoSo")]
         public string LoaiHoSoId { get; set; }
+        public string UserId { get; set; }
 
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
         public virtual Hop Hop { get; set; }
+        public virtual HoSo HoSoCha { get; set; }
         public virtual LoaiHoSo LoaiHoSo { get; set; }
         public virtual ICollection<HoSo> HoSoCons { get; set; }
         public virtual ICollection<TaiLieuVanBan> TaiLieuVanBans { get; set; }

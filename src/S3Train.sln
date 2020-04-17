@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{C41780E6-0393-470A-B0AD-E46E7AFFBA91}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "business", "business", "{F58AC1F3-EDFA-4B17-AE4C-3E5A783D1005}"
+	ProjectSection(SolutionItems) = preProject
+		S3Train.Domain\App.config = S3Train.Domain\App.config
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database", "database", "{359C1907-7E7C-4247-B8FF-E16F90899AAD}"
 EndProject

@@ -9,7 +9,6 @@ namespace S3Train.Domain
 {
     public class Hop : EntityBase
     {
-        public string UserId { get; set; }
         public string ChuyenDe { get; set; }
         public int SoHop { get; set; }
         public string TinhTrang { get; set; }
@@ -19,8 +18,11 @@ namespace S3Train.Domain
         [ForeignKey("Ke")]
         public string KeId { get; set; }
         [ForeignKey("PhongBan")]
-        public string PhongBanId { get; set; }
+        public string PhongBanId { get; set; }       
+        public string UserId { get; set; }
 
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
         public virtual Ke Ke { get; set; }
         public virtual PhongBan PhongBan { get; set; }
         public virtual ICollection<HoSo> HoSos { get; set; }

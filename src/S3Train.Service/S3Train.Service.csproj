@@ -118,10 +118,6 @@
     <Compile Include="IdentityManager\EmailService.cs" />
     <Compile Include="IdentityManager\SmsService.cs" />
     <Compile Include="IGenenicServiceBase.cs" />
-    <Compile Include="Migrations\202002191801128_EditDatabase.cs" />
-    <Compile Include="Migrations\202002191801128_EditDatabase.Designer.cs">
-      <DependentUpon>202002191801128_EditDatabase.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202002190239110_Initial.cs" />
     <Compile Include="Migrations\202002190239110_Initial.Designer.cs">
@@ -162,9 +158,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202002190239110_Initial.resx">
       <DependentUpon>202002190239110_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002191801128_EditDatabase.resx">
-      <DependentUpon>202002191801128_EditDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

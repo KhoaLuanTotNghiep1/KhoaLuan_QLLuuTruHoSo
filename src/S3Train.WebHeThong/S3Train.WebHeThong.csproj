@@ -48,6 +48,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=5.1.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.5.1.2\lib\net461\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Mvc5.5.0.0\lib\net461\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi, Version=5.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.WebApi2.5.0.0\lib\net461\Autofac.Integration.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -62,6 +71,9 @@
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -98,8 +110,53 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -108,6 +165,12 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
@@ -137,8 +200,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http">
-    </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
     <Reference Include="System.Web.Optimization">
@@ -163,6 +224,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\DependencyConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
@@ -172,6 +234,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004151314022_InitialDatabase.cs" />
+    <Compile Include="Migrations\202004151314022_InitialDatabase.designer.cs">
+      <DependentUpon>202004151314022_InitialDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004171523358_Adjustdatabse.cs" />
+    <Compile Include="Migrations\202004171523358_Adjustdatabse.designer.cs">
+      <DependentUpon>202004171523358_Adjustdatabse.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -179,12 +249,69 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\assets\css\cs-skin-elastic.css" />
+    <Content Include="Content\assets\css\lib\chosen\chosen-sprite%402x.png" />
+    <Content Include="Content\assets\css\lib\chosen\chosen-sprite.png" />
+    <Content Include="Content\assets\css\lib\chosen\chosen.css" />
+    <Content Include="Content\assets\css\lib\chosen\chosen.min.css" />
+    <Content Include="Content\assets\css\lib\datatable\buttons.bootstrap.min.css" />
+    <Content Include="Content\assets\css\lib\datatable\buttons.dataTables.min.css" />
+    <Content Include="Content\assets\css\lib\datatable\dataTables.bootstrap.min.css" />
+    <Content Include="Content\assets\css\lib\vector-map\jqvmap.min.css" />
+    <Content Include="Content\assets\css\style.css" />
+    <Content Include="Content\assets\fonts\icomoon\icomoon.svg" />
+    <Content Include="Content\assets\fonts\icomoon\index.html" />
+    <Content Include="Content\assets\js\dashboard.js" />
+    <Content Include="Content\assets\js\init\chartjs-init.js" />
+    <Content Include="Content\assets\js\init\datatables-init.js" />
+    <Content Include="Content\assets\js\init\flot-chart-init.js" />
+    <Content Include="Content\assets\js\init\fullcalendar-init.js" />
+    <Content Include="Content\assets\js\init\gmap-init.js" />
+    <Content Include="Content\assets\js\init\peitychart-init.js" />
+    <Content Include="Content\assets\js\init\vector-init.js" />
+    <Content Include="Content\assets\js\init\weather-init.js" />
+    <Content Include="Content\assets\js\lib\chosen\chosen.jquery.js" />
+    <Content Include="Content\assets\js\lib\chosen\chosen.jquery.min.js" />
+    <Content Include="Content\assets\js\lib\chosen\chosen.proto.js" />
+    <Content Include="Content\assets\js\lib\chosen\chosen.proto.min.js" />
+    <Content Include="Content\assets\js\lib\data-table\buttons.bootstrap.min.js" />
+    <Content Include="Content\assets\js\lib\data-table\buttons.colVis.min.js" />
+    <Content Include="Content\assets\js\lib\data-table\buttons.flash.min.js" />
+    <Content Include="Content\assets\js\lib\data-table\buttons.html5.min.js" />
+    <Content Include="Content\assets\js\lib\data-table\buttons.print.min.js" />
+    <Content Include="Content\assets\js\lib\data-table\dataTables.bootstrap.min.js" />
+    <Content Include="Content\assets\js\lib\data-table\dataTables.buttons.min.js" />
+    <Content Include="Content\assets\js\lib\data-table\datatables.min.js" />
+    <Content Include="Content\assets\js\lib\data-table\jquery-1.12.4.js" />
+    <Content Include="Content\assets\js\lib\data-table\jquery.dataTables.min.js" />
+    <Content Include="Content\assets\js\lib\data-table\jszip.min.js" />
+    <Content Include="Content\assets\js\lib\data-table\pdfmake.min.js" />
+    <Content Include="Content\assets\js\lib\data-table\vfs_fonts.js" />
+    <Content Include="Content\assets\js\lib\gmap\gmapApi.js" />
+    <Content Include="Content\assets\js\lib\gmap\gmaps.js" />
+    <Content Include="Content\assets\js\lib\gmap\gmaps.min.js" />
+    <Content Include="Content\assets\js\main.js" />
+    <Content Include="Content\assets\js\vmap.sampledata.js" />
+    <Content Include="Content\assets\js\widgets.js" />
+    <Content Include="Content\assets\scss\style.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\admin.jpg" />
+    <Content Include="Content\images\avatar\1.jpg" />
+    <Content Include="Content\images\avatar\2.jpg" />
+    <Content Include="Content\images\avatar\3.jpg" />
+    <Content Include="Content\images\avatar\4.jpg" />
+    <Content Include="Content\images\avatar\5.jpg" />
+    <Content Include="Content\images\avatar\6.jpg" />
+    <Content Include="Content\images\avatar\64-1.jpg" />
+    <Content Include="Content\images\avatar\64-2.jpg" />
+    <Content Include="Content\images\favicon.png" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\logo2.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -211,6 +338,14 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Content\assets\css\style.css.map" />
+    <Content Include="Content\assets\fonts\icomoon\icomoon.eot" />
+    <Content Include="Content\assets\fonts\icomoon\icomoon.ttf" />
+    <Content Include="Content\assets\fonts\icomoon\icomoon.woff" />
+    <Content Include="Content\assets\scss\style.css.map" />
+    <Content Include="Content\assets\scss\style.scss" />
+    <Content Include="Content\images\.gitignore" />
+    <Content Include="Content\images\logo.psd" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -341,6 +476,8 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Shared\_LayoutAdminPage.cshtml" />
+    <Content Include="Views\Home\demo.cshtml" />
     <None Include="Web.LocalConnectStrings.config">
       <SubType>Designer</SubType>
     </None>
@@ -370,6 +507,14 @@
       <Project>{95439e7b-f59d-4acd-a2b0-75c27f3319af}</Project>
       <Name>S3Train.Service</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202004151314022_InitialDatabase.resx">
+      <DependentUpon>202004151314022_InitialDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004171523358_Adjustdatabse.resx">
+      <DependentUpon>202004171523358_Adjustdatabse.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

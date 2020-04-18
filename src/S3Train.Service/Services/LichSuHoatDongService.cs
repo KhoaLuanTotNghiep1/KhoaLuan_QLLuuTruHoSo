@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace S3Train.Services
 {
-    public class KhoService : GenenicServiceBase<Kho>, IKhoService
+    public class LichSuHoatDongService : GenenicServiceBase<LichSuHoatDong>, ILichSuHoatDongService
     {
-        public KhoService(ApplicationDbContext dbContext) : base(dbContext)
+        public LichSuHoatDongService(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace S3Train.Contract
 {
-    public interface IKhoService : IGenenicServiceBase<Kho>
+    public interface ITuService : IGenenicServiceBase<Tu>
     {
     }
 }

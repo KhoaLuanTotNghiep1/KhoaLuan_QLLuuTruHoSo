@@ -24,6 +24,7 @@ namespace S3Train.Domain
         public virtual ICollection<HoSo> HoSos { get; set; }
         public virtual ICollection<Ke> Kes { get; set; }
         public virtual ICollection<MuonTra> MuonTras { get; set; }
+        public virtual ICollection<LichSuHoatDong> LichSuHoatDongs { get; set; }
     }
 
     public class ApplicationRole : IdentityRole<string, ApplicationUserRole>

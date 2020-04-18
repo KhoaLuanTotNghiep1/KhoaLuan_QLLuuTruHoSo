@@ -18,12 +18,12 @@ namespace S3Train.Domain
         public string TinhTrang { get; set; }
 
         public string UserId { get; set; }
-        [ForeignKey("Kho")]
-        public string KhoId { get; set; }
+        [ForeignKey("Tu")]
+        public string Tuid { get; set; }
 
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
-        public virtual Kho Kho { get; set; }
+        public virtual Tu Tu { get; set; }
         public virtual ICollection<Hop> Hops { get; set; }
     }
 }

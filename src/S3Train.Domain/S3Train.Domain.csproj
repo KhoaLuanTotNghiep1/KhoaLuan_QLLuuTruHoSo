@@ -64,7 +64,9 @@
     <Compile Include="HoSo.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="Ke.cs" />
-    <Compile Include="Kho.cs" />
+    <Compile Include="LichSuHoatDong.cs" />
+    <Compile Include="NoiBanHanh.cs" />
+    <Compile Include="Tu.cs" />
     <Compile Include="LoaiHoSo.cs" />
     <Compile Include="MuonTra.cs" />
     <Compile Include="PhongBan.cs" />

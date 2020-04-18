@@ -100,7 +100,9 @@
     <Compile Include="Contract\IHopService.cs" />
     <Compile Include="Contract\IHoSoService.cs" />
     <Compile Include="Contract\IKeService.cs" />
-    <Compile Include="Contract\IKhoService.cs" />
+    <Compile Include="Contract\ILichSuHoatDongService.cs" />
+    <Compile Include="Contract\INoiBanHanhService.cs" />
+    <Compile Include="Contract\ITuService.cs" />
     <Compile Include="Contract\ILoaiHoSoService.cs" />
     <Compile Include="Contract\IMuonTraService.cs" />
     <Compile Include="Contract\IPhongBanService.cs" />
@@ -134,7 +136,9 @@
     <Compile Include="Services\HopService.cs" />
     <Compile Include="Services\HoSoService.cs" />
     <Compile Include="Services\KeService.cs" />
-    <Compile Include="Services\KhoService.cs" />
+    <Compile Include="Services\LichSuHoatDongService.cs" />
+    <Compile Include="Services\NoiBanHanhService.cs" />
+    <Compile Include="Services\TuService.cs" />
     <Compile Include="Services\LoaiHoSoService.cs" />
     <Compile Include="Services\MuonTraService.cs" />
     <Compile Include="Services\PhongBanService.cs" />

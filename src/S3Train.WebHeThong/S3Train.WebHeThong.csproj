@@ -242,6 +242,14 @@
     <Compile Include="Migrations\202004171523358_Adjustdatabse.designer.cs">
       <DependentUpon>202004171523358_Adjustdatabse.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004180829243_ChangeKhoToTu.cs" />
+    <Compile Include="Migrations\202004180829243_ChangeKhoToTu.designer.cs">
+      <DependentUpon>202004180829243_ChangeKhoToTu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004180926385_AddTableNoiBanHanhAndLichSuHoatDong.cs" />
+    <Compile Include="Migrations\202004180926385_AddTableNoiBanHanhAndLichSuHoatDong.designer.cs">
+      <DependentUpon>202004180926385_AddTableNoiBanHanhAndLichSuHoatDong.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -2223,6 +2231,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004171523358_Adjustdatabse.resx">
       <DependentUpon>202004171523358_Adjustdatabse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004180829243_ChangeKhoToTu.resx">
+      <DependentUpon>202004180829243_ChangeKhoToTu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004180926385_AddTableNoiBanHanhAndLichSuHoatDong.resx">
+      <DependentUpon>202004180926385_AddTableNoiBanHanhAndLichSuHoatDong.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

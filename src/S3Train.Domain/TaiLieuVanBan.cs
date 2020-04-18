@@ -22,9 +22,12 @@ namespace S3Train.Domain
 
         [ForeignKey("HoSo")]
         public string HoSoId { get; set; }
+        [ForeignKey("NoiBanHanh")]
+        public string NoiBanHanhId { get; set; }
 
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
         public virtual HoSo HoSo { get; set; }
+        public virtual NoiBanHanh NoiBanHanh { get; set; }
     }
 }

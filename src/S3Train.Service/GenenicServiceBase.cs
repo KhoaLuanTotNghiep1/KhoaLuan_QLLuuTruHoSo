@@ -33,7 +33,7 @@ namespace S3Train
         /// Get all item in Entity
         /// </summary>
         /// <returns>List item in Entity</returns>
-        public List<T> GetAll()
+        public IList<T> GetAll()
         {
             return EntityDbSet.ToList();
         }
@@ -43,7 +43,7 @@ namespace S3Train
         /// </summary>
         /// <param name="orderBy">sort order</param>
         /// <returns>List item was sorted</returns>
-        public List<T> GetAll(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy)
+        public IList<T> GetAll(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy)
         {
             return orderBy(EntityDbSet).ToList();
         }

@@ -64,10 +64,6 @@ namespace S3Train.WebHeThong.App_Start
         private static void RegisterDependencyMappingOverrides(ContainerBuilder builder)
         {
             builder.RegisterType<ApplicationDbContext>();
-            builder.RegisterType<AccountManager>().As<IAccountManager>();
-            builder.RegisterType<RoleService>().As<IRoleService>();
-            builder.RegisterType<UserService>().As<IUserService>();
-            builder.RegisterType<UserIdentityService>().As<IUserIdentityService>();
             builder.RegisterType<ChiTietMuonTraService>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<HopService>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<HoSoService>().AsImplementedInterfaces().SingleInstance();
@@ -79,6 +75,10 @@ namespace S3Train.WebHeThong.App_Start
             builder.RegisterType<PhongBanService>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<TaiLieuVanBanService>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<TuService>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<AccountManager>().As<IAccountManager>();
+            builder.RegisterType<RoleService>().As<IRoleService>();
+            builder.RegisterType<UserService>().As<IUserService>();
+            builder.RegisterType<UserIdentityService>().As<IUserIdentityService>();
         }
     }
 }

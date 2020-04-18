@@ -13,5 +13,5 @@ namespace S3Train.Services
         public TuService(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
-    }
+    }   
 }

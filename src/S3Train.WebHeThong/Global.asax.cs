@@ -1,4 +1,5 @@
-﻿using System;
+﻿using S3Train.WebHeThong.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +17,7 @@ namespace S3Train.WebHeThong
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            DependencyConfig.RegisterDependencyResolvers();
         }
     }
 }

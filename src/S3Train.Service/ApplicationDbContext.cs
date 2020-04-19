@@ -67,6 +67,7 @@ namespace S3Train.Domain
             modelBuilder.Entity<PhongBan>().HasMany(p => p.Hops).WithOptional(prod => prod.PhongBan);
 
             modelBuilder.Entity<LoaiHoSo>().ToTable("LoaiHoSo");
+            modelBuilder.Entity<LoaiHoSo>().Property(p => p.Ma).HasMaxLength(50).IsOptional();
             modelBuilder.Entity<LoaiHoSo>().Property(p => p.Ten).HasMaxLength(300).IsOptional();
             modelBuilder.Entity<LoaiHoSo>().HasMany(p => p.HoSos).WithOptional(prod => prod.LoaiHoSo);
 
@@ -84,12 +85,17 @@ namespace S3Train.Domain
             modelBuilder.Entity<TaiLieuVanBan>().ToTable("TaiLieuVanBan");
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.Ten).HasMaxLength(300).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.Loai).HasMaxLength(300).IsOptional();
-            modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.So).HasMaxLength(300).IsOptional();
-            modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.KhoGiay).HasMaxLength(300).IsOptional();
+            modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.SoKyHieu).HasMaxLength(100).IsOptional();
+            modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.TrichYeu).IsOptional();
+            modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.NoiDung).IsOptional();
+            modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.NguoiDuyet).HasMaxLength(100).IsOptional();
+            modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.NguoiKy).HasMaxLength(100).IsOptional();
+            modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.NguoiGuiHoacNhan).HasMaxLength(100).IsOptional();
+            modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.NoiNhan).HasMaxLength(200).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.SoTo).IsOptional();
-            modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.TacGia).HasMaxLength(300).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.TinhTrang).HasMaxLength(150).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.GhiChu).IsOptional();
+            modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.DuongDan).IsOptional();
 
             modelBuilder.Entity<MuonTra>().ToTable("MuonTra");
             modelBuilder.Entity<MuonTra>().Property(p => p.NgayMuon).IsOptional();

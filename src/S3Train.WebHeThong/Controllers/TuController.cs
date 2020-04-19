@@ -1,4 +1,5 @@
 ﻿using S3Train.Contract;
+using S3Train.Core.Constant;
 using S3Train.Domain;
 using S3Train.WebHeThong.Models;
 using System;
@@ -26,14 +27,24 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: Tu
-        public ActionResult Index()
+        public ActionResult Index(int? pageIndex, int? pageSize)
         {
-            var model = GetTus(_tuService.GetAll(x => x.OrderBy(m => m.Ten)));
+            pageIndex = (pageIndex ?? 1);
+            pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
 
+            var model = new TuIndexViewModel()
+            {
+                PageIndex = pageIndex.Value,
+                PageSize = pageSize.Value
+            };
+            var tus = _tuService.GetAllPaged(pageIndex, pageSize.Value, null, p => p.OrderBy(c => c.Ten));
+
+            model.Paged = tus;
+            model.Items = GetTus(tus.ToList());
             return View(model);
         }
 
-        private IList<TuViewModel> GetTus(IList<Tu> tus)
+        private List<TuViewModel> GetTus(IList<Tu> tus)
         {
             return tus.Select(x => new TuViewModel
             {

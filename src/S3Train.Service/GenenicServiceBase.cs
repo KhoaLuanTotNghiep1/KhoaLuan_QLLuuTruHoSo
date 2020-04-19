@@ -156,9 +156,13 @@ namespace S3Train
             DbContext.SaveChanges();
         }
 
-        public IPagedList<T> GetAllPaged()
+        public IPagedList<T> GetAllPaged(int? pageIndex, int pageSize = 20, Expression<Func<T, bool>> where = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null)
         {
-            throw new NotImplementedException();
+            var page = pageIndex ?? 1;
+
+            var iQueryableDbSet = @where != null ? EntityDbSet.Where(@where) : EntityDbSet;
+
+            return orderBy != null ? orderBy(iQueryableDbSet).ToPagedList(page, pageSize) : iQueryableDbSet.ToPagedList(page, pageSize);
         }
     }
 }

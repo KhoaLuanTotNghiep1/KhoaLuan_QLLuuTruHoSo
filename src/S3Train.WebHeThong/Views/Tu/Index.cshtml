@@ -1,6 +1,7 @@
-﻿@using S3Train.WebHeThong.Models
-@model IEnumerable<TuViewModel>
-
+﻿@using S3Train.Core.Constant
+@using X.PagedList.Mvc.Common
+@using X.PagedList.Mvc
+@model S3Train.WebHeThong.Models.TuIndexViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
@@ -8,15 +9,42 @@
 
 <div class="card">
     <div class="card-body">
-        <table class="dataTable">
+        <table>
             <thead>
-                <tr><th>@Html.DisplayNameFor(m => m.Ten)</th></tr>
+                <tr>
+                    <th>#</th>
+                    <th>Ten</th>
+                    <th>Ten</th>
+                    <th>Ten</th>
+                    <th>Ten</th>
+                    <th>Ten</th>
+                </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>s</td>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(m => item.Ten)</td>
+                    </tr>
+                }
+                <tr class="pageging">
+                    <td colspan="8">
+                        @Html.PagedListPager(Model.Paged, pageIndex => Url.Action("Index", new RouteValueDictionary {
+                         { "pageIndex" , pageIndex },
+                         { "pageSize", Model.PageSize > 0 ? Model.PageSize : GlobalConfigs.DEFAULT_PAGESIZE } ,
+                     }), new PagedListRenderOptions
+                             {
+                         LiElementClasses = new string[] { "page-item" },
+                         PageClasses = new string[] { "page-link" },
+                         DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                         DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                         MaximumPageNumbersToDisplay = 5,
+                         EllipsesElementClass = "page-link",
+                     })
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
+

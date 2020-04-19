@@ -2,8 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+using X.PagedList;
 
 namespace S3Train.WebHeThong.Models
 {
@@ -54,5 +53,11 @@ namespace S3Train.WebHeThong.Models
         public bool TrangThai { get; set; }
 
         public virtual ICollection<Ke> Kes { get; set; }
+    }
+
+    public class TuIndexViewModel : IndexViewModelBase
+    {
+        public IPagedList<Tu> Paged { get; set; }
+        public List<TuViewModel> Items { get; set; }
     }
 }

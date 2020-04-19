@@ -8,6 +8,7 @@ namespace S3Train.Domain
 {
     public class LoaiHoSo : EntityBase
     {
+        public string Ma { get; set; }
         public string Ten { get; set; }
 
         public virtual ICollection<HoSo> HoSos { get; set; }

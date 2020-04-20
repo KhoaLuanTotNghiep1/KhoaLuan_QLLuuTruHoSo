@@ -10,23 +10,23 @@ namespace S3Train.WebHeThong.Models
     {
         public string Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Điền Tên")]
         [Display(Name = "Tên")]
         public string Ten { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Điền Vị Trí")]
         [Display(Name = "Vị Trí")]
         public string ViTri { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Điền Diện Tích")]
         [Display(Name = "Diện Tích")]
         public string DienTich { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Điền Tên Người Quản Lý")]
         [Display(Name = "Người Quản Lý")]
         public string NgươiQuanLy { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Điền Đơn Vị Tính")]
         [Display(Name = "Đơn Vị Tính")]
         public string DonViTinh { get; set; }
 
@@ -37,12 +37,11 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Sức Chứa")]
         public int SoLuongMax { get; set; }
 
-        [Required]
         [Display(Name = "Tình Trạng")]
-        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public string TinhTrang { get; set; }
 
         [Display(Name = "Ngày Tạo")]
+        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime NgayTao { get; set; }
 
         [Display(Name = " Ngày Cập Nhật")]

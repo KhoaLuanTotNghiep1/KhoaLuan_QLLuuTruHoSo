@@ -120,11 +120,6 @@
     <Compile Include="IdentityManager\EmailService.cs" />
     <Compile Include="IdentityManager\SmsService.cs" />
     <Compile Include="IGenenicServiceBase.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Migrations\202002190239110_Initial.cs" />
-    <Compile Include="Migrations\202002190239110_Initial.Designer.cs">
-      <DependentUpon>202002190239110_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Model\Role\RoleViewModel.cs" />
     <Compile Include="Model\User\UserViewModel.cs" />
     <Compile Include="IndentityService\AccountManager.cs" />
@@ -159,11 +154,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202002190239110_Initial.resx">
-      <DependentUpon>202002190239110_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

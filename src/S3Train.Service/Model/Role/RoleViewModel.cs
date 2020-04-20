@@ -1,4 +1,6 @@
-﻿namespace S3Train.Model.Role
+﻿using S3Train.Domain;
+
+namespace S3Train.Model.Role
 {
     public class RoleViewModel
     {

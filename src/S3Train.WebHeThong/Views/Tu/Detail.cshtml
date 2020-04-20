@@ -1,0 +1,100 @@
+﻿@using S3Train.WebHeThong.Models
+@model TuViewModel
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
+    int soLuong = Model.SoLuongMax - Model.SoLuongHienTai;
+}
+<h2>Thông Tin Chi Tiết</h2>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.Ten)</h6>
+                        <p>@Html.DisplayFor(item => Model.Ten)</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgươiQuanLy)</h6>
+                        <p>@Html.DisplayFor(item => Model.NgươiQuanLy)</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.DienTich)</h6>
+                        <p>@Html.DisplayFor(item => Model.DienTich)</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.DonViTinh)</h6>
+                        <p>@Html.DisplayFor(item => Model.DonViTinh)</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoLuongMax)</h6>
+                        <p>@Html.DisplayFor(item => Model.SoLuongMax)</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoLuongHienTai)</h6>
+                        <p>@Html.DisplayFor(item => Model.SoLuongHienTai)</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayTao)</h6>
+                        <p>@Html.DisplayFor(item => Model.NgayTao)</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayCapNhat)</h6>
+                        <p>@Html.DisplayFor(item => Model.NgayCapNhat)</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.TrangThai)</h6>
+                        <p>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", Model.TrangThai)</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">Tình Trạng Lưu Trữ</h6>
+                        <p>@Html.Partial("~/Views/Shared/_PartialTinhTrang.cshtml", soLuong)</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.TinhTrang)</h6>
+                        <p>@Html.DisplayFor(item => Model.TinhTrang)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4 class="m-0 font-weight-bold text-primary">Danh Sách Kệ Của kho</h4>
+                <br />
+                <table class="table table-responsive-md">
+                    <thead>
+                        <tr>
+                            <th>Tên</th>
+                            <th>Số Thứ Tự</th>
+                            <th>Số Hộp Hiện Tại</th>
+                            <th>Số Hôp Max</th>
+                            <th>Hoạt Động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ke in Model.Kes)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(m => ke.SoThuTu)</td>
+                                <td>@Html.DisplayFor(m => ke.Ten)</td>
+                                <td>@Html.DisplayFor(m => ke.SoHopHienTai)</td>
+                                <td>@Html.DisplayFor(m => ke.SoHopToiDa)</td>
+                                <td></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -169,7 +169,16 @@ namespace S3Train.Service
                     FullName = u.FullName,
                     Avatar = u.Avatar,
                     PhoneNumber = u.PhoneNumber,
+                    Active = u.Active,
+                    CreatedDate = u.CreatedDate,
+                    UpdatedDate = u.UpdatedDate
                 }).ToPagedListAsync(pageIndex, pageSize);
+        }
+
+        public async Task<IdentityResult> DeleteAsync(ApplicationUser user)
+        {
+            var result = await _accountManager.UserManager.DeleteAsync(user);
+            return result;
         }
     }
 }

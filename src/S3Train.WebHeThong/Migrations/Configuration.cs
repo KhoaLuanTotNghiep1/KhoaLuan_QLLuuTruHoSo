@@ -250,6 +250,29 @@
             //noiBanHanhs.ForEach(x => context.NoiBanHanhs.AddOrUpdate(c => c.Ten, x));
             //context.SaveChanges();
 
+            //var roles = new List<ApplicationRole>()
+            //{
+            //    new ApplicationRole
+            //    {
+            //        Id = Guid.NewGuid().ToString(),
+            //        Name ="Cán Bộ Thủ Thư",
+            //        Description ="",
+            //    },
+            //    new ApplicationRole
+            //    {
+            //        Id = Guid.NewGuid().ToString(),
+            //        Name ="Ban Quản Lý",
+            //        Description ="",
+            //    },
+            //    new ApplicationRole
+            //    {
+            //        Id = Guid.NewGuid().ToString(),
+            //        Name ="Cán Bộ Thư Văn",
+            //        Description ="",
+            //    }
+            //};
+            //roles.ForEach(x => context.Roles.AddOrUpdate(c => c.Name, x));
+            //context.SaveChanges();
             //var loaiHoSos = new List<LoaiHoSo>()
             //{
             //    new LoaiHoSo

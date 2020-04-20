@@ -19,6 +19,10 @@ namespace S3Train.Domain
         }
         public string FullName { get; set; }
         public string Avatar { get; set; }
+        public string Address { get; set; }
+        public bool Active { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
         public virtual ICollection<TaiLieuVanBan> TaiLieuVanBans { get; set; }
         public virtual ICollection<Hop> Hops { get; set; }
         public virtual ICollection<HoSo> HoSos { get; set; }

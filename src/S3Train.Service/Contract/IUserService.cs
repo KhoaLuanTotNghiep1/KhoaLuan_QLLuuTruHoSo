@@ -20,6 +20,7 @@ namespace S3Train.Contract
         Task<IdentityResult> UpdatePassword(string id, string password);
         Task<IdentityResult> Create(ApplicationUser user, string password);
         Task<IdentityResult> Update(ApplicationUser user);
+        Task<IdentityResult> DeleteAsync(ApplicationUser user);
         Task<IList<UserLoginInfo>> GetLogins(string id);
         Task SignInAsync(ApplicationUser user, bool isPersistent, bool shouldLockout = false);
         void SignOut();

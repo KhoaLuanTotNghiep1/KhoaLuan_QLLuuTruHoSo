@@ -1,0 +1,67 @@
+﻿@using S3Train.Model.User
+@using X.PagedList.Mvc.Common
+@using X.PagedList.Mvc
+@model X.PagedList.IPagedList<UserViewModel>
+@{
+    ViewBag.Title = "IndexAsync";
+    Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
+    int stt = 1;
+}
+
+<div class="card">
+    <div class="card-body">
+        <a href="@Url.Action("CreateOrUpdate","User")" class="btn btn-info m-2">
+            <i class="fas fa-plus"></i> Tạo Mới
+        </a>
+
+        <table class="table table-responsive-lg">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên Tài Khoản</th>
+                    <th>Tên Đầy Đủ</th>
+                    <th>Email</th>
+                    <th>Số Điện Thoại</th>
+                    <th>Trạng Thái</th>
+                    <th>Hoạt Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td>
+                            <img class="img-profile rounded rounded-circle" src="~/Content/img/boy.png" style="max-width:30px" title="Hình đại diện" /> @item.UserName
+                        </td>
+                        <td>@Html.DisplayFor(m => item.FullName)</td>
+                        <td>@Html.DisplayFor(m => item.Email)</td>
+                        <td>@Html.DisplayFor(m => item.PhoneNumber)</td>
+                        <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.Active)</td>
+                        <td>
+                            @Html.Partial("~/Views/Shared/_PartialChangeRole.cshtml", item)
+                        </td>
+                    </tr>
+                    stt += 1;
+                }
+                <tr class="pageging">
+                    <td colspan="8">
+                        @Html.PagedListPager(Model, pageIndex => Url.Action("IndexAsync", new RouteValueDictionary {
+                         { "pageIndex" , pageIndex },
+                         { "pageSize", Model.PageSize > 0 ? Model.PageSize : GlobalConfigs.DEFAULT_PAGESIZE } ,
+                     }), new PagedListRenderOptions
+                             {
+                         LiElementClasses = new string[] { "page-item" },
+                         PageClasses = new string[] { "page-link" },
+                         DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                         DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                         MaximumPageNumbersToDisplay = 5,
+                         EllipsesElementClass = "page-link",
+                     })
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

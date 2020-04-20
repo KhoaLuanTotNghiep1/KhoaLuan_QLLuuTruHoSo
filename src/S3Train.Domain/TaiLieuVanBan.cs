@@ -11,9 +11,10 @@ namespace S3Train.Domain
     {
         public string Ten { get; set; }
         public string Loai { get; set; }
+        public string Dang { get; set; } // công văn đến/đi/nội bộ
         public string SoKyHieu { get; set; }
         public int SoTo { get; set; }
-        public string TinhTrang { get; set; }
+        public string TinhTrang { get; set; } // còn trong kho hay đã cho mượn
         public string DuongDan { get; set; }
         public string GhiChu { get; set; }
         public string NoiDung { get; set; }

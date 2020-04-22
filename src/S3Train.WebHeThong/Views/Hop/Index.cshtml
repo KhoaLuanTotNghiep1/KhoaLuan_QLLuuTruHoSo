@@ -1,17 +1,14 @@
-﻿@using S3Train.Core.Constant
-@using X.PagedList.Mvc.Common
-@using X.PagedList.Mvc
-@model S3Train.WebHeThong.Models.TuIndexViewModel
+﻿@using S3Train.WebHeThong.Models
+@model HopViewIndexModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
     int stt = 1;
-    int soLuong = 0;
 }
 
 <div class="card">
     <div class="card-body">
-        <a href="@Url.Action("CreateOrUpdate","Tu")" class="btn btn-info m-2">
+        <a href="@Url.Action("CreateOrUpdate","Hop")" class="btn btn-info m-2">
             <i class="fas fa-plus"></i> Tạo Mới
         </a>
 
@@ -19,9 +16,9 @@
             <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Tên</th>
-                    <th>Người Quản Lý</th>
-                    <th>Lưu Trữ</th>
+                    <th>Chuyên Đề</th>
+                    <th>Vị Trí Hộp</th>
+                    <th>Phòng Ban</th>
                     <th>Trạng Thái</th>
                     <th>Hoạt Động</th>
                 </tr>
@@ -29,26 +26,25 @@
             <tbody>
                 @foreach (var item in Model.Items)
                 {
-                soLuong = item.SoLuongMax - item.SoLuongHienTai;
-                <tr>
-                    <td>@stt</td>
-                    <td>@Html.DisplayFor(m => item.Ten)</td>
-                    <td>@Html.DisplayFor(m => item.NgươiQuanLy)</td>
-                    <td>@Html.Partial("~/Views/Shared/_PartialTinhTrang.cshtml", soLuong)</td>
-                    <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
-                    <td>
-                        <a href="@Url.Action("Detail","Tu", new { id=item.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
-                            <i class="fas fa-info"></i>
-                        </a>
-                        <a href="@Url.Action("CreateOrUpdate","Tu", new { id=item.Id})" class="btn btn-primary" title="Cập Nhật">
-                            <i class="fas fa-sync"></i>
-                        </a>
-                        <a href="@Url.Action("Delete","Tu", new { id=item.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @item.Ten?');" title="Xóa">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </td>
-                </tr>
-                stt += 1;
+                    <tr>
+                        <td>@stt</td>
+                        <td>@Html.DisplayFor(m => item.ChuyenDe)</td>
+                        <td>@item.Ke.Tu.Ten Kệ Thứ @Html.DisplayFor(m => item.Ke.SoThuTu) Hộp Số @Html.DisplayFor(m => item.SoHop)</td>
+                        <td>@Html.DisplayFor(m => item.PhongBan.Ten)</td>
+                        <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
+                        <td>
+                            <a href="@Url.Action("Detail","Hop", new { id=item.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
+                                <i class="fas fa-info"></i>
+                            </a>
+                            <a href="@Url.Action("CreateOrUpdate","Hop", new { id=item.Id})" class="btn btn-primary" title="Cập Nhật">
+                                <i class="fas fa-sync"></i>
+                            </a>
+                            <a href="@Url.Action("Delete","Hop", new { id=item.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa Hộp @item.SoHop Của Kệ @item.Ke.SoThuTu Kho @item.Ke.Tu.Ten?');" title="Xóa">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    stt += 1;
                 }
                 <tr class="pageging">
                     <td colspan="8">

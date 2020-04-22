@@ -48,17 +48,16 @@ namespace S3Train.WebHeThong.Models
 
     public class LoginViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Required(ErrorMessage = "Bạn Chưa Điền Tài Khoản")]
+        [Display(Name = "Tài Khoản")]
+        public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Bạn Chưa Điền Mật Khẩu")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Mật Khẩu")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Duy Trì Đăng Nhập?")]
         public bool RememberMe { get; set; }
     }
 

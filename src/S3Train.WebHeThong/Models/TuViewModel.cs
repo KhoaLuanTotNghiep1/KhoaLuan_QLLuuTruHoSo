@@ -33,7 +33,7 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Số Lượng Hiện Tại")]
         public int SoLuongHienTai { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Điền Sức Chứa")]
         [Display(Name = "Sức Chứa")]
         public int SoLuongMax { get; set; }
 

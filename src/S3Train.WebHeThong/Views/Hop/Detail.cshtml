@@ -1,10 +1,12 @@
 ﻿@using S3Train.WebHeThong.Models
-@model TuViewModel
+@model HopViewModel
+
 @{
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
-    int soLuong = Model.SoLuongMax - Model.SoLuongHienTai;
+    int stt = 1;
 }
+
 <h4>Thông Tin Chi Tiết</h4>
 <div class="row">
     <div class="col-lg-9">
@@ -12,33 +14,37 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-4">
-                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.Ten)</h6>
-                        <p>@Html.DisplayFor(item => Model.Ten)</p>
+                        <h6 class="m-0 font-weight-bold text-primary">Tủ</h6>
+                        <p>@Html.DisplayFor(item => Model.Ke.Tu.Ten)</p>
                     </div>
                     <div class="col-lg-4">
-                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgươiQuanLy)</h6>
-                        <p>@Html.DisplayFor(item => Model.NgươiQuanLy)</p>
+                        <h6 class="m-0 font-weight-bold text-primary">Kệ</h6>
+                        <p>@Html.DisplayFor(item => Model.Ke.Ten)</p>
                     </div>
                     <div class="col-lg-4">
-                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.DienTich)</h6>
-                        <p>@Html.DisplayFor(item => Model.DienTich) m2</p>
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoHop)</h6>
+                        <p>Hộp số @Html.DisplayFor(item => Model.SoHop)</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.DonViTinh)</h6>
-                        <p>@Html.DisplayFor(item => Model.DonViTinh)</p>
+                        <h6 class="m-0 font-weight-bold text-primary">Phòng Ban</h6>
+                        <p>@Html.DisplayFor(item => Model.PhongBan.Ten)</p>
                     </div>
                     <div class="col-lg-4">
-                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoLuongMax)</h6>
-                        <p>@Html.DisplayFor(item => Model.SoLuongMax) @Html.DisplayFor(item => Model.DonViTinh)</p>
+                        <h6 class="m-0 font-weight-bold text-primary">Người Tạo</h6>
+                        <p>@Html.DisplayFor(item => Model.User.FullName)</p>
                     </div>
                     <div class="col-lg-4">
-                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoLuongHienTai)</h6>
-                        <p>@Html.DisplayFor(item => Model.SoLuongHienTai) @Html.DisplayFor(item => Model.DonViTinh)</p>
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayBatDau)</h6>
+                        <p>@Html.DisplayFor(item => Model.NgayBatDau)</p>
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayKetThuc)</h6>
+                        <p>@Html.DisplayFor(item => Model.NgayKetThuc)</p>
+                    </div>
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayTao)</h6>
                         <p>@Html.DisplayFor(item => Model.NgayTao)</p>
@@ -46,12 +52,6 @@
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayCapNhat)</h6>
                         <p>@Html.DisplayFor(item => Model.NgayCapNhat)</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.TinhTrang)</h6>
-                        <p>@Html.DisplayFor(item => Model.TinhTrang)</p>
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                         <div class="row align-items-center">
                             <div class="col">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">Lưu Trữ</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTinhTrang.cshtml", soLuong)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", Model.TinhTrang)</div>
                                 <div class="mt-2 mb-0 text-muted text-xs">
                                     <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
                                     <span>Since last month</span>
@@ -106,38 +106,42 @@
     <div class="col-lg-12">
         <div class="card mb-4">
             <div class="card-body">
-                <h5 class="m-0 font-weight-bold text-primary">Danh Sách Kệ Của kho</h5>
+                <h5 class="m-0 font-weight-bold text-primary">Danh Sách Hộp Của Kệ</h5>
                 <br />
                 <table class="table table-responsive-md">
                     <thead>
                         <tr>
-                            <th>Tên</th>
                             <th>STT</th>
-                            <th>Số Hộp Hiện Tại</th>
-                            <th>Lưu Trữ</th>
+                            <th>Phông Lưu Trữ</th>
+                            <th>Loại Hồ Sơ</th>
+                            <th>Thời Gian Bảo Quản</th>
+                            <th>Người Tạo Hồ Sơ</th>
                             <th>Hoạt Động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var ke in Model.Kes)
+                        @foreach (var hoso in Model.HoSos)
                         {
                             <tr>
-                                <td>@Html.DisplayFor(m => ke.Ten)</td>
-                                <td>@Html.DisplayFor(m => ke.SoHopHienTai)</td>
-                                <td>@Html.DisplayFor(m => ke.SoHopHienTai)</td>
-                                <td>@Html.Partial("~/Views/Shared/_PartialTinhTrang.cshtml", Convert.ToInt32(ke.SoHopToiDa - ke.SoHopHienTai))</td>
+                                <td>@stt</td>
+                                <td>@Html.DisplayFor(item => hoso.PhongLuuTru)</td>
+                                <td>@Html.DisplayFor(item => hoso.LoaiHoSo.Ten)</td>
+                                <td>@Html.DisplayFor(item => hoso.ThoiGianBaoQuan)</td>
+                                <td>@Html.DisplayFor(item => hoso.User.FullName)</td>
+                                <td>@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", hoso.TinhTrang)</td>
                                 <td>
-                                    <a href="@Url.Action("Detail","Ke", new { id=ke.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
+                                    <a href="@Url.Action("Detail","HoSo", new { id=hoso.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
                                         <i class="fas fa-info"></i>
                                     </a>
-                                    <a href="@Url.Action("CreateOrUpdate","Ke", new { id=ke.Id})" class="btn btn-primary" title="Cập Nhật">
+                                    <a href="@Url.Action("CreateOrUpdate","HoSo", new { id=hoso.Id})" class="btn btn-primary" title="Cập Nhật">
                                         <i class="fas fa-sync"></i>
                                     </a>
-                                    <a href="@Url.Action("Delete","Ke", new { id=ke.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @ke.Ten?');" title="Xóa">
+                                    <a href="@Url.Action("Delete","HoSo", new { id=hoso.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @hoso.PhongLuuTru?');" title="Xóa">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
                             </tr>
+                            stt += 1;
                         }
                     </tbody>
                 </table>

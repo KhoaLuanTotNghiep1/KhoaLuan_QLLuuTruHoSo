@@ -1,0 +1,12 @@
+﻿@model string
+
+@{
+    if (Model == "Trong Kho")
+    {
+        <span class="badge badge-primary">Trong Kho</span>
+    }
+    else
+    {
+        <span class="badge badge-warning">Đang Mượn</span>
+    }
+}

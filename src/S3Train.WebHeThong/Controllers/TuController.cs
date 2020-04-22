@@ -71,7 +71,7 @@ namespace S3Train.WebHeThong.Controllers
             tu.DienTich = model.DienTich;
             tu.NgươiQuanLy = model.NgươiQuanLy;
             tu.SoLuongMax = model.SoLuongMax;
-            tu.SoLuongHienTai = model.SoLuongHienTai;
+            tu.SoLuongHienTai = 0;
             tu.TinhTrang = model.TinhTrang;
             tu.TrangThai = true;
 
@@ -84,6 +84,7 @@ namespace S3Train.WebHeThong.Controllers
             }
             else
             {
+                tu.NgayCapNhat = DateTime.Now;
                 _tuService.Update(tu);
                 TempData["AlertMessage"] = "Cập Nhật Thành Công";
             }
@@ -105,7 +106,6 @@ namespace S3Train.WebHeThong.Controllers
             return View(model);
         }
 
-
         private TuViewModel GetTu(Tu tu)
         {
             var model = new TuViewModel
@@ -113,7 +113,7 @@ namespace S3Train.WebHeThong.Controllers
                 Id = tu.Id,
                 Ten = tu.Ten,
                 DonViTinh = tu.DonViTinh,
-                DienTich = tu.DonViTinh,
+                DienTich = tu.DienTich,
                 NgươiQuanLy = tu.NgươiQuanLy,
                 TinhTrang = tu.TinhTrang,
                 SoLuongHienTai = tu.SoLuongHienTai,

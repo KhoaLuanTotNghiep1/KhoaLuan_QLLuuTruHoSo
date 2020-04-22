@@ -32,7 +32,7 @@
                 <hr class="sidebar-divider my-0">
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="@Url.Action("Dashboard","Home")">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Bảng Điều Khiển</span>
                 </a>
@@ -40,73 +40,64 @@
             <li>
                 <hr class="sidebar-divider">
                 <div class="sidebar-heading">
-                    Chức Năng
+                    Chức Năng Hệ Thống
                 </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
                    aria-expanded="true" aria-controls="collapseBootstrap">
                     <i class="far fa-fw fa-window-maximize"></i>
-                    <span>Quản Lý Tủ</span>
+                    <span>Quản Lý Tủ/Kệ/Hộp</span>
                 </a>
                 <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Bootstrap UI</h6>
-                        <a class="collapse-item" href="alerts.html">Alerts</a>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="dropdowns.html">Dropdowns</a>
-                        <a class="collapse-item" href="modals.html">Modals</a>
-                        <a class="collapse-item" href="popovers.html">Popovers</a>
-                        <a class="collapse-item" href="progress-bar.html">Progress Bars</a>
+                        <h6 class="collapse-header">Quản Lý Tủ/Kệ/Hộp</h6>
+                        <a class="collapse-item" href="@Url.Action("Index","Tu")">Quản Lý Tủ</a>
+                        <a class="collapse-item" href="@Url.Action("Index","Ke")">Quản Lý Kệ</a>
+                        <a class="collapse-item" href="@Url.Action("Index","Hop")">Quản Lý Hộp</a>
                     </div>
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="forms.html">
+                <a class="nav-link" href="@Url.Action("Index","HoSo")">
                     <i class="fab fa-fw fa-wpforms"></i>
-                    <span>Quản Lý</span>
+                    <span>Quản Lý Hồ Sơ</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true"
                    aria-controls="collapseTable">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Quản Lý</span>
+                    <span>Quản Lý Văn Bản</span>
                 </a>
                 <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Tables</h6>
-                        <a class="collapse-item" href="simple-tables.html">Simple Tables</a>
-                        <a class="collapse-item" href="datatables.html">DataTables</a>
+                        <h6 class="collapse-header">Quản Lý Văn Bản/Tài Liệu</h6>
+                        <a class="collapse-item" href="simple-tables.html">Văn Bảng</a>
+                        <a class="collapse-item" href="datatables.html">Tài Liệu</a>
+                        <a class="collapse-item" href="datatables.html">Văn Bản/Tài Liệu Đến</a>
+                        <a class="collapse-item" href="datatables.html">Văn Bản/Tài Liệu Đi</a>
                     </div>
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="ui-colors.html">
-                    <i class="fas fa-fw fa-palette"></i>
-                    <span>UI Colors</span>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMuonTra" aria-expanded="true"
+                   aria-controls="collapseMuonTra">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Quản Lý Mượn/Trả</span>
                 </a>
+                <div id="collapseMuonTra" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Quản Lý Mượn/Trả</h6>
+                        <a class="collapse-item" href="simple-tables.html">Danh Sách Mượn</a>
+                        <a class="collapse-item" href="datatables.html">Danh Sách Trả</a>
+                    </div>
+                </div>
             </li>
             <li>
                 <hr class="sidebar-divider">
                 <div class="sidebar-heading">
-                    Thống Kê Báo Cáo
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePage" aria-expanded="true"
-                   aria-controls="collapsePage">
-                    <i class="fas fa-fw fa-columns"></i>
-                    <span>Báo Cáo</span>
-                </a>
-                <div id="collapsePage" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Example Pages</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
-                    </div>
+                    Thống Kê/Báo Cáo
                 </div>
             </li>
             <li class="nav-item">
@@ -115,6 +106,33 @@
                     <span>Thống Kê</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Báo Cáo</span>
+                </a>
+            </li>
+            <li>
+                <hr class="sidebar-divider">
+                <div class="sidebar-heading">
+                    Quản Lý Người Dùng
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNguoiDung" aria-expanded="true"
+                   aria-controls="collapseNguoiDung">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Quản Lý Người Dùng</span>
+                </a>
+                <div id="collapseNguoiDung" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Quản Lý Người Dùng</h6>
+                        <a class="collapse-item" href="@Url.Action("IndexAsync","User")">Người Dùng</a>
+                        <a class="collapse-item" href="@Url.Action("Index","Role")">Quyền Truy Cập</a>
+                    </div>
+                </div>
+            </li>
+
             <li>
                 <hr class="sidebar-divider">
                 <div class="version" id="version-ruangadmin"></div>

@@ -2269,6 +2269,7 @@
     <Content Include="Views\Hop\CreateOrUpdate.cshtml" />
     <Content Include="Views\Shared\_PartialTinhTrangLuuTru.cshtml" />
     <Content Include="Views\Hop\Detail.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
     <None Include="Web.LocalConnectStrings.config">
       <SubType>Designer</SubType>
     </None>

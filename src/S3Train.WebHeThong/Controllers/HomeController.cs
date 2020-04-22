@@ -33,5 +33,10 @@ namespace S3Train.WebHeThong.Controllers
 
             return View();
         }
+
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
     }
 }

@@ -1,13 +1,9 @@
 ﻿namespace S3Train.Domain
 {
-    public enum ProductAdvertisementType
+    public enum ActionWithObject
     {
-        SliderBanner,
-        MidSquareBanner,
-        LgSquareBanner,
-        MidVertRectangleBanner,
-        LgVertRectangleBanner,
-        MidHorRectangleBanner,
-        LgHorRectangleBanner
+        Create,
+        Update,
+        Delete
     }
 }

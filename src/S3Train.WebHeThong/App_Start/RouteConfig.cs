@@ -16,7 +16,7 @@ namespace S3Train.WebHeThong
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Tu", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
             );
         }
     }

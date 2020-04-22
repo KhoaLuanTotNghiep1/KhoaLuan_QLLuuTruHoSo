@@ -241,8 +241,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="CommomClientSide\DropDownList\SelectListItemFromDomain.cs" />
+    <Compile Include="CommomClientSide\Function\Compute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HopController.cs" />
+    <Compile Include="Controllers\KeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\TuController.cs" />
@@ -280,7 +284,9 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\HopViewModel.cs" />
     <Compile Include="Models\IndexViewModelBase.cs" />
+    <Compile Include="Models\KeViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RoleViewModel.cs" />
     <Compile Include="Models\TuViewModel.cs" />
@@ -2220,7 +2226,6 @@
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
@@ -2256,6 +2261,14 @@
     <Content Include="Views\User\IndexAsync.cshtml" />
     <Content Include="Views\User\CreateOrUpdate.cshtml" />
     <Content Include="Views\Shared\_PartialChangeRole.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Ke\Index.cshtml" />
+    <Content Include="Views\Ke\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Ke\Detail.cshtml" />
+    <Content Include="Views\Hop\Index.cshtml" />
+    <Content Include="Views\Hop\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Shared\_PartialTinhTrangLuuTru.cshtml" />
+    <Content Include="Views\Hop\Detail.cshtml" />
     <None Include="Web.LocalConnectStrings.config">
       <SubType>Designer</SubType>
     </None>

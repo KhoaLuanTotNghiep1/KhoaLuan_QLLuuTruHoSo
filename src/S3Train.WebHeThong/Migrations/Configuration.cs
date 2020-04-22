@@ -250,6 +250,61 @@
             //noiBanHanhs.ForEach(x => context.NoiBanHanhs.AddOrUpdate(c => c.Ten, x));
             //context.SaveChanges();
 
+            //var pBans = new List<PhongBan>()
+            //{
+            //    new PhongBan
+            //    {
+            //        Id = Guid.NewGuid().ToString(),
+            //        Ten = "Phòng Tổ Chức Hành Chính",
+            //        NgayTao = DateTime.Now,
+            //        TrangThai = true
+            //    },
+            //    new PhongBan
+            //    {
+            //        Id = Guid.NewGuid().ToString(),
+            //        Ten = "Phòng Đào Tạo",
+            //        NgayTao = DateTime.Now,
+            //        TrangThai = true
+            //    },
+            //    new PhongBan
+            //    {
+            //        Id = Guid.NewGuid().ToString(),
+            //        Ten = "Phòng Công Tác HSSV",
+            //        NgayTao = DateTime.Now,
+            //        TrangThai = true
+            //    },
+            //    new PhongBan
+            //    {
+            //        Id = Guid.NewGuid().ToString(),
+            //        Ten = "Phòng Khoa Học Công Nghệ",
+            //        NgayTao = DateTime.Now,
+            //        TrangThai = true
+            //    },
+            //    new PhongBan
+            //    {
+            //        Id = Guid.NewGuid().ToString(),
+            //        Ten = "Phòng Tài Chính Kế Toán",
+            //        NgayTao = DateTime.Now,
+            //        TrangThai = true
+            //    },
+            //    new PhongBan
+            //    {
+            //        Id = Guid.NewGuid().ToString(),
+            //        Ten = "Phòng Quản Trị",
+            //        NgayTao = DateTime.Now,
+            //        TrangThai = true
+            //    },
+            //    new PhongBan
+            //    {
+            //        Id = Guid.NewGuid().ToString(),
+            //        Ten = "Phòng Thanh Tra Giáo Dục",
+            //        NgayTao = DateTime.Now,
+            //        TrangThai = true
+            //    }
+            //};
+            //pBans.ForEach(x => context.phongBans.AddOrUpdate(c => c.Ten, x));
+            //context.SaveChanges();
+
             //var roles = new List<ApplicationRole>()
             //{
             //    new ApplicationRole

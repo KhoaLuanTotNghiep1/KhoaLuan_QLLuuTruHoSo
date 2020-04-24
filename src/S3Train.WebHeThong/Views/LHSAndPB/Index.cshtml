@@ -1,0 +1,124 @@
+﻿@using S3Train.WebHeThong.Models
+@model LHSAndPBViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
+    int stt = 1;
+    int stt2 = 1;
+}
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Loại Hồ Sơ</h1>
+        </div>
+        <div class="card">
+            <div class="card">
+                <div class="card-body">
+                    @Html.Partial("_PartialCreateOrUpdateLHS", new LoaiHoSoViewModel())
+                    <table class="table table-responsive-lg table-hover">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã</th>
+                                <th>Tên</th>
+                                <th>Hoạt Động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.LHS.Items)
+                            {
+                                <tr>
+                                    <td>@stt</td>
+                                    <td>@Html.DisplayFor(m => item.Ma)</td>
+                                    <td>@Html.DisplayFor(m => item.Ten)</td>
+                                    <td>
+                                        @Html.Partial("_PartialCreateOrUpdateLHS",item)
+                                    </td>
+                                </tr>
+                                stt += 1;
+                            }
+                            <tr class="pageging">
+                                <td colspan="8">
+                                    @Html.PagedListPager(Model.LHS.Paged, pageIndex => Url.Action("Index", new RouteValueDictionary {
+                                    { "pageIndexLHS" , pageIndex },
+                                    { "pageSizeLHS", Model.LHS.PageSize > 0 ? Model.LHS.PageSize : 5 } ,
+                                    }), new PagedListRenderOptions
+                                    {
+                                    LiElementClasses = new string[] { "page-item" },
+                                    PageClasses = new string[] { "page-link" },
+                                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                                    MaximumPageNumbersToDisplay = 5,
+                                    EllipsesElementClass = "page-link",
+                                    })
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Phòng Ban</h1>
+        </div>
+        <div class="card">
+            <div class="card">
+                <div class="card-body">
+                    @Html.Partial("_PartialCreateOrUpdatePB", new PhongBanViewModel())
+                    <table class="table table-responsive-lg table-hover">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên</th>
+                                <th>Hoạt Động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PB.Items)
+                            {
+                                <tr>
+                                    <td>@stt2</td>
+                                    <td>@Html.DisplayFor(m => item.Ten)</td>
+                                    <td>
+                                        @Html.Partial("_PartialCreateOrUpdatePB", item)
+                                    </td>
+                                </tr>
+                                stt2 += 1;
+                            }
+                            <tr class="pageging">
+                                <td colspan="8">
+                                    @Html.PagedListPager(Model.PB.Paged, pageIndex => Url.Action("Index", new RouteValueDictionary {
+                                    { "pageIndexPB" , pageIndex },
+                                    { "pageSizePB", Model.PB.PageSize > 0 ? Model.PB.PageSize : 5 } ,
+                                    }), new PagedListRenderOptions
+                                    {
+                                    LiElementClasses = new string[] { "page-item" },
+                                    PageClasses = new string[] { "page-link" },
+                                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                                    MaximumPageNumbersToDisplay = 5,
+                                    EllipsesElementClass = "page-link",
+                                    })
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["AlertMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+    </script>
+}

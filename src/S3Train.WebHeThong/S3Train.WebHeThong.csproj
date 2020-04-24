@@ -2276,6 +2276,9 @@
     <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\NoiBanHanh\Index.cshtml" />
     <Content Include="Views\NoiBanHanh\_PartialCreateOrUpdateNoiBanHanh.cshtml" />
+    <Content Include="Views\LHSAndPB\Index.cshtml" />
+    <Content Include="Views\LHSAndPB\_PartialCreateOrUpdateLHS.cshtml" />
+    <Content Include="Views\LHSAndPB\_PartialCreateOrUpdatePB.cshtml" />
     <None Include="Web.LocalConnectStrings.config">
       <SubType>Designer</SubType>
     </None>

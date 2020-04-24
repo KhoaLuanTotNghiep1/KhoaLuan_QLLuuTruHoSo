@@ -59,10 +59,18 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Index","HoSo")">
-                    <i class="fab fa-fw fa-wpforms"></i>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHoSo" aria-expanded="true"
+                   aria-controls="collapseTable">
+                    <i class="fas fa-fw fa-table"></i>
                     <span>Quản Lý Hồ Sơ</span>
                 </a>
+                <div id="collapseHoSo" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Quản Lý Hồ Sơ</h6>
+                        <a class="collapse-item" href="#">Hồ Sơ</a>
+                        <a class="collapse-item" href="@Url.Action("Index","LHSAndPB")">Loại Hồ Sơ Và Phòng Ban</a>
+                    </div>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true"
@@ -77,6 +85,7 @@
                         <a class="collapse-item" href="datatables.html">Tài Liệu</a>
                         <a class="collapse-item" href="datatables.html">Văn Bản/Tài Liệu Đến</a>
                         <a class="collapse-item" href="datatables.html">Văn Bản/Tài Liệu Đi</a>
+                        <a class="collapse-item" href="@Url.Action("Index","NoiBanHanh")">Nơi Ban Hành</a>
                     </div>
                 </div>
             </li>

@@ -71,6 +71,6 @@ namespace S3Train.WebHeThong.Models
     public class PhongBanVIndexiewModel : IndexViewModelBase
     {
         public IPagedList<PhongBan> Paged { get; set; }
-        public List<NoiBanHanhViewModel> Items { get; set; }
+        public List<PhongBanViewModel> Items { get; set; }
     }
 }

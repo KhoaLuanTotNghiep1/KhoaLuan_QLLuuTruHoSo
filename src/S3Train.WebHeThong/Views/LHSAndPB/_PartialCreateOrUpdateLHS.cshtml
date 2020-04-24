@@ -1,0 +1,63 @@
+﻿@using S3Train.WebHeThong.Models
+@model LoaiHoSoViewModel
+
+@using (Html.BeginForm("CreateOrUpdateLHS", "LHSAndPB", FormMethod.Post))
+{
+
+    if (string.IsNullOrEmpty(Model.Id))
+    {
+        <button type="button" title="Tạo Mới" class="btn btn-info m-2" data-toggle="modal" data-target="#exampleModal@(Model.Id)">
+            <i class="fas fa-plus"></i> Tạo Mới
+        </button>
+    }
+    else
+    {
+        <button type="button" title="Cập Nhật" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal@(Model.Id)">
+            <i class="fas fa-sync"></i>
+        </button>
+        <a href="@Url.Action("DeleteLHS","LHSAndPB", new { id = Model.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @Model.Ten?');" title="Xóa">
+            <i class="fas fa-trash"></i>
+        </a>
+        @Html.HiddenFor(m => Model.Id)
+    }
+
+
+    @Html.AntiForgeryToken()
+    <div class="modal fade" id="exampleModal@(Model.Id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Loại Hồ Sơ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="col-md">
+                            @Html.LabelFor(model => model.Ma, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Ma, new { htmlAttributes = new { @class = "form-control", @placeholder = "QĐ" } })
+                            @Html.ValidationMessageFor(model => model.Ma, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md">
+                            @Html.LabelFor(model => model.Ten, htmlAttributes: new { @class = "control-label" })
+                            @Html.TextAreaFor(model => model.Ten, new { @class = "form-control", @rows = "5", @placeholder = "Quyết địng" })
+                            @Html.ValidationMessageFor(model => model.Ten, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

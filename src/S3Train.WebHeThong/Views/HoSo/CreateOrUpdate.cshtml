@@ -1,0 +1,68 @@
+﻿@using S3Train.WebHeThong.Models
+@model HoSoViewModel
+
+@{
+    ViewBag.Title = "CreateOrUpdate";
+    Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
+    Model.GhiChu = Html.Raw(HttpUtility.HtmlDecode(Model.GhiChu)).ToString();
+    Model.BienMucHoSo = Html.Raw(HttpUtility.HtmlDecode(Model.BienMucHoSo)).ToString();
+}
+
+<div class="card">
+    <div class="card-body" id="myForm">
+        @using (Html.BeginForm("CreateOrUpdate", "HoSo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group row">
+                <div class="col-md">
+                    <label>@Html.DisplayNameFor(item => Model.HopId)</label>
+                    @Html.DropDownListFor(m => m.HopId, new SelectList(ViewBag.Hops, "Value", "Text"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.HopId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label>@Html.DisplayNameFor(item => Model.LoaiHoSoId)</label>
+                    @Html.DropDownListFor(m => m.LoaiHoSoId, new SelectList(ViewBag.LoaiHoSos, "Value", "Text"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.LoaiHoSoId, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    <label>@Html.DisplayNameFor(item => Model.TapHoSoId)</label>
+                    @Html.DropDownListFor(m => m.TapHoSoId, new SelectList(ViewBag.TapHoSos, "Value", "Text"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TapHoSoId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label>@Html.DisplayNameFor(item => Model.PhongLuuTru)</label>
+                    @Html.EditorFor(model => model.PhongLuuTru, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.PhongLuuTru, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    <label>@Html.DisplayNameFor(item => Model.ThoiGianBaoQuan)</label>
+                    @Html.EditorFor(model => model.ThoiGianBaoQuan, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.ThoiGianBaoQuan, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label>@Html.DisplayNameFor(item => Model.BienMucHoSo)</label>
+                    @Html.TextAreaFor(model => model.BienMucHoSo, new { @class = "form-control", placeholder = "Điều kiện hiện tại của kệ", rows = "9" })
+                    <script type="text/javascript">CKEDITOR.replace("BienMucHoSo", { htmlEncodeOutput: true });</script>
+                </div>
+                <div class="col-md-6">
+                    <label>@Html.DisplayNameFor(item => Model.GhiChu)</label>
+                    @Html.TextAreaFor(model => model.GhiChu, new { @class = "form-control", placeholder = "Điều kiện hiện tại của kệ", rows = "9" })
+                    <script type="text/javascript">CKEDITOR.replace("GhiChu", { htmlEncodeOutput: true });</script>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-success" />
+            </div>
+        }
+    </div>
+</div>

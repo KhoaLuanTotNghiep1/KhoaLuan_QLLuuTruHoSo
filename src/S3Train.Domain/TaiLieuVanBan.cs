@@ -24,6 +24,7 @@ namespace S3Train.Domain
         public string NguoiKy { get; set; }
         public string NguoiDuyet { get; set; }
         public string UserId { get; set; }
+        public DateTime NgayBanHanh { get; set; }
 
         [ForeignKey("HoSo")]
         public string HoSoId { get; set; }

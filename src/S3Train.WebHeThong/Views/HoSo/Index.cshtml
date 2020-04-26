@@ -1,0 +1,82 @@
+﻿@using S3Train.WebHeThong.Models
+@model HoSoIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
+    int stt = 1;
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Hồ Sơ</h1>
+</div>
+<div class="card">
+    <div class="card-body">
+        <a href="@Url.Action("CreateOrUpdate","HoSo")" class="btn btn-info m-2">
+            <i class="fas fa-plus"></i> Tạo Mới
+        </a>
+
+        <table class="table table-responsive-lg">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Phông Lưu Trữ</th>
+                    <th>Vị Trí</th>
+                    <th>Lưu Trữ</th>
+                    <th>Trạng Thái</th>
+                    <th>Hoạt Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@Html.DisplayFor(m => item.PhongLuuTru)</td>
+                        <td>@item.Hop.Ke.Tu.Ten kệ thứ @item.Hop.Ke.SoThuTu hộp số @item.Hop.SoHop</td>
+                        <td>@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", item.TinhTrang)</td>
+                        <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
+                        <td>
+                            <a href="@Url.Action("Detail","HoSo", new { id=item.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
+                                <i class="fas fa-info"></i>
+                            </a>
+                            <a href="@Url.Action("CreateOrUpdate","HoSo", new { id=item.Id})" class="btn btn-primary" title="Cập Nhật">
+                                <i class="fas fa-sync"></i>
+                            </a>
+                            <a href="@Url.Action("Delete","HoSo", new { id=item.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @item.PhongLuuTru?');" title="Xóa">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    stt += 1;
+                }
+                <tr class="pageging">
+                    <td colspan="8">
+                        @Html.PagedListPager(Model.Paged, pageIndex => Url.Action("Index", new RouteValueDictionary {
+                        { "pageIndex" , pageIndex },
+                        { "pageSize", Model.PageSize > 0 ? Model.PageSize : GlobalConfigs.DEFAULT_PAGESIZE } ,
+                        }), new PagedListRenderOptions
+                        {
+                        LiElementClasses = new string[] { "page-item" },
+                        PageClasses = new string[] { "page-link" },
+                        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                        MaximumPageNumbersToDisplay = 5,
+                        EllipsesElementClass = "page-link",
+                        })
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["AlertMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+    </script>
+}

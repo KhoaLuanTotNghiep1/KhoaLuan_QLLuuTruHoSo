@@ -27,7 +27,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: Tu
-        public ActionResult Index(int? pageIndex, int? pageSize)
+        public ActionResult Index(int? pageIndex, int? pageSize, string searchString)
         {
             pageIndex = (pageIndex ?? 1);
             pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
@@ -38,6 +38,12 @@ namespace S3Train.WebHeThong.Controllers
                 PageSize = pageSize.Value
             };
             var tus = _tuService.GetAllPaged(pageIndex, pageSize.Value, null, p => p.OrderBy(c => c.Ten));
+
+            if(!string.IsNullOrEmpty(searchString))
+            {
+                tus = _tuService.GetAllPaged(pageIndex, pageSize.Value, p => p.Ten.Contains(searchString) || p.NgươiQuanLy.Contains(searchString)
+                    , p => p.OrderBy(c => c.Ten));
+            }
 
             model.Paged = tus;
             model.Items = GetTus(tus.ToList());

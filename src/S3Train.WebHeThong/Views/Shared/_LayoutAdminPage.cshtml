@@ -16,6 +16,7 @@
     <link href="~/Content/css/ruang-admin.min.css" rel="stylesheet">
     <link href="~/Content/alertifyjs/alertify.css" rel="stylesheet" />
     <link href="~/Content/alertifyjs/alertify.min.css" rel="stylesheet" />
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
 </head>
 
 <body id="page-top">
@@ -81,10 +82,9 @@
                 <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Quản Lý Văn Bản/Tài Liệu</h6>
-                        <a class="collapse-item" href="simple-tables.html">Văn Bảng</a>
-                        <a class="collapse-item" href="datatables.html">Tài Liệu</a>
-                        <a class="collapse-item" href="datatables.html">Văn Bản/Tài Liệu Đến</a>
-                        <a class="collapse-item" href="datatables.html">Văn Bản/Tài Liệu Đi</a>
+                        <a class="collapse-item" href="@Url.Action("Index","TaiLieuVanBan", new { dang = "Nội Bộ"})">Nội Bộ</a>
+                        <a class="collapse-item" href="@Url.Action("Index","TaiLieuVanBan", new { dang = "Đến"})">Văn Bản/Tài Liệu Đến</a>
+                        <a class="collapse-item" href="@Url.Action("Index","TaiLieuVanBan", new { dang = "Đi"})">Văn Bản/Tài Liệu Đi</a>
                         <a class="collapse-item" href="@Url.Action("Index","NoiBanHanh")">Nơi Ban Hành</a>
                     </div>
                 </div>

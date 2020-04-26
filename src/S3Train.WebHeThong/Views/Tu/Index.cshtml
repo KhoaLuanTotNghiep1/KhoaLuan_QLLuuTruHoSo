@@ -11,10 +11,16 @@
 
 <div class="card">
     <div class="card-body">
-        <a href="@Url.Action("CreateOrUpdate","Tu")" class="btn btn-info m-2">
-            <i class="fas fa-plus"></i> Tạo Mới
-        </a>
-
+        <div class="row">
+            <div class="col-md-6">
+                <a href="@Url.Action("CreateOrUpdate","Tu")" class="btn btn-info m-2 btn">
+                    <i class="fas fa-plus"></i> Tạo Mới
+                </a>
+            </div>
+            <div class="col-md-6">
+                @Html.Partial("~/Views/Shared/_PartialSearch.cshtml")
+            </div>
+        </div>
         <table class="table table-responsive-lg">
             <thead>
                 <tr>
@@ -29,26 +35,26 @@
             <tbody>
                 @foreach (var item in Model.Items)
                 {
-                soLuong = item.SoLuongMax - item.SoLuongHienTai;
-                <tr>
-                    <td>@stt</td>
-                    <td>@Html.DisplayFor(m => item.Ten)</td>
-                    <td>@Html.DisplayFor(m => item.NgươiQuanLy)</td>
-                    <td>@Html.Partial("~/Views/Shared/_PartialTinhTrang.cshtml", soLuong)</td>
-                    <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
-                    <td>
-                        <a href="@Url.Action("Detail","Tu", new { id=item.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
-                            <i class="fas fa-info"></i>
-                        </a>
-                        <a href="@Url.Action("CreateOrUpdate","Tu", new { id=item.Id})" class="btn btn-primary" title="Cập Nhật">
-                            <i class="fas fa-sync"></i>
-                        </a>
-                        <a href="@Url.Action("Delete","Tu", new { id=item.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @item.Ten?');" title="Xóa">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </td>
-                </tr>
-                stt += 1;
+                    soLuong = item.SoLuongMax - item.SoLuongHienTai;
+                    <tr>
+                        <td>@stt</td>
+                        <td>@Html.DisplayFor(m => item.Ten)</td>
+                        <td>@Html.DisplayFor(m => item.NgươiQuanLy)</td>
+                        <td>@Html.Partial("~/Views/Shared/_PartialTinhTrang.cshtml", soLuong)</td>
+                        <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
+                        <td>
+                            <a href="@Url.Action("Detail","Tu", new { id=item.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
+                                <i class="fas fa-info"></i>
+                            </a>
+                            <a href="@Url.Action("CreateOrUpdate","Tu", new { id=item.Id})" class="btn btn-primary" title="Cập Nhật">
+                                <i class="fas fa-sync"></i>
+                            </a>
+                            <a href="@Url.Action("Delete","Tu", new { id=item.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @item.Ten?');" title="Xóa">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    stt += 1;
                 }
                 <tr class="pageging">
                     <td colspan="8">

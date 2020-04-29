@@ -13,5 +13,17 @@ namespace S3Train.Services
         public TaiLieuVanBanService(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
+
+        public List<string> GetDocuments()
+        {
+            var result = new List<string>();
+
+            foreach(var item in EntityDbSet)
+            {
+                result.Add(item.NoiDung);
+            }
+
+            return result;
+        }
     }
 }

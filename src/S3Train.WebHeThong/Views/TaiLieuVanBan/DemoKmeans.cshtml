@@ -1,0 +1,33 @@
+﻿@using TextClustering.Lib
+@model IEnumerable<Centroid>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DemoKmeans</title>
+</head>
+<body>
+    <div> 
+        @foreach(var item in Model)
+        {
+            <div>
+                <div>--------------------------------------------------------------------------------</div>
+                @foreach(var doc in item.GroupedDocument)
+                {
+                    if(item.GroupedDocument.Count() > 1)
+                    {
+                        <label>@Html.Raw(HttpUtility.HtmlDecode(doc.Content))</label>
+                        <br />
+                    }
+                }
+            </div>
+        }
+    </div>
+</body>
+</html>

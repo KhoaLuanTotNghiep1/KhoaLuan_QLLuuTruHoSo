@@ -2634,6 +2634,7 @@
     <Content Include="Views\TaiLieuVanBan\CreateOrUpdate.cshtml" />
     <Content Include="Views\TaiLieuVanBan\Detail.cshtml" />
     <Content Include="Views\Shared\_PartialSearch.cshtml" />
+    <Content Include="Views\TaiLieuVanBan\DemoKmeans.cshtml" />
     <None Include="Web.LocalConnectStrings.config">
       <SubType>Designer</SubType>
     </None>
@@ -2651,6 +2652,10 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AlgorithmLibrary\AlgorithmLibrary.csproj">
+      <Project>{96ef9f9c-0cb0-465d-a8df-ceb835ad0ed1}</Project>
+      <Name>AlgorithmLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\S3Train.Core\S3Train.Core.csproj">
       <Project>{db766cb7-fe6c-4849-9dfe-12a70a537f80}</Project>
       <Name>S3Train.Core</Name>

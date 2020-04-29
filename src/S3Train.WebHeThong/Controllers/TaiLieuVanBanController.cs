@@ -7,8 +7,8 @@ using S3Train.WebHeThong.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using AlgorithmLibrary.Kmeans;
 using X.PagedList;
 
 namespace S3Train.WebHeThong.Controllers
@@ -139,6 +139,22 @@ namespace S3Train.WebHeThong.Controllers
             var model = GetTaiLieuVanBan(_taiLieuVanBanService.Get(m => m.Id == id));
 
             return View(model);
+        }
+
+        public ActionResult DemoKmeans()
+        {
+            var list = _taiLieuVanBanService.GetDocuments();
+
+            var docCollection = new DocumentCollection()
+            {
+                DocumentList = list
+            };
+            
+            List<DocumentVector> vSpace = VectorSpaceModel.ProcessDocumentCollection(docCollection);
+            int totalIteration = 0;
+            List<Centroid> resultSet = DocumnetClustering.PrepareDocumentCluster(3, vSpace, ref totalIteration);
+            
+            return View(resultSet);
         }
 
         private TaiLieu_VanBanViewModel GetTaiLieuVanBan(TaiLieuVanBan x)

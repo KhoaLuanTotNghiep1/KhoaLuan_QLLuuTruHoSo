@@ -47,12 +47,12 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NguoiKy)</h6>
-                        <p>@Html.DisplayFor(item => Model.NguoiKy)</p>
-                    </div>
-                    <div class="col-md-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NguoiDuyet)</h6>
                         <p>@Html.DisplayFor(item => Model.NguoiDuyet)</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NguoiKy)</h6>
+                        <p>@Html.DisplayFor(item => Model.NguoiKy)</p>
                     </div>
                     <div class="col-md-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayBanHanh)</h6>
@@ -97,6 +97,13 @@
                         <p>@Html.DisplayFor(item => Model.NgayCapNhat)</p>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md">
+                        <h6 class="m-0 font-weight-bold text-primary">Đường Dẫn</h6>
+                        <p>@Html.DisplayFor(item => Model.DuongDan)</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -109,10 +116,6 @@
                             <div class="col">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">Trạng Thái</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", Model.TrangThai)</div>
-                                <div class="mt-2 mb-0 text-muted text-xs">
-                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                    <span>Since last month</span>
-                                </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-primary"></i>
@@ -131,10 +134,6 @@
                             <div class="col">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">Lưu Trữ</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", Model.TinhTrang)</div>
-                                <div class="mt-2 mb-0 text-muted text-xs">
-                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                    <span>Since last month</span>
-                                </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-primary"></i>
@@ -153,12 +152,10 @@
             <div class="col-md-6">
                 <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.GhiChu)</h6>
                 @Html.TextAreaFor(model => model.GhiChu, new { @class = "form-control", rows = "5" })
-                <script type="text/javascript">CKEDITOR.replace("GhiChu", { htmlEncodeOutput: true });</script>
             </div>
             <div class="col-md-6">
                 <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.TrichYeu)</h6>
                 @Html.TextAreaFor(model => model.TrichYeu, new { @class = "form-control", rows = "5" })
-                <script type="text/javascript">CKEDITOR.replace("TrichYeu", { htmlEncodeOutput: true });</script>
             </div>
         </div>
     </div>
@@ -170,7 +167,6 @@
             <div class="col-md">
                 <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NoiDung)</h6>
                 @Html.TextAreaFor(model => model.NoiDung, new { @class = "form-control", rows = "10" })
-                <script type="text/javascript">CKEDITOR.replace("NoiDung", { htmlEncodeOutput: true });</script>
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-﻿@using TextClustering.Lib
+﻿@using AlgorithmLibrary.Kmeans
 @model IEnumerable<Centroid>
 
 @{
@@ -13,21 +13,33 @@
     <title>DemoKmeans</title>
 </head>
 <body>
-    <div> 
-        @foreach(var item in Model)
+    <div>
+        @foreach (var item in Model)
         {
             <div>
                 <div>--------------------------------------------------------------------------------</div>
-                @foreach(var doc in item.GroupedDocument)
+                @foreach (var doc in item.GroupedDocument)
                 {
-                    if(item.GroupedDocument.Count() > 1)
+                    if (item.GroupedDocument.Count() > 1)
                     {
-                        <label>@Html.Raw(HttpUtility.HtmlDecode(doc.Content))</label>
-                        <br />
+                        if (doc.Content == ViewBag.da)
+                        {
+                            <label style="color:red">@Html.Raw(HttpUtility.HtmlDecode(doc.Content))</label>
+                            <br />
+                        }
+                        else
+                        {
+                            <label>@Html.Raw(HttpUtility.HtmlDecode(doc.Content))</label>
+                            <br />
+                        }
+
                     }
                 }
             </div>
         }
+
+        <label style="color:aqua">@ViewBag.data</label>
+        <input id="Button1" type="button" value="button" />
     </div>
 </body>
 </html>

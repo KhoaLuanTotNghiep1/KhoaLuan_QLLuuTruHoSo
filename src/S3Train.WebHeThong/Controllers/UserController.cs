@@ -1,4 +1,5 @@
-﻿using S3Train.Contract;
+﻿using Microsoft.AspNet.Identity;
+using S3Train.Contract;
 using S3Train.Domain;
 using S3Train.Model.User;
 using System;
@@ -70,6 +71,7 @@ namespace S3Train.WebHeThong.Controllers
                 await _userService.Create(user, model.Password);
                 await _userService.UserAddToRoles(user.Id, model.Role);
                 TempData["AlertMessage"] = "Tạo Mới Thành Công";
+                return RedirectToAction("IndexAsync");
             }
             else
             {
@@ -83,8 +85,8 @@ namespace S3Train.WebHeThong.Controllers
 
                 await _userService.Update(user);
                 TempData["AlertMessage"] = "Cập Nhật Thành Công";
+                return RedirectToAction("UserProfile");
             }
-            return RedirectToAction("IndexAsync");
         }
 
         public async Task<ActionResult> Delete(string id)
@@ -93,6 +95,19 @@ namespace S3Train.WebHeThong.Controllers
             await _userService.DeleteAsync(user);
             TempData["AlertMessage"] = "Xóa Thành Công";
             return RedirectToAction("IndexAsync");
+        }
+
+
+        public async Task<ActionResult> UserProfile()
+        {
+            string id = User.Identity.GetUserId();
+
+            var user = await _userService.GetUserById(id);
+            var roles = await _userService.GetRolesForUser(id);
+
+            var model = new UserViewModel(user);
+
+            return View(model);
         }
 
         public async Task<ActionResult> ChangeRole(UserViewModel model)

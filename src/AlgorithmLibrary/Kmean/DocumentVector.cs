@@ -5,14 +5,10 @@ using System.Text;
 
 namespace AlgorithmLibrary.Kmeans
 {
-    /// <summary>
-    /// Represents each document in n-dimensional vector space using Vector Space Model
-    /// </summary>
     public class DocumentVector
     {
-        //Content represents the document(or any other object) to be clustered
-        public string Content { get; set; }
-        //represents the tf*idf of  each document
-        public float[] VectorSpace { get; set; }
+        public string Content { get; set; } // nội dung document
+        
+        public float[] VectorSpace { get; set; } // Tf_Idf
     }
 }

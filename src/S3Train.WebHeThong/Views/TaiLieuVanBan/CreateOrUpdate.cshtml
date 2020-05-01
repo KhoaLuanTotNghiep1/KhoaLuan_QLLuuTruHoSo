@@ -22,12 +22,7 @@
             </div>
 
             <div class="form-group row">
-                <div class="col-md-6">
-                    <label>@Html.DisplayNameFor(item => Model.Loai)</label>
-                    @Html.DropDownListFor(m => m.Loai, new SelectList(ViewBag.LoaiHoSos, "Text", "Text"), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Loai, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-6">
+                <div class="col-md">
                     <label>@Html.DisplayNameFor(item => Model.NoiBanHanhId)</label>
                     @Html.DropDownListFor(m => m.NoiBanHanhId, new SelectList(ViewBag.NoiBanHanhs, "value", "Text"), new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.NoiBanHanhId, "", new { @class = "text-danger" })
@@ -35,6 +30,16 @@
             </div>
 
             <div class="form-group row">
+                <div class="col-md-3">
+                    <label>@Html.DisplayNameFor(item => Model.Loai)</label>
+                    @Html.DropDownListFor(m => m.Loai, new SelectList(ViewBag.LoaiHoSos, "Text", "Text"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Loai, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-3">
+                    <label>@Html.DisplayNameFor(item => Model.NgayBanHanh)</label>
+                    @Html.EditorFor(model => model.NgayBanHanh, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NgayBanHanh, "", new { @class = "text-danger" })
+                </div>
                 <div class="col-md-4">
                     <label>@Html.DisplayNameFor(item => Model.SoKyHieu)</label>
                     @Html.EditorFor(model => model.SoKyHieu, new { htmlAttributes = new { @class = "form-control", @placeholder = "1052/TB-DCT" } })
@@ -42,18 +47,8 @@
                 </div>
                 <div class="col-md-2">
                     <label>@Html.DisplayNameFor(item => Model.SoTo)</label>
-                    @Html.EditorFor(model => model.SoTo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.SoTo, new { htmlAttributes = new { @class = "form-control", @min = "0" } })
                     @Html.ValidationMessageFor(model => model.SoTo, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-3">
-                    <label>@Html.DisplayNameFor(item => Model.NgayBanHanh)</label>
-                    @Html.EditorFor(model => model.NgayBanHanh, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.NgayBanHanh, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-3">
-                    <label>@Html.DisplayNameFor(item => Model.HoSoId)</label>
-                    @Html.DropDownListFor(m => m.HoSoId, new SelectList(ViewBag.HoSos, "value", "Text"), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.HoSoId, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -81,7 +76,7 @@
                         </div>
                         <div class="col-md-6">
                             <label>@Html.DisplayNameFor(item => Model.NoiNhan)</label>
-                            @Html.EditorFor(model => model.NoiNhan, new { htmlAttributes = new { @class = "form-control", @placeholder = "320 đường Bạch Đằng / Quận Bình Thạnh" } })
+                            @Html.EditorFor(model => model.NoiNhan, new { htmlAttributes = new { @class = "form-control", @placeholder = "Địa chỉ người nhận" } })
                             @Html.ValidationMessageFor(model => model.NoiNhan, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -94,15 +89,14 @@
                             @Html.EditorFor(model => model.NguoiGuiHoacNhan, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
                             @Html.ValidationMessageFor(model => model.NguoiGuiHoacNhan, "", new { @class = "text-danger" })
                         </div>
-                        @*<div class="col-md-6">
+                        <div class="col-md-6">
                             <label>File Đính Kèm</label>
-                            <input type="file" class="custom-file form-control"/>
+                            <input type="file" class="form-control" name="file" />
                             <span class="small">Có thể có hoặc không</span>
-                        </div>*@
+                        </div>
                     </div>
                 }
             }
-
             <div class="form-group row">
                 <div class="col-md-6">
                     <label>@Html.DisplayNameFor(item => Model.GhiChu)</label>
@@ -120,7 +114,21 @@
                 <div class="col-md">
                     <label>@Html.DisplayNameFor(item => Model.NoiDung)</label>
                     @Html.TextAreaFor(model => model.NoiDung, new { @class = "form-control", rows = "5" })
-                    <script type="text/javascript">CKEDITOR.replace("NoiDung", { htmlEncodeOutput: true });</script>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md">
+                    <label>Hồ Sơ Lưu Trữ</label>
+                    @Html.EditorFor(model => model.HoSoId, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.HoSoId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md">
+                    <i><span id="viTri"></span></i>
+                    <input id="Button1" class="btn btn-primary col-md-auto" type="button" value="Gợi ý vị trí lưu" />
                 </div>
             </div>
 
@@ -131,3 +139,51 @@
     </div>
 </div>
 
+@section  scripts{
+    <script>
+        $(document).ready(function () {
+
+            $('#Button1').click(function (e) {
+                e.preventDefault();
+                var noiDung = $("#NoiDung").val();
+                if (noiDung.length == 0) {
+                    alert("Muốn sử dụng chức năng gợi ý nơi lưu trữ thì nội dung không được để trống?")
+                } else {
+                    $.ajax({
+                        url: "/TaiLieuVanBan/StorageSuggestion",
+                        type: 'GET',
+                        data: {
+                            document: noiDung
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            var vt = "Vị trí lưu trữ gợi ý: " + data.da;
+                            $("#viTri").text(vt);
+                            $("#Button1").hide();
+                        },
+                        error: function () {
+                            alert("Lỗi 500");
+                        }
+                    });
+                }
+            });
+
+            $("#HoSoId").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/TaiLieuVanBan/AutoCompleteText",
+                        type: "POST",
+                        dataType: "json",
+                        data: { text: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.Text, value: item.Text};
+                            }))
+
+                        }
+                    })
+                }
+            });
+        });
+    </script>
+}

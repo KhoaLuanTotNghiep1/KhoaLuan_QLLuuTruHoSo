@@ -5,11 +5,8 @@ using System.Text;
 
 namespace AlgorithmLibrary.Kmeans
 {
-    /// <summary>
-    /// It represents the collection of document or corpus
-    /// </summary>
     public class DocumentCollection
     {
-        public  List<String> DocumentList { get; set; }
+        public  List<String> DocumentList { get; set; } // Danh sách document
     }
 }

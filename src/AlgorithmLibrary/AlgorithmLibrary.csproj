@@ -46,7 +46,6 @@
     <Compile Include="Kmean\DocumentVector.cs" />
     <Compile Include="Kmean\DocumnetClustering.cs" />
     <Compile Include="Kmean\SimilarityMatrics.cs" />
-    <Compile Include="Kmean\StopWordsHandler.cs" />
     <Compile Include="Kmean\VectorSpaceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -10,6 +10,9 @@ using System.Linq;
 using System.Web.Mvc;
 using AlgorithmLibrary.Kmeans;
 using X.PagedList;
+using S3Train.WebHeThong.CommomClientSide.Function;
+using System.Web;
+using System.IO;
 
 namespace S3Train.WebHeThong.Controllers
 {
@@ -59,7 +62,6 @@ namespace S3Train.WebHeThong.Controllers
             var model = new TaiLieu_VanBanViewModel();
 
             ViewBag.LoaiHoSos = SelectListItemFromDomain.SelectListItem_LoaiHoSo(_loaiHoSoService.GetAll(m => m.OrderBy(t => t.Ten)));
-            ViewBag.HoSos = SelectListItemFromDomain.SelectListItem_HoSo(_hoSoService.GetAll(m => m.OrderBy(t => t.PhongLuuTru)));
             ViewBag.NoiBanHanhs = SelectListItemFromDomain.SelectListItem_NoiBanHanh(_noiBanHanhService.GetAll(m => m.OrderBy(t => t.Ten)));
 
             if (string.IsNullOrEmpty(id))
@@ -76,15 +78,22 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateOrUpdate(TaiLieu_VanBanViewModel model)
+        public ActionResult CreateOrUpdate(TaiLieu_VanBanViewModel model, HttpPostedFileBase file)
         {
             var taiLieuVanBan = string.IsNullOrEmpty(model.Id) ? new TaiLieuVanBan { NgayCapNhat = DateTime.Now }
                 : _taiLieuVanBanService.Get(m => m.Id == model.Id);
 
+            var autoList = AutoCompleteTextHoSos(_hoSoService.GetAll());
+
+            string localFile = Server.MapPath("~/Content/HoSo/");
+
+            string path = UpFile(file, localFile);
+
+            #region taiLieuVanBan
             taiLieuVanBan.Dang = model.Dang;
-            taiLieuVanBan.DuongDan = model.DuongDan;
+            taiLieuVanBan.DuongDan = path;
             taiLieuVanBan.GhiChu = model.GhiChu;
-            taiLieuVanBan.HoSoId = model.HoSoId;
+            taiLieuVanBan.HoSoId = autoList.FirstOrDefault(p => p.Text == model.HoSoId).Id;
             taiLieuVanBan.Loai = model.Loai;
             taiLieuVanBan.NguoiDuyet = model.NguoiDuyet;
             taiLieuVanBan.NoiDung = model.NoiDung;
@@ -98,8 +107,9 @@ namespace S3Train.WebHeThong.Controllers
             taiLieuVanBan.TrichYeu = model.TrichYeu;
             taiLieuVanBan.NgayBanHanh = model.NgayBanHanh;
             taiLieuVanBan.UserId = User.Identity.GetUserId();
+            #endregion
 
-            if(model.Dang == "Đi")
+            if (model.Dang == "Đi")
             {
                 taiLieuVanBan.TinhTrang = "Đã Gởi";
                 taiLieuVanBan.TrangThai = false;
@@ -141,24 +151,84 @@ namespace S3Train.WebHeThong.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult AutoCompleteText(string text)
+        {
+            var model = AutoCompleteTextHoSos(_hoSoService.GetAll());
+
+            model = model.Where(p => p.Text.Contains(text)).ToList();
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult StorageSuggestion(string document)
+        {
+            var list = _taiLieuVanBanService.GetDocuments();
+            list.Add(document);
+            var docCollection = new DocumentCollection()
+            {
+                DocumentList = list
+            };
+
+            List<DocumentVector> vSpace = VectorSpaceModel.ProcessDocumentCollection(docCollection);
+            List<Centroid> resultSet = DocumnetClustering.DocumentCluster(3, vSpace, document);
+
+            string documentNeedSearch = DocumnetClustering.FindClosestDocument();
+
+            var taiLieuVanBan = _taiLieuVanBanService.Get(p => p.NoiDung == documentNeedSearch);
+
+            string local = taiLieuVanBan.HoSo.Hop.Ke.Tu.Ten + " kệ thứ " + taiLieuVanBan.HoSo.Hop.Ke.SoThuTu + " hộp số " + taiLieuVanBan.HoSo.Hop.SoHop + " hồ sơ " + taiLieuVanBan.HoSo.PhongLuuTru;
+
+            return Json(new { da = local}, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult DemoKmeans()
         {
             var list = _taiLieuVanBanService.GetDocuments();
-
+            ViewBag.da = "Những bài văn viết về người thầy cũ đã nghỉ hưu, người bố làm nghề xe ôm hay người mẹ đơn thân thần tảo nuôi con… đã lấy được nước mắt của người đọc.";
+            list.Add(ViewBag.da);
             var docCollection = new DocumentCollection()
             {
                 DocumentList = list
             };
             
             List<DocumentVector> vSpace = VectorSpaceModel.ProcessDocumentCollection(docCollection);
-            int totalIteration = 0;
-            List<Centroid> resultSet = DocumnetClustering.PrepareDocumentCluster(3, vSpace, ref totalIteration);
-            
+            List<Centroid> resultSet = DocumnetClustering.DocumentCluster(3, vSpace, ViewBag.da);
+
+            ViewBag.data = DocumnetClustering.FindClosestDocument();
+
             return View(resultSet);
+        }
+
+        public string UpFile(HttpPostedFileBase a, string url)
+        {
+            string fileName = "";
+            if (a != null && a.ContentLength > 0)
+            {
+                fileName = Path.GetFileName(a.FileName).ToString();
+                string path = Path.Combine(url, fileName);
+                a.SaveAs(path);
+               
+                return path;
+            }
+            else
+            {
+                return fileName;
+            }
+        }
+
+        private List<AutoCompleteTextModel> AutoCompleteTextHoSos(IList<HoSo> hoSos)
+        {
+            var list = ConvertDomainToAutoCompleteModel.ConvertHoSo(hoSos);
+
+            return list;
         }
 
         private TaiLieu_VanBanViewModel GetTaiLieuVanBan(TaiLieuVanBan x)
         {
+            var autoList = AutoCompleteTextHoSos(_hoSoService.GetAll());
+
             var model = new TaiLieu_VanBanViewModel
             {
                Id = x.Id,
@@ -166,7 +236,6 @@ namespace S3Train.WebHeThong.Controllers
                DuongDan = x.DuongDan,
                GhiChu = x.GhiChu,
                HoSo = x.HoSo,
-               HoSoId = x.HoSoId,
                Loai = x.Loai,
                NgayCapNhat =  x.NgayCapNhat,
                NgayTao = x.NgayTao,
@@ -187,6 +256,8 @@ namespace S3Train.WebHeThong.Controllers
                UserId = x.UserId,
                NgayBanHanh = x.NgayBanHanh
             };
+
+            model.HoSoId = autoList.FirstOrDefault(p => p.Id == x.HoSoId).Text;
             return model;
         }
 

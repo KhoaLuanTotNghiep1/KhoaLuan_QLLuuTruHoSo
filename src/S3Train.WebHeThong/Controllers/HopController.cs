@@ -74,8 +74,10 @@ namespace S3Train.WebHeThong.Controllers
             var hop = string.IsNullOrEmpty(model.Id) ? new Hop { NgayCapNhat = DateTime.Now }
                 : _hopService.Get(m => m.Id == model.Id);
 
+            var autoList = AutoCompleteTextKes(_keService.GetAll());
+
             hop.ChuyenDe = model.ChuyenDe;
-            hop.KeId = model.KeId;
+            hop.KeId = autoList.FirstOrDefault(p => p.Text == model.KeId).Id;
             hop.PhongBanId = model.PhongBanId;
             hop.SoHop = model.SoHop;
             hop.UserId = User.Identity.GetUserId();
@@ -88,7 +90,7 @@ namespace S3Train.WebHeThong.Controllers
                 hop.Id = Guid.NewGuid().ToString();
                 hop.TinhTrang = "Trong Kho";
                 hop.NgayTao = DateTime.Now;
-                var result = UpdateTu_SoHopHienTai(model.KeId, ActionWithObject.Update);
+                var result = UpdateTu_SoHopHienTai(hop.KeId, ActionWithObject.Update);
                 if (!result)
                 {
                     TempData["AlertMessage"] = "Số Lượng Kệ Trong Tủ Bạn Chọn Đã Đầy";
@@ -108,9 +110,12 @@ namespace S3Train.WebHeThong.Controllers
 
         public ActionResult Delete(string id)
         {
-            var tu = _hopService.Get(m => m.Id == id);
-            _hopService.Remove(tu);
-            UpdateTu_SoHopHienTai(tu.KeId, ActionWithObject.Delete);
+            var hop = _hopService.Get(m => m.Id == id);
+
+            UpdateTu_SoHopHienTai(hop.KeId, ActionWithObject.Delete);
+
+            _hopService.Remove(hop);
+            
             TempData["AlertMessage"] = "Xóa Thành Công";
             
             return RedirectToAction("Index");
@@ -121,6 +126,16 @@ namespace S3Train.WebHeThong.Controllers
             var model = GetHop(_hopService.Get(m => m.Id == id));
             
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AutoCompleteText(string text)
+        {
+            var model = AutoCompleteTextKes(_keService.GetAll());
+
+            model = model.Where(p => p.Text.Contains(text)).ToList();
+
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
         public bool UpdateTu_SoHopHienTai(string id, ActionWithObject action)
@@ -151,8 +166,17 @@ namespace S3Train.WebHeThong.Controllers
                 _keService.GetAll(m => m.OrderBy(t => t.Tu.Ten)));
         }
 
+        private List<AutoCompleteTextModel> AutoCompleteTextKes(IList<Ke> kes)
+        {
+            var list = ConvertDomainToAutoCompleteModel.LocalHop(kes);
+
+            return list;
+        }
+
         private HopViewModel GetHop(Hop hop)
         {
+            var autoList = AutoCompleteTextKes(_keService.GetAll());
+
             var model = new HopViewModel
             {
                 Id = hop.Id,
@@ -162,7 +186,6 @@ namespace S3Train.WebHeThong.Controllers
                 PhongBan = hop.PhongBan,
                 SoHop = hop.SoHop,
                 PhongBanId = hop.PhongBanId,
-                KeId = hop.KeId,
                 TinhTrang = hop.TinhTrang,
                 NgayTao = hop.NgayTao,
                 NgayCapNhat = hop.NgayCapNhat,
@@ -172,6 +195,8 @@ namespace S3Train.WebHeThong.Controllers
                 Ke = hop.Ke,
                 User = hop.User
             };
+
+            model.KeId = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text;
             return model;
         }
 

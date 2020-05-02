@@ -220,7 +220,7 @@ namespace S3Train.WebHeThong.Controllers
 
         private List<AutoCompleteTextModel> AutoCompleteTextHoSos(IList<HoSo> hoSos)
         {
-            var list = ConvertDomainToAutoCompleteModel.ConvertHoSo(hoSos);
+            var list = ConvertDomainToAutoCompleteModel.LocalTaiLieu(hoSos);
 
             return list;
         }

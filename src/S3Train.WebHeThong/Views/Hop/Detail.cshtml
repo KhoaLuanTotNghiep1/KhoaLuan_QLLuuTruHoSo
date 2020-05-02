@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">Kệ</h6>
-                        <p>@Html.DisplayFor(item => Model.Ke.Ten)</p>
+                        <p>Kệ thứ @Html.DisplayFor(item => Model.Ke.SoThuTu)</p>
                     </div>
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoHop)</h6>
@@ -115,7 +115,6 @@
                             <th>Phông Lưu Trữ</th>
                             <th>Loại Hồ Sơ</th>
                             <th>Thời Gian Bảo Quản</th>
-                            <th>Người Tạo Hồ Sơ</th>
                             <th>Hoạt Động</th>
                         </tr>
                     </thead>
@@ -127,8 +126,6 @@
                                 <td>@Html.DisplayFor(item => hoso.PhongLuuTru)</td>
                                 <td>@Html.DisplayFor(item => hoso.LoaiHoSo.Ten)</td>
                                 <td>@Html.DisplayFor(item => hoso.ThoiGianBaoQuan)</td>
-                                <td>@Html.DisplayFor(item => hoso.User.FullName)</td>
-                                <td>@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", hoso.TinhTrang)</td>
                                 <td>
                                     <a href="@Url.Action("Detail","HoSo", new { id=hoso.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
                                         <i class="fas fa-info"></i>

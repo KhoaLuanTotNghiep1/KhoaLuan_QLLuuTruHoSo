@@ -49,7 +49,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
                    aria-expanded="true" aria-controls="collapseBootstrap">
-                    <i class="far fa-fw fa-window-maximize"></i>
+                    <i class="far fa-fw fa-window-restore"></i>
                     <span>Quản Lý Tủ/Kệ/Hộp</span>
                 </a>
                 <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
@@ -64,13 +64,13 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHoSo" aria-expanded="true"
                    aria-controls="collapseTable">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-file"></i>
                     <span>Quản Lý Hồ Sơ</span>
                 </a>
                 <div id="collapseHoSo" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Quản Lý Hồ Sơ</h6>
-                        <a class="collapse-item" href="#">Hồ Sơ</a>
+                        <a class="collapse-item" href="@Url.Action("Index","HoSo")">Hồ Sơ</a>
                         <a class="collapse-item" href="@Url.Action("Index","LHSAndPB")">Loại Hồ Sơ Và Phòng Ban</a>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true"
                    aria-controls="collapseTable">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-book"></i>
                     <span>Quản Lý Văn Bản</span>
                 </a>
                 <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
@@ -94,7 +94,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMuonTra" aria-expanded="true"
                    aria-controls="collapseMuonTra">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-reply"></i>
                     <span>Quản Lý Mượn/Trả</span>
                 </a>
                 <div id="collapseMuonTra" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
@@ -119,7 +119,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                    <i class="fas fa-fw fa-newspaper"></i>
                     <span>Báo Cáo</span>
                 </a>
             </li>
@@ -132,7 +132,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNguoiDung" aria-expanded="true"
                    aria-controls="collapseNguoiDung">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-user"></i>
                     <span>Quản Lý Người Dùng</span>
                 </a>
                 <div id="collapseNguoiDung" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
@@ -334,16 +334,8 @@
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Thông Tin Cá Nhân
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
                                 <div class="dropdown-divider"></div>
-                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm"}))
                                 {
                                     @Html.AntiForgeryToken()
                                     <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">

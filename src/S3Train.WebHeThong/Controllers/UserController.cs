@@ -2,6 +2,7 @@
 using S3Train.Contract;
 using S3Train.Domain;
 using S3Train.Model.User;
+using S3Train.WebHeThong.CommomClientSide.Function;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,10 +69,21 @@ namespace S3Train.WebHeThong.Controllers
                     Active = true
                 };
 
-                await _userService.Create(user, model.Password);
-                await _userService.UserAddToRoles(user.Id, model.Role);
-                TempData["AlertMessage"] = "Tạo Mới Thành Công";
-                return RedirectToAction("IndexAsync");
+                var result = await _userService.Create(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    await _userService.UserAddToRoles(user.Id, model.Role);
+                    TempData["AlertMessage"] = "Tạo Mới Thành Công";
+                    return RedirectToAction("IndexAsync");
+                }
+                else
+                {
+                    ViewBag.Roles = DropDownRole();
+                    foreach (var er in result.Errors)
+                        TempData["AlertMessage"] += er.ToString();
+                    return View(model);
+                }
             }
             else
             {
@@ -89,6 +101,33 @@ namespace S3Train.WebHeThong.Controllers
             }
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeAvatar(HttpPostedFileBase file)
+        {
+            string local = Server.MapPath("~/Content/Avatar/");
+
+            if (file != null)
+            {
+                string id = User.Identity.GetUserId();
+
+                var user = await _userService.GetUserById(id);
+
+                user.Avatar = UploadFile.UpFileAndGetFileName(file, local);
+
+                await _userService.Update(user);
+
+                TempData["AlertMessage"] = "Cập nhật avatar thành công";
+            }
+            else
+            {
+                TempData["AlertMessage"] = "Cập nhật avatar thất bại";
+            }
+
+            return RedirectToAction("UserProfile");
+        }
+
         public async Task<ActionResult> Delete(string id)
         {
             var user = await _userService.GetUserById(id);
@@ -96,7 +135,6 @@ namespace S3Train.WebHeThong.Controllers
             TempData["AlertMessage"] = "Xóa Thành Công";
             return RedirectToAction("IndexAsync");
         }
-
 
         public async Task<ActionResult> UserProfile()
         {
@@ -107,18 +145,33 @@ namespace S3Train.WebHeThong.Controllers
 
             var model = new UserViewModel(user);
 
+            model.Role = roles.Count() > 0 ? roles[0].ToString() : "";
             return View(model);
         }
 
         public async Task<ActionResult> ChangeRole(UserViewModel model)
         {
             var roles = await _userService.GetRolesForUser(model.Id);
-
-            await _userService.RemoveFromRoles(model.Id, roles[0].ToString());
+            if(roles.Count > 0)
+                await _userService.RemoveFromRoles(model.Id, roles[0].ToString());
             await _userService.UserAddToRoles(model.Id, model.Role);
 
-            TempData["AlertMessage"] = "Thay Đổi Quyền Thành Công";
+            TempData["AlertMessage"] = "Đổi quyền người dùng thành quyền" + model.Role + " thành công";
             return RedirectToAction("IndexAsync");
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UpdatePassWord(string Password)
+        {
+            string id = User.Identity.GetUserId();
+
+            var result = await _userService.UpdatePassword(id, Password);
+
+            TempData["AlertMessage"] = "Đổi mật khẩu thành công";
+
+            return RedirectToAction("UserProfile");
         }
 
         private List<SelectListItem> DropDownRole()

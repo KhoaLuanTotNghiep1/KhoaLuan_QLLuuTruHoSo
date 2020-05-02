@@ -244,6 +244,7 @@
     <Compile Include="CommomClientSide\DropDownList\SelectListItemFromDomain.cs" />
     <Compile Include="CommomClientSide\Function\Compute.cs" />
     <Compile Include="CommomClientSide\Function\ConvertDomainToAutoCompleteModel.cs" />
+    <Compile Include="CommomClientSide\Function\UploadFile.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HopController.cs" />
@@ -328,6 +329,7 @@
     <Content Include="Content\alertifyjs\themes\semantic.min.css" />
     <Content Include="Content\alertifyjs\themes\semantic.rtl.css" />
     <Content Include="Content\alertifyjs\themes\semantic.rtl.min.css" />
+    <Content Include="Content\Avatar\boy.png" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />

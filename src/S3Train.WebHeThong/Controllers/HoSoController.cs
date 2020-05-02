@@ -3,6 +3,7 @@ using S3Train.Contract;
 using S3Train.Core.Constant;
 using S3Train.Domain;
 using S3Train.WebHeThong.CommomClientSide.DropDownList;
+using S3Train.WebHeThong.CommomClientSide.Function;
 using S3Train.WebHeThong.Models;
 using System;
 using System.Collections.Generic;
@@ -58,7 +59,6 @@ namespace S3Train.WebHeThong.Controllers
 
             ViewBag.LoaiHoSos = SelectListItemFromDomain.SelectListItem_LoaiHoSo(_loaiHoSoService.GetAll(m => m.OrderBy(t => t.Ten)));
             ViewBag.TapHoSos = SelectListItemFromDomain.SelectListItem_HoSo(_hoSoService.GetAll(m => m.OrderBy(t => t.PhongLuuTru)));
-            ViewBag.Hops = SelectListItemFromDomain.SelectListItem_Hop(_hopService.GetAll(m => m.OrderBy(t => t.Ke.Tu.Ten)));
 
             if (string.IsNullOrEmpty(id))
             {
@@ -79,6 +79,8 @@ namespace S3Train.WebHeThong.Controllers
             var hoSo = string.IsNullOrEmpty(model.Id) ? new HoSo { NgayCapNhat = DateTime.Now }
                 : _hoSoService.Get(m => m.Id == model.Id);
 
+            var autoList = LocalHops(_hopService.GetAll());
+
             hoSo.TapHoSoId = model.TapHoSoId;
             hoSo.PhongLuuTru = model.PhongLuuTru;
             hoSo.TinhTrang = "Trong Kho";
@@ -86,7 +88,7 @@ namespace S3Train.WebHeThong.Controllers
             hoSo.GhiChu = model.GhiChu;
             hoSo.BienMucHoSo = model.BienMucHoSo;
             hoSo.LoaiHoSoId = model.LoaiHoSoId;
-            hoSo.HopId = model.HopId;
+            hoSo.HopId = autoList.FirstOrDefault(p => p.Text == model.HopId).Id;
             hoSo.UserId = User.Identity.GetUserId();
             hoSo.TrangThai = true;
 
@@ -121,8 +123,27 @@ namespace S3Train.WebHeThong.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult AutoCompleteText(string text)
+        {
+            var model = LocalHops(_hopService.GetAll());
+
+            model = model.Where(p => p.Text.Contains(text)).ToList();
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        private List<AutoCompleteTextModel> LocalHops(IList<Hop> hops)
+        {
+            var list = ConvertDomainToAutoCompleteModel.LocalHoSo(hops);
+
+            return list;
+        }
+
         private HoSoViewModel GetHoSo(HoSo x)
         {
+            var autoList = LocalHops(_hopService.GetAll());
+
             var model = new HoSoViewModel
             {
                 Id = x.Id,
@@ -130,7 +151,6 @@ namespace S3Train.WebHeThong.Controllers
                 GhiChu = x.GhiChu,
                 Hop = x.Hop,
                 PhongLuuTru = x.PhongLuuTru,
-                HopId = x.HopId,
                 LoaiHoSoId = x.LoaiHoSoId,
                 LoaiHoSo = x.LoaiHoSo,
                 HoSoCons = x.HoSoCons,
@@ -145,6 +165,9 @@ namespace S3Train.WebHeThong.Controllers
                 NgayCapNhat = x.NgayCapNhat,
                 TrangThai = x.TrangThai,
             };
+
+            model.HopId = autoList.FirstOrDefault(p => p.Id == x.HopId).Text;
+
             return model;
         }
 

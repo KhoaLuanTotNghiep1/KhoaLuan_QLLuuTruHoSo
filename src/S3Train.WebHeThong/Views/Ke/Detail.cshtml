@@ -108,49 +108,55 @@
         </div>
     </div>
 
-    <div class="col-lg-12">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="m-0 font-weight-bold text-primary">Danh Sách Hộp Của Kệ</h5>
-                <br />
-                <table class="table table-responsive-md">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Chuyên Đề</th>
-                            <th>Phòng Ban</th>
-                            <th>Số Hộp</th>
-                            <th>Lưu Trữ</th>
-                            <th>Hoạt Động</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var hop in Model.Hops)
-                        {
-                            <tr>
-                                <td>@stt</td>
-                                <td>@Html.DisplayFor(item => hop.ChuyenDe)</td>
-                                <td>@Html.DisplayFor(item => hop.PhongBan.Ten)</td>
-                                <td>Hộp số @Html.DisplayFor(item => hop.SoHop)</td>
-                                <td>@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml",hop.TinhTrang)</td>
-                                <td>
-                                    <a href="@Url.Action("Detail","Hop", new { id=hop.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
-                                        <i class="fas fa-info"></i>
-                                    </a>
-                                    <a href="@Url.Action("CreateOrUpdate","Hop", new { id=hop.Id})" class="btn btn-primary" title="Cập Nhật">
-                                        <i class="fas fa-sync"></i>
-                                    </a>
-                                    <a href="@Url.Action("Delete","Hop", new { id=hop.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @hop.SoHop?');" title="Xóa">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            stt += 1;
-                        }
-                    </tbody>
-                </table>
+    @{
+        if (Model.Hops != null)
+        {
+            <div class="col-lg-12">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="m-0 font-weight-bold text-primary">Danh Sách Hộp Của Kệ</h5>
+                        <br />
+                        <table class="table table-responsive-md">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Chuyên Đề</th>
+                                    <th>Phòng Ban</th>
+                                    <th>Số Hộp</th>
+                                    <th>Lưu Trữ</th>
+                                    <th>Hoạt Động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var hop in Model.Hops)
+                                {
+                                    <tr>
+                                        <td>@stt</td>
+                                        <td>@Html.DisplayFor(item => hop.ChuyenDe)</td>
+                                        <td>@Html.DisplayFor(item => hop.PhongBan.Ten)</td>
+                                        <td>Hộp số @Html.DisplayFor(item => hop.SoHop)</td>
+                                        <td>@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", hop.TinhTrang)</td>
+                                        <td>
+                                            <a href="@Url.Action("Detail","Hop", new { id=hop.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
+                                                <i class="fas fa-info"></i>
+                                            </a>
+                                            <a href="@Url.Action("CreateOrUpdate","Hop", new { id=hop.Id})" class="btn btn-primary" title="Cập Nhật">
+                                                <i class="fas fa-sync"></i>
+                                            </a>
+                                            <a href="@Url.Action("Delete","Hop", new { id=hop.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @hop.SoHop?');" title="Xóa">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    stt += 1;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        }
+    }
+
 </div>
 

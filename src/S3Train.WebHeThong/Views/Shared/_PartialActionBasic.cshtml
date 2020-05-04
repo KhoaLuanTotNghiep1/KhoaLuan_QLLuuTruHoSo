@@ -1,0 +1,25 @@
+﻿@model string
+
+<a href="@Url.Action("Detail",ViewBag.Controller, new { id=Model})" class="btn btn-info" title="Thông Tin Chi Tiết">
+    <i class="fas fa-info"></i>
+</a>
+@{
+    if (ViewBag.Active)
+    {
+        <a href="@Url.Action("CreateOrUpdate",ViewBag.Controller, new { id=Model})" class="btn btn-primary" title="Cập Nhật">
+            <i class="fas fa-sync"></i>
+        </a>
+        <a href="@Url.Action("ChangeActive",ViewBag.Controller, new { id=Model, active = false})" class="btn btn-warning" onclick="return confirm('Bạn Có Chắc Muốn Xóa Item này không?');" title="Xóa">
+            <i class="fas fa-trash-alt"></i>
+        </a>
+    }
+    else
+    {
+        <a href="@Url.Action("ChangeActive",ViewBag.Controller, new { id=Model, active = true})" class="btn btn-primary" onclick="return confirm('Bạn muốn khôi phục item này không?');" title="Khôi phục">
+            <i class="fas fa-trash-restore"></i>
+        </a>
+        <a href="@Url.Action("Delete",ViewBag.Controller, new { id=Model })" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa hoàn toàn item này không?');" title="Xóa">
+            <i class="fas fa-trash"></i>
+        </a>
+    }
+}

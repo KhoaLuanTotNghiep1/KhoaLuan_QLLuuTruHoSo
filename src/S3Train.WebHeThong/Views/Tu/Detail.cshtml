@@ -103,45 +103,51 @@
         </div>
     </div>
 
-    <div class="col-lg-12">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="m-0 font-weight-bold text-primary">Danh Sách Kệ Của kho</h5>
-                <br />
-                <table class="table table-responsive-md">
-                    <thead>
-                        <tr>
-                            <th>Tên</th>
-                            <th>STT</th>
-                            <th>Số Hộp Hiện Tại</th>
-                            <th>Lưu Trữ</th>
-                            <th>Hoạt Động</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var ke in Model.Kes)
-                        {
-                            <tr>
-                                <td>@Html.DisplayFor(m => ke.Ten)</td>
-                                <td>@Html.DisplayFor(m => ke.SoHopHienTai)</td>
-                                <td>@Html.DisplayFor(m => ke.SoHopHienTai)</td>
-                                <td>@Html.Partial("~/Views/Shared/_PartialTinhTrang.cshtml", Convert.ToInt32(ke.SoHopToiDa - ke.SoHopHienTai))</td>
-                                <td>
-                                    <a href="@Url.Action("Detail","Ke", new { id=ke.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
-                                        <i class="fas fa-info"></i>
-                                    </a>
-                                    <a href="@Url.Action("CreateOrUpdate","Ke", new { id=ke.Id})" class="btn btn-primary" title="Cập Nhật">
-                                        <i class="fas fa-sync"></i>
-                                    </a>
-                                    <a href="@Url.Action("Delete","Ke", new { id=ke.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @ke.Ten?');" title="Xóa">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+    @{
+        if (Model.Kes != null)
+        {
+            <div class="col-lg-12">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="m-0 font-weight-bold text-primary">Danh Sách Kệ Của kho</h5>
+                        <br />
+                        <table class="table table-responsive-md">
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>STT</th>
+                                    <th>Số Hộp Hiện Tại</th>
+                                    <th>Lưu Trữ</th>
+                                    <th>Hoạt Động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var ke in Model.Kes)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(m => ke.Ten)</td>
+                                        <td>@Html.DisplayFor(m => ke.SoHopHienTai)</td>
+                                        <td>@Html.DisplayFor(m => ke.SoHopHienTai)</td>
+                                        <td>@Html.Partial("~/Views/Shared/_PartialTinhTrang.cshtml", Convert.ToInt32(ke.SoHopToiDa - ke.SoHopHienTai))</td>
+                                        <td>
+                                            <a href="@Url.Action("Detail","Ke", new { id=ke.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
+                                                <i class="fas fa-info"></i>
+                                            </a>
+                                            <a href="@Url.Action("CreateOrUpdate","Ke", new { id=ke.Id})" class="btn btn-primary" title="Cập Nhật">
+                                                <i class="fas fa-sync"></i>
+                                            </a>
+                                            <a href="@Url.Action("Delete","Ke", new { id=ke.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @ke.Ten?');" title="Xóa">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        }
+    }
+
 </div>

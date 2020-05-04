@@ -242,6 +242,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="CommomClientSide\DropDownList\SelectListItemFromDomain.cs" />
+    <Compile Include="CommomClientSide\Function\AddList.cs" />
     <Compile Include="CommomClientSide\Function\Compute.cs" />
     <Compile Include="CommomClientSide\Function\ConvertDomainToAutoCompleteModel.cs" />
     <Compile Include="CommomClientSide\Function\UploadFile.cs" />
@@ -2693,6 +2694,8 @@
     <Content Include="Views\Shared\_PartialSearch.cshtml" />
     <Content Include="Views\TaiLieuVanBan\DemoKmeans.cshtml" />
     <Content Include="Views\User\UserProfile.cshtml" />
+    <Content Include="Views\Shared\_PartialActionBasic.cshtml" />
+    <Content Include="Views\Shared\_PartialActionCreateAndTrash.cshtml" />
     <None Include="Web.LocalConnectStrings.config">
       <SubType>Designer</SubType>
     </None>
@@ -2700,6 +2703,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\HoSo\" />
+    <Folder Include="Views\Trash\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

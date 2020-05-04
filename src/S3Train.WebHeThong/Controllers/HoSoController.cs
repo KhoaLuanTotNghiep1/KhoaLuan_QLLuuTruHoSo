@@ -35,20 +35,34 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: HoSo
-        public ActionResult Index(int? pageIndex, int? pageSize)
+        public ActionResult Index(int? pageIndex, int? pageSize, string searchString, bool active = true)
         {
             pageIndex = (pageIndex ?? 1);
             pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
+
+            string[] includeArray = { "Hop", "TapHoSo", "LoaiHoSo", "User", "HoSoCons", "TaiLieuVanBans" };
+            var includes = AddList.AddItemByArray(includeArray);
 
             var model = new HoSoIndexViewModel()
             {
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var tus = _hoSoService.GetAllPaged(pageIndex, pageSize.Value, null, p => p.OrderBy(c => c.Hop.Ke.Tu.Ten));
+            var hoSos = _hoSoService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderBy(c => c.PhongLuuTru), includes);
 
-            model.Paged = tus;
-            model.Items = GetHoSos(tus.ToList());
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                hoSos = _hoSoService.GetAllPaged(pageIndex, pageSize.Value, p => p.PhongLuuTru.Contains(searchString) || p.TapHoSo.PhongLuuTru.Contains(searchString)
+                   || p.User.FullName.Contains(searchString) && p.TrangThai == active, p => p.OrderBy(c => c.PhongLuuTru), includes);
+            }
+
+            model.Paged = hoSos;
+            model.Items = GetHoSos(hoSos.ToList());
+
+            ViewBag.Active = active;
+            ViewBag.searchString = searchString;
+            ViewBag.Controller = "HoSo";
+
             return View(model);
         }
 
@@ -121,6 +135,17 @@ namespace S3Train.WebHeThong.Controllers
             var model = GetHoSo(_hoSoService.Get(m => m.Id == id));
 
             return View(model);
+        }
+
+        public ActionResult ChangeActive(string id, bool active)
+        {
+            var model = _hoSoService.Get(m => m.Id == id);
+
+            model.TrangThai = active;
+            model.NgayCapNhat = DateTime.Now;
+
+            _hoSoService.Update(model);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

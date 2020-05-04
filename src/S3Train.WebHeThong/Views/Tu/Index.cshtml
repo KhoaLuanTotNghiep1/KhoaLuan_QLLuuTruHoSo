@@ -13,12 +13,11 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                <a href="@Url.Action("CreateOrUpdate","Tu")" class="btn btn-info m-2 btn">
-                    <i class="fas fa-plus"></i> Tạo Mới
-                </a>
+                @Html.Partial("~/Views/Shared/_PartialActionCreateAndTrash.cshtml", "Tu")
             </div>
             <div class="col-md-6">
                 @Html.Partial("~/Views/Shared/_PartialSearch.cshtml")
+                <i><span>Tìm kiếm: theo tên tủ hoặc tên người quản lý</span></i>
             </div>
         </div>
         <table class="table table-responsive-lg">
@@ -43,15 +42,7 @@
                         <td>@Html.Partial("~/Views/Shared/_PartialTinhTrang.cshtml", soLuong)</td>
                         <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
                         <td>
-                            <a href="@Url.Action("Detail","Tu", new { id=item.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
-                                <i class="fas fa-info"></i>
-                            </a>
-                            <a href="@Url.Action("CreateOrUpdate","Tu", new { id=item.Id})" class="btn btn-primary" title="Cập Nhật">
-                                <i class="fas fa-sync"></i>
-                            </a>
-                            <a href="@Url.Action("Delete","Tu", new { id=item.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @item.Ten?');" title="Xóa">
-                                <i class="fas fa-trash"></i>
-                            </a>
+                            @Html.Partial("~/Views/Shared/_PartialActionBasic.cshtml", item.Id)
                         </td>
                     </tr>
                     stt += 1;
@@ -61,6 +52,8 @@
                         @Html.PagedListPager(Model.Paged, pageIndex => Url.Action("Index", new RouteValueDictionary {
                         { "pageIndex" , pageIndex },
                         { "pageSize", Model.PageSize > 0 ? Model.PageSize : GlobalConfigs.DEFAULT_PAGESIZE } ,
+                        { "active",  ViewBag.Active} ,
+                        { "searchString",  ViewBag.searchString} ,
                         }), new PagedListRenderOptions
                         {
                         LiElementClasses = new string[] { "page-item" },

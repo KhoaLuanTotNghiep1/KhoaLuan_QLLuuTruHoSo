@@ -38,21 +38,36 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: TaiLieuVanBan
-        public ActionResult Index(int? pageIndex, int? pageSize, string dang)
+        public ActionResult Index(int? pageIndex, int? pageSize, string dang, string searchString, bool active = true)
         {
             pageIndex = (pageIndex ?? 1);
             pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
+
+            string[] includeArray = { "NoiBanHanh", "User", "HoSo" };
+            var includes = AddList.AddItemByArray(includeArray);
 
             var model = new TaiLieuVanBanIndexViewModel()
             {
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var taiLieuVanBans = _taiLieuVanBanService.GetAllPaged(pageIndex, pageSize.Value, p => p.Dang == dang, p => p.OrderBy(c => c.Ten));
 
-            ViewBag.Dang = dang;
+            var taiLieuVanBans = _taiLieuVanBanService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active && p.Dang == dang, p => p.OrderBy(c => c.Ten), includes);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                taiLieuVanBans = _taiLieuVanBanService.GetAllPaged(pageIndex, pageSize.Value, p => p.Ten.Contains(searchString) || p.Loai.Contains(searchString)
+                    && p.TrangThai == active && p.Dang == dang, p => p.OrderBy(c => c.Ten), includes);
+            }
+
             model.Paged = taiLieuVanBans;
             model.Items = GetTaiLieuVanBans(taiLieuVanBans.ToList());
+
+            ViewBag.Active = active;
+            ViewBag.searchString = searchString;
+            ViewBag.Controller = "TaiLieuVanBan";
+            ViewBag.Dang = dang;
+
             return View(model);
         }
 
@@ -149,6 +164,17 @@ namespace S3Train.WebHeThong.Controllers
             var model = GetTaiLieuVanBan(_taiLieuVanBanService.Get(m => m.Id == id));
 
             return View(model);
+        }
+
+        public ActionResult ChangeActive(string id, bool active)
+        {
+            var model = _taiLieuVanBanService.Get(m => m.Id == id);
+
+            model.TrangThai = active;
+            model.NgayCapNhat = DateTime.Now;
+
+            _taiLieuVanBanService.Update(model);
+            return RedirectToAction("Index", new { dang = model.Dang});
         }
 
         [HttpPost]

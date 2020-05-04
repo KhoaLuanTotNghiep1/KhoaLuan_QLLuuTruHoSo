@@ -15,7 +15,7 @@ namespace S3Train
         IEnumerable<T> Gets(Expression<Func<T, bool>> predicate);
         IEnumerable<T> Gets(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy);
         IPagedList<T> GetAllPaged(int? pageIndex, int pageSize = 20, Expression<Func<T, bool>> where = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null);
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, List<string> includes = null);
         T GetById(string id);
         T Get(Expression<Func<T, bool>> predicate);
         T Get(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy);

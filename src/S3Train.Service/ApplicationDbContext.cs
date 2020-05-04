@@ -10,6 +10,7 @@ namespace S3Train.Domain
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
+            this.Configuration.LazyLoadingEnabled = true;
         }
 
         public DbSet<Ke> Kes { get; set; }

@@ -32,20 +32,34 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: Hop
-        public ActionResult Index(int? pageIndex, int? pageSize)
+        public ActionResult Index(int? pageIndex, int? pageSize, string searchString, bool active = true)
         {
             pageIndex = (pageIndex ?? 1);
             pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
+
+            string[] includeArray = { "HoSos", "PhongBan", "Ke", "User" };
+            var includes = AddList.AddItemByArray(includeArray);
 
             var model = new HopViewIndexModel()
             {
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var hops = _hopService.GetAllPaged(pageIndex, pageSize.Value, null, p => p.OrderBy(c => c.Ke.SoThuTu));
+            var hops = _hopService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderBy(c => c.Ke.SoThuTu), includes);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                hops = _hopService.GetAllPaged(pageIndex, pageSize.Value, p => p.ChuyenDe.Contains(searchString) || p.PhongBan.Ten.Contains(searchString)
+                    && p.TrangThai == active, p => p.OrderBy(c => c.Ke.SoThuTu), includes);
+            }
 
             model.Paged = hops;
-            model.Items = GetHops(hops .ToList());
+            model.Items = GetHops(hops.ToList());
+
+            ViewBag.Active = active;
+            ViewBag.searchString = searchString;
+            ViewBag.Controller = "Hop";
+
             return View(model);
         }
 
@@ -126,6 +140,17 @@ namespace S3Train.WebHeThong.Controllers
             var model = GetHop(_hopService.Get(m => m.Id == id));
             
             return View(model);
+        }
+
+        public ActionResult ChangeActive(string id, bool active)
+        {
+            var model = _hopService.Get(m => m.Id == id);
+
+            model.TrangThai = active;
+            model.NgayCapNhat = DateTime.Now;
+
+            _hopService.Update(model);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

@@ -9,6 +9,8 @@ namespace S3Train.Domain
         [ForeignKey("MuonTra")]
         public string MuonTraID { get; set; }
 
+        public int SoLuong { get; set; }
+
         public virtual MuonTra MuonTra { get; set; }
     }
 }

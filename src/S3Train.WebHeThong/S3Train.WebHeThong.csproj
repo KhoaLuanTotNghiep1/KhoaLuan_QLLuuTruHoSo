@@ -244,11 +244,13 @@
     <Compile Include="CommomClientSide\DropDownList\SelectListItemFromDomain.cs" />
     <Compile Include="CommomClientSide\Function\Compute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ChiTietMuonTraViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HopController.cs" />
     <Compile Include="Controllers\KeController.cs" />
     <Compile Include="Controllers\LHSAndPBController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MuonTraController.cs" />
     <Compile Include="Controllers\NoiBanHanhController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\TuController.cs" />
@@ -284,6 +286,14 @@
     <Compile Include="Migrations\202004201255534_AddColumnOnTableUserAndTaiLieuVanBan.designer.cs">
       <DependentUpon>202004201255534_AddColumnOnTableUserAndTaiLieuVanBan.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004271509417_muontra.cs" />
+    <Compile Include="Migrations\202004271509417_muontra.designer.cs">
+      <DependentUpon>202004271509417_muontra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004271545402_CTMuonTra.cs" />
+    <Compile Include="Migrations\202004271545402_CTMuonTra.designer.cs">
+      <DependentUpon>202004271545402_CTMuonTra.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\HopViewModel.cs" />
@@ -291,6 +301,7 @@
     <Compile Include="Models\KeViewModel.cs" />
     <Compile Include="Models\LHSAndPBViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MuonTraViewModel.cs" />
     <Compile Include="Models\NoiBanHanhViewModel.cs" />
     <Compile Include="Models\RoleViewModel.cs" />
     <Compile Include="Models\TuViewModel.cs" />
@@ -2276,6 +2287,7 @@
     <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\NoiBanHanh\Index.cshtml" />
     <Content Include="Views\NoiBanHanh\_PartialCreateOrUpdateNoiBanHanh.cshtml" />
+    <Content Include="Views\MuonTra\Index.cshtml" />
     <None Include="Web.LocalConnectStrings.config">
       <SubType>Designer</SubType>
     </None>
@@ -2328,6 +2340,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004201255534_AddColumnOnTableUserAndTaiLieuVanBan.resx">
       <DependentUpon>202004201255534_AddColumnOnTableUserAndTaiLieuVanBan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004271509417_muontra.resx">
+      <DependentUpon>202004271509417_muontra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004271545402_CTMuonTra.resx">
+      <DependentUpon>202004271545402_CTMuonTra.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

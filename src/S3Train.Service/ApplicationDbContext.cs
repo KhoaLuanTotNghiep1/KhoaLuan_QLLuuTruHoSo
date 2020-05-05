@@ -100,12 +100,13 @@ namespace S3Train.Domain
             modelBuilder.Entity<MuonTra>().ToTable("MuonTra");
             modelBuilder.Entity<MuonTra>().Property(p => p.NgayMuon).IsOptional();
             modelBuilder.Entity<MuonTra>().Property(p => p.NgayKetThuc).IsOptional();
-            modelBuilder.Entity<MuonTra>().Property(p => p.SoLuong).IsOptional();
             modelBuilder.Entity<MuonTra>().Property(p => p.TinhTrang).IsOptional();
+            modelBuilder.Entity<MuonTra>().Property(p => p.VanThu).IsOptional();
             modelBuilder.Entity<MuonTra>().HasMany(p => p.ChiTietMuonTras).WithOptional(prod => prod.MuonTra);
 
             modelBuilder.Entity<ChiTietMuonTra>().ToTable("ChiTietMuonTra");
             modelBuilder.Entity<ChiTietMuonTra>().Property(p => p.ThuMuon).IsOptional();
+            modelBuilder.Entity<ChiTietMuonTra>().Property(p => p.SoLuong).IsOptional();
 
             modelBuilder.Entity<NoiBanHanh>().ToTable("NoiBanHanh");
             modelBuilder.Entity<NoiBanHanh>().Property(p => p.Ten).IsOptional();

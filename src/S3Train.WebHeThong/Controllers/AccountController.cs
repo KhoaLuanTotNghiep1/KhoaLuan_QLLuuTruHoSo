@@ -81,7 +81,7 @@ namespace S3Train.WebHeThong.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("Tu","Index");
+                    return RedirectToAction("Index", "Tu");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -395,6 +395,7 @@ namespace S3Train.WebHeThong.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
+
         }
 
         //

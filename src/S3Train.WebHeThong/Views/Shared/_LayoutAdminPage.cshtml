@@ -84,9 +84,9 @@
                 <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Quản Lý Văn Bản/Tài Liệu</h6>
-                        <a class="collapse-item" href="@Url.Action("Index","TaiLieuVanBan", new { dang = "Nội Bộ"})">Nội Bộ</a>
-                        <a class="collapse-item" href="@Url.Action("Index","TaiLieuVanBan", new { dang = "Đến"})">Văn Bản/Tài Liệu Đến</a>
-                        <a class="collapse-item" href="@Url.Action("Index","TaiLieuVanBan", new { dang = "Đi"})">Văn Bản/Tài Liệu Đi</a>
+                        <a class="collapse-item" href="@Url.Action("Index","TaiLieuVanBan", new { dang = GlobalConfigs.DANG_NOIBO})">Nội Bộ</a>
+                        <a class="collapse-item" href="@Url.Action("Index","TaiLieuVanBan", new { dang = GlobalConfigs.DANG_DEN})">Văn Bản/Tài Liệu Đến</a>
+                        <a class="collapse-item" href="@Url.Action("Index","TaiLieuVanBan", new { dang = GlobalConfigs.DANG_DI})">Văn Bản/Tài Liệu Đi</a>
                         <a class="collapse-item" href="@Url.Action("Index","NoiBanHanh")">Nơi Ban Hành</a>
                     </div>
                 </div>
@@ -335,7 +335,7 @@
                                     Thông Tin Cá Nhân
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm"}))
+                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                                 {
                                     @Html.AntiForgeryToken()
                                     <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">
@@ -383,6 +383,7 @@
     <script src="~/Scripts/js/demo/CheckInputEmpty.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     @Scripts.Render("~/bundles/jquery")
 
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>

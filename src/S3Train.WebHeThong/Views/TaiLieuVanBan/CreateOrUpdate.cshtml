@@ -65,38 +65,19 @@
                 </div>
             </div>
 
-            {
-                if (Model.Dang == "Đi")
-                {
-                    <div class="form-group row">
-                        <div class="col-md-6">
-                            <label>Người Gửi</label>
-                            @Html.EditorFor(model => model.NguoiGuiHoacNhan, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nguyễn Văn C" } })
-                            @Html.ValidationMessageFor(model => model.NguoiGuiHoacNhan, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-6">
-                            <label>@Html.DisplayNameFor(item => Model.NoiNhan)</label>
-                            @Html.EditorFor(model => model.NoiNhan, new { htmlAttributes = new { @class = "form-control", @placeholder = "Địa chỉ người nhận" } })
-                            @Html.ValidationMessageFor(model => model.NoiNhan, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="form-group row">
-                        <div class="col-md-6">
-                            <label>Người Nhận</label>
-                            @Html.EditorFor(model => model.NguoiGuiHoacNhan, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
-                            @Html.ValidationMessageFor(model => model.NguoiGuiHoacNhan, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-6">
-                            <label>File Đính Kèm</label>
-                            <input type="file" class="form-control" name="file" />
-                            <span class="small">Có thể có hoặc không</span>
-                        </div>
-                    </div>
-                }
-            }
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label>Người Nhận</label>
+                    @Html.EditorFor(model => model.NguoiGuiHoacNhan, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.NguoiGuiHoacNhan, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    <label>File Đính Kèm</label>
+                    <input type="file" class="form-control" name="file" />
+                    <span class="small">Có thể có hoặc không</span>
+                </div>
+            </div>
+
             <div class="form-group row">
                 <div class="col-md-6">
                     <label>@Html.DisplayNameFor(item => Model.GhiChu)</label>
@@ -121,6 +102,7 @@
                 <div class="col-md">
                     <label>Hồ Sơ Lưu Trữ</label>
                     @Html.EditorFor(model => model.HoSoId, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                    <i><span>Lưu ý: phải nhập đúng với kết quả được gợi ý</span></i>
                     @Html.ValidationMessageFor(model => model.HoSoId, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -162,7 +144,7 @@
                             $("#Button1").hide();
                         },
                         error: function () {
-                            alert("Lỗi 500");
+                            alert("Lưu trữ tùy ý vì không có tài liệu / văn bản có nội dung tương tự");
                         }
                     });
                 }

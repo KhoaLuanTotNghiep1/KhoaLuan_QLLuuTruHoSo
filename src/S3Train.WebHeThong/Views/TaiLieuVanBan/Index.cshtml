@@ -46,6 +46,10 @@
                         <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
                         <td>
                             @Html.Partial("~/Views/Shared/_PartialActionBasic.cshtml", item.Id)
+                            @if (item.Dang != GlobalConfigs.DANG_DI)
+                            {
+                                @Html.Partial("~/Views/Shared/_PartialChageDangTLVB.cshtml", item)
+                            }
                         </td>
                     </tr>
                     stt += 1;

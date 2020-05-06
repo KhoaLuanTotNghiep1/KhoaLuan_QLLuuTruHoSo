@@ -256,6 +256,7 @@
     <Compile Include="Controllers\NoiBanHanhController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\TaiLieuVanBanController.cs" />
+    <Compile Include="Controllers\ThongKeController.cs" />
     <Compile Include="Controllers\TuController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -300,6 +301,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AutoCompleteTextModel.cs" />
+    <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\HopViewModel.cs" />
     <Compile Include="Models\HoSoViewModel.cs" />
     <Compile Include="Models\IndexViewModelBase.cs" />
@@ -2696,6 +2698,9 @@
     <Content Include="Views\User\UserProfile.cshtml" />
     <Content Include="Views\Shared\_PartialActionBasic.cshtml" />
     <Content Include="Views\Shared\_PartialActionCreateAndTrash.cshtml" />
+    <Content Include="Views\ThongKe\Index.cshtml" />
+    <Content Include="Views\Shared\_PartialTaiLieuVanBanIndexSmall.cshtml" />
+    <Content Include="Views\Shared\_PartialChageDangTLVB.cshtml" />
     <None Include="Web.LocalConnectStrings.config">
       <SubType>Designer</SubType>
     </None>

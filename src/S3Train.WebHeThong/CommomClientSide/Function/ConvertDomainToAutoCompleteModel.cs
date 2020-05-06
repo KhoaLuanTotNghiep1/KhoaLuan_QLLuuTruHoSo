@@ -10,9 +10,9 @@ namespace S3Train.WebHeThong.CommomClientSide.Function
 {
     public static class ConvertDomainToAutoCompleteModel
     {
-        public static List<AutoCompleteTextModel> LocalTaiLieu(IList<HoSo> hoSos)
+        public static HashSet<AutoCompleteTextModel> LocalTaiLieu(IList<HoSo> hoSos)
         {
-            var list = new List<AutoCompleteTextModel>();
+            var list = new HashSet<AutoCompleteTextModel>();
 
             foreach(var item in hoSos)
             {
@@ -30,9 +30,9 @@ namespace S3Train.WebHeThong.CommomClientSide.Function
             return list;
         }
 
-        public static List<AutoCompleteTextModel> LocalHop(IList<Ke> kes)
+        public static HashSet<AutoCompleteTextModel> LocalHop(IList<Ke> kes)
         {
-            var list = new List<AutoCompleteTextModel>();
+            var list = new HashSet<AutoCompleteTextModel>();
 
             foreach (var item in kes)
             {
@@ -50,9 +50,9 @@ namespace S3Train.WebHeThong.CommomClientSide.Function
             return list;
         }
 
-        public static List<AutoCompleteTextModel> LocalHoSo(IList<Hop> hops)
+        public static HashSet<AutoCompleteTextModel> LocalHoSo(IList<Hop> hops)
         {
-            var list = new List<AutoCompleteTextModel>();
+            var list = new HashSet<AutoCompleteTextModel>();
 
             foreach (var item in hops)
             {

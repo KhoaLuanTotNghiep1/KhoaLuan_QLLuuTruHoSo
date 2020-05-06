@@ -21,6 +21,7 @@
                 <div class="col-md-6">
                     <label>@Html.DisplayNameFor(item => Model.KeId)</label>
                     @Html.EditorFor(model => model.KeId, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                    <i><span>Lưu ý: phải nhập đúng với kết quả được gợi ý</span></i>
                     @Html.ValidationMessageFor(model => model.KeId, "", new { @class = "text-danger" })
                 </div>
             </div>

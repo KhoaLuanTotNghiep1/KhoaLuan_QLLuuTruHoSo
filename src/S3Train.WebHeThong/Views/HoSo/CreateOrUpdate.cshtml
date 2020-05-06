@@ -17,6 +17,7 @@
                 <div class="col-md">
                     <label>@Html.DisplayNameFor(item => Model.HopId)</label>
                     @Html.EditorFor(model => model.HopId, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                    <i><span>Lưu ý: phải nhập đúng với kết quả được gợi ý</span></i>
                     @Html.ValidationMessageFor(model => model.HopId, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -50,12 +51,12 @@
             <div class="form-group row">
                 <div class="col-md-6">
                     <label>@Html.DisplayNameFor(item => Model.BienMucHoSo)</label>
-                    @Html.TextAreaFor(model => model.BienMucHoSo, new { @class = "form-control", placeholder = "Điều kiện hiện tại của kệ", rows = "9" })
+                    @Html.TextAreaFor(model => model.BienMucHoSo, new { @class = "form-control", rows = "9" })
                     <script type="text/javascript">CKEDITOR.replace("BienMucHoSo", { htmlEncodeOutput: true });</script>
                 </div>
                 <div class="col-md-6">
                     <label>@Html.DisplayNameFor(item => Model.GhiChu)</label>
-                    @Html.TextAreaFor(model => model.GhiChu, new { @class = "form-control", placeholder = "Điều kiện hiện tại của kệ", rows = "9" })
+                    @Html.TextAreaFor(model => model.GhiChu, new { @class = "form-control", rows = "9" })
                     <script type="text/javascript">CKEDITOR.replace("GhiChu", { htmlEncodeOutput: true });</script>
                 </div>
             </div>

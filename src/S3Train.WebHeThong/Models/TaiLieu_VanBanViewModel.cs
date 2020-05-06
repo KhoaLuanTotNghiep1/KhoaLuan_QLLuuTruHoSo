@@ -48,7 +48,7 @@ namespace S3Train.WebHeThong.Models
         public string TrichYeu { get; set; }
 
         [Required(ErrorMessage = "Bạn Chưa điền nơi nhận")]
-        [Display(Name = "Nơi Nhận")]
+        [Display(Name = "Địa Chỉ Nhận Tài Liệu/Văn Bản")]
         public string NoiNhan { get; set; }
 
         public string NguoiGuiHoacNhan { get; set; }

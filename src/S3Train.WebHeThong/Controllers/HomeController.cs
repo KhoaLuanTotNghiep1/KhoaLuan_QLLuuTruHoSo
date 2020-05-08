@@ -27,16 +27,25 @@ namespace S3Train.WebHeThong.Controllers
             return View();
         }
 
-        public ActionResult demo()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
         public ActionResult Dashboard()
         {
             return View();
+        }
+
+        public ActionResult NotFound()
+        {
+            Response.StatusCode = 404;
+            ViewBag.Error = 400;
+            ViewBag.Title = "Không Tìm Thấy Trang";
+            return View();
+        }
+
+        public ActionResult ServerError()
+        {
+            Response.StatusCode = 500;
+            ViewBag.Error = 500;
+            ViewBag.Title = "Lỗi Server";
+            return View("NotFound");
         }
     }
 }

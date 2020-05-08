@@ -156,7 +156,7 @@ namespace S3Train.WebHeThong.Controllers
                 await _userService.RemoveFromRoles(model.Id, roles[0].ToString());
             await _userService.UserAddToRoles(model.Id, model.Role);
 
-            TempData["AlertMessage"] = "Đổi quyền người dùng thành quyền" + model.Role + " thành công";
+            TempData["AlertMessage"] = "Đổi quyền người dùng thành quyền " + model.Role + " thành công";
             return RedirectToAction("IndexAsync");
         }
 

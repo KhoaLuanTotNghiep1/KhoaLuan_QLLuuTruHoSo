@@ -662,6 +662,7 @@
     <Content Include="Content\ckeditor\vendor\promise.js" />
     <Content Include="Content\css\ruang-admin.css" />
     <Content Include="Content\css\ruang-admin.min.css" />
+    <Content Include="Content\Error.css" />
     <Content Include="Content\font\OFL.txt" />
     <Content Include="Content\images\admin.jpg" />
     <Content Include="Content\images\avatar\1.jpg" />
@@ -2318,6 +2319,7 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Error.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -2662,7 +2664,6 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Shared\_LayoutAdminPage.cshtml" />
-    <Content Include="Views\Home\demo.cshtml" />
     <Content Include="Views\Tu\Index.cshtml" />
     <Content Include="Views\Shared\_PartialTinhTrang.cshtml" />
     <Content Include="Views\Shared\_PartialTrangThai.cshtml" />
@@ -2701,6 +2702,8 @@
     <Content Include="Views\ThongKe\Index.cshtml" />
     <Content Include="Views\Shared\_PartialTaiLieuVanBanIndexSmall.cshtml" />
     <Content Include="Views\Shared\_PartialChageDangTLVB.cshtml" />
+    <Content Include="Views\Shared\_PartialSlidebar.cshtml" />
+    <Content Include="Views\Home\NotFound.cshtml" />
     <None Include="Web.LocalConnectStrings.config">
       <SubType>Designer</SubType>
     </None>
@@ -2708,7 +2711,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\HoSo\" />
-    <Folder Include="Views\Trash\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

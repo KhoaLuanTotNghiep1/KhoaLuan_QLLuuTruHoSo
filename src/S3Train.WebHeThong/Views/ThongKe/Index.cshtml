@@ -34,6 +34,12 @@
                     <div id="chartContainer" style="height: 370px; width: 100%;"></div>
                 </div>
             </div>
+
+            <div class="">
+                <a href="@Url.Action("Export","ThongKe", new { type = "excel"})" class="btn btn-info">Xuất file exel</a>
+
+                <a class="btn btn-warning" href="@Url.Action("Export","ThongKe", new { type = "csv"})">Xuất file CSV</a>
+            </div>
         }
     </div>
 </div>
@@ -45,9 +51,19 @@
         {
             <div class="mb-4"></div>
 
-            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">Danh Sách @item.Key</h1>
+            <div class="align-items-center justify-content-between mb-1">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1 class="h3 mb-0 text-gray-800">Danh Sách @item.Key</h1>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="@Url.Action("Export","ThongKe", new { type = "excel", dang = item.Key})" class="btn btn-info">Xuất file exel</a>
+
+                        <a class="btn btn-warning" href="@Url.Action("Export","ThongKe", new { type = "csv", dang = item.Key})">Xuất file CSV</a>
+                    </div>
+                </div>
             </div>
+
             @Html.Partial("~/Views/Shared/_PartialTaiLieuVanBanIndexSmall.cshtml", item.Value)
         }
     }

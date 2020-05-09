@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace S3Train.WebHeThong.Controllers
 {
+    [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
     public class HoSoController : Controller
     {
         private readonly IHoSoService _hoSoService;

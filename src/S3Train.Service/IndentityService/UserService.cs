@@ -180,5 +180,10 @@ namespace S3Train.Service
             var result = await _accountManager.UserManager.DeleteAsync(user);
             return result;
         }
+
+        public async Task<IList<ApplicationUser>> GetAllAsync()
+        {
+            return await _accountManager.UserManager.Users.ToListAsync();
+        }
     }
 }

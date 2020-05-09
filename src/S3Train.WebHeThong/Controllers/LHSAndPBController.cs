@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace S3Train.WebHeThong.Controllers
 {
+    [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
     public class LHSAndPBController : Controller
     {
         private readonly ILoaiHoSoService _loaiHoSoService;

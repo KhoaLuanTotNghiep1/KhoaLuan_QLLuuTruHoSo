@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.Owin;
+using S3Train.Core.Constant;
 using S3Train.Domain;
 using S3Train.IdentityManager;
 using S3Train.WebHeThong.Models;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace S3Train.WebHeThong.Controllers
 {
+    [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC)]
     public class RoleController : Controller
     {
         private ApplicationRoleManager _roleManager;

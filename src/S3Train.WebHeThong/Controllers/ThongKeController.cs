@@ -2,6 +2,7 @@
 using S3Train.Contract;
 using S3Train.Core.Constant;
 using S3Train.Domain;
+using S3Train.WebHeThong.CommomClientSide.Function;
 using S3Train.WebHeThong.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ using System.Web.UI.WebControls;
 
 namespace S3Train.WebHeThong.Controllers
 {
+    [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
     public class ThongKeController : Controller
     {
         private readonly ITaiLieuVanBanService _taiLieuVanBanService;
@@ -32,18 +34,11 @@ namespace S3Train.WebHeThong.Controllers
         // GET: ThongKe
         public ActionResult Index(DateTime? startTime, DateTime? endTime)
         {
-            List<DataPoint> dataPoints = new List<DataPoint>();
-            DataPoint dataPoint;
-
             var list = GetDoc(startTime, endTime);
 
             HttpContext.Session["ListTK"] = list;
 
-            foreach(var item in list)
-            {
-                dataPoint = new DataPoint(item.Value.Count(), item.Key);
-                dataPoints.Add(dataPoint);
-            }
+            var dataPoints = AddList.ListDataPonit(list);
 
             ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
 

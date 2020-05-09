@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 
 namespace S3Train.WebHeThong.Controllers
 {
+    [Authorize]
     public class TaiLieuVanBanController : Controller
     {
         private readonly ITaiLieuVanBanService _taiLieuVanBanService;
@@ -145,6 +146,7 @@ namespace S3Train.WebHeThong.Controllers
             return RedirectToAction("Index", new { dang = model.Dang});
         }
 
+        [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
         [HttpPost]
         public async Task<ActionResult> ChangeDangForTLVB(TaiLieu_VanBanViewModel model)
         {
@@ -162,6 +164,7 @@ namespace S3Train.WebHeThong.Controllers
             return RedirectToAction("Index", new { dang = GlobalConfigs.DANG_DI });
         }
 
+        [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
         public ActionResult Delete(string id)
         {
             var taiLieuVanBan = _taiLieuVanBanService.Get(m => m.Id == id);
@@ -177,6 +180,7 @@ namespace S3Train.WebHeThong.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
         public ActionResult ChangeActive(string id, bool active)
         {
             var model = _taiLieuVanBanService.Get(m => m.Id == id);

@@ -247,7 +247,7 @@
     <Compile Include="CommomClientSide\Function\ConvertDomainToAutoCompleteModel.cs" />
     <Compile Include="CommomClientSide\Function\UploadFile.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ChiTietMuonTraViewModel.cs" />
+    <Compile Include="Models\ChiTietMuonTraViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HopController.cs" />
     <Compile Include="Controllers\HoSoController.cs" />
@@ -258,6 +258,7 @@
     <Compile Include="Controllers\NoiBanHanhController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\TaiLieuVanBanController.cs" />
+    <Compile Include="Controllers\ThongKeController.cs" />
     <Compile Include="Controllers\TuController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -302,6 +303,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AutoCompleteTextModel.cs" />
+    <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\HopViewModel.cs" />
     <Compile Include="Models\HoSoViewModel.cs" />
     <Compile Include="Models\IndexViewModelBase.cs" />
@@ -663,6 +665,7 @@
     <Content Include="Content\ckeditor\vendor\promise.js" />
     <Content Include="Content\css\ruang-admin.css" />
     <Content Include="Content\css\ruang-admin.min.css" />
+    <Content Include="Content\Error.css" />
     <Content Include="Content\font\OFL.txt" />
     <Content Include="Content\images\admin.jpg" />
     <Content Include="Content\images\avatar\1.jpg" />
@@ -2319,6 +2322,7 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Error.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -2628,11 +2632,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -2663,7 +2663,6 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Shared\_LayoutAdminPage.cshtml" />
-    <Content Include="Views\Home\demo.cshtml" />
     <Content Include="Views\Tu\Index.cshtml" />
     <Content Include="Views\Shared\_PartialTinhTrang.cshtml" />
     <Content Include="Views\Shared\_PartialTrangThai.cshtml" />
@@ -2697,6 +2696,11 @@
     <Content Include="Views\TaiLieuVanBan\Index.cshtml" />
     <Content Include="Views\Shared\_PartialActionBasic.cshtml" />
     <Content Include="Views\Shared\_PartialActionCreateAndTrash.cshtml" />
+    <Content Include="Views\ThongKe\Index.cshtml" />
+    <Content Include="Views\Shared\_PartialTaiLieuVanBanIndexSmall.cshtml" />
+    <Content Include="Views\Shared\_PartialChageDangTLVB.cshtml" />
+    <Content Include="Views\Shared\_PartialSlidebar.cshtml" />
+    <Content Include="Views\Home\NotFound.cshtml" />
     <Content Include="Views\Shared\_PartialSearch.cshtml" />
     <Content Include="Views\Hop\CreateOrUpdate.cshtml" />
     <Content Include="Views\MuonTra\CreateOrUpdate.cshtml" />
@@ -2708,7 +2712,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\HoSo\" />
     <Folder Include="Views\LHSAnfPB\" />
-    <Folder Include="Views\Muon\" />
     <Folder Include="Views\Trash\" />
   </ItemGroup>
   <ItemGroup>

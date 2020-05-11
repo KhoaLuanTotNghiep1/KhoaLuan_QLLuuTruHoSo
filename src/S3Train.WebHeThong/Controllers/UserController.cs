@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using S3Train.Contract;
+using S3Train.Core.Constant;
 using S3Train.Domain;
 using S3Train.Model.User;
 using S3Train.WebHeThong.CommomClientSide.Function;
@@ -12,6 +13,7 @@ using System.Web.Mvc;
 
 namespace S3Train.WebHeThong.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -28,6 +30,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: User
+        [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
         public async Task<ActionResult> IndexAsync()
         {
             var model = await _userService.GetUser(1,10);
@@ -36,6 +39,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
         public async Task<ActionResult> CreateOrUpdate(string id)
         {
             ViewBag.Roles = DropDownRole();
@@ -128,6 +132,7 @@ namespace S3Train.WebHeThong.Controllers
             return RedirectToAction("UserProfile");
         }
 
+        [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
         public async Task<ActionResult> Delete(string id)
         {
             var user = await _userService.GetUserById(id);
@@ -149,6 +154,7 @@ namespace S3Train.WebHeThong.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
         public async Task<ActionResult> ChangeRole(UserViewModel model)
         {
             var roles = await _userService.GetRolesForUser(model.Id);
@@ -156,7 +162,7 @@ namespace S3Train.WebHeThong.Controllers
                 await _userService.RemoveFromRoles(model.Id, roles[0].ToString());
             await _userService.UserAddToRoles(model.Id, model.Role);
 
-            TempData["AlertMessage"] = "Đổi quyền người dùng thành quyền" + model.Role + " thành công";
+            TempData["AlertMessage"] = "Đổi quyền người dùng thành quyền " + model.Role + " thành công";
             return RedirectToAction("IndexAsync");
         }
 

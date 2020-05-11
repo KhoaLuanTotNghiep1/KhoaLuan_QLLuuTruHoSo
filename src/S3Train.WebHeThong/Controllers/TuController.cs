@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace S3Train.WebHeThong.Controllers
 {
+    [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC)]
     public class TuController : Controller
     {
         private readonly ITuService _tuService;

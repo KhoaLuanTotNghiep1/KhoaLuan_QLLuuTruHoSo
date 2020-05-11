@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace S3Train.WebHeThong.Controllers
 {
+    [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
     public class HopController : Controller
     {
         private readonly IKeService _keService;
@@ -102,7 +103,7 @@ namespace S3Train.WebHeThong.Controllers
             if (string.IsNullOrEmpty(model.Id))
             {
                 hop.Id = Guid.NewGuid().ToString();
-                hop.TinhTrang = "Trong Kho";
+                hop.TinhTrang = GlobalConfigs.TINHTRANG_TRONGKHO;
                 hop.NgayTao = DateTime.Now;
                 var result = UpdateTu_SoHopHienTai(hop.KeId, ActionWithObject.Update);
                 if (!result)
@@ -158,7 +159,7 @@ namespace S3Train.WebHeThong.Controllers
         {
             var model = AutoCompleteTextKes(_keService.GetAll());
 
-            model = model.Where(p => p.Text.Contains(text)).ToList();
+            model = model.Where(p => p.Text.Contains(text)).ToHashSet();
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -191,7 +192,7 @@ namespace S3Train.WebHeThong.Controllers
                 _keService.GetAll(m => m.OrderBy(t => t.Tu.Ten)));
         }
 
-        private List<AutoCompleteTextModel> AutoCompleteTextKes(IList<Ke> kes)
+        private HashSet<AutoCompleteTextModel> AutoCompleteTextKes(IList<Ke> kes)
         {
             var list = ConvertDomainToAutoCompleteModel.LocalHop(kes);
 

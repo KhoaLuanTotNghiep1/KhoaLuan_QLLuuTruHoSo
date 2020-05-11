@@ -1,0 +1,145 @@
+﻿<ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+    <li>
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-icon">
+                <img src="~/Content/img/logo/logo2.png">
+            </div>
+            <div class="sidebar-brand-text mx-3">Hệ Thống Lưu Trữ</div>
+        </a>
+        <hr class="sidebar-divider my-0">
+    </li>
+    @{
+        if (User.IsInRole("Giám Đốc") || User.IsInRole("Cán Bộ Văn Thư"))
+        {
+            <li class="nav-item active">
+                <a class="nav-link" href="@Url.Action("Dashboard","Home")">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Bảng Điều Khiển</span>
+                </a>
+            </li>
+            <li>
+                <hr class="sidebar-divider">
+                <div class="sidebar-heading">
+                    Chức Năng Hệ Thống
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
+                   aria-expanded="true" aria-controls="collapseBootstrap">
+                    <i class="far fa-fw fa-window-restore"></i>
+                    <span>Quản Lý Tủ/Kệ/Hộp</span>
+                </a>
+                <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Quản Lý Tủ/Kệ/Hộp</h6>
+                        @if (User.IsInRole("Giám Đốc"))
+                        {
+                            <a class="collapse-item" href="@Url.Action("Index","Tu")">Quản Lý Tủ</a>
+                        }
+                        <a class="collapse-item" href="@Url.Action("Index","Ke")">Quản Lý Kệ</a>
+                        <a class="collapse-item" href="@Url.Action("Index","Hop")">Quản Lý Hộp</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHoSo" aria-expanded="true"
+                   aria-controls="collapseTable">
+                    <i class="fas fa-fw fa-file"></i>
+                    <span>Quản Lý Hồ Sơ</span>
+                </a>
+                <div id="collapseHoSo" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Quản Lý Hồ Sơ</h6>
+                        <a class="collapse-item" href="@Url.Action("Index","HoSo")">Hồ Sơ</a>
+                        <a class="collapse-item" href="@Url.Action("Index","LHSAndPB")">Loại Hồ Sơ Và Phòng Ban</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMuonTra" aria-expanded="true"
+                   aria-controls="collapseMuonTra">
+                    <i class="fas fa-fw fa-reply"></i>
+                    <span>Quản Lý Mượn/Trả</span>
+                </a>
+                <div id="collapseMuonTra" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Quản Lý Mượn/Trả</h6>
+                        <a class="collapse-item" href="simple-tables.html">Danh Sách Mượn</a>
+                        <a class="collapse-item" href="datatables.html">Danh Sách Trả</a>
+                    </div>
+                </div>
+            </li>
+        }
+    }
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true"
+           aria-controls="collapseTable" id="chaaaaa">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Quản Lý Văn Bản</span>
+        </a>
+        <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Quản Lý Văn Bản/Tài Liệu</h6>
+                <a class="collapse-item" href="@Url.Action("Index","TaiLieuVanBan", new { dang = GlobalConfigs.DANG_NOIBO})">Nội Bộ</a>
+                <a class="collapse-item" href="@Url.Action("Index","TaiLieuVanBan", new { dang = GlobalConfigs.DANG_DEN})">Văn Bản/Tài Liệu Đến</a>
+                <a class="collapse-item" href="@Url.Action("Index","TaiLieuVanBan", new { dang = GlobalConfigs.DANG_DI})">Văn Bản/Tài Liệu Đi</a>
+                <a class="collapse-item" href="@Url.Action("Index","NoiBanHanh")">Nơi Ban Hành</a>
+            </div>
+        </div>
+    </li>
+
+    @{
+        if (User.IsInRole("Giám Đốc") || User.IsInRole("Cán Bộ Văn Thư"))
+        {
+            <li>
+                <hr class="sidebar-divider">
+                <div class="sidebar-heading">
+                    Thống Kê/Báo Cáo
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Thống Kê</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-newspaper"></i>
+                    <span>Báo Cáo</span>
+                </a>
+            </li>
+        }
+
+        if (User.IsInRole("Giám Đốc"))
+        {
+            <li>
+                <hr class="sidebar-divider">
+                <div class="sidebar-heading">
+                    Quản Lý Người Dùng
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNguoiDung" aria-expanded="true"
+                   aria-controls="collapseNguoiDung">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Quản Lý Người Dùng</span>
+                </a>
+                <div id="collapseNguoiDung" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Quản Lý Người Dùng</h6>
+                        <a class="collapse-item" href="@Url.Action("IndexAsync","User")">Người Dùng</a>
+                        <a class="collapse-item" href="@Url.Action("Index","Role")">Quyền Truy Cập</a>
+                    </div>
+                </div>
+            </li>
+        }
+    }
+
+
+
+    <li>
+        <hr class="sidebar-divider">
+        <div class="version" id="version-ruangadmin"></div>
+    </li>
+</ul>

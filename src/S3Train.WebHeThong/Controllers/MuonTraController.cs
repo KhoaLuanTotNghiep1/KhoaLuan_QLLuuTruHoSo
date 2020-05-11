@@ -8,6 +8,8 @@ using S3Train.WebHeThong.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -89,11 +91,12 @@ namespace S3Train.WebHeThong.Controllers
                 : _chiTietMuonTraService.Get(m => m.Id == model.Id);
 
             var autoList = AutoCompleteTextHoSos(_hoSoService.GetAll(), _taiLieuVanBanService.GetAll());
+            var autoListUser = AutoCompleteTextUsers(_userService.GetAllAsync().Result);
 
             muontra.VanThu = User.Identity.GetUserName();
             muontra.NgayMuon = model.NgayMuon;
             muontra.NgayKetThuc = model.NgayTra;
-            muontra.UserId = model.User.Id;
+            muontra.UserId = autoListUser.FirstOrDefault(p => p.Text == model.User.FullName).Id;
             muontra.TrangThai = true;
             muontra.TinhTrang = model.TinhTrang;
             muontra.NgayTao = DateTime.Now;
@@ -151,19 +154,36 @@ namespace S3Train.WebHeThong.Controllers
         {
             var model = AutoCompleteTextHoSos(_hoSoService.GetAll(), _taiLieuVanBanService.GetAll());
 
-            model = model.Where(p => p.Text.Contains(text)).ToList();
+            model = model.Where(p => p.Text.Contains(text)).ToHashSet();
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-      
-        private List<AutoCompleteTextModel> AutoCompleteTextHoSos(IList<HoSo> hosos, IList<TaiLieuVanBan> taiLieuVanBans)
+        [HttpPost]
+        public ActionResult AutoCompleteText1(string text)
+        {
+            var model = AutoCompleteTextUsers(_userService.GetAllAsync().Result);
+
+            model = model.Where(p => p.Text.Contains(text)).ToHashSet();
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        
+
+        private HashSet<AutoCompleteTextModel> AutoCompleteTextHoSos(IList<HoSo> hosos, IList<TaiLieuVanBan> taiLieuVanBans)
         {
             var list = ConvertDomainToAutoCompleteModel.LocalHoSo(hosos, taiLieuVanBans);
 
             return list;
         }
 
+        private HashSet<AutoCompleteTextModel> AutoCompleteTextUsers(IList<ApplicationUser> users)
+        {
+            var list = ConvertDomainToAutoCompleteModel.LocalUser(users);
+
+            return list;
+        }
+        
         private MuonTraViewModel GetMuonTra(MuonTra muonTra)
         {
             var autoList = AutoCompleteTextHoSos(_hoSoService.GetAll(), _taiLieuVanBanService.GetAll());

@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using S3Train.Contract;
+using S3Train.Core.Constant;
 using S3Train.Domain;
 using S3Train.IdentityManager;
 using S3Train.WebHeThong.Models;
@@ -19,9 +21,15 @@ namespace S3Train.WebHeThong.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly IUserService _userService;
 
         public AccountController()
         {
+        }
+
+        public AccountController(IUserService userService)
+        {
+            _userService = userService;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -78,10 +86,17 @@ namespace S3Train.WebHeThong.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
+            var user = await _userService.GetUserByUserName(model.UserName);
+            var roles = await _userService.GetRolesForUser(user.Id);
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("Dashboard", "Home");
+                    {
+                        if (roles[0].ToString() == GlobalConfigs.ROLE_CANBO)
+                            return RedirectToAction("Index", "TaiLieuVanBan", new { dang = GlobalConfigs.DANG_NOIBO });
+                        else
+                            return RedirectToAction("Dashboard", "Home");
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

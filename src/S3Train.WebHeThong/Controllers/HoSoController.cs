@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace S3Train.WebHeThong.Controllers
 {
+    [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
     public class HoSoController : Controller
     {
         private readonly IHoSoService _hoSoService;
@@ -97,7 +98,7 @@ namespace S3Train.WebHeThong.Controllers
 
             hoSo.TapHoSoId = model.TapHoSoId;
             hoSo.PhongLuuTru = model.PhongLuuTru;
-            hoSo.TinhTrang = "Trong Kho";
+            hoSo.TinhTrang = GlobalConfigs.TINHTRANG_TRONGKHO;
             hoSo.ThoiGianBaoQuan = model.ThoiGianBaoQuan;
             hoSo.GhiChu = model.GhiChu;
             hoSo.BienMucHoSo = model.BienMucHoSo;
@@ -153,12 +154,12 @@ namespace S3Train.WebHeThong.Controllers
         {
             var model = LocalHops(_hopService.GetAll());
 
-            model = model.Where(p => p.Text.Contains(text)).ToList();
+            model = model.Where(p => p.Text.Contains(text)).ToHashSet();
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        private List<AutoCompleteTextModel> LocalHops(IList<Hop> hops)
+        private HashSet<AutoCompleteTextModel> LocalHops(IList<Hop> hops)
         {
             var list = ConvertDomainToAutoCompleteModel.LocalHoSo(hops);
 

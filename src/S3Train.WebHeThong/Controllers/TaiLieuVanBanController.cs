@@ -13,15 +13,18 @@ using X.PagedList;
 using S3Train.WebHeThong.CommomClientSide.Function;
 using System.Web;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace S3Train.WebHeThong.Controllers
 {
+    [Authorize]
     public class TaiLieuVanBanController : Controller
     {
         private readonly ITaiLieuVanBanService _taiLieuVanBanService;
         private readonly INoiBanHanhService _noiBanHanhService;
         private readonly IHoSoService _hoSoService;
         private readonly ILoaiHoSoService _loaiHoSoService;
+        private readonly IUserService _userService;
 
         public TaiLieuVanBanController()
         {
@@ -29,12 +32,13 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         public TaiLieuVanBanController(ITaiLieuVanBanService taiLieuVanBanService, INoiBanHanhService noiBanHanhService, 
-            IHoSoService hoSoService, ILoaiHoSoService loaiHoSoService)
+            IHoSoService hoSoService, ILoaiHoSoService loaiHoSoService, IUserService userService)
         {
             _taiLieuVanBanService = taiLieuVanBanService;
             _noiBanHanhService = noiBanHanhService;
             _hoSoService = hoSoService;
             _loaiHoSoService = loaiHoSoService;
+            _userService = userService;
         }
 
         // GET: TaiLieuVanBan
@@ -121,19 +125,10 @@ namespace S3Train.WebHeThong.Controllers
             taiLieuVanBan.Ten = model.Ten;
             taiLieuVanBan.TrichYeu = model.TrichYeu;
             taiLieuVanBan.NgayBanHanh = model.NgayBanHanh;
+            taiLieuVanBan.TinhTrang = "Trong Kho";
+            taiLieuVanBan.TrangThai = true;
             taiLieuVanBan.UserId = User.Identity.GetUserId();
             #endregion
-
-            if (model.Dang == "Đi")
-            {
-                taiLieuVanBan.TinhTrang = "Đã Gởi";
-                taiLieuVanBan.TrangThai = false;
-            }
-            else
-            {
-                taiLieuVanBan.TinhTrang = "Trong Kho";
-                taiLieuVanBan.TrangThai = true;
-            }
 
             if (string.IsNullOrEmpty(model.Id))
             {
@@ -151,6 +146,25 @@ namespace S3Train.WebHeThong.Controllers
             return RedirectToAction("Index", new { dang = model.Dang});
         }
 
+        [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
+        [HttpPost]
+        public async Task<ActionResult> ChangeDangForTLVB(TaiLieu_VanBanViewModel model)
+        {
+            var taiLieuVanBan = _taiLieuVanBanService.Get(p => p.Id == model.Id);
+            var user = await _userService.GetUserById(User.Identity.GetUserId());
+
+            taiLieuVanBan.NguoiGuiHoacNhan = user.FullName;
+            taiLieuVanBan.Dang = GlobalConfigs.DANG_DI;
+            taiLieuVanBan.NoiNhan = model.NoiNhan;
+            taiLieuVanBan.NgayCapNhat = DateTime.Now;
+            taiLieuVanBan.TinhTrang = GlobalConfigs.TINHTRANG_DAGOI;
+
+            _taiLieuVanBanService.Update(taiLieuVanBan);
+
+            return RedirectToAction("Index", new { dang = GlobalConfigs.DANG_DI });
+        }
+
+        [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
         public ActionResult Delete(string id)
         {
             var taiLieuVanBan = _taiLieuVanBanService.Get(m => m.Id == id);
@@ -166,6 +180,7 @@ namespace S3Train.WebHeThong.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
         public ActionResult ChangeActive(string id, bool active)
         {
             var model = _taiLieuVanBanService.Get(m => m.Id == id);
@@ -182,7 +197,7 @@ namespace S3Train.WebHeThong.Controllers
         {
             var model = AutoCompleteTextHoSos(_hoSoService.GetAll());
 
-            model = model.Where(p => p.Text.Contains(text)).ToList();
+            model = model.Where(p => p.Text.Contains(text)).ToHashSet();
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -244,7 +259,7 @@ namespace S3Train.WebHeThong.Controllers
             }
         }
 
-        private List<AutoCompleteTextModel> AutoCompleteTextHoSos(IList<HoSo> hoSos)
+        private HashSet<AutoCompleteTextModel> AutoCompleteTextHoSos(IList<HoSo> hoSos)
         {
             var list = ConvertDomainToAutoCompleteModel.LocalTaiLieu(hoSos);
 

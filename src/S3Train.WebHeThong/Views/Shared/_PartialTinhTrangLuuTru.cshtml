@@ -1,17 +1,17 @@
 ﻿@model string
 
 @{
-    if (Model == "Trong Kho")
+    if (Model == GlobalConfigs.TINHTRANG_TRONGKHO)
     {
         <span class="badge badge-primary">Trong Kho</span>
     }
 
-    if (Model == "Đang Mượn")
+    if (Model == GlobalConfigs.TINHTRANG_DANGMUON)
     {
         <span class="badge badge-warning">Đang Mượn</span>
     }
 
-    if (Model == "Đã Gởi")
+    if (Model == GlobalConfigs.TINHTRANG_DAGOI)
     {
         <span class="badge badge-warning">Đã Gởi</span>
     }

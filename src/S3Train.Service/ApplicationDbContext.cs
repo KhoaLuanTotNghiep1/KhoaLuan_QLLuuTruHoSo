@@ -10,6 +10,7 @@ namespace S3Train.Domain
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
+            this.Configuration.LazyLoadingEnabled = true;
         }
 
         public DbSet<Ke> Kes { get; set; }
@@ -72,14 +73,13 @@ namespace S3Train.Domain
             modelBuilder.Entity<LoaiHoSo>().HasMany(p => p.HoSos).WithOptional(prod => prod.LoaiHoSo);
 
             modelBuilder.Entity<HoSo>().ToTable("HoSo");
-            modelBuilder.Entity<HoSo>().Property(p => p.TapHoSo).HasMaxLength(300).IsRequired();
             modelBuilder.Entity<HoSo>().Property(p => p.PhongLuuTru).IsOptional();
             modelBuilder.Entity<HoSo>().Property(p => p.ThoiGianBaoQuan).IsOptional();
             modelBuilder.Entity<HoSo>().Property(p => p.GhiChu).IsOptional();
             modelBuilder.Entity<HoSo>().Property(p => p.BienMucHoSo).IsOptional();
             modelBuilder.Entity<HoSo>().Property(p => p.TinhTrang).HasMaxLength(150).IsOptional();
             modelBuilder.Entity<HoSo>().HasMany(p => p.TaiLieuVanBans).WithRequired(prod => prod.HoSo);
-            modelBuilder.Entity<HoSo>().HasOptional(p => p.HoSoCha).WithMany(c => c.HoSoCons).HasForeignKey(b => b.HoSoChaId);
+            modelBuilder.Entity<HoSo>().HasOptional(p => p.TapHoSo).WithMany(c => c.HoSoCons).HasForeignKey(b => b.TapHoSoId);
 
 
             modelBuilder.Entity<TaiLieuVanBan>().ToTable("TaiLieuVanBan");
@@ -96,6 +96,7 @@ namespace S3Train.Domain
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.TinhTrang).HasMaxLength(150).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.GhiChu).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.DuongDan).IsOptional();
+            modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.NgayBanHanh).IsOptional();
 
             modelBuilder.Entity<MuonTra>().ToTable("MuonTra");
             modelBuilder.Entity<MuonTra>().Property(p => p.NgayMuon).IsOptional();

@@ -1,0 +1,173 @@
+﻿@using S3Train.WebHeThong.Models
+@model TaiLieu_VanBanViewModel
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
+
+    Model.GhiChu = Html.Raw(HttpUtility.HtmlDecode(Model.GhiChu)).ToString();
+    Model.TrichYeu = Html.Raw(HttpUtility.HtmlDecode(Model.TrichYeu)).ToString();
+    Model.NoiDung = Html.Raw(HttpUtility.HtmlDecode(Model.NoiDung)).ToString();
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Thông Tin chi Tiết</h1>
+</div>
+<div class="row">
+    <div class="col-md-9">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.Ten)</h6>
+                        <p>@Html.DisplayFor(item => Model.Ten)</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.Loai)</h6>
+                        <p>@Html.DisplayFor(item => Model.Loai)</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.Dang)</h6>
+                        <p>@Html.DisplayFor(item => Model.Dang)</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoKyHieu)</h6>
+                        <p>@Html.DisplayFor(item => Model.SoKyHieu)</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoTo)</h6>
+                        <p>@Html.DisplayFor(item => Model.SoTo) trang</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="m-0 font-weight-bold text-primary">Hồ Sơ</h6>
+                        <p>@Html.DisplayFor(item => Model.HoSo.PhongLuuTru)</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NguoiDuyet)</h6>
+                        <p>@Html.DisplayFor(item => Model.NguoiDuyet)</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NguoiKy)</h6>
+                        <p>@Html.DisplayFor(item => Model.NguoiKy)</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayBanHanh)</h6>
+                        <p>@Html.DisplayFor(item => Model.NgayBanHanh)</p>
+                    </div>
+                </div>
+                @{
+                    if (Model.Dang == "Đi")
+                    {
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h6 class="m-0 font-weight-bold text-primary">Người Gửi</h6>
+                                <p>@Html.DisplayFor(item => Model.NguoiGuiHoacNhan)</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NoiNhan)</h6>
+                                <p>@Html.DisplayFor(item => Model.NoiNhan)</p>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h6 class="m-0 font-weight-bold text-primary">Người Nhận</h6>
+                                <p>@Html.DisplayFor(item => Model.NguoiGuiHoacNhan)</p>
+                            </div>
+                        </div>
+                    }
+                }
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6 class="m-0 font-weight-bold text-primary">Người Tạo</h6>
+                        <p>@Html.DisplayFor(item => Model.User.FullName)</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayTao)</h6>
+                        <p>@Html.DisplayFor(item => Model.NgayTao)</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayCapNhat)</h6>
+                        <p>@Html.DisplayFor(item => Model.NgayCapNhat)</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md">
+                        <h6 class="m-0 font-weight-bold text-primary">Đường Dẫn</h6>
+                        <p>@Html.DisplayFor(item => Model.DuongDan)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Trạng Thái</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", Model.TrangThai)</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Lưu Trữ</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", Model.TinhTrang)</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.GhiChu)</h6>
+                @Html.TextAreaFor(model => model.GhiChu, new { @class = "form-control", rows = "5" })
+            </div>
+            <div class="col-md-6">
+                <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.TrichYeu)</h6>
+                @Html.TextAreaFor(model => model.TrichYeu, new { @class = "form-control", rows = "5" })
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md">
+                <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NoiDung)</h6>
+                @Html.TextAreaFor(model => model.NoiDung, new { @class = "form-control", rows = "10" })
+            </div>
+        </div>
+    </div>
+</div>

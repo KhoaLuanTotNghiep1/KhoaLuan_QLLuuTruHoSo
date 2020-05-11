@@ -1,6 +1,7 @@
 ﻿using S3Train.Contract;
 using S3Train.Core.Constant;
 using S3Train.Domain;
+using S3Train.WebHeThong.CommomClientSide.Function;
 using S3Train.WebHeThong.Models;
 using System;
 using System.Collections.Generic;
@@ -27,20 +28,34 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: Tu
-        public ActionResult Index(int? pageIndex, int? pageSize)
+        public ActionResult Index(int? pageIndex, int? pageSize, string searchString, bool active = true)
         {
             pageIndex = (pageIndex ?? 1);
             pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
+
+            string[] includeArray = { "NoiBanHanh", "User", "HoSo" };
+            var includes = AddList.AddItemByArray(includeArray);
 
             var model = new TuIndexViewModel()
             {
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var tus = _tuService.GetAllPaged(pageIndex, pageSize.Value, null, p => p.OrderBy(c => c.Ten));
+            var tus = _tuService.GetAllPaged(pageIndex, pageSize.Value,  p=> p.TrangThai == active, p => p.OrderBy(c => c.Ten), includes);
+
+            if(!string.IsNullOrEmpty(searchString))
+            {
+                tus = _tuService.GetAllPaged(pageIndex, pageSize.Value, p => p.Ten.Contains(searchString) || p.NgươiQuanLy.Contains(searchString)
+                    && p.TrangThai == active, p => p.OrderBy(c => c.Ten), includes);
+            }
 
             model.Paged = tus;
             model.Items = GetTus(tus.ToList());
+
+            ViewBag.Active = active;
+            ViewBag.searchString = searchString;
+            ViewBag.Controller = "Tu";
+
             return View(model);
         }
 
@@ -104,6 +119,17 @@ namespace S3Train.WebHeThong.Controllers
             var model = GetTu(_tuService.Get(m => m.Id == id));
 
             return View(model);
+        }
+
+        public ActionResult ChangeActive(string id, bool active)
+        {
+            var model = _tuService.Get(m => m.Id == id);
+
+            model.TrangThai = active;
+            model.NgayCapNhat = DateTime.Now;
+
+            _tuService.Update(model);
+            return RedirectToAction("Index");
         }
 
         private TuViewModel GetTu(Tu tu)

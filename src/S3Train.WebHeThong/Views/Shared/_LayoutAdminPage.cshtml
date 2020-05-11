@@ -16,6 +16,9 @@
     <link href="~/Content/css/ruang-admin.min.css" rel="stylesheet">
     <link href="~/Content/alertifyjs/alertify.css" rel="stylesheet" />
     <link href="~/Content/alertifyjs/alertify.min.css" rel="stylesheet" />
+
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
 </head>
 
 <body id="page-top">
@@ -46,7 +49,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
                    aria-expanded="true" aria-controls="collapseBootstrap">
-                    <i class="far fa-fw fa-window-maximize"></i>
+                    <i class="far fa-fw fa-window-restore"></i>
                     <span>Quản Lý Tủ/Kệ/Hộp</span>
                 </a>
                 <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
@@ -59,31 +62,39 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Index","HoSo")">
-                    <i class="fab fa-fw fa-wpforms"></i>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHoSo" aria-expanded="true"
+                   aria-controls="collapseTable">
+                    <i class="fas fa-fw fa-file"></i>
                     <span>Quản Lý Hồ Sơ</span>
                 </a>
+                <div id="collapseHoSo" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Quản Lý Hồ Sơ</h6>
+                        <a class="collapse-item" href="@Url.Action("Index","HoSo")">Hồ Sơ</a>
+                        <a class="collapse-item" href="@Url.Action("Index","LHSAndPB")">Loại Hồ Sơ Và Phòng Ban</a>
+                    </div>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true"
                    aria-controls="collapseTable">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-book"></i>
                     <span>Quản Lý Văn Bản</span>
                 </a>
                 <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Quản Lý Văn Bản/Tài Liệu</h6>
-                        <a class="collapse-item" href="simple-tables.html">Văn Bảng</a>
-                        <a class="collapse-item" href="datatables.html">Tài Liệu</a>
-                        <a class="collapse-item" href="datatables.html">Văn Bản/Tài Liệu Đến</a>
-                        <a class="collapse-item" href="datatables.html">Văn Bản/Tài Liệu Đi</a>
+                        <a class="collapse-item" href="@Url.Action("Index","TaiLieuVanBan", new { dang = "Nội Bộ"})">Nội Bộ</a>
+                        <a class="collapse-item" href="@Url.Action("Index","TaiLieuVanBan", new { dang = "Đến"})">Văn Bản/Tài Liệu Đến</a>
+                        <a class="collapse-item" href="@Url.Action("Index","TaiLieuVanBan", new { dang = "Đi"})">Văn Bản/Tài Liệu Đi</a>
+                        <a class="collapse-item" href="@Url.Action("Index","NoiBanHanh")">Nơi Ban Hành</a>
                     </div>
                 </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMuonTra" aria-expanded="true"
                    aria-controls="collapseMuonTra">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-reply"></i>
                     <span>Quản Lý Mượn/Trả</span>
                 </a>
                 <div id="collapseMuonTra" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
@@ -108,7 +119,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                    <i class="fas fa-fw fa-newspaper"></i>
                     <span>Báo Cáo</span>
                 </a>
             </li>
@@ -121,7 +132,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNguoiDung" aria-expanded="true"
                    aria-controls="collapseNguoiDung">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-user"></i>
                     <span>Quản Lý Người Dùng</span>
                 </a>
                 <div id="collapseNguoiDung" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
@@ -319,23 +330,19 @@
                                 }
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="@Url.Action("UserProfile","User")">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
+                                    Thông Tin Cá Nhân
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="login.html">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
+                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm"}))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Đăng Xuất
+                                    </a>
+                                }
                             </div>
                         </li>
                     </ul>
@@ -377,6 +384,8 @@
     <script src="~/Scripts/jquery.validate.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
     @Scripts.Render("~/bundles/jquery")
+
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     @RenderSection("scripts", false)
 </body>
 

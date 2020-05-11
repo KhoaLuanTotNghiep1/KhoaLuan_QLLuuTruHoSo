@@ -5,7 +5,6 @@
 @{
     ViewBag.Title = "IndexAsync";
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
-    int stt = 1;
 }
 
 <div class="card">
@@ -17,7 +16,7 @@
         <table class="table table-responsive-lg">
             <thead>
                 <tr>
-                    <th>STT</th>
+                    <th>Ảnh</th>
                     <th>Tên Tài Khoản</th>
                     <th>Tên Đầy Đủ</th>
                     <th>Email</th>
@@ -30,9 +29,9 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@stt</td>
+                        <td><img class="img-profile rounded rounded-circle" src="~/Content/img/boy.png" style="max-width:30px" title="Hình đại diện" /></td>
                         <td>
-                            <img class="img-profile rounded rounded-circle" src="~/Content/img/boy.png" style="max-width:30px" title="Hình đại diện" /> @item.UserName
+                            @item.UserName
                         </td>
                         <td>@Html.DisplayFor(m => item.FullName)</td>
                         <td>@Html.DisplayFor(m => item.Email)</td>
@@ -42,7 +41,6 @@
                             @Html.Partial("~/Views/Shared/_PartialChangeRole.cshtml", item)
                         </td>
                     </tr>
-                    stt += 1;
                 }
                 <tr class="pageging">
                     <td colspan="8">
@@ -65,3 +63,12 @@
     </div>
 </div>
 
+@section scripts{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["AlertMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+    </script>
+}

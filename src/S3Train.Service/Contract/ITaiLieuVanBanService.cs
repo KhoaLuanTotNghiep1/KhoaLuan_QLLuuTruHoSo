@@ -9,5 +9,6 @@ namespace S3Train.Contract
 {
     public interface ITaiLieuVanBanService : IGenenicServiceBase<TaiLieuVanBan>
     {
+        List<string> GetDocuments();
     }
 }

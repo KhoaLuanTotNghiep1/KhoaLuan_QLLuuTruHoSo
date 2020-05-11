@@ -1,0 +1,8 @@
+﻿@using (Html.BeginForm())
+{
+    <div class="row">
+        @Html.TextBox("searchString", "", new { @class = "form-control col-md-9", @placeholder = "Tìm kiếm" })
+        &ensp;
+        <input type="submit" value="Tìm Kiếm" class="btn btn-primary col-md-auto" />
+    </div>
+}

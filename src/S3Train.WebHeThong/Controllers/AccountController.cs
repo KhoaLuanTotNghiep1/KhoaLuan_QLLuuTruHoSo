@@ -81,14 +81,14 @@ namespace S3Train.WebHeThong.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("Index", "Tu");
+                    return RedirectToAction("Dashboard", "Home");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Đăng Nhập Thất Bại.");
                     return View(model);
             }
         }
@@ -395,7 +395,6 @@ namespace S3Train.WebHeThong.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
-
         }
 
         //

@@ -1,0 +1,217 @@
+﻿@using S3Train.WebHeThong.Models
+@model HoSoViewModel
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
+    int stt = 1;
+    int stt2 = 1;
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Thông Tin chi Tiết</h1>
+</div>
+<div class="row">
+    <div class="col-lg-9">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.PhongLuuTru)</h6>
+                        <p>@Html.DisplayFor(item => Model.PhongLuuTru)</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.LoaiHoSoId)</h6>
+                        <p>@Html.DisplayFor(item => Model.LoaiHoSo.Ten)</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.TapHoSoId)</h6>
+                        <p>@Html.DisplayFor(item => Model.TapHoSo.PhongLuuTru)</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">Người Tạo</h6>
+                        <p>@Html.DisplayFor(item => Model.User.FullName)</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayTao)</h6>
+                        <p>@Html.DisplayFor(item => Model.NgayTao)</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayCapNhat)</h6>
+                        <p>@Html.DisplayFor(item => Model.NgayCapNhat)</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h6 class="m-0 font-weight-bold text-primary">Vị Trí</h6>
+                        <p>@Model.Hop.Ke.Tu.Ten kệ thứ @Model.Hop.Ke.SoThuTu hộp số @Model.Hop.SoHop</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.ThoiGianBaoQuan)</h6>
+                        <p>@Html.DisplayFor(item => Model.ThoiGianBaoQuan) tháng</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.BienMucHoSo)</h6>
+                        <p>@Html.Raw(HttpUtility.HtmlDecode(Model.BienMucHoSo))</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.GhiChu)</h6>
+                        <p>@Html.Raw(HttpUtility.HtmlDecode(Model.GhiChu))</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="row">
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Trạng Thái</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", Model.TrangThai)</div>
+                                <div class="mt-2 mb-0 text-muted text-xs">
+                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                                    <span>Since last month</span>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Lưu Trữ</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", Model.TinhTrang)</div>
+                                <div class="mt-2 mb-0 text-muted text-xs">
+                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                                    <span>Since last month</span>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @{
+        if (Model.HoSoCons != null)
+        {
+            <div class="col-lg-12">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="m-0 font-weight-bold text-primary">Danh Hồ Sơ Con</h5>
+                        <br />
+                        <table class="table table-responsive-md">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Phông Lưu Trữ</th>
+                                    <th>Vị Trí Lưu Trữ</th>
+                                    <th>Lưu Trữ</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Hoạt Động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var hoso in Model.HoSoCons)
+                                {
+                                    <tr>
+                                        <td>@stt2</td>
+                                        <td>@Html.DisplayFor(item => hoso.PhongLuuTru)</td>
+                                        <td>@hoso.Hop.Ke.Tu.Ten kệ thứ @hoso.Hop.Ke.SoThuTu hộp số @hoso.Hop.SoHop</td>
+                                        <td>@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", hoso.TinhTrang)</td>
+                                        <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", hoso.TrangThai)</td>
+                                        <td>
+                                            <a href="@Url.Action("Detail","HoSo", new { id=hoso.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
+                                                <i class="fas fa-info"></i>
+                                            </a>
+                                            <a href="@Url.Action("CreateOrUpdate","HoSo", new { id=hoso.Id})" class="btn btn-primary" title="Cập Nhật">
+                                                <i class="fas fa-sync"></i>
+                                            </a>
+                                            <a href="@Url.Action("Delete","HoSo", new { id=hoso.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @hoso.PhongLuuTru?');" title="Xóa">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    stt2 += 1;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+    @{
+        if (Model.TaiLieuVanBans != null)
+        {
+            <div class="col-lg-12">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="m-0 font-weight-bold text-primary">Danh Sách Tài Liệu/Văn Bản</h5>
+                        <br />
+                        <table class="table table-responsive-md">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên</th>
+                                    <th>Số Ký Hiệu</th>
+                                    <th>Lưu Trữ</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Hoạt Động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var taiLieuVanBan in Model.TaiLieuVanBans)
+                                {
+                                    <tr>
+                                        <td>@stt</td>
+                                        <td>@Html.DisplayFor(item => taiLieuVanBan.Ten)</td>
+                                        <td>@Html.DisplayFor(item => taiLieuVanBan.SoKyHieu)</td>
+                                        <td>@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", taiLieuVanBan.TinhTrang)</td>
+                                        <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", taiLieuVanBan.TrangThai)</td>
+                                        <td>
+                                            <a href="@Url.Action("Detail","TaiLieuVanBan", new { id=taiLieuVanBan.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
+                                                <i class="fas fa-info"></i>
+                                            </a>
+                                            <a href="@Url.Action("CreateOrUpdate","TaiLieuVanBan", new { id=taiLieuVanBan.Id})" class="btn btn-primary" title="Cập Nhật">
+                                                <i class="fas fa-sync"></i>
+                                            </a>
+                                            <a href="@Url.Action("Delete","TaiLieuVanBan", new { id=taiLieuVanBan.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @taiLieuVanBan.Ten?');" title="Xóa">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    stt += 1;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+

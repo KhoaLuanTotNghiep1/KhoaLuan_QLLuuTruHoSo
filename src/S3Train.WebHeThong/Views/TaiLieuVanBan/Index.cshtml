@@ -1,0 +1,86 @@
+﻿@using S3Train.WebHeThong.Models
+@model TaiLieuVanBanIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
+    int stt = 1;
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Tài Liệu/Văn Bản</h1>
+</div>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                @Html.Partial("~/Views/Shared/_PartialActionCreateAndTrash.cshtml", "TaiLieuVanBan")
+            </div>
+            <div class="col-md-6">
+                @Html.Partial("~/Views/Shared/_PartialSearch.cshtml")
+                <i><span>Tìm kiếm: theo tên văn bản hoặc loại văn bản</span></i>
+            </div>
+        </div>
+
+        <table class="table table-responsive-lg">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Số Ký Hiệu</th>
+                    <th>Tên</th>
+                    <th>Loại</th>
+                    <th>Lưu Trữ</th>
+                    <th>Tình Trạng</th>
+                    <th>Hoạt Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@Html.DisplayFor(m => item.SoKyHieu)</td>
+                        <td>@Html.DisplayFor(m => item.Ten)</td>
+                        <td>@Html.DisplayFor(m => item.Loai)</td>
+                        <td>@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", item.TinhTrang)</td>
+                        <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
+                        <td>
+                            @Html.Partial("~/Views/Shared/_PartialActionBasic.cshtml", item.Id)
+                        </td>
+                    </tr>
+                    stt += 1;
+                }
+                <tr class="pageging">
+                    <td colspan="8">
+                        @Html.PagedListPager(Model.Paged, pageIndex => Url.Action("Index", new RouteValueDictionary {
+                        { "pageIndex" , pageIndex },
+                        { "pageSize", Model.PageSize > 0 ? Model.PageSize : GlobalConfigs.DEFAULT_PAGESIZE } ,
+                        { "dang",  ViewBag.Dang} ,
+                        { "active",  ViewBag.Active} ,
+                        { "searchString",  ViewBag.searchString} ,
+                        }), new PagedListRenderOptions
+                        {
+                        LiElementClasses = new string[] { "page-item" },
+                        PageClasses = new string[] { "page-link" },
+                        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                        MaximumPageNumbersToDisplay = 5,
+                        EllipsesElementClass = "page-link",
+                        })
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["AlertMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+    </script>
+}
+

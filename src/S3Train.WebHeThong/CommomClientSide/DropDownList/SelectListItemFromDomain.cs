@@ -56,12 +56,125 @@ namespace S3Train.WebHeThong.CommomClientSide.DropDownList
             return items;
         }
 
+        /// <summary>
+        /// format LoaiHoSo from domain to SelectListItem
+        /// </summary>
+        /// <param name="loaiHoSos">list LoaiHoSo</param>
+        /// <returns>Select List</returns>
+        public static List<SelectListItem> SelectListItem_LoaiHoSo(IList<LoaiHoSo> loaiHoSos)
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+            foreach (var item in loaiHoSos)
+            {
+                items.Add(new SelectListItem { Text = item.Ten, Value = item.Id });
+            }
+            return items;
+        }
+
+        /// <summary>
+        /// format HoSo from domain to SelectListItem
+        /// </summary>
+        /// <param name="hoSos">list HoSo</param>
+        /// <returns>Select List</returns>
+        public static List<SelectListItem> SelectListItem_HoSo(IList<HoSo> hoSos)
+        {
+            List<SelectListItem> items = new List<SelectListItem>()
+            {
+                new SelectListItem { Text = "", Value = "" }
+            };
+            foreach (var item in hoSos)
+            {
+                items.Add(new SelectListItem { Text = item.PhongLuuTru, Value = item.Id });
+            }
+            return items;
+        }
+
+
+        /// <summary>
+        /// format Hop from domain to SelectListItem
+        /// </summary>
+        /// <param name="taiLieuVanBans">list Hop</param>
+        /// <returns>Select List</returns>
+        public static List<SelectListItem> SelectListItem_VanBanTaiLieu(IList<TaiLieuVanBan> taiLieuVanBans)
+        {
+            List<SelectListItem> items = new List<SelectListItem>()
+            {
+                new SelectListItem { Text = "", Value = "" }
+            };
+            foreach (var item in taiLieuVanBans)
+            {
+                items.Add(new SelectListItem { Text = item.Ten, Value = item.Id });
+            }
+            return items;
+        }
+
+
+        /// <summary>
+        /// format Hop from domain to SelectListItem
+        /// </summary>
+        /// <param name="users">list Hop</param>
+        /// <returns>Select List</returns>
+        public static List<SelectListItem> SelectListItem_User(IList<ApplicationUser> users)
+        {
+            List<SelectListItem> items = new List<SelectListItem>()
+            {
+                new SelectListItem { Text = "", Value = "" }
+            };
+            foreach (var item in users)
+            {
+                items.Add(new SelectListItem { Text = item.FullName, Value = item.Id });
+            }
+            return items;
+        }
+
+        /// <summary>
+        /// format Hop from domain to SelectListItem
+        /// </summary>
+        /// <param name="hops">list Hop</param>
+        /// <returns>Select List</returns>
+        public static List<SelectListItem> SelectListItem_Hop(IList<Hop> hops)
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+            foreach (var item in hops)
+            {
+                string vt = item.Ke.Tu.Ten +" kệ thứ "+item.Ke.SoThuTu + " hộp số " + item.SoHop;
+                items.Add(new SelectListItem { Text = vt, Value = item.Id });
+            }
+            return items;
+        }
+
+        /// <summary>
+        /// format Hop from domain to SelectListItem
+        /// </summary>
+        /// <param name="hops">list Hop</param>
+        /// <returns>Select List</returns>
+        public static List<SelectListItem> SelectListItem_NoiBanHanh(IList<NoiBanHanh> noiBanHanhs)
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+            foreach (var item in noiBanHanhs)
+            {
+                items.Add(new SelectListItem { Text = item.Ten, Value = item.Id });
+            }
+            return items;
+        }
+
         public static List<SelectListItem> SelectListItem_TinhTrangLuuTru()
         {
             var items = new List<SelectListItem>
             {
                 new SelectListItem{Value = "Trong Kho", Text = "Trong Kho"},
                 new SelectListItem{Value = "Đang Mượn", Text = "Đang Mượn"},
+            };
+            return items;
+        }
+
+        public static List<SelectListItem> SelectListItem_DangVanBan()
+        {
+            var items = new List<SelectListItem>
+            {
+                new SelectListItem{Value = "Nội Bộ", Text = "Nội Bộ"},
+                new SelectListItem{Value = "Đến", Text = "Đến"},
+                new SelectListItem{Value = "Đi", Text = "Đi"}
             };
             return items;
         }

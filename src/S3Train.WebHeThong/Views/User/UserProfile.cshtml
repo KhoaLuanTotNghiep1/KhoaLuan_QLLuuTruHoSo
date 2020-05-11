@@ -1,0 +1,201 @@
+﻿@using S3Train.Model.User
+@model UserViewModel
+
+@{
+    ViewBag.Title = "UserProfile";
+    Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <div class="row m-y-2">
+            <div class="col-lg-8 push-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Thông Tin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Chỉnh Sửa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" data-target="#passWord" data-toggle="tab" class="nav-link">Đổi Mật Khẩu</a>
+                    </li>
+                </ul>
+                <br />
+                <div class="tab-content p-b-3">
+                    <div class="tab-pane active" id="profile">
+                        <h4 class="m-y-2">Thông tin cá nhân</h4>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.DisplayNameFor(model => model.FullName)
+                            </div>
+                            <div class="col-md">
+                                @Html.DisplayFor(model => model.FullName)
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.DisplayNameFor(model => model.UserName)
+                            </div>
+                            <div class="col-md">
+                                @Html.DisplayFor(model => model.UserName)
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.DisplayNameFor(model => model.Email)
+                            </div>
+                            <div class="col-md">
+                                @Html.DisplayFor(model => model.Email)
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.DisplayNameFor(model => model.PhoneNumber)
+                            </div>
+                            <div class="col-md">
+                                @Html.DisplayFor(model => model.PhoneNumber)
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.DisplayNameFor(model => model.Address)
+                            </div>
+                            <div class="col-md">
+                                @Html.DisplayFor(model => model.Address)
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.DisplayNameFor(model => model.Role)
+                            </div>
+                            <div class="col-md">
+                                @Html.DisplayFor(model => model.Role)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="edit">
+                        <h4 class="m-y-2">Chỉnh Sửa Thông Tin</h4>
+                        @using (Html.BeginForm("CreateOrUpdate", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">@Html.DisplayNameFor(item => Model.FullName)</label>
+                                <div class="col-lg-9">
+                                    @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Trà Xuân Sơn" } })
+                                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">@Html.DisplayNameFor(item => Model.Email)</label>
+                                <div class="col-lg-9">
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Trà Xuân Sơn" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">@Html.DisplayNameFor(item => Model.PhoneNumber)</label>
+                                <div class="col-lg-9">
+                                    @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Trà Xuân Sơn" } })
+                                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">@Html.DisplayNameFor(item => Model.Address)</label>
+                                <div class="col-lg-9">
+                                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @placeholder = "Trà Xuân Sơn" } })
+                                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">@Html.DisplayNameFor(item => Model.UserName)</label>
+                                <div class="col-lg-9">
+                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Trà Xuân Sơn" } })
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            @Html.HiddenFor(model => model.Id)
+
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label"></label>
+                                <div class="col-lg-9">
+                                    <input type="reset" class="btn btn-secondary" value="Hủy">
+                                    <input type="submit" class="btn btn-success" value="Lưu Thay Đổi">
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="tab-pane" id="passWord">
+                        <h4 class="m-y-2">Đổi Mật Khẩu</h4>
+                        @using (Html.BeginForm("UpdatePassWord", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">@Html.DisplayNameFor(item => Model.Password)</label>
+                                <div class="col-lg-9">
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">@Html.DisplayNameFor(item => Model.ConfirmPassword)</label>
+                                <div class="col-lg-9">
+                                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label"></label>
+                                <div class="col-lg-9">
+                                    <input type="submit" class="btn btn-success" value="Đổi Mật Khẩu">
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <img src="~/Content/Avatar/@Model.Avatar" class="img-fluid rounded" alt="avatar" id="ImageAvatar" />
+                <label class="custom-file">
+                    @using (Html.BeginForm("ChangeAvatar", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="file" id="file" name="file" class="custom-file-input" />
+                        <span class="custom-file-control btn btn-info" id="chageAvatar">Thay đổi avatar</span>
+                        <input type="submit" class="btn btn-danger" value="Lưu Thay Đổi" id="avatarSubmit"/>
+                    }
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["AlertMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+
+        $(document).ready(function () {
+            $("#avatarSubmit").hide();
+
+            $('input[type="file"]').change(function () {
+                $("#chageAvatar").hide();
+                $("#avatarSubmit").show();
+            }); 
+        });
+    </script>
+}

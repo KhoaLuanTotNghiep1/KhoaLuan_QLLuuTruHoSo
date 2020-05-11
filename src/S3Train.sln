@@ -20,6 +20,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "S3Train.Service", "S3Train.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "S3Train.WebHeThong", "S3Train.WebHeThong\S3Train.WebHeThong.csproj", "{9B10CD6A-D0FB-4250-BCC7-3FDB811A7167}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "algorithm", "algorithm", "{0F85B56F-DAA2-4B49-823F-E3D315F5C2E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithmLibrary", "AlgorithmLibrary\AlgorithmLibrary.csproj", "{96EF9F9C-0CB0-465D-A8DF-CEB835AD0ED1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +46,10 @@ Global
 		{9B10CD6A-D0FB-4250-BCC7-3FDB811A7167}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B10CD6A-D0FB-4250-BCC7-3FDB811A7167}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B10CD6A-D0FB-4250-BCC7-3FDB811A7167}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96EF9F9C-0CB0-465D-A8DF-CEB835AD0ED1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96EF9F9C-0CB0-465D-A8DF-CEB835AD0ED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96EF9F9C-0CB0-465D-A8DF-CEB835AD0ED1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96EF9F9C-0CB0-465D-A8DF-CEB835AD0ED1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +58,7 @@ Global
 		{DB766CB7-FE6C-4849-9DFE-12A70A537F80} = {C41780E6-0393-470A-B0AD-E46E7AFFBA91}
 		{E1778609-49E4-4DE5-A064-570F6E8BCD0F} = {F58AC1F3-EDFA-4B17-AE4C-3E5A783D1005}
 		{95439E7B-F59D-4ACD-A2B0-75C27F3319AF} = {F58AC1F3-EDFA-4B17-AE4C-3E5A783D1005}
+		{96EF9F9C-0CB0-465D-A8DF-CEB835AD0ED1} = {0F85B56F-DAA2-4B49-823F-E3D315F5C2E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9E65401C-EF15-4E22-A6CF-234117977687}

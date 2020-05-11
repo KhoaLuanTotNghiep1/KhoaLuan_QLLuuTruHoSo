@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">Kệ</h6>
-                        <p>@Html.DisplayFor(item => Model.Ke.Ten)</p>
+                        <p>Kệ thứ @Html.DisplayFor(item => Model.Ke.SoThuTu)</p>
                     </div>
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoHop)</h6>
@@ -103,49 +103,52 @@
         </div>
     </div>
 
-    <div class="col-lg-12">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="m-0 font-weight-bold text-primary">Danh Sách Hộp Của Kệ</h5>
-                <br />
-                <table class="table table-responsive-md">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Phông Lưu Trữ</th>
-                            <th>Loại Hồ Sơ</th>
-                            <th>Thời Gian Bảo Quản</th>
-                            <th>Người Tạo Hồ Sơ</th>
-                            <th>Hoạt Động</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var hoso in Model.HoSos)
-                        {
-                            <tr>
-                                <td>@stt</td>
-                                <td>@Html.DisplayFor(item => hoso.PhongLuuTru)</td>
-                                <td>@Html.DisplayFor(item => hoso.LoaiHoSo.Ten)</td>
-                                <td>@Html.DisplayFor(item => hoso.ThoiGianBaoQuan)</td>
-                                <td>@Html.DisplayFor(item => hoso.User.FullName)</td>
-                                <td>@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", hoso.TinhTrang)</td>
-                                <td>
-                                    <a href="@Url.Action("Detail","HoSo", new { id=hoso.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
-                                        <i class="fas fa-info"></i>
-                                    </a>
-                                    <a href="@Url.Action("CreateOrUpdate","HoSo", new { id=hoso.Id})" class="btn btn-primary" title="Cập Nhật">
-                                        <i class="fas fa-sync"></i>
-                                    </a>
-                                    <a href="@Url.Action("Delete","HoSo", new { id=hoso.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @hoso.PhongLuuTru?');" title="Xóa">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            stt += 1;
-                        }
-                    </tbody>
-                </table>
+    @{
+        if (Model.HoSos != null)
+        {
+            <div class="col-lg-12">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="m-0 font-weight-bold text-primary">Danh Sách Hộp Của Kệ</h5>
+                        <br />
+                        <table class="table table-responsive-md">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Phông Lưu Trữ</th>
+                                    <th>Loại Hồ Sơ</th>
+                                    <th>Thời Gian Bảo Quản</th>
+                                    <th>Hoạt Động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var hoso in Model.HoSos)
+                                {
+                                    <tr>
+                                        <td>@stt</td>
+                                        <td>@Html.DisplayFor(item => hoso.PhongLuuTru)</td>
+                                        <td>@Html.DisplayFor(item => hoso.LoaiHoSo.Ten)</td>
+                                        <td>@Html.DisplayFor(item => hoso.ThoiGianBaoQuan)</td>
+                                        <td>
+                                            <a href="@Url.Action("Detail","HoSo", new { id=hoso.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
+                                                <i class="fas fa-info"></i>
+                                            </a>
+                                            <a href="@Url.Action("CreateOrUpdate","HoSo", new { id=hoso.Id})" class="btn btn-primary" title="Cập Nhật">
+                                                <i class="fas fa-sync"></i>
+                                            </a>
+                                            <a href="@Url.Action("Delete","HoSo", new { id=hoso.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @hoso.PhongLuuTru?');" title="Xóa">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    stt += 1;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        }
+    }
+
 </div>

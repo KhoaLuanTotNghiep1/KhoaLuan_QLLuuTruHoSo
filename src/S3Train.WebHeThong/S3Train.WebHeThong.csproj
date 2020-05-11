@@ -2700,6 +2700,7 @@
     <Content Include="Views\Shared\_PartialChageDangTLVB.cshtml" />
     <Content Include="Views\Shared\_PartialSlidebar.cshtml" />
     <Content Include="Views\Home\NotFound.cshtml" />
+    <Content Include="Views\Home\LichSuHoatDong.cshtml" />
     <None Include="Web.LocalConnectStrings.config">
       <SubType>Designer</SubType>
     </None>

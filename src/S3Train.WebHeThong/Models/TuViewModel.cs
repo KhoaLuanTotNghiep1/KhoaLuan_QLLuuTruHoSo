@@ -59,4 +59,10 @@ namespace S3Train.WebHeThong.Models
         public IPagedList<Tu> Paged { get; set; }
         public List<TuViewModel> Items { get; set; }
     }
+
+    public class LichSuHoatDongIndexViewModel : IndexViewModelBase
+    {
+        public IPagedList<LichSuHoatDong> Paged { get; set; }
+        public List<LichSuHoatDong> Items { get; set; }
+    }
 }

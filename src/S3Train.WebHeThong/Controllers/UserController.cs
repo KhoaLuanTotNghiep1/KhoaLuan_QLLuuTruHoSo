@@ -18,15 +18,17 @@ namespace S3Train.WebHeThong.Controllers
     {
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
-        // nhớ làm thêm chức năng kiểm tra email và username đã tồn tại khi lập tài khoản user mới
+        private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
+
         public UserController()
         {
 
         }
-        public UserController(IUserService userService, IRoleService roleService)
+        public UserController(IUserService userService, IRoleService roleService, IFunctionLichSuHoatDongService functionLichSuHoatDongService)
         {
             _userService = userService;
             _roleService = roleService;
+            _functionLichSuHoatDongService = functionLichSuHoatDongService;
         }
 
         // GET: User
@@ -78,6 +80,7 @@ namespace S3Train.WebHeThong.Controllers
                 if (result.Succeeded)
                 {
                     await _userService.UserAddToRoles(user.Id, model.Role);
+                    _functionLichSuHoatDongService.Create(ActionWithObject.Create, User.Identity.GetUserId(), "tài khoản: " + user.UserName);
                     TempData["AlertMessage"] = "Tạo Mới Thành Công";
                     return RedirectToAction("IndexAsync");
                 }
@@ -137,6 +140,7 @@ namespace S3Train.WebHeThong.Controllers
         {
             var user = await _userService.GetUserById(id);
             await _userService.DeleteAsync(user);
+            _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), "tài khoản: " + user.UserName);
             TempData["AlertMessage"] = "Xóa Thành Công";
             return RedirectToAction("IndexAsync");
         }
@@ -158,9 +162,14 @@ namespace S3Train.WebHeThong.Controllers
         public async Task<ActionResult> ChangeRole(UserViewModel model)
         {
             var roles = await _userService.GetRolesForUser(model.Id);
+            var user = await _userService.GetUserById(model.Id);
+
             if(roles.Count > 0)
                 await _userService.RemoveFromRoles(model.Id, roles[0].ToString());
+
             await _userService.UserAddToRoles(model.Id, model.Role);
+            _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(),
+                "quyền tài khoản: " + user.UserName + " thành quyền " + model.Role);
 
             TempData["AlertMessage"] = "Đổi quyền người dùng thành quyền " + model.Role + " thành công";
             return RedirectToAction("IndexAsync");

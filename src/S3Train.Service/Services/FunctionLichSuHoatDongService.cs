@@ -1,12 +1,6 @@
-﻿using Microsoft.AspNet.Identity;
-using S3Train.Contract;
+﻿using S3Train.Contract;
 using S3Train.Domain;
-using S3Train.Model.LichSuHoatDong;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace S3Train.Services
 {
@@ -14,14 +8,68 @@ namespace S3Train.Services
     {
         private readonly ILichSuHoatDongService _lichSuHoatDongService;
 
-        public FunctionLichSuHoatDongService()
-        {
-
-        }
-
-        public FunctionLichSuHoatDongService(LichSuHoatDongService lichSuHoatDongService)
+        public FunctionLichSuHoatDongService(ILichSuHoatDongService lichSuHoatDongService)
         {
             _lichSuHoatDongService = lichSuHoatDongService;
+        }
+
+        public void Create(ActionWithObject hoatDong, string userId, string chiTietHoatDong)
+        {
+            var lichSuHoatDong = new LichSuHoatDong()
+            {
+                Id = Guid.NewGuid().ToString(),
+                HoatDong = ActionString(hoatDong),
+                ChiTietHoatDong = ActionString(hoatDong) + chiTietHoatDong,
+                NgayTao = DateTime.Now,
+                TrangThai = true,
+                UserId = userId
+            };
+
+            _lichSuHoatDongService.Insert(lichSuHoatDong);
+        }
+
+        public void Remove(string Id)
+        {
+            if (string.IsNullOrEmpty(Id))
+                return;
+
+            var item = _lichSuHoatDongService.GetById(Id);
+
+            if (item == null)
+                return;
+
+            _lichSuHoatDongService.Remove(item);
+        }
+
+        public void Remove(DateTime dateTime)
+        {
+            if (dateTime == null)
+                dateTime = DateTime.Now;
+
+            _lichSuHoatDongService.Remove(p => p.NgayTao <= dateTime);
+        }
+
+        private string ActionString(ActionWithObject actionWithObject)
+        {
+            string result = "";
+            switch(actionWithObject)
+            {
+                case ActionWithObject.Create:
+                    result = "Tạo mới ";
+                    break;
+                case ActionWithObject.Update:
+                    result = "Cập nhật ";
+                    break;
+                case ActionWithObject.Delete:
+                    result = "Xóa ";
+                    break;
+                case ActionWithObject.ChangeStatus:
+                    result = "Thay Đổi ";
+                    break;
+                default:
+                    break;
+            }
+            return result;
         }
     }
 }

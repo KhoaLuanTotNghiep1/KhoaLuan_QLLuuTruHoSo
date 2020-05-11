@@ -1,4 +1,5 @@
-﻿using S3Train.Contract;
+﻿using Microsoft.AspNet.Identity;
+using S3Train.Contract;
 using S3Train.Core.Constant;
 using S3Train.Domain;
 using S3Train.WebHeThong.Models;
@@ -15,16 +16,19 @@ namespace S3Train.WebHeThong.Controllers
     {
         private readonly ILoaiHoSoService _loaiHoSoService;
         private readonly IPhongBanService _phongBanService;
+        private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
 
         public LHSAndPBController()
         {
 
         }
 
-        public LHSAndPBController(ILoaiHoSoService loaiHoSoService, IPhongBanService phongBanService)
+        public LHSAndPBController(ILoaiHoSoService loaiHoSoService, IPhongBanService phongBanService,
+            IFunctionLichSuHoatDongService functionLichSuHoatDongService)
         {
             _loaiHoSoService = loaiHoSoService;
             _phongBanService = phongBanService;
+            _functionLichSuHoatDongService = functionLichSuHoatDongService;
         }
 
         // GET: LHSAnfPB
@@ -71,12 +75,14 @@ namespace S3Train.WebHeThong.Controllers
                 loaiHoSo.Id = Guid.NewGuid().ToString();
                 loaiHoSo.NgayTao = DateTime.Now;
                 _loaiHoSoService.Insert(loaiHoSo);
+                _functionLichSuHoatDongService.Create(ActionWithObject.Create, User.Identity.GetUserId(), "loại hồ sơ: " + loaiHoSo.Ten);
                 TempData["AlertMessage"] = "Tạo Mới Loại Hồ Sơ Thành Công";
             }
             else
             {
                 loaiHoSo.NgayCapNhat = DateTime.Now;
                 _loaiHoSoService.Update(loaiHoSo);
+                _functionLichSuHoatDongService.Create(ActionWithObject.Update, User.Identity.GetUserId(), "loại hồ sơ: " + loaiHoSo.Ten);
                 TempData["AlertMessage"] = "Cập Nhật Loại Hồ Sơ Thành Công";
             }
             return RedirectToAction("Index");
@@ -112,12 +118,14 @@ namespace S3Train.WebHeThong.Controllers
                 phongBan.Id = Guid.NewGuid().ToString();
                 phongBan.NgayTao = DateTime.Now;
                 _phongBanService.Insert(phongBan);
+                _functionLichSuHoatDongService.Create(ActionWithObject.Create, User.Identity.GetUserId(), "phòng ban: " + phongBan.Ten);
                 TempData["AlertMessage"] = "Tạo Mới Phong Ban Thành Công";
             }
             else
             {
                 phongBan.NgayCapNhat = DateTime.Now;
                 _phongBanService.Update(phongBan);
+                _functionLichSuHoatDongService.Create(ActionWithObject.Update, User.Identity.GetUserId(), "phòng ban: " + phongBan.Ten);
                 TempData["AlertMessage"] = "Cập Nhật Phòng Ban Thành Công";
             }
             return RedirectToAction("Index");
@@ -127,6 +135,7 @@ namespace S3Train.WebHeThong.Controllers
         {
             var loaiHoSo = _loaiHoSoService.Get(m => m.Id == id);
             _loaiHoSoService.Remove(loaiHoSo);
+            _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), "loại hồ sơ: " + loaiHoSo.Ten);
             TempData["AlertMessage"] = "Xóa Loại Hồ Sơ Thành Công";
             return RedirectToAction("Index");
         }
@@ -135,6 +144,7 @@ namespace S3Train.WebHeThong.Controllers
         {
             var phongBan = _phongBanService.Get(m => m.Id == id);
             _phongBanService.Remove(phongBan);
+            _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), "phòng ban: " + phongBan.Ten);
             TempData["AlertMessage"] = "Xóa Phòng Ban Thành Công";
             return RedirectToAction("Index");
         }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 using S3Train.Contract;
 using S3Train.Core.Constant;
 using S3Train.Domain;
@@ -20,6 +21,7 @@ namespace S3Train.WebHeThong.Controllers
         private readonly IHoSoService _hoSoService;
         private readonly ITaiLieuVanBanService _taiLieuVanBanService;
         private readonly ILichSuHoatDongService _lichSuHoatDongService;
+        private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
 
         public HomeController()
         {
@@ -27,7 +29,8 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         public HomeController(ITuService tuService, IKeService keService, IHopService hopService, IHoSoService hoSoService,
-           ITaiLieuVanBanService taiLieuVanBanService, ILichSuHoatDongService lichSuHoatDongService)
+           ITaiLieuVanBanService taiLieuVanBanService, ILichSuHoatDongService lichSuHoatDongService, 
+           IFunctionLichSuHoatDongService functionLichSuHoatDongService)
         {
             _tuService = tuService;
             _keService = keService;
@@ -35,6 +38,7 @@ namespace S3Train.WebHeThong.Controllers
             _hoSoService = hoSoService;
             _taiLieuVanBanService = taiLieuVanBanService;
             _lichSuHoatDongService = lichSuHoatDongService;
+            _functionLichSuHoatDongService = functionLichSuHoatDongService;
         }
 
         [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
@@ -44,11 +48,59 @@ namespace S3Train.WebHeThong.Controllers
 
             ViewBag.DataPoints = JsonConvert.SerializeObject(AddList.ListDataPonit(GetDoc()));
 
-            var lichSuHoatDongs = _lichSuHoatDongService.Gets(p => p.NgayTao == DateTime.Today).Skip(5);
-            if (lichSuHoatDongs.Count() > 0)
-                ViewBag.LichSuHoatDong = lichSuHoatDongs;
+            var lichSuHoatDongs = _lichSuHoatDongService.Gets(p => p.NgayTao <= DateTime.Now).OrderByDescending(p => p.NgayTao).Take(5);
+            ViewBag.LichSuHoatDong = lichSuHoatDongs;
 
             return View();
+        }
+
+        public ActionResult LichSuHoatDong(int? pageIndex, int? pageSize, string searchString, bool active = true)
+        {
+            pageIndex = (pageIndex ?? 1);
+            pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
+
+            string[] includeArray = {"User"};
+            var includes = AddList.AddItemByArray(includeArray);
+
+            var model = new LichSuHoatDongIndexViewModel()
+            {
+                PageIndex = pageIndex.Value,
+                PageSize = pageSize.Value
+            };
+            var lichSuHoatDongs = _lichSuHoatDongService.GetAllPaged(pageIndex, pageSize.Value, null, p => p.OrderBy(c => c.NgayTao), includes);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                lichSuHoatDongs = _lichSuHoatDongService.GetAllPaged(pageIndex, pageSize.Value, p => p.User.FullName.Contains(searchString) || 
+                    p.HoatDong.Contains(searchString), p => p.OrderBy(c => c.NgayTao), includes);
+            }
+
+            model.Paged = lichSuHoatDongs;
+            model.Items = lichSuHoatDongs.ToList();
+
+            ViewBag.Active = active;
+            ViewBag.searchString = searchString;
+
+            return View(model);
+        }
+
+        public ActionResult DeleteLichSuHoatDong(string id)
+        {
+            _functionLichSuHoatDongService.Remove(id);
+
+            TempData["AlertMessage"] = "Xóa Thành Công";
+            return RedirectToAction("LichSuHoatDong");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteAll(DateTime dateTime)
+        {
+            _functionLichSuHoatDongService.Remove(dateTime);
+            _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(),
+                " tất cả các hoạt độn trước ngày " + dateTime.ToString());
+
+            TempData["AlertMessage"] = "Xóa Thành Công Các Hoạt Động Trước Ngày " + dateTime.ToString();
+            return RedirectToAction("LichSuHoatDong");
         }
 
         public ActionResult NotFound()

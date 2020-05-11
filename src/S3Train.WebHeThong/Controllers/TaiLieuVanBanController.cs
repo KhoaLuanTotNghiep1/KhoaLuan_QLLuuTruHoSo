@@ -25,6 +25,7 @@ namespace S3Train.WebHeThong.Controllers
         private readonly IHoSoService _hoSoService;
         private readonly ILoaiHoSoService _loaiHoSoService;
         private readonly IUserService _userService;
+        private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
 
         public TaiLieuVanBanController()
         {
@@ -32,13 +33,15 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         public TaiLieuVanBanController(ITaiLieuVanBanService taiLieuVanBanService, INoiBanHanhService noiBanHanhService, 
-            IHoSoService hoSoService, ILoaiHoSoService loaiHoSoService, IUserService userService)
+            IHoSoService hoSoService, ILoaiHoSoService loaiHoSoService, IUserService userService, 
+            IFunctionLichSuHoatDongService functionLichSuHoatDongService)
         {
             _taiLieuVanBanService = taiLieuVanBanService;
             _noiBanHanhService = noiBanHanhService;
             _hoSoService = hoSoService;
             _loaiHoSoService = loaiHoSoService;
             _userService = userService;
+            _functionLichSuHoatDongService = functionLichSuHoatDongService;
         }
 
         // GET: TaiLieuVanBan
@@ -103,6 +106,8 @@ namespace S3Train.WebHeThong.Controllers
                 : _taiLieuVanBanService.Get(m => m.Id == model.Id);
 
             var autoList = AutoCompleteTextHoSos(_hoSoService.GetAll());
+            string userId = User.Identity.GetUserId();
+            string cthd = model.Loai + ": " + model.Ten;
 
             string localFile = Server.MapPath("~/Content/HoSo/");
 
@@ -127,7 +132,7 @@ namespace S3Train.WebHeThong.Controllers
             taiLieuVanBan.NgayBanHanh = model.NgayBanHanh;
             taiLieuVanBan.TinhTrang = "Trong Kho";
             taiLieuVanBan.TrangThai = true;
-            taiLieuVanBan.UserId = User.Identity.GetUserId();
+            taiLieuVanBan.UserId = userId;
             #endregion
 
             if (string.IsNullOrEmpty(model.Id))
@@ -135,12 +140,14 @@ namespace S3Train.WebHeThong.Controllers
                 taiLieuVanBan.Id = Guid.NewGuid().ToString();
                 taiLieuVanBan.NgayTao = DateTime.Now;
                 _taiLieuVanBanService.Insert(taiLieuVanBan);
+                _functionLichSuHoatDongService.Create(ActionWithObject.Create, userId, cthd);
                 TempData["AlertMessage"] = "Tạo Mới Thành Công";
             }
             else
             {
                 taiLieuVanBan.NgayCapNhat = DateTime.Now;
                 _taiLieuVanBanService.Update(taiLieuVanBan);
+                _functionLichSuHoatDongService.Create(ActionWithObject.Update, userId, cthd);
                 TempData["AlertMessage"] = "Cập Nhật Thành Công";
             }
             return RedirectToAction("Index", new { dang = model.Dang});
@@ -160,7 +167,9 @@ namespace S3Train.WebHeThong.Controllers
             taiLieuVanBan.TinhTrang = GlobalConfigs.TINHTRANG_DAGOI;
 
             _taiLieuVanBanService.Update(taiLieuVanBan);
+            _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(),"gởi văn bản đi: " + model.Ten);
 
+            TempData["AlertMessage"] = "Gởi văn bản thành công";
             return RedirectToAction("Index", new { dang = GlobalConfigs.DANG_DI });
         }
 
@@ -170,6 +179,7 @@ namespace S3Train.WebHeThong.Controllers
             var taiLieuVanBan = _taiLieuVanBanService.Get(m => m.Id == id);
             _taiLieuVanBanService.Remove(taiLieuVanBan);
             TempData["AlertMessage"] = "Xóa Thành Công";
+            _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), taiLieuVanBan.Loai + ": " + taiLieuVanBan.Ten);
             return RedirectToAction("Index", new { dang = taiLieuVanBan.Dang});
         }
 
@@ -189,6 +199,9 @@ namespace S3Train.WebHeThong.Controllers
             model.NgayCapNhat = DateTime.Now;
 
             _taiLieuVanBanService.Update(model);
+            _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(), model.Loai + ": " + model.Ten);
+
+            TempData["AlertMessage"] = "Xóa Thành Công";
             return RedirectToAction("Index", new { dang = model.Dang});
         }
 

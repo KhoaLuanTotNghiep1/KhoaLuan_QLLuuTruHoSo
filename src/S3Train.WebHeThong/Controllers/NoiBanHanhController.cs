@@ -1,4 +1,5 @@
-﻿using S3Train.Contract;
+﻿using Microsoft.AspNet.Identity;
+using S3Train.Contract;
 using S3Train.Core.Constant;
 using S3Train.Domain;
 using S3Train.WebHeThong.Models;
@@ -14,15 +15,17 @@ namespace S3Train.WebHeThong.Controllers
     public class NoiBanHanhController : Controller
     {
         private readonly INoiBanHanhService _noiBanHanhService;
+        private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
 
         public NoiBanHanhController()
         {
 
         }
 
-        public NoiBanHanhController(INoiBanHanhService noiBanHanhService)
+        public NoiBanHanhController(INoiBanHanhService noiBanHanhService, IFunctionLichSuHoatDongService functionLichSuHoatDongService)
         {
             _noiBanHanhService = noiBanHanhService;
+            _functionLichSuHoatDongService = functionLichSuHoatDongService;
         }
 
         // GET: NoiBanHanh
@@ -80,12 +83,14 @@ namespace S3Train.WebHeThong.Controllers
                 noiBanHanh.Id = Guid.NewGuid().ToString();
                 noiBanHanh.NgayTao = DateTime.Now;
                 _noiBanHanhService.Insert(noiBanHanh);
+                _functionLichSuHoatDongService.Create(ActionWithObject.Create, User.Identity.GetUserId(), "nơi ban hành: " + model.Ten);
                 TempData["AlertMessage"] = "Tạo Mới Thành Công";
             }
             else
             {
                 noiBanHanh.NgayCapNhat = DateTime.Now;
                 _noiBanHanhService.Update(noiBanHanh);
+                _functionLichSuHoatDongService.Create(ActionWithObject.Update, User.Identity.GetUserId(), "nơi ban hành: " + model.Ten);
                 TempData["AlertMessage"] = "Cập Nhật Thành Công";
             }
             return RedirectToAction("Index");
@@ -93,8 +98,9 @@ namespace S3Train.WebHeThong.Controllers
 
         public ActionResult Delete(string id)
         {
-            var tu = _noiBanHanhService.Get(m => m.Id == id);
-            _noiBanHanhService.Remove(tu);
+            var noiBanHanh = _noiBanHanhService.Get(m => m.Id == id);
+            _noiBanHanhService.Remove(noiBanHanh);
+            _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), "nơi ban hành: " + noiBanHanh.Ten);
             TempData["AlertMessage"] = "Xóa Thành Công";
             return RedirectToAction("Index");
         }

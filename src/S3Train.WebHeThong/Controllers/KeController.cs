@@ -18,16 +18,18 @@ namespace S3Train.WebHeThong.Controllers
     {
         private readonly ITuService _tuService;
         private readonly IKeService _keService;
+        private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
 
         public KeController()
         {
 
         }
 
-        public KeController(ITuService tuService, IKeService keService)
+        public KeController(ITuService tuService, IKeService keService, IFunctionLichSuHoatDongService functionLichSuHoatDongService)
         {
             _tuService = tuService;
             _keService = keService;
+            _functionLichSuHoatDongService = functionLichSuHoatDongService;
         }
 
         // GET: Ke
@@ -86,6 +88,9 @@ namespace S3Train.WebHeThong.Controllers
             var ke = string.IsNullOrEmpty(model.Id) ? new Ke { NgayCapNhat = DateTime.Now }
                 : _keService.Get(m => m.Id == model.Id);
 
+            var userId = User.Identity.GetUserId();
+            var cthd = "kệ: " + model.Ten;
+
             ke.Ten = model.Ten;
             ke.SoThuTu = model.SoThuTu;
             ke.SoHopToiDa = model.SoHopToiDa;
@@ -108,12 +113,15 @@ namespace S3Train.WebHeThong.Controllers
                     return View(model);
                 }
                 _keService.Insert(ke);
+
+                _functionLichSuHoatDongService.Create(ActionWithObject.Create, userId, cthd);
                 TempData["AlertMessage"] = "Tạo Mới Thành Công";
             }
             else
             {
                 ke.NgayCapNhat = DateTime.Now;
                 _keService.Update(ke);
+                _functionLichSuHoatDongService.Create(ActionWithObject.Update, userId, cthd);
                 TempData["AlertMessage"] = "Cập Nhật Thành Công";
             }
             return RedirectToAction("Index");
@@ -124,6 +132,7 @@ namespace S3Train.WebHeThong.Controllers
             var ke = _keService.Get(m => m.Id == id);
             _keService.Remove(ke);
             UpdateTu_SoLuongHienTai(ke.Tuid, ActionWithObject.Delete);
+            _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), "kệ: " + ke.Ten);
             TempData["AlertMessage"] = "Xóa Thành Công";
             return RedirectToAction("Index");
         }
@@ -143,6 +152,7 @@ namespace S3Train.WebHeThong.Controllers
             model.NgayCapNhat = DateTime.Now;
 
             _keService.Update(model);
+            _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(), "kệ " + model.Ten + " thành "+ active);
             return RedirectToAction("Index");
         }
 

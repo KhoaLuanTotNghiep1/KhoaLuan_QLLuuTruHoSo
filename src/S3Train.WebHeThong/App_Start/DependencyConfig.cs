@@ -68,13 +68,14 @@ namespace S3Train.WebHeThong.App_Start
             builder.RegisterType<HopService>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<HoSoService>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<KeService>().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterType<LichSuHoatDongService>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<LoaiHoSoService>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<MuonTraService>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<NoiBanHanhService>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<PhongBanService>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<TaiLieuVanBanService>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<TuService>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<LichSuHoatDongService>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<FunctionLichSuHoatDongService>().As<IFunctionLichSuHoatDongService>();
             builder.RegisterType<AccountManager>().As<IAccountManager>();
             builder.RegisterType<RoleService>().As<IRoleService>();
             builder.RegisterType<UserService>().As<IUserService>();

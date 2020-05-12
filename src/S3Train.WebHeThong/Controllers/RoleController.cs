@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNet.Identity.Owin;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using S3Train.Contract;
 using S3Train.Core.Constant;
 using S3Train.Domain;
 using S3Train.IdentityManager;
@@ -16,9 +18,14 @@ namespace S3Train.WebHeThong.Controllers
     public class RoleController : Controller
     {
         private ApplicationRoleManager _roleManager;
+        private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
 
         public RoleController()
         {
+        }
+        public RoleController(IFunctionLichSuHoatDongService functionLichSuHoatDongService)
+        {
+            _functionLichSuHoatDongService = functionLichSuHoatDongService;
         }
 
         public RoleController(ApplicationRoleManager roleManager)
@@ -71,6 +78,7 @@ namespace S3Train.WebHeThong.Controllers
                 role.Id = Guid.NewGuid().ToString();
 
                 await RoleManager.CreateAsync(role);
+                _functionLichSuHoatDongService.Create(ActionWithObject.Create, User.Identity.GetUserId(), "quyền truy cập: " + model.Name);
                 TempData["AlertMessage"] = "Tạo Mới Thành Công";
             }
             else
@@ -80,6 +88,7 @@ namespace S3Train.WebHeThong.Controllers
                 role.Description = model.Description;
 
                 await RoleManager.UpdateAsync(role);
+                _functionLichSuHoatDongService.Create(ActionWithObject.Update, User.Identity.GetUserId(), "quyền truy cập: " + model.Name);
                 TempData["AlertMessage"] = "Cập Nhật Thành Công";
             }
             return RedirectToAction("Index");
@@ -90,6 +99,7 @@ namespace S3Train.WebHeThong.Controllers
             var role = await RoleManager.FindByIdAsync(id);
             await RoleManager.DeleteAsync(role);
             TempData["AlertMessage"] = "Xóa Thành Công";
+            _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), "quyền truy cập: " + role.Name);
             return RedirectToAction("Index");
         }
     }

@@ -1,0 +1,108 @@
+﻿@using S3Train.Domain
+@using S3Train.WebHeThong.Models
+@model LichSuHoatDongIndexViewModel
+
+@{
+    ViewBag.Title = "LichSuHoatDong";
+    Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
+    int stt = 1;
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Lịch Sử Hoạt Động</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("DashBoard","Home")">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">LichSuHoatDong</li>
+    </ol>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-8">
+                @Html.Partial("~/Views/Shared/_PartialSearch.cshtml")
+                <i><span>Tìm kiếm: hành động hoặc tên người thực hiện</span></i>
+            </div>
+            <div class="col-md-4">
+                @using (Html.BeginForm("DeleteAll", "Home", FormMethod.Post))
+                {
+                    <div class="row">
+                        <input type="date" class="form-control col-md-9" name="dateTime" />
+                        &ensp;
+                        <input type="submit" value="Xóa" class="btn btn-danger col-md-auto" />
+                    </div>
+                    <i><span>Xóa các hoạt động trước ngày bạn chọn</span></i>
+                }
+            </div>
+        </div>
+        <br />
+        <table class="table table-responsive-lg">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Hoạt Động</th>
+                    <th>Chi Tiết Hoạt Động</th>
+                    <th>Người Thực Hiện</th>
+                    <th>Hoạt Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@Html.DisplayFor(m => item.HoatDong)</td>
+                        <td>
+                            @Html.DisplayFor(m => item.ChiTietHoatDong)
+
+                            @{
+                                if (item.ChiTietHoatDong.Split().Last() == "True")
+                                {
+                                    @Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", true)
+                                }
+                                if (item.ChiTietHoatDong.Split().Last() == "False")
+                                {
+                                    @Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", false)
+                                }
+                            }
+                        </td>
+                        <td>@Html.DisplayFor(m => item.User.FullName)</td>
+                        <td>
+                            <a href="@Url.Action("DeleteLichSuHoatDong","Home", new { id=item.Id })" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa hoàn toàn item này không?');" title="Xóa">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    stt += 1;
+                }
+                <tr class="pageging">
+                    <td colspan="8">
+                        @Html.PagedListPager(Model.Paged, pageIndex => Url.Action("LichSuHoatDong", new RouteValueDictionary {
+                        { "pageIndex" , pageIndex },
+                        { "pageSize", Model.PageSize > 0 ? Model.PageSize : GlobalConfigs.DEFAULT_PAGESIZE } ,
+                        { "searchString",  ViewBag.searchString} ,
+                        }), new PagedListRenderOptions
+                        {
+                        LiElementClasses = new string[] { "page-item" },
+                        PageClasses = new string[] { "page-link" },
+                        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                        MaximumPageNumbersToDisplay = 5,
+                        EllipsesElementClass = "page-link",
+                        })
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["AlertMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+    </script>
+}

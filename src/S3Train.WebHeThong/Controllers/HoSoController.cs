@@ -20,6 +20,7 @@ namespace S3Train.WebHeThong.Controllers
         private readonly ILoaiHoSoService _loaiHoSoService;
         private readonly IPhongBanService _phongBanService;
         private readonly IHopService _hopService;
+        private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
 
         public HoSoController()
         {
@@ -27,12 +28,13 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         public HoSoController(IHoSoService hoSoService, ILoaiHoSoService loaiHoSoService, 
-            IPhongBanService phongBanService, IHopService hopService)
+            IPhongBanService phongBanService, IHopService hopService, IFunctionLichSuHoatDongService functionLichSuHoatDongService)
         {
             _hoSoService = hoSoService;
             _loaiHoSoService = loaiHoSoService;
             _phongBanService = phongBanService;
             _hopService = hopService;
+            _functionLichSuHoatDongService = functionLichSuHoatDongService;
         }
 
         // GET: HoSo
@@ -95,6 +97,8 @@ namespace S3Train.WebHeThong.Controllers
                 : _hoSoService.Get(m => m.Id == model.Id);
 
             var autoList = LocalHops(_hopService.GetAll());
+            var userId = User.Identity.GetUserId();
+            var chiTietHoatDong = "hồ sơ: " + model.PhongLuuTru;
 
             hoSo.TapHoSoId = model.TapHoSoId;
             hoSo.PhongLuuTru = model.PhongLuuTru;
@@ -104,7 +108,7 @@ namespace S3Train.WebHeThong.Controllers
             hoSo.BienMucHoSo = model.BienMucHoSo;
             hoSo.LoaiHoSoId = model.LoaiHoSoId;
             hoSo.HopId = autoList.FirstOrDefault(p => p.Text == model.HopId).Id;
-            hoSo.UserId = User.Identity.GetUserId();
+            hoSo.UserId = userId;
             hoSo.TrangThai = true;
 
             if (string.IsNullOrEmpty(model.Id))
@@ -112,12 +116,14 @@ namespace S3Train.WebHeThong.Controllers
                 hoSo.Id = Guid.NewGuid().ToString();
                 hoSo.NgayTao = DateTime.Now;
                 _hoSoService.Insert(hoSo);
+                _functionLichSuHoatDongService.Create(ActionWithObject.Create, userId, chiTietHoatDong);
                 TempData["AlertMessage"] = "Tạo Mới Thành Công";
             }
             else
             {
                 hoSo.NgayCapNhat = DateTime.Now;
                 _hoSoService.Update(hoSo);
+                _functionLichSuHoatDongService.Create(ActionWithObject.Update, userId, chiTietHoatDong);
                 TempData["AlertMessage"] = "Cập Nhật Thành Công";
             }
             return RedirectToAction("Index");
@@ -125,9 +131,10 @@ namespace S3Train.WebHeThong.Controllers
 
         public ActionResult Delete(string id)
         {
-            var tu = _hoSoService.Get(m => m.Id == id);
-            _hoSoService.Remove(tu);
+            var hoSo = _hoSoService.Get(m => m.Id == id);
+            _hoSoService.Remove(hoSo);
             TempData["AlertMessage"] = "Xóa Thành Công";
+            _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), "hồ sơ: "+ hoSo.PhongLuuTru);
             return RedirectToAction("Index");
         }
 
@@ -146,6 +153,7 @@ namespace S3Train.WebHeThong.Controllers
             model.NgayCapNhat = DateTime.Now;
 
             _hoSoService.Update(model);
+            _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(), "hồ sơ: " + model.PhongLuuTru + " thành " +active);
             return RedirectToAction("Index");
         }
 

@@ -1,15 +1,17 @@
-﻿@using S3Train.Model.LichSuHoatDong
+﻿@using S3Train.Domain
+
 @{
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
 
     var array = ViewBag.Array as int[];
+    var lichSuHoatDongs = ViewBag.LichSuHoatDong as IEnumerable<LichSuHoatDong>;
 }
 <div class="container-fluid" id="container-wrapper">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+        <h1 class="h3 mb-0 text-gray-800">Bảng Điều Khiển</h1>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="./">Home</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("DashBoard","Home")">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
         </ol>
     </div>
@@ -108,22 +110,32 @@
                     <h6 class="m-0 font-weight-bold text-light">Các Hoạt Động Gần Nhất</h6>
                 </div>
                 <div>
-                    @*@if (ViewBag.LichSuHoatDong != null)
+                    @if (lichSuHoatDongs.Count() > 0)
                     {
-                        @foreach (var item in ViewBag.LichSuHoatDong as List<LichSuHoatDongViewModel>)
+                        foreach (var item in lichSuHoatDongs)
                         {
                             <div class="customer-message align-items-center">
-                                <a class="font-weight-bold" href="#">
+                                <a class="font-weight-bold" href="@Url.Action("LichSuHoatDong","Home")">
                                     <div class="text-truncate message-title">
                                         @item.ChiTietHoatDong
                                     </div>
-                                    <div class="small text-gray-500 message-time font-weight-bold">@item.User.UserName . @item.NgayTao</div>
+                                    <div class="small text-gray-500 message-time font-weight-bold">@item.User.UserName : @item.NgayTao</div>
                                 </a>
                             </div>
                         }
-                    }*@
+                    }
+                    else
+                    {
+                        <div class="customer-message align-items-center">
+                            <a class="font-weight-bold" href="#">
+                                <div class="text-truncate message-title">
+                                    Hôm nay chưa có hoạt động
+                                </div>
+                            </a>
+                        </div>
+                    }
                     <div class="card-footer text-center">
-                        <a class="m-0 small text-primary card-link" href="#">View More <i class="fas fa-chevron-right"></i></a>
+                        <a class="m-0 small text-primary card-link" href="@Url.Action("LichSuHoatDong","Home")">Xem Thêm <i class="fas fa-chevron-right"></i></a>
                     </div>
                 </div>
             </div>

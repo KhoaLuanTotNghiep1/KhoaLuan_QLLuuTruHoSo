@@ -4,14 +4,14 @@
 @{
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
-
-    Model.GhiChu = Html.Raw(HttpUtility.HtmlDecode(Model.GhiChu)).ToString();
-    Model.TrichYeu = Html.Raw(HttpUtility.HtmlDecode(Model.TrichYeu)).ToString();
-    Model.NoiDung = Html.Raw(HttpUtility.HtmlDecode(Model.NoiDung)).ToString();
 }
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Thông Tin chi Tiết</h1>
+    <h1 class="h3 mb-0 text-gray-800">Thông Tin Chi Tiết Tài Liệu/Văn Bản</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index","TaiLieuVanBan")">TaiLieuVanBan</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Detail</li>
+    </ol>
 </div>
 <div class="row">
     <div class="col-md-9">
@@ -100,7 +100,7 @@
 
                 <div class="row">
                     <div class="col-md">
-                        <h6 class="m-0 font-weight-bold text-primary">Đường Dẫn</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Đường Dẫn File</h6>
                         <p>@Html.DisplayFor(item => Model.DuongDan)</p>
                     </div>
                 </div>
@@ -151,23 +151,13 @@
         <div class="row">
             <div class="col-md-6">
                 <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.GhiChu)</h6>
-                @Html.TextAreaFor(model => model.GhiChu, new { @class = "form-control", rows = "5" })
+                @Html.Raw(HttpUtility.HtmlDecode(Model.GhiChu)).ToString()
             </div>
             <div class="col-md-6">
                 <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.TrichYeu)</h6>
-                @Html.TextAreaFor(model => model.TrichYeu, new { @class = "form-control", rows = "5" })
+                @Html.Raw(HttpUtility.HtmlDecode(Model.GhiChu)).ToString()
             </div>
         </div>
     </div>
 </div>
 <br />
-<div class="card">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md">
-                <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NoiDung)</h6>
-                @Html.TextAreaFor(model => model.NoiDung, new { @class = "form-control", rows = "10" })
-            </div>
-        </div>
-    </div>
-</div>

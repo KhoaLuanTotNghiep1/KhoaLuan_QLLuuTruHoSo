@@ -2701,9 +2701,15 @@
     <Content Include="Views\Shared\_PartialChageDangTLVB.cshtml" />
     <Content Include="Views\Shared\_PartialSlidebar.cshtml" />
     <Content Include="Views\Home\NotFound.cshtml" />
+    <Content Include="Views\Home\LichSuHoatDong.cshtml" />
     <Content Include="Views\Shared\_PartialSearch.cshtml" />
     <Content Include="Views\Hop\CreateOrUpdate.cshtml" />
     <Content Include="Views\MuonTra\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\demo.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
     <None Include="Web.LocalConnectStrings.config">
       <SubType>Designer</SubType>
     </None>

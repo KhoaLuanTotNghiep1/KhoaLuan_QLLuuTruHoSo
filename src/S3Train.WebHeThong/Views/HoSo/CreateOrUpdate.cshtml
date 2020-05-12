@@ -6,8 +6,17 @@
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
     Model.GhiChu = Html.Raw(HttpUtility.HtmlDecode(Model.GhiChu)).ToString();
     Model.BienMucHoSo = Html.Raw(HttpUtility.HtmlDecode(Model.BienMucHoSo)).ToString();
+
+    string title = string.IsNullOrEmpty(Model.Id) ? "Tạo Mới" : "Cập Nhật";
 }
 
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">@title Hộp</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index","Hop")">Hop</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Detail</li>
+    </ol>
+</div>
 <div class="card">
     <div class="card-body" id="myForm">
         @using (Html.BeginForm("CreateOrUpdate", "HoSo", FormMethod.Post, new { enctype = "multipart/form-data" }))

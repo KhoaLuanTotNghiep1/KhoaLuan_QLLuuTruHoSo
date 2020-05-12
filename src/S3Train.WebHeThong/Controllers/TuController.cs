@@ -1,4 +1,5 @@
-﻿using S3Train.Contract;
+﻿using Microsoft.AspNet.Identity;
+using S3Train.Contract;
 using S3Train.Core.Constant;
 using S3Train.Domain;
 using S3Train.WebHeThong.CommomClientSide.Function;
@@ -16,16 +17,18 @@ namespace S3Train.WebHeThong.Controllers
     {
         private readonly ITuService _tuService;
         private readonly IKeService _keService;
+        private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
 
         public TuController()
         {
 
         }
 
-        public TuController(ITuService tuService, IKeService keService)
+        public TuController(ITuService tuService, IKeService keService, IFunctionLichSuHoatDongService functionLichSuHoatDongService)
         {
             _tuService = tuService;
             _keService = keService;
+            _functionLichSuHoatDongService = functionLichSuHoatDongService;
         }
 
         // GET: Tu
@@ -82,6 +85,9 @@ namespace S3Train.WebHeThong.Controllers
             var tu =  string.IsNullOrEmpty(model.Id) ? new Tu { NgayCapNhat = DateTime.Now}
                 : _tuService.Get(m => m.Id == model.Id);
 
+            string userId = User.Identity.GetUserId();
+            string chiTietHoatDong = model.Ten;
+
             tu.Ten = model.Ten;
             tu.ViTri = model.ViTri;
             tu.DienTich = model.DienTich;
@@ -96,12 +102,14 @@ namespace S3Train.WebHeThong.Controllers
                 tu.Id = Guid.NewGuid().ToString();
                 tu.NgayTao = DateTime.Now;
                 _tuService.Insert(tu);
+                _functionLichSuHoatDongService.Create(ActionWithObject.Create,userId,chiTietHoatDong);
                 TempData["AlertMessage"] = "Tạo Mới Thành Công";
             }
             else
             {
                 tu.NgayCapNhat = DateTime.Now;
                 _tuService.Update(tu);
+                _functionLichSuHoatDongService.Create(ActionWithObject.Update, userId, chiTietHoatDong);
                 TempData["AlertMessage"] = "Cập Nhật Thành Công";
             }
             return RedirectToAction("Index");
@@ -111,6 +119,7 @@ namespace S3Train.WebHeThong.Controllers
         {
             var tu = _tuService.Get(m => m.Id == id);
             _tuService.Remove(tu);
+            _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), tu.Ten);
             TempData["AlertMessage"] = "Xóa Thành Công";
             return RedirectToAction("Index");
         }
@@ -130,6 +139,7 @@ namespace S3Train.WebHeThong.Controllers
             model.NgayCapNhat = DateTime.Now;
 
             _tuService.Update(model);
+            _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(), model.Ten + " thành " + active);
             return RedirectToAction("Index");
         }
 

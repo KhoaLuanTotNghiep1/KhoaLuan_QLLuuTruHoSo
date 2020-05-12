@@ -3,6 +3,7 @@
 
 @using (Html.BeginForm("CreateOrUpdateLHS", "LHSAndPB", FormMethod.Post))
 {
+    string title = string.IsNullOrEmpty(Model.Id) ? "Tạo Mới" : "Cập Nhật";
 
     if (string.IsNullOrEmpty(Model.Id))
     {
@@ -27,7 +28,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Loại Hồ Sơ</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">@title Loại Hồ Sơ</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

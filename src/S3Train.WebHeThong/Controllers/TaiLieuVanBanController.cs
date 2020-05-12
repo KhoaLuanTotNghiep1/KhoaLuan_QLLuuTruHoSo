@@ -199,7 +199,8 @@ namespace S3Train.WebHeThong.Controllers
             model.NgayCapNhat = DateTime.Now;
 
             _taiLieuVanBanService.Update(model);
-            _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(), model.Loai + ": " + model.Ten);
+            _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(),
+                model.Loai + ": " + model.Ten + " thành "+ active);
 
             TempData["AlertMessage"] = "Xóa Thành Công";
             return RedirectToAction("Index", new { dang = model.Dang});

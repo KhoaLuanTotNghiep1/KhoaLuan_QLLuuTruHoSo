@@ -67,7 +67,7 @@ namespace S3Train.WebHeThong.Controllers
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var lichSuHoatDongs = _lichSuHoatDongService.GetAllPaged(pageIndex, pageSize.Value, null, p => p.OrderBy(c => c.NgayTao), includes);
+            var lichSuHoatDongs = _lichSuHoatDongService.GetAllPaged(pageIndex, pageSize.Value, null, p => p.OrderByDescending(c => c.NgayTao), includes);
 
             if (!string.IsNullOrEmpty(searchString))
             {

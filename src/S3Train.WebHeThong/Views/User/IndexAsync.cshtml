@@ -7,6 +7,14 @@
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
 }
 
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Tài Khoản</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("IndexAsync","User")">User</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Index</li>
+    </ol>
+</div>
+
 <div class="card">
     <div class="card-body">
         <a href="@Url.Action("CreateOrUpdate","User")" class="btn btn-info m-2">

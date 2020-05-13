@@ -34,5 +34,6 @@ namespace S3Train.Contract
         Task<IdentityResult> RemoveFromRoles(string userId, params string[] roles);
         Task<IPagedList<UserViewModel>> GetUser(int pageIndex, int pageSize);
         Task<IList<ApplicationUser>> GetAllAsync();
+      
     }
 }

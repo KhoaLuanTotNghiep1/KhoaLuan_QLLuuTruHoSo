@@ -15,5 +15,6 @@ namespace S3Train.Contract
         Task<IdentityResult> DeleteAsync(ApplicationRole role);
         Task<IPagedList<RoleViewModel>> GetRolesAsync(int pageIndex, int pageSize);
         List<ApplicationRole> GetAllRoles();
+        int CountUsersBelongRoleByRoleName(string roleName);
     }
 }

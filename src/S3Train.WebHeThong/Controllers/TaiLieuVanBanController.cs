@@ -59,12 +59,13 @@ namespace S3Train.WebHeThong.Controllers
                 PageSize = pageSize.Value
             };
 
-            var taiLieuVanBans = _taiLieuVanBanService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active && p.Dang == dang, p => p.OrderBy(c => c.Ten), includes);
+            var taiLieuVanBans = _taiLieuVanBanService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active && 
+                p.Dang == dang, p => p.OrderBy(c => c.Ten), includes);
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 taiLieuVanBans = _taiLieuVanBanService.GetAllPaged(pageIndex, pageSize.Value, p => p.Ten.Contains(searchString) || p.Loai.Contains(searchString)
-                    && p.TrangThai == active && p.Dang == dang, p => p.OrderBy(c => c.Ten), includes);
+                    || p.NoiDung.Contains(searchString) && p.TrangThai == active && p.Dang == dang, p => p.OrderBy(c => c.Ten), includes);
             }
 
             model.Paged = taiLieuVanBans;
@@ -219,6 +220,7 @@ namespace S3Train.WebHeThong.Controllers
         [HttpGet]
         public ActionResult StorageSuggestion(string document)
         {
+            string local = "Không tìm thấy tài liêu/văn bản có cùng nội dung! Tạo hồ sơ mới.";
             var list = _taiLieuVanBanService.GetDocuments();
             list.Add(document);
             var docCollection = new DocumentCollection()
@@ -231,9 +233,13 @@ namespace S3Train.WebHeThong.Controllers
 
             string documentNeedSearch = DocumnetClustering.FindClosestDocument();
 
-            var taiLieuVanBan = _taiLieuVanBanService.Get(p => p.NoiDung == documentNeedSearch);
+            if(!string.IsNullOrEmpty(documentNeedSearch))
+            {
+                var taiLieuVanBan = _taiLieuVanBanService.Get(p => p.NoiDung == documentNeedSearch);
 
-            string local = taiLieuVanBan.HoSo.Hop.Ke.Tu.Ten + " kệ thứ " + taiLieuVanBan.HoSo.Hop.Ke.SoThuTu + " hộp số " + taiLieuVanBan.HoSo.Hop.SoHop + " hồ sơ " + taiLieuVanBan.HoSo.PhongLuuTru;
+                local = taiLieuVanBan.HoSo.Hop.Ke.Tu.Ten + " kệ thứ " + taiLieuVanBan.HoSo.Hop.Ke.SoThuTu + 
+                    " hộp số " + taiLieuVanBan.HoSo.Hop.SoHop + " hồ sơ " + taiLieuVanBan.HoSo.PhongLuuTru;
+            }
 
             return Json(new { da = local}, JsonRequestBehavior.AllowGet);
         }

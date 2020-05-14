@@ -129,16 +129,5 @@ namespace S3Train.WebHeThong.CommomClientSide.DropDownList
             };
             return items;
         }
-
-        public static List<SelectListItem> SelectListItem_DangVanBan()
-        {
-            var items = new List<SelectListItem>
-            {
-                new SelectListItem{Value = "Nội Bộ", Text = "Nội Bộ"},
-                new SelectListItem{Value = "Đến", Text = "Đến"},
-                new SelectListItem{Value = "Đi", Text = "Đi"}
-            };
-            return items;
-        }
     }
 }

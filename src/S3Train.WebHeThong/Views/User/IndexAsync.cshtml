@@ -8,10 +8,10 @@
 }
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Tài Khoản</h1>
+    <h1 class="h3 mb-0 text-gray-800">Tài Khoản Người Dùng</h1>
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="@Url.Action("IndexAsync","User")">User</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Index</li>
+        <li class="breadcrumb-item"><a href="@Url.Action("DanhSach","NguoiDung")">NguoiDung</a></li>
+        <li class="breadcrumb-item active" aria-current="page">DanhSach</li>
     </ol>
 </div>
 
@@ -37,7 +37,7 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td><img class="img-profile rounded rounded-circle" src="~/Content/img/boy.png" style="max-width:30px" title="Hình đại diện" /></td>
+                        <td><img class="img-profile rounded rounded-circle" src="~/Content/Avatar/@item.Avatar" style="max-width:30px" title="Hình đại diện" /></td>
                         <td>
                             @item.UserName
                         </td>

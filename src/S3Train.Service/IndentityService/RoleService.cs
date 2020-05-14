@@ -66,5 +66,10 @@ namespace S3Train.Service
             return _accountManager.Query<ApplicationRole>().Where(c => c.Name != DefaultRole.Administration)
                 .OrderBy(order => order.Name).ToList();
         }
+
+        public int CountUsersBelongRoleByRoleName(string roleName)
+        {
+            return _accountManager.Query<ApplicationRole>().FirstOrDefault(c => c.Name == roleName).Users.Count();
+        }
     }
 }

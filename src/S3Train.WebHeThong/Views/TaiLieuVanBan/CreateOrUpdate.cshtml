@@ -150,7 +150,10 @@
                         success: function (data) {
                             console.log(data);
                             var vt = "Vị trí lưu trữ gợi ý: " + data.da;
-                            $("#viTri").text(vt);
+                            if (data.da == "Không tìm thấy tài liêu/văn bản có cùng nội dung! Tạo hồ sơ mới.")
+                                $("#viTri").text(vt);
+                            else
+                                $("#HoSoId").val(data.da);
                             $("#Button1").hide();
                         },
                         error: function () {

@@ -172,8 +172,7 @@
                     {
                         @Html.AntiForgeryToken()
                         <input type="file" id="file" name="file" class="custom-file-input" />
-                        <span class="custom-file-control btn btn-info" id="chageAvatar">Thay đổi avatar</span>
-                        <input type="submit" class="btn btn-danger" value="Lưu Thay Đổi" id="avatarSubmit"/>
+                        <input type="submit" class="btn btn-danger" value="Lưu Thay Đổi Avatar" id="avatarSubmit"/>
                     }
                 </label>
             </div>
@@ -192,10 +191,24 @@
         $(document).ready(function () {
             $("#avatarSubmit").hide();
 
-            $('input[type="file"]').change(function () {
-                $("#chageAvatar").hide();
-                $("#avatarSubmit").show();
+            $('#ImageAvatar').click(function () {
+                $("#file").trigger('click');
             }); 
+
+            $('#file').on('change', function (e) {
+
+                var target = e.target,
+                    /*Getiing the selected file*/
+                    imgFile = target.files[0],
+                    readerFile = new FileReader();
+                /*Attaching loading event to the reader*/
+                readerFile.onload = function (loadEvent) {
+                    $('#ImageAvatar').attr('src', loadEvent.target.result)
+                }
+                /*Loading the dataurl to reader*/
+                $("#avatarSubmit").show();
+                readerFile.readAsDataURL(imgFile)
+            })
         });
     </script>
 }

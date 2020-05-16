@@ -30,9 +30,9 @@
             <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Số Ký Hiệu</th>
                     <th>Tên</th>
                     <th>Loại</th>
+                    <th>Dạng Văn Bản</th>
                     <th>Lưu Trữ</th>
                     <th>Tình Trạng</th>
                     <th>Hoạt Động</th>
@@ -43,9 +43,9 @@
                 {
                     <tr>
                         <td>@stt</td>
-                        <td>@Html.DisplayFor(m => item.SoKyHieu)</td>
                         <td>@Html.DisplayFor(m => item.Ten)</td>
                         <td>@Html.DisplayFor(m => item.Loai)</td>
+                        <td>@Html.DisplayFor(m => item.Dang)</td>
                         <td>@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", item.TinhTrang)</td>
                         <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
                         <td>

@@ -305,7 +305,14 @@
     <Compile Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.designer.cs">
       <DependentUpon>202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\202005160325216_AdjustToOldVersion.cs" />
+    <Compile Include="Migrations\202005160325216_AdjustToOldVersion.designer.cs">
+      <DependentUpon>202005160325216_AdjustToOldVersion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005161447058_AddColumnHinhAnhTableTLVB.cs" />
+    <Compile Include="Migrations\202005161447058_AddColumnHinhAnhTableTLVB.designer.cs">
+      <DependentUpon>202005161447058_AddColumnHinhAnhTableTLVB.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AutoCompleteTextModel.cs" />
@@ -2715,6 +2722,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\HinhAnhTLVB\" />
     <Folder Include="Content\HoSo\" />
   </ItemGroup>
   <ItemGroup>
@@ -2771,6 +2779,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.resx">
       <DependentUpon>202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005160325216_AdjustToOldVersion.resx">
+      <DependentUpon>202005160325216_AdjustToOldVersion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005161447058_AddColumnHinhAnhTableTLVB.resx">
+      <DependentUpon>202005161447058_AddColumnHinhAnhTableTLVB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

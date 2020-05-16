@@ -64,6 +64,9 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Người Tạo")]
         public string UserId { get; set; }
 
+        [Display(Name = "Hình Ảnh")]
+        public string HinhAnh { get; set; }
+
         [Required(ErrorMessage = "Bạn Chưa chọn năm ban hành")]
         [Display(Name = "Năm Ban Hành")]
         [DataType(DataType.Date)]

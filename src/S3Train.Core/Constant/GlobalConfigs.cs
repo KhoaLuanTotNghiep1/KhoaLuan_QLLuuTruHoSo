@@ -4,9 +4,9 @@
     {
         public const int DEFAULT_PAGESIZE = 10;
 
-        public const string DANG_DEN = "Đến";
-        public const string DANG_DI = "Đi";
-        public const string DANG_NOIBO = "Nội Bộ";
+        public const string DANG_DEN = "Văn Bản Đến";
+        public const string DANG_DI = "Văn Bản Đi";
+        public const string DANG_NOIBO = "Văn Bản Nội Bộ";
 
         public const string TINHTRANG_TRONGKHO = "Trong Kho";
         public const string TINHTRANG_DAGOI = "Đã Gởi";

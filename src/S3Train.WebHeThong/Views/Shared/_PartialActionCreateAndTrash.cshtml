@@ -1,22 +1,10 @@
 ﻿@model string
 
 @{
-    if (ViewBag.Dang != null)
-    {
-        <a href="@Url.Action("CreateOrUpdate",Model, new { dang = ViewBag.Dang})" class="btn btn-info m-2 btn">
+        <a href="@Url.Action("CreateOrUpdate", Model)" class="btn btn-info m-2 btn">
             <i class="fas fa-plus"></i> Tạo Mới
         </a>
-        <a href="@Url.Action("Index",Model, new { active = false, dang = ViewBag.Dang})" class="btn btn-warning m-2 btn">
+        <a href="@Url.Action("Index", Model, new { active = false })" class="btn btn-warning m-2 btn">
             <i class="fas fa-trash-alt"></i> Giỏ Rác
         </a>
-    }
-    else
-    {
-        <a href="@Url.Action("CreateOrUpdate",Model)" class="btn btn-info m-2 btn">
-            <i class="fas fa-plus"></i> Tạo Mới
-        </a>
-        <a href="@Url.Action("Index",Model, new { active = false})" class="btn btn-warning m-2 btn">
-            <i class="fas fa-trash-alt"></i> Giỏ Rác
-        </a>
-    }
 }

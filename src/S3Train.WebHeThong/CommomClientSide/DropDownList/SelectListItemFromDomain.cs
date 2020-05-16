@@ -1,4 +1,5 @@
-﻿using S3Train.Domain;
+﻿using S3Train.Core.Constant;
+using S3Train.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -120,13 +121,13 @@ namespace S3Train.WebHeThong.CommomClientSide.DropDownList
             return items;
         }
 
-        public static List<SelectListItem> SelectListItem_TinhTrangLuuTru()
+        public static List<SelectListItem> SelectListItem_Object(List<object> list)
         {
-            var items = new List<SelectListItem>
+            List<SelectListItem> items = new List<SelectListItem>();
+            foreach (var item in list)
             {
-                new SelectListItem{Value = "Trong Kho", Text = "Trong Kho"},
-                new SelectListItem{Value = "Đang Mượn", Text = "Đang Mượn"},
-            };
+                items.Add(new SelectListItem { Text = item.ToString(), Value = item.ToString() });
+            }
             return items;
         }
     }

@@ -143,6 +143,13 @@
                 </div>
             </div>
         </div>
+        <br />
+        <div class="row">
+            <div class="col" style="width:150px; height:200px">
+                <img src="~/Content/HinhAnhTLVB/@Model.HinhAnh" class="img-fluid rounded"
+                     alt="Hình Ảnh Tài Liệu/Văn Bản" id="ImageAvatar" style="max-height:100%; max-width:100%; display:block" />
+            </div>
+        </div>
     </div>
 </div>
 
@@ -155,7 +162,7 @@
             </div>
             <div class="col-md-6">
                 <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.TrichYeu)</h6>
-                @Html.Raw(HttpUtility.HtmlDecode(Model.GhiChu)).ToString()
+                @Html.Raw(HttpUtility.HtmlDecode(Model.TrichYeu)).ToString()
             </div>
         </div>
     </div>

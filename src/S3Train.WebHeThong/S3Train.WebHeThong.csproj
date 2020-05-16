@@ -305,6 +305,7 @@
     <Compile Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.designer.cs">
       <DependentUpon>202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AutoCompleteTextModel.cs" />

@@ -76,7 +76,6 @@ namespace S3Train.WebHeThong.App_Start
             builder.RegisterType<TaiLieuVanBanService>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<TuService>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<LichSuHoatDongService>().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterType<DangTaiLieuVanBanService>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<FunctionLichSuHoatDongService>().As<IFunctionLichSuHoatDongService>();
             builder.RegisterType<AccountManager>().As<IAccountManager>();
             builder.RegisterType<RoleService>().As<IRoleService>();

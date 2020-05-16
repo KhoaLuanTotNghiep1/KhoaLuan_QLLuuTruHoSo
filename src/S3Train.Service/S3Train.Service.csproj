@@ -128,7 +128,6 @@
     <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="Contract\IAccountManager.cs" />
     <Compile Include="Contract\IChiTietMuonTraService.cs" />
-    <Compile Include="Contract\IDangTaiLieuVanBangService.cs" />
     <Compile Include="Contract\IFunctionLichSuHoatDongService.cs" />
     <Compile Include="Contract\IHopService.cs" />
     <Compile Include="Contract\IHoSoService.cs" />
@@ -163,7 +162,6 @@
     <Compile Include="IndentityService\UserIdentityService.cs" />
     <Compile Include="IndentityService\UserService.cs" />
     <Compile Include="Services\ChiTietMuonTraService.cs" />
-    <Compile Include="Services\DangTaiLieuVanBanService.cs" />
     <Compile Include="Services\FunctionLichSuHoatDongService.cs" />
     <Compile Include="Services\HopService.cs" />
     <Compile Include="Services\HoSoService.cs" />

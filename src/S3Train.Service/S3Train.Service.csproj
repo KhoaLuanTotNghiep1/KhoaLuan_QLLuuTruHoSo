@@ -128,6 +128,7 @@
     <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="Contract\IAccountManager.cs" />
     <Compile Include="Contract\IChiTietMuonTraService.cs" />
+    <Compile Include="Contract\IDangTaiLieuVanBangService.cs" />
     <Compile Include="Contract\IFunctionLichSuHoatDongService.cs" />
     <Compile Include="Contract\IHopService.cs" />
     <Compile Include="Contract\IHoSoService.cs" />
@@ -152,7 +153,8 @@
     <Compile Include="IdentityManager\EmailService.cs" />
     <Compile Include="IdentityManager\SmsService.cs" />
     <Compile Include="IGenenicServiceBase.cs" />
-    <Compile Include="Model\LichSuHoatDong\LichSuHoatDongViewModel.cs" />
+    <Compile Include="Model\Dto\NoiBanHanhDto.cs" />
+    <Compile Include="Model\Dto\TaiLieuVanBanDto.cs" />
     <Compile Include="Model\Role\RoleViewModel.cs" />
     <Compile Include="Model\User\UserViewModel.cs" />
     <Compile Include="IndentityService\AccountManager.cs" />
@@ -161,6 +163,7 @@
     <Compile Include="IndentityService\UserIdentityService.cs" />
     <Compile Include="IndentityService\UserService.cs" />
     <Compile Include="Services\ChiTietMuonTraService.cs" />
+    <Compile Include="Services\DangTaiLieuVanBanService.cs" />
     <Compile Include="Services\FunctionLichSuHoatDongService.cs" />
     <Compile Include="Services\HopService.cs" />
     <Compile Include="Services\HoSoService.cs" />

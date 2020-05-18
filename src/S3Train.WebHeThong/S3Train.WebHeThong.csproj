@@ -247,6 +247,18 @@
     <Compile Include="CommomClientSide\Function\ConvertDomainToAutoCompleteModel.cs" />
     <Compile Include="CommomClientSide\Function\UploadFile.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Migrations\202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.cs" />
+    <Compile Include="Migrations\202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.Designer.cs">
+      <DependentUpon>202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs" />
+    <Compile Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.Designer.cs">
+      <DependentUpon>202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005161612104_update-db.cs" />
+    <Compile Include="Migrations\202005161612104_update-db.Designer.cs">
+      <DependentUpon>202005161612104_update-db.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ChiTietMuonTraViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HopController.cs" />
@@ -291,14 +303,6 @@
     <Compile Include="Migrations\202004201255534_AddColumnOnTableUserAndTaiLieuVanBan.cs" />
     <Compile Include="Migrations\202004201255534_AddColumnOnTableUserAndTaiLieuVanBan.designer.cs">
       <DependentUpon>202004201255534_AddColumnOnTableUserAndTaiLieuVanBan.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004271509417_muontra.cs" />
-    <Compile Include="Migrations\202004271509417_muontra.designer.cs">
-      <DependentUpon>202004271509417_muontra.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004271545402_CTMuonTra.cs" />
-    <Compile Include="Migrations\202004271545402_CTMuonTra.designer.cs">
-      <DependentUpon>202004271545402_CTMuonTra.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -2768,6 +2772,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004201255534_AddColumnOnTableUserAndTaiLieuVanBan.resx">
       <DependentUpon>202004201255534_AddColumnOnTableUserAndTaiLieuVanBan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.resx">
+      <DependentUpon>202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.resx">
+      <DependentUpon>202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005161612104_update-db.resx">
+      <DependentUpon>202005161612104_update-db.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

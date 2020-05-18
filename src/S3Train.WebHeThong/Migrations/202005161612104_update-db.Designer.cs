@@ -7,13 +7,13 @@ namespace S3Train.WebHeThong.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class CTMuonTra : IMigrationMetadata
+    public sealed partial class updatedb : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CTMuonTra));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(updatedb));
         
         string IMigrationMetadata.Id
         {
-            get { return "202004271545402_CTMuonTra"; }
+            get { return "202005161612104_update-db"; }
         }
         
         string IMigrationMetadata.Source

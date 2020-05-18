@@ -26,6 +26,7 @@ namespace S3Train.WebHeThong.Controllers
         public bool TrangThai { get; set; }
 
         public virtual MuonTra MuonTra { get; set; }
+        public virtual TaiLieuVanBan TaiLieuVanBan { get; set; }
 
     }
 }

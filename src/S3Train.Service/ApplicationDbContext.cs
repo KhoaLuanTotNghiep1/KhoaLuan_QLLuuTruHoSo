@@ -97,6 +97,7 @@ namespace S3Train.Domain
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.GhiChu).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.DuongDan).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.NgayBanHanh).IsOptional();
+            modelBuilder.Entity<TaiLieuVanBan>().HasMany(p => p.ChiTietMuonTras).WithOptional(p => p.TaiLieuVanBan);
 
             modelBuilder.Entity<MuonTra>().ToTable("MuonTra");
             modelBuilder.Entity<MuonTra>().Property(p => p.NgayMuon).IsOptional();
@@ -106,7 +107,7 @@ namespace S3Train.Domain
             modelBuilder.Entity<MuonTra>().HasMany(p => p.ChiTietMuonTras).WithOptional(prod => prod.MuonTra);
 
             modelBuilder.Entity<ChiTietMuonTra>().ToTable("ChiTietMuonTra");
-            modelBuilder.Entity<ChiTietMuonTra>().Property(p => p.ThuMuon).IsOptional();
+            modelBuilder.Entity<ChiTietMuonTra>().Property(p => p.TaiLieuVanBanId).IsOptional();
             modelBuilder.Entity<ChiTietMuonTra>().Property(p => p.SoLuong).IsOptional();
 
             modelBuilder.Entity<NoiBanHanh>().ToTable("NoiBanHanh");

@@ -14,8 +14,8 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Đơn vị mượn/Người mượn")]
         public string UserId { get; set; }
 
-        [Required(ErrorMessage = "Điền hồ sơ, VB/TL mượn")]
-        [Display(Name = "Hồ sơ VB/TL")]
+        [Required(ErrorMessage = "Điền  VB/TL mượn")]
+        [Display(Name = "Văn bản/Tài liệu")]
         public string ThuMuon { get; set; }
 
         [Required(ErrorMessage = "Điền Ngày Mượn")]

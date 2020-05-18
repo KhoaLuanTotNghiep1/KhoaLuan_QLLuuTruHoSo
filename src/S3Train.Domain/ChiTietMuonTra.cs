@@ -4,12 +4,15 @@ namespace S3Train.Domain
 {
     public class ChiTietMuonTra : EntityBase
     {
-        public string ThuMuon { get; set; }
 
         [ForeignKey("MuonTra")]
         public string MuonTraID { get; set; }
+        [ForeignKey("TaiLieuVanBan")]
+        public string TaiLieuVanBanId { get; set; }
 
         public int SoLuong { get; set; }
+
+        public virtual TaiLieuVanBan TaiLieuVanBan { get; set; }
 
         public virtual MuonTra MuonTra { get; set; }
     }

@@ -30,22 +30,9 @@ namespace S3Train.WebHeThong.CommomClientSide.Function
             return list;
         }
 
-        public static HashSet<AutoCompleteTextModel> LocalHoSo(IList<HoSo> hoSos, IList<TaiLieuVanBan> taiLieuVanBans)
+        public static HashSet<AutoCompleteTextModel> LocalVanBan(IList<TaiLieuVanBan> taiLieuVanBans)
         {
             var list = new HashSet<AutoCompleteTextModel>();
-            foreach (var item in hoSos)
-            {
-                string local = item.PhongLuuTru;
-                
-
-                var auto = new AutoCompleteTextModel()
-                {
-                    Id = item.Id,
-                    Text = local,
-                };
-
-                list.Add(auto);
-            }
 
             foreach (var item in taiLieuVanBans)
             {

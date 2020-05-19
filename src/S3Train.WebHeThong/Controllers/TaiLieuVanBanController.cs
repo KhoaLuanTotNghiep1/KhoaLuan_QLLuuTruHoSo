@@ -45,7 +45,8 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: TaiLieuVanBan
-        public ActionResult Index(int? pageIndex, int? pageSize, string dang, string searchString, bool active = true)
+        public ActionResult Index(int? pageIndex, int? pageSize, string searchString, 
+            string dang = GlobalConfigs.DANG_DEN, bool active = true)
         {
             pageIndex = (pageIndex ?? 1);
             pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
@@ -59,12 +60,13 @@ namespace S3Train.WebHeThong.Controllers
                 PageSize = pageSize.Value
             };
 
-            var taiLieuVanBans = _taiLieuVanBanService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active && p.Dang == dang, p => p.OrderBy(c => c.Ten), includes);
+            var taiLieuVanBans = _taiLieuVanBanService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active && 
+                p.Dang == dang, p => p.OrderBy(c => c.Ten), includes);
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 taiLieuVanBans = _taiLieuVanBanService.GetAllPaged(pageIndex, pageSize.Value, p => p.Ten.Contains(searchString) || p.Loai.Contains(searchString)
-                    && p.TrangThai == active && p.Dang == dang, p => p.OrderBy(c => c.Ten), includes);
+                    || p.NoiDung.Contains(searchString) && p.TrangThai == active && p.Dang == dang, p => p.OrderBy(c => c.Ten), includes);
             }
 
             model.Paged = taiLieuVanBans;
@@ -79,16 +81,17 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpGet]
-        public ActionResult CreateOrUpdate(string id, string dang)
+        public ActionResult CreateOrUpdate(string id)
         {
             var model = new TaiLieu_VanBanViewModel();
+            var dangs = new List<object> { GlobalConfigs.DANG_DEN, GlobalConfigs.DANG_NOIBO };
 
             ViewBag.LoaiHoSos = SelectListItemFromDomain.SelectListItem_LoaiHoSo(_loaiHoSoService.GetAll(m => m.OrderBy(t => t.Ten)));
             ViewBag.NoiBanHanhs = SelectListItemFromDomain.SelectListItem_NoiBanHanh(_noiBanHanhService.GetAll(m => m.OrderBy(t => t.Ten)));
+            ViewBag.Dangs = SelectListItemFromDomain.SelectListItem_Object(dangs);
 
             if (string.IsNullOrEmpty(id))
             {
-                model.Dang = dang;
                 return View(model);
             }
             else
@@ -100,7 +103,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateOrUpdate(TaiLieu_VanBanViewModel model, HttpPostedFileBase file)
+        public ActionResult CreateOrUpdate(TaiLieu_VanBanViewModel model, IEnumerable<HttpPostedFileBase> file)
         {
             var taiLieuVanBan = string.IsNullOrEmpty(model.Id) ? new TaiLieuVanBan { NgayCapNhat = DateTime.Now }
                 : _taiLieuVanBanService.Get(m => m.Id == model.Id);
@@ -110,8 +113,10 @@ namespace S3Train.WebHeThong.Controllers
             string cthd = model.Loai + ": " + model.Ten;
 
             string localFile = Server.MapPath("~/Content/HoSo/");
+            string localImage = Server.MapPath("~/Content/HinhAnhTLVB/");
 
-            string path = UpFile(file, localFile);
+            string path = UpFileGetPathOrFileName(file.ElementAt(0), localFile, model.DuongDan,"path");
+            string hinhAnh = UpFileGetPathOrFileName(file.ElementAt(1), localImage, model.HinhAnh);
 
             #region taiLieuVanBan
             taiLieuVanBan.Dang = model.Dang;
@@ -133,6 +138,7 @@ namespace S3Train.WebHeThong.Controllers
             taiLieuVanBan.TinhTrang = "Trong Kho";
             taiLieuVanBan.TrangThai = true;
             taiLieuVanBan.UserId = userId;
+            taiLieuVanBan.HinhAnh = hinhAnh;
             #endregion
 
             if (string.IsNullOrEmpty(model.Id))
@@ -219,6 +225,7 @@ namespace S3Train.WebHeThong.Controllers
         [HttpGet]
         public ActionResult StorageSuggestion(string document)
         {
+            string local = "Không tìm thấy tài liêu/văn bản có cùng nội dung! Tạo hồ sơ mới.";
             var list = _taiLieuVanBanService.GetDocuments();
             list.Add(document);
             var docCollection = new DocumentCollection()
@@ -231,9 +238,13 @@ namespace S3Train.WebHeThong.Controllers
 
             string documentNeedSearch = DocumnetClustering.FindClosestDocument();
 
-            var taiLieuVanBan = _taiLieuVanBanService.Get(p => p.NoiDung == documentNeedSearch);
+            if(!string.IsNullOrEmpty(documentNeedSearch))
+            {
+                var taiLieuVanBan = _taiLieuVanBanService.Get(p => p.NoiDung == documentNeedSearch);
 
-            string local = taiLieuVanBan.HoSo.Hop.Ke.Tu.Ten + " kệ thứ " + taiLieuVanBan.HoSo.Hop.Ke.SoThuTu + " hộp số " + taiLieuVanBan.HoSo.Hop.SoHop + " hồ sơ " + taiLieuVanBan.HoSo.PhongLuuTru;
+                local = taiLieuVanBan.HoSo.Hop.Ke.Tu.Ten + " kệ thứ " + taiLieuVanBan.HoSo.Hop.Ke.SoThuTu + 
+                    " hộp số " + taiLieuVanBan.HoSo.Hop.SoHop + " hồ sơ " + taiLieuVanBan.HoSo.PhongLuuTru;
+            }
 
             return Json(new { da = local}, JsonRequestBehavior.AllowGet);
         }
@@ -256,16 +267,26 @@ namespace S3Train.WebHeThong.Controllers
             return View(resultSet);
         }
 
-        public string UpFile(HttpPostedFileBase a, string url)
+        /// <summary>
+        /// Upload file
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="url">path folder</param>
+        /// <param name="get">path/fileName</param>
+        /// <returns>path/file name</returns>
+        public string UpFileGetPathOrFileName(HttpPostedFileBase a, string url, string name, string get = "fileName")
         {
-            string fileName = "";
+            string fileName = name;
             if (a != null && a.ContentLength > 0)
             {
                 fileName = Path.GetFileName(a.FileName).ToString();
                 string path = Path.Combine(url, fileName);
                 a.SaveAs(path);
-               
-                return path;
+
+                if (get == "path")
+                    return path;
+                else
+                    return fileName;
             }
             else
             {
@@ -309,7 +330,9 @@ namespace S3Train.WebHeThong.Controllers
                TrichYeu = x.TrichYeu,
                User = x.User,
                UserId = x.UserId,
-               NgayBanHanh = x.NgayBanHanh
+               NgayBanHanh = x.NgayBanHanh,
+               HinhAnh = x.HinhAnh,
+               HoSoId = x.HoSoId
             };
 
             model.HoSoId = autoList.FirstOrDefault(p => p.Id == x.HoSoId).Text;
@@ -344,7 +367,8 @@ namespace S3Train.WebHeThong.Controllers
                 TrichYeu = x.TrichYeu,
                 User = x.User,
                 UserId = x.UserId,
-                NgayBanHanh = x.NgayBanHanh
+                NgayBanHanh = x.NgayBanHanh,
+                HinhAnh = x.HinhAnh
             }).ToList();
         }
     }

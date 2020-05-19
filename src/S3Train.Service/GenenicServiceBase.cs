@@ -105,6 +105,11 @@ namespace S3Train
         /// <returns>item</returns>
         public T Insert(T item)
         {
+            if (string.IsNullOrEmpty(item.Id))
+                item.Id = Guid.NewGuid().ToString();
+
+            item.NgayTao = DateTime.Now;
+            item.TrangThai = true;
             var result = EntityDbSet.Add(item);
             DbContext.SaveChanges();
             return result;
@@ -127,6 +132,7 @@ namespace S3Train
         /// <returns>item</returns>
         public T Update(T item)
         {
+            item.NgayCapNhat = DateTime.Now;
             EntityDbSet.Attach(item);
             DbContext.Entry(item).State = EntityState.Modified;
             DbContext.SaveChanges();

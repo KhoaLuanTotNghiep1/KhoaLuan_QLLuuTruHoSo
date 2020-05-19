@@ -15,17 +15,20 @@ using System.Web.Mvc;
 namespace S3Train.WebHeThong.Controllers
 {
     [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC)]
+    [RoutePrefix("QuyenTruyCap")]
     public class RoleController : Controller
     {
         private ApplicationRoleManager _roleManager;
         private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
+        private readonly IRoleService _roleService;
 
         public RoleController()
         {
         }
-        public RoleController(IFunctionLichSuHoatDongService functionLichSuHoatDongService)
+        public RoleController(IFunctionLichSuHoatDongService functionLichSuHoatDongService, IRoleService roleService)
         {
             _functionLichSuHoatDongService = functionLichSuHoatDongService;
+            _roleService = roleService;
         }
 
         public RoleController(ApplicationRoleManager roleManager)
@@ -46,12 +49,16 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: Admin/Role
+        [Route("danhSach")]
         public ActionResult Index()
         {
             List<RoleViewModel> list = new List<RoleViewModel>();
-            
+
             foreach (var role in RoleManager.Roles)
-                list.Add(new RoleViewModel(role));
+            {
+                int countUser = _roleService.CountUsersBelongRoleByRoleName(role.Name);
+                list.Add(new RoleViewModel(role, countUser));
+            }
             return View(list);
         }
 

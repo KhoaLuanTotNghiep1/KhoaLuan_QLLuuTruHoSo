@@ -14,6 +14,7 @@ using System.Web.Mvc;
 namespace S3Train.WebHeThong.Controllers
 {
     [Authorize]
+    [RoutePrefix("NguoiDung")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -33,6 +34,7 @@ namespace S3Train.WebHeThong.Controllers
 
         // GET: User
         [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
+        [Route("DanhSach")]
         public async Task<ActionResult> IndexAsync()
         {
             var model = await _userService.GetUser(1,10);
@@ -41,6 +43,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpGet]
+        [Route("TaoTaiKhoanNguoiDung")]
         [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
         public async Task<ActionResult> CreateOrUpdate(string id)
         {
@@ -59,6 +62,7 @@ namespace S3Train.WebHeThong.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [Route("TaoTaiKhoanNguoiDung")]
         public async Task<ActionResult> CreateOrUpdate(UserViewModel model)
         {
             if (string.IsNullOrEmpty(model.Id))
@@ -82,7 +86,7 @@ namespace S3Train.WebHeThong.Controllers
                     await _userService.UserAddToRoles(user.Id, model.Role);
                     _functionLichSuHoatDongService.Create(ActionWithObject.Create, User.Identity.GetUserId(), "tài khoản: " + user.UserName);
                     TempData["AlertMessage"] = "Tạo Mới Thành Công";
-                    return RedirectToAction("IndexAsync");
+                    return RedirectToAction("DanhSach","NguoiDung");
                 }
                 else
                 {
@@ -145,6 +149,7 @@ namespace S3Train.WebHeThong.Controllers
             return RedirectToAction("IndexAsync");
         }
 
+        [Route("ThongTinNguoiDung")]
         public async Task<ActionResult> UserProfile()
         {
             string id = User.Identity.GetUserId();
@@ -152,9 +157,10 @@ namespace S3Train.WebHeThong.Controllers
             var user = await _userService.GetUserById(id);
             var roles = await _userService.GetRolesForUser(id);
 
-            var model = new UserViewModel(user);
-
-            model.Role = roles.Count() > 0 ? roles[0].ToString() : "";
+            var model = new UserViewModel(user)
+            {
+                Role = roles.Count() > 0 ? roles[0].ToString() : ""
+            };
             return View(model);
         }
 

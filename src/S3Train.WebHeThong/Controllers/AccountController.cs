@@ -91,19 +91,14 @@ namespace S3Train.WebHeThong.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    {
-                        if (roles[0].ToString() == GlobalConfigs.ROLE_CANBO)
-                            return RedirectToAction("Index", "TaiLieuVanBan", new { dang = GlobalConfigs.DANG_NOIBO });
-                        else
-                            return RedirectToAction("Dashboard", "Home");
-                    }
+                    return RedirectToAction("UserProfile", "User");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Đăng Nhập Thất Bại.");
+                    ModelState.AddModelError("", "Tài khoản hoặc mật khẩu không đúng. Vui lòng nhập lại");
                     return View(model);
             }
         }

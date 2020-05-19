@@ -1,13 +1,13 @@
-﻿using System;
+﻿using S3Train.Domain;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace S3Train.Domain
+namespace S3Train.Model.Dto
 {
-    public class TaiLieuVanBan : EntityBase
+    public class TaiLieuVanBanDto : EntityBase
     {
         public string Ten { get; set; }
         public string Loai { get; set; }
@@ -24,18 +24,9 @@ namespace S3Train.Domain
         public string NguoiKy { get; set; }
         public string NguoiDuyet { get; set; }
         public string UserId { get; set; }
-        public string HinhAnh { get; set; }
         public DateTime NgayBanHanh { get; set; }
 
-        [ForeignKey("HoSo")]
         public string HoSoId { get; set; }
-        [ForeignKey("NoiBanHanh")]
         public string NoiBanHanhId { get; set; }
-
-        [ForeignKey("UserId")]
-        public virtual ApplicationUser User { get; set; }
-        public virtual HoSo HoSo { get; set; }
-        public virtual NoiBanHanh NoiBanHanh { get; set; }
-        public virtual ICollection<ChiTietMuonTra> ChiTietMuonTras { get; set; }
     }
 }

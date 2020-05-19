@@ -57,6 +57,9 @@
     <Reference Include="Autofac.Integration.WebApi, Version=5.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.WebApi2.5.0.0\lib\net461\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper, Version=4.1.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.1.0\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -239,14 +242,18 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\DependencyConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\MappingProfile.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="CommomClientSide\DropDownList\SelectListItemFromDomain.cs" />
     <Compile Include="CommomClientSide\Function\AddList.cs" />
     <Compile Include="CommomClientSide\Function\Compute.cs" />
     <Compile Include="CommomClientSide\Function\ConvertDomainToAutoCompleteModel.cs" />
     <Compile Include="CommomClientSide\Function\UploadFile.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\API\TaiLieuVanBanController.cs" />
+    <Compile Include="Controllers\API\TestController.cs" />
     <Compile Include="Migrations\202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.cs" />
     <Compile Include="Migrations\202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.Designer.cs">
       <DependentUpon>202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.cs</DependentUpon>
@@ -303,6 +310,14 @@
     <Compile Include="Migrations\202004201255534_AddColumnOnTableUserAndTaiLieuVanBan.cs" />
     <Compile Include="Migrations\202004201255534_AddColumnOnTableUserAndTaiLieuVanBan.designer.cs">
       <DependentUpon>202004201255534_AddColumnOnTableUserAndTaiLieuVanBan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.cs" />
+    <Compile Include="Migrations\202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.designer.cs">
+      <DependentUpon>202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs" />
+    <Compile Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.designer.cs">
+      <DependentUpon>202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -2720,6 +2735,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\HinhAnhTLVB\" />
     <Folder Include="Content\HoSo\" />
     <Folder Include="Views\LHSAnfPB\" />
     <Folder Include="Views\Trash\" />
@@ -2778,9 +2794,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.resx">
       <DependentUpon>202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005161612104_update-db.resx">
-      <DependentUpon>202005161612104_update-db.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

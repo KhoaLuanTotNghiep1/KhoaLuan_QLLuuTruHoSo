@@ -314,6 +314,10 @@
     <Compile Include="Migrations\202005161447058_AddColumnHinhAnhTableTLVB.designer.cs">
       <DependentUpon>202005161447058_AddColumnHinhAnhTableTLVB.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005191232224_AddForienKeyTLVBvsCTMT.cs" />
+    <Compile Include="Migrations\202005191232224_AddForienKeyTLVBvsCTMT.designer.cs">
+      <DependentUpon>202005191232224_AddForienKeyTLVBvsCTMT.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AutoCompleteTextModel.cs" />
@@ -2786,6 +2790,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005161447058_AddColumnHinhAnhTableTLVB.resx">
       <DependentUpon>202005161447058_AddColumnHinhAnhTableTLVB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005191232224_AddForienKeyTLVBvsCTMT.resx">
+      <DependentUpon>202005191232224_AddForienKeyTLVBvsCTMT.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

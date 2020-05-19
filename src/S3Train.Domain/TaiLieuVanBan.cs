@@ -36,5 +36,6 @@ namespace S3Train.Domain
         public virtual ApplicationUser User { get; set; }
         public virtual HoSo HoSo { get; set; }
         public virtual NoiBanHanh NoiBanHanh { get; set; }
+        public virtual ICollection<ChiTietMuonTra> ChiTietMuonTras { get; set; }
     }
 }

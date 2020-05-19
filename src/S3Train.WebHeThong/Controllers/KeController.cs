@@ -14,6 +14,7 @@ using System.Web.Mvc;
 namespace S3Train.WebHeThong.Controllers
 {
     [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
+    [RoutePrefix("Ke")]
     public class KeController : Controller
     {
         private readonly ITuService _tuService;
@@ -33,6 +34,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: Ke
+        [Route("Danh-Sach")]
         public ActionResult Index(int? pageIndex, int? pageSize, string searchString, bool active = true)
         {
             pageIndex = (pageIndex ?? 1);
@@ -65,6 +67,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpGet]
+        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public ActionResult CreateOrUpdate(string id)
         {
             var model = new KeViewModel();
@@ -83,6 +86,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpPost]
+        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public ActionResult CreateOrUpdate(KeViewModel model)
         {
             var ke = string.IsNullOrEmpty(model.Id) ? new Ke { NgayCapNhat = DateTime.Now }
@@ -137,6 +141,7 @@ namespace S3Train.WebHeThong.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("Thong-Tin-Chi-Tiet")]
         public ActionResult Detail(string id)
         {
             var model = GetKe(_keService.Get(m => m.Id == id));

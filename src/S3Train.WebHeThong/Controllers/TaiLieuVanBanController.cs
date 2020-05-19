@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 namespace S3Train.WebHeThong.Controllers
 {
     [Authorize]
+    [RoutePrefix("Tai-Lieu-Van-Ban")]
     public class TaiLieuVanBanController : Controller
     {
         private readonly ITaiLieuVanBanService _taiLieuVanBanService;
@@ -45,6 +46,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: TaiLieuVanBan
+        [Route("Danh-Sach")]
         public ActionResult Index(int? pageIndex, int? pageSize, string searchString, 
             string dang = GlobalConfigs.DANG_DEN, bool active = true)
         {
@@ -61,12 +63,12 @@ namespace S3Train.WebHeThong.Controllers
             };
 
             var taiLieuVanBans = _taiLieuVanBanService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active && 
-                p.Dang == dang, p => p.OrderBy(c => c.Ten), includes);
+                p.Dang.Contains(dang), p => p.OrderBy(c => c.Ten), includes);
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 taiLieuVanBans = _taiLieuVanBanService.GetAllPaged(pageIndex, pageSize.Value, p => p.Ten.Contains(searchString) || p.Loai.Contains(searchString)
-                    || p.NoiDung.Contains(searchString) && p.TrangThai == active && p.Dang == dang, p => p.OrderBy(c => c.Ten), includes);
+                    || p.NoiDung.Contains(searchString) && p.TrangThai == active && p.Dang.Contains(dang), p => p.OrderBy(c => c.Ten), includes);
             }
 
             model.Paged = taiLieuVanBans;
@@ -81,6 +83,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpGet]
+        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public ActionResult CreateOrUpdate(string id)
         {
             var model = new TaiLieu_VanBanViewModel();
@@ -103,6 +106,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpPost]
+        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public ActionResult CreateOrUpdate(TaiLieu_VanBanViewModel model, IEnumerable<HttpPostedFileBase> file)
         {
             var taiLieuVanBan = string.IsNullOrEmpty(model.Id) ? new TaiLieuVanBan { NgayCapNhat = DateTime.Now }
@@ -189,6 +193,7 @@ namespace S3Train.WebHeThong.Controllers
             return RedirectToAction("Index", new { dang = taiLieuVanBan.Dang});
         }
 
+        [Route("Thong-Tin-Chi-Tiet")]
         public ActionResult Detail(string id)
         {
             var model = GetTaiLieuVanBan(_taiLieuVanBanService.Get(m => m.Id == id));

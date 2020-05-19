@@ -17,6 +17,7 @@ using System.Web.UI.WebControls;
 namespace S3Train.WebHeThong.Controllers
 {
     [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
+    [Route("Thong-Ke")]
     public class ThongKeController : Controller
     {
         private readonly ITaiLieuVanBanService _taiLieuVanBanService;
@@ -32,6 +33,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: ThongKe
+        [Route("Danh-Sach")]
         public ActionResult Index(DateTime? startTime, DateTime? endTime)
         {
             var list = GetDoc(startTime, endTime);

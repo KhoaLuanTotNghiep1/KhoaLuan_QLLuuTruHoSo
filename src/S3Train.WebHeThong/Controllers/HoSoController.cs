@@ -14,6 +14,7 @@ using System.Web.Mvc;
 namespace S3Train.WebHeThong.Controllers
 {
     [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
+    [RoutePrefix("Ho-So")]
     public class HoSoController : Controller
     {
         private readonly IHoSoService _hoSoService;
@@ -38,6 +39,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: HoSo
+        [Route("Danh-Sach")]
         public ActionResult Index(int? pageIndex, int? pageSize, string searchString, bool active = true)
         {
             pageIndex = (pageIndex ?? 1);
@@ -70,6 +72,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpGet]
+        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public ActionResult CreateOrUpdate(string id)
         {
             var model = new HoSoViewModel();
@@ -91,6 +94,7 @@ namespace S3Train.WebHeThong.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
+        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public ActionResult CreateOrUpdate(HoSoViewModel model)
         {
             var hoSo = string.IsNullOrEmpty(model.Id) ? new HoSo { NgayCapNhat = DateTime.Now }
@@ -138,6 +142,7 @@ namespace S3Train.WebHeThong.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("Thong-Tin-Chi-Tiet")]
         public ActionResult Detail(string id)
         {
             var model = GetHoSo(_hoSoService.Get(m => m.Id == id));

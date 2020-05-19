@@ -153,10 +153,10 @@ namespace S3Train.WebHeThong.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult GetVanBan (string text)
-        {
-            var a = 
-        }
+        //public ActionResult GetVanBan(string text)
+        //{
+        //    var a = 
+        //}
 
         [HttpPost]
         public ActionResult AutoCompleteText(string text)

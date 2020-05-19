@@ -11,23 +11,23 @@
         @using (Html.BeginForm("CreateOrUpdate", "MuonTra", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
-        <div class="form-group row">
-            <div class="col-md-6">
-                <label>@Html.DisplayNameFor(item => Model.UserId)</label>
-                @Html.EditorFor(model => Model.User.FullName, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
-                @Html.ValidationMessageFor(model => Model.UserId, "", new { @class = "text-danger" })
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label>@Html.DisplayNameFor(item => Model.UserId)</label>
+                    @Html.EditorFor(model => Model.UserId, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                    @Html.ValidationMessageFor(model => Model.UserId, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    <label>@Html.DisplayNameFor(item => Model.ThuMuon)</label>
+                    @Html.EditorFor(model => model.ThuMuon, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.ThuMuon, "", new { @class = "text-danger" })
+                </div>
             </div>
-            <div class="col-md-6">
-                <label>@Html.DisplayNameFor(item => Model.ThuMuon)</label>
-                @Html.EditorFor(model => model.ThuMuon, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
-                @Html.ValidationMessageFor(model => model.ThuMuon, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
             <div class="form-group row">
                 <div class="col-md-6">
-                    <label>@Html.DisplayNameFor(item => "Danh sách thư mượn")</label>
-                    @Html.EditorFor(model => model.ThuMuon, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                    <label>@Html.DisplayNameFor(item => Model.DSMuon)</label>
+                    @Html.TextAreaFor(model => model.DSMuon, new { @class = "form-control", placeholder = "", rows = "3" })
                 </div>
                 <div class="col-md-6">
                     <label>@Html.DisplayNameFor(item => Model.SoLuong)</label>
@@ -54,47 +54,6 @@
         }
     </div>
 
-    @*<div class="col-lg-12">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h5 class="m-0 font-weight-bold text-primary">Danh Sách Kệ Của kho</h5>
-                    <br />
-                    <table class="table table-responsive-md">
-                        <thead>
-                            <tr>
-                                <th>STT</th>
-                                <th>ID</th>
-                                <th>Tên</th>
-                                <th>Số Lượng</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if(Model.ThuMuon == )
-                            @foreach (var user in Model )
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => ke.Ten)</td>
-                                    <td>@Html.DisplayFor(m => ke.SoHopHienTai)</td>
-                                    <td>@Html.DisplayFor(m => ke.SoHopHienTai)</td>
-                                    <td>@Html.Partial("~/Views/Shared/_PartialTinhTrang.cshtml", Convert.ToInt32(ke.SoHopToiDa - ke.SoHopHienTai))</td>
-                                    <td>
-                                        <a href="@Url.Action("Detail","Ke", new { id=ke.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
-                                            <i class="fas fa-info"></i>
-                                        </a>
-                                        <a href="@Url.Action("CreateOrUpdate","Ke", new { id=ke.Id})" class="btn btn-primary" title="Cập Nhật">
-                                            <i class="fas fa-sync"></i>
-                                        </a>
-                                        <a href="@Url.Action("Delete","Ke", new { id=ke.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @ke.Ten?');" title="Xóa">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>*@
 </div>
 
 @section scripts{
@@ -141,6 +100,16 @@
                 }
             });
         });
+        
+        $("#ThuMuon").change(function () {
+            var thumuon = $("#ThuMuon").val();
+            $("#ThuMuon").each(function () {
+                var thumuon = $("#ThuMuon").val();
+                $("#DSMuon").val(thumuon);
+            });
+            $("#DSMuon").val(thumuon)
+        });
+
     </script>
 
 }

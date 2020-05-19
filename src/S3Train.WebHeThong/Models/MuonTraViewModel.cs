@@ -18,6 +18,10 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Văn bản/Tài liệu")]
         public string ThuMuon { get; set; }
 
+        
+        [Display(Name = "Danh Sách Mượn")]
+        public string DSMuon { get; set; }
+
         [Required(ErrorMessage = "Điền Ngày Mượn")]
         [Display(Name = "Ngày Mượn")]
         [DataType(DataType.Date)]

@@ -13,6 +13,7 @@ using System.Web.Mvc;
 namespace S3Train.WebHeThong.Controllers
 {
     [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC)]
+    [RoutePrefix("Tu")]
     public class TuController : Controller
     {
         private readonly ITuService _tuService;
@@ -32,6 +33,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: Tu
+        [Route("Danh-Sach")]
         public ActionResult Index(int? pageIndex, int? pageSize, string searchString, bool active = true)
         {
             pageIndex = (pageIndex ?? 1);
@@ -64,6 +66,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpGet]
+        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public ActionResult CreateOrUpdate(string id)
         {
             var model = new TuViewModel();
@@ -80,6 +83,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpPost]
+        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public ActionResult CreateOrUpdate(TuViewModel model)
         {
             var tu =  string.IsNullOrEmpty(model.Id) ? new Tu { NgayCapNhat = DateTime.Now}
@@ -124,6 +128,7 @@ namespace S3Train.WebHeThong.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("Thong-Tin-Chi-Tiet")]
         public ActionResult Detail(string id)
         {
             var model = GetTu(_tuService.Get(m => m.Id == id));

@@ -12,6 +12,7 @@ using System.Web.Mvc;
 namespace S3Train.WebHeThong.Controllers
 {
     [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
+    [RoutePrefix("Noi-Ban-Hanh")]
     public class NoiBanHanhController : Controller
     {
         private readonly INoiBanHanhService _noiBanHanhService;
@@ -29,6 +30,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: NoiBanHanh
+        [Route("Danh-Sach")]
         public ActionResult Index(int? pageIndex, int? pageSize)
         {
             pageIndex = (pageIndex ?? 1);
@@ -47,6 +49,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpGet]
+        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public PartialViewResult CreateOrUpdate(string id)
         {
             var model = new NoiBanHanhViewModel();
@@ -69,6 +72,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpPost]
+        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public ActionResult CreateOrUpdate(NoiBanHanhViewModel model)
         {
             var noiBanHanh = string.IsNullOrEmpty(model.Id) ? new NoiBanHanh { NgayCapNhat = DateTime.Now }

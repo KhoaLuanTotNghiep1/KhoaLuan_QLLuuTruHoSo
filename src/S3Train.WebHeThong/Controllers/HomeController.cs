@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace S3Train.WebHeThong.Controllers
 {
+    [RoutePrefix("Home")]
     public class HomeController : Controller
     {
         private readonly ITuService _tuService;
@@ -42,6 +43,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
+        [Route("Bang-Dieu-Khien")]
         public ActionResult Dashboard()
         {
             ViewBag.Array = CountItem();
@@ -54,6 +56,7 @@ namespace S3Train.WebHeThong.Controllers
             return View();
         }
 
+        [Route("Lich-Su-Hoat-Dong")]
         public ActionResult LichSuHoatDong(int? pageIndex, int? pageSize, string searchString, bool active = true)
         {
             pageIndex = (pageIndex ?? 1);
@@ -123,27 +126,30 @@ namespace S3Train.WebHeThong.Controllers
         {
             var array = new int[18];
 
-            int getAllTLVB = _taiLieuVanBanService.GetAll().Count();
+            var hoSos = _hoSoService.GetAll();
+            var hops = _hopService.GetAll();
+            var kes = _keService.GetAll();
+            var taiLieuVanBans = _taiLieuVanBanService.GetAll();
 
-            var den = _taiLieuVanBanService.Gets(p => p.Dang == GlobalConfigs.DANG_DEN).Count();
-            var di = _taiLieuVanBanService.Gets(p => p.Dang == GlobalConfigs.DANG_DI).Count();
-            var noiBo = _taiLieuVanBanService.Gets(p => p.Dang == GlobalConfigs.DANG_NOIBO).Count();
-
-            array[0] = _hoSoService.GetAll().Count();
-            array[1] = _hoSoService.Gets(p => p.TrangThai == true).Count();
-            array[2] = _hoSoService.Gets(p => p.TrangThai == false).Count();
-            array[3] = getAllTLVB;
-            array[4] = _taiLieuVanBanService.Gets(p => p.TrangThai == true).Count();
-            array[5] = _taiLieuVanBanService.Gets(p => p.TrangThai == false).Count();
-            array[6] = _hopService.GetAll().Count();
-            array[7] = _hopService.Gets(p => p.TrangThai == true).Count();
-            array[8] = _hopService.Gets(p => p.TrangThai == false).Count();
-            array[9] = _keService.GetAll().Count();
-            array[10] = _keService.Gets(p => p.TrangThai == true).Count();
-            array[11] = _keService.Gets(p => p.TrangThai == false).Count();
-            array[12] = ComputePercent(getAllTLVB, noiBo);
-            array[13] = ComputePercent(getAllTLVB, den);
-            array[14] = ComputePercent(getAllTLVB, di);
+            var den = taiLieuVanBans.Where(p => p.Dang == GlobalConfigs.DANG_DEN).Count();
+            var di = taiLieuVanBans.Where(p => p.Dang == GlobalConfigs.DANG_DI).Count();
+            var noiBo = taiLieuVanBans.Where(p => p.Dang == GlobalConfigs.DANG_NOIBO).Count();
+           
+            array[0] = hoSos.Count();
+            array[1] = hoSos.Where(p => p.TrangThai == true).Count();
+            array[2] = hoSos.Where(p => p.TrangThai == false).Count();
+            array[3] = taiLieuVanBans.Count();
+            array[4] = taiLieuVanBans.Where(p => p.TrangThai == true).Count();
+            array[5] = taiLieuVanBans.Where(p => p.TrangThai == false).Count();
+            array[6] = hops.Count();
+            array[7] = hops.Where(p => p.TrangThai == true).Count();
+            array[8] = hops.Where(p => p.TrangThai == false).Count();
+            array[9] = kes.Count();
+            array[10] = kes.Where(p => p.TrangThai == true).Count();
+            array[11] = kes.Where(p => p.TrangThai == false).Count();
+            array[12] = ComputePercent(taiLieuVanBans.Count(), noiBo);
+            array[13] = ComputePercent(taiLieuVanBans.Count(), den);
+            array[14] = ComputePercent(taiLieuVanBans.Count(), di);
             array[15] = noiBo;
             array[16] = den;
             array[17] = di;

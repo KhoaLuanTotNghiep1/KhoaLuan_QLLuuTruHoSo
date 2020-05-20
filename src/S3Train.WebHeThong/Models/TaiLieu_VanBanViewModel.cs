@@ -44,9 +44,6 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Nội Dung")]
         public string NoiDung { get; set; }
 
-        [Display(Name = "Trích Dẫn")]
-        public string TrichYeu { get; set; }
-
         [Required(ErrorMessage = "Bạn Chưa điền nơi nhận")]
         [Display(Name = "Địa Chỉ Nhận Tài Liệu/Văn Bản")]
         public string NoiNhan { get; set; }
@@ -66,6 +63,9 @@ namespace S3Train.WebHeThong.Models
 
         [Display(Name = "Hình Ảnh")]
         public string HinhAnh { get; set; }
+
+        [Display(Name = "Vị Trí")]
+        public string ViTri { get; set; }
 
         [Required(ErrorMessage = "Bạn Chưa chọn năm ban hành")]
         [Display(Name = "Năm Ban Hành")]

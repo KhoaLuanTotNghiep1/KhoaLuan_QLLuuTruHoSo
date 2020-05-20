@@ -318,6 +318,10 @@
     <Compile Include="Migrations\202005191232224_AddForienKeyTLVBvsCTMT.designer.cs">
       <DependentUpon>202005191232224_AddForienKeyTLVBvsCTMT.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005201439510_DeleteColumnTrichDan.cs" />
+    <Compile Include="Migrations\202005201439510_DeleteColumnTrichDan.designer.cs">
+      <DependentUpon>202005201439510_DeleteColumnTrichDan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AutoCompleteTextModel.cs" />
@@ -2793,6 +2797,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005191232224_AddForienKeyTLVBvsCTMT.resx">
       <DependentUpon>202005191232224_AddForienKeyTLVBvsCTMT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005201439510_DeleteColumnTrichDan.resx">
+      <DependentUpon>202005201439510_DeleteColumnTrichDan.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

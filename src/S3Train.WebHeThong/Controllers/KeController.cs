@@ -48,12 +48,12 @@ namespace S3Train.WebHeThong.Controllers
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var kes = _keService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderBy(c => c.Ten), includes);
+            var kes = _keService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderBy(c => c.NgayTao), includes);
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 kes = _keService.GetAllPaged(pageIndex, pageSize.Value, p => p.Ten.Contains(searchString) && p.TrangThai == active
-                    && p.TrangThai == active, p => p.OrderBy(c => c.Ten), includes);
+                    && p.TrangThai == active, p => p.OrderBy(c => c.NgayTao), includes);
             }
 
             model.Paged = kes;
@@ -67,7 +67,6 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpGet]
-        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public ActionResult CreateOrUpdate(string id)
         {
             var model = new KeViewModel();
@@ -86,7 +85,6 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpPost]
-        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public ActionResult CreateOrUpdate(KeViewModel model)
         {
             var ke = string.IsNullOrEmpty(model.Id) ? new Ke { NgayCapNhat = DateTime.Now }
@@ -198,7 +196,8 @@ namespace S3Train.WebHeThong.Controllers
                 Tuid = x.Tuid,
                 Tu = x.Tu,
                 Hops = x.Hops,
-                User = x.User
+                User = x.User,
+                ViTri = x.Tu.Ten
             };
             return model;
         }
@@ -222,7 +221,8 @@ namespace S3Train.WebHeThong.Controllers
                 Tuid = x.Tuid,
                 Tu = x.Tu,
                 Hops = x.Hops,
-                User = x.User
+                User = x.User,
+                ViTri = x.Tu.Ten
             }).ToList();
         }
     }

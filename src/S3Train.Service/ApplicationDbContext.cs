@@ -86,7 +86,6 @@ namespace S3Train.Domain
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.Ten).HasMaxLength(300).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.Loai).HasMaxLength(300).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.SoKyHieu).HasMaxLength(100).IsOptional();
-            modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.TrichYeu).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.NoiDung).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.NguoiDuyet).HasMaxLength(100).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.NguoiKy).HasMaxLength(100).IsOptional();

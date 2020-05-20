@@ -6,6 +6,7 @@
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
 
     string title = string.IsNullOrEmpty(Model.Id) ? "Tạo Mới" : "Cập Nhật";
+    Model.GhiChu = Html.Raw(HttpUtility.HtmlDecode(Model.GhiChu)).ToString();
 }
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -102,15 +103,10 @@
             </div>
 
             <div class="form-group row">
-                <div class="col-md-6">
+                <div class="col-md">
                     <label>@Html.DisplayNameFor(item => Model.GhiChu)</label>
                     @Html.TextAreaFor(model => model.GhiChu, new { @class = "form-control", rows = "5" })
                     <script type="text/javascript">CKEDITOR.replace("GhiChu", { htmlEncodeOutput: true });</script>
-                </div>
-                <div class="col-md-6">
-                    <label>@Html.DisplayNameFor(item => Model.TrichYeu)</label>
-                    @Html.TextAreaFor(model => model.TrichYeu, new { @class = "form-control", rows = "5" })
-                    <script type="text/javascript">CKEDITOR.replace("TrichYeu", { htmlEncodeOutput: true });</script>
                 </div>
             </div>
 

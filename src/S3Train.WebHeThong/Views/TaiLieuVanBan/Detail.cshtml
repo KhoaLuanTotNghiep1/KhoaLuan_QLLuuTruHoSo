@@ -33,16 +33,16 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.ViTri)</h6>
+                        <p>@Html.DisplayFor(item => Model.ViTri)</p>
+                    </div>
+                    <div class="col-md-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoKyHieu)</h6>
                         <p>@Html.DisplayFor(item => Model.SoKyHieu)</p>
                     </div>
                     <div class="col-md-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoTo)</h6>
                         <p>@Html.DisplayFor(item => Model.SoTo) trang</p>
-                    </div>
-                    <div class="col-md-4">
-                        <h6 class="m-0 font-weight-bold text-primary">Hồ Sơ</h6>
-                        <p>@Html.DisplayFor(item => Model.HoSo.PhongLuuTru)</p>
                     </div>
                 </div>
                 <div class="row">
@@ -156,13 +156,9 @@
 <div class="card">
     <div class="card-body">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md">
                 <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.GhiChu)</h6>
                 @Html.Raw(HttpUtility.HtmlDecode(Model.GhiChu)).ToString()
-            </div>
-            <div class="col-md-6">
-                <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.TrichYeu)</h6>
-                @Html.Raw(HttpUtility.HtmlDecode(Model.TrichYeu)).ToString()
             </div>
         </div>
     </div>

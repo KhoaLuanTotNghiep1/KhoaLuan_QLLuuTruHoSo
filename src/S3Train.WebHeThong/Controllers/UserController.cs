@@ -43,7 +43,6 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpGet]
-        [Route("Tao-Tai-Khoan-Nguoi-Dung")]
         [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
         public async Task<ActionResult> CreateOrUpdate(string id)
         {
@@ -62,7 +61,6 @@ namespace S3Train.WebHeThong.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        [Route("Tao-Tai-Khoan-Nguoi-Dung")]
         public async Task<ActionResult> CreateOrUpdate(UserViewModel model)
         {
             if (string.IsNullOrEmpty(model.Id))

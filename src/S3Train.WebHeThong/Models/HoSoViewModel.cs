@@ -15,6 +15,9 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Tập Hồ Sơ")]
         public string TapHoSoId { get; set; }
 
+        [Display(Name = "Vị Trí")]
+        public string ViTri { get; set; }
+
         [Required(ErrorMessage = "Bạn chưa điền phông lưu trữ")]
         [Display(Name = "Phông Lưu Trữ")]
         public string PhongLuuTru { get; set; }

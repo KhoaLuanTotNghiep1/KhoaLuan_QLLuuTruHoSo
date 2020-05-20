@@ -51,12 +51,12 @@ namespace S3Train.WebHeThong.Controllers
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var hops = _hopService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderBy(c => c.Ke.SoThuTu), includes);
+            var hops = _hopService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderBy(c => c.NgayTao), includes);
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 hops = _hopService.GetAllPaged(pageIndex, pageSize.Value, p => p.ChuyenDe.Contains(searchString) || p.PhongBan.Ten.Contains(searchString)
-                    && p.TrangThai == active, p => p.OrderBy(c => c.Ke.SoThuTu), includes);
+                    && p.TrangThai == active, p => p.OrderBy(c => c.NgayTao), includes);
             }
 
             model.Paged = hops;
@@ -70,7 +70,6 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpGet]
-        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public ActionResult CreateOrUpdate(string id)
         {
             var model = new HopViewModel();
@@ -90,7 +89,6 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpPost]
-        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public ActionResult CreateOrUpdate(HopViewModel model)
         {
             var hop = string.IsNullOrEmpty(model.Id) ? new Hop { NgayCapNhat = DateTime.Now }
@@ -240,7 +238,8 @@ namespace S3Train.WebHeThong.Controllers
                 UserId = hop.UserId,
                 HoSos = hop.HoSos,
                 Ke = hop.Ke,
-                User = hop.User
+                User = hop.User,
+                ViTri = hop.Ke.Tu.Ten + " kệ thứ " + hop.Ke.SoThuTu
             };
 
             model.KeId = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text;
@@ -266,7 +265,8 @@ namespace S3Train.WebHeThong.Controllers
                 UserId = hop.UserId,
                 HoSos = hop.HoSos,
                 Ke = hop.Ke,
-                User = hop.User
+                User = hop.User,
+                ViTri = hop.Ke.Tu.Ten + " kệ thứ " + hop.Ke.SoThuTu
             }).ToList();
         }
     }

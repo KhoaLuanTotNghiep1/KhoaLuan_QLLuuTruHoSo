@@ -63,12 +63,12 @@ namespace S3Train.WebHeThong.Controllers
             };
 
             var taiLieuVanBans = _taiLieuVanBanService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active && 
-                p.Dang.Contains(dang), p => p.OrderBy(c => c.Ten), includes);
+                p.Dang.Contains(dang), p => p.OrderBy(c => c.NgayTao), includes);
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 taiLieuVanBans = _taiLieuVanBanService.GetAllPaged(pageIndex, pageSize.Value, p => p.Ten.Contains(searchString) || p.Loai.Contains(searchString)
-                    || p.NoiDung.Contains(searchString) && p.TrangThai == active && p.Dang.Contains(dang), p => p.OrderBy(c => c.Ten), includes);
+                    || p.NoiDung.Contains(searchString) && p.TrangThai == active && p.Dang.Contains(dang), p => p.OrderBy(c => c.NgayTao), includes);
             }
 
             model.Paged = taiLieuVanBans;
@@ -83,7 +83,6 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpGet]
-        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public ActionResult CreateOrUpdate(string id)
         {
             var model = new TaiLieu_VanBanViewModel();
@@ -106,7 +105,6 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpPost]
-        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public ActionResult CreateOrUpdate(TaiLieu_VanBanViewModel model, IEnumerable<HttpPostedFileBase> file)
         {
             var taiLieuVanBan = string.IsNullOrEmpty(model.Id) ? new TaiLieuVanBan { NgayCapNhat = DateTime.Now }
@@ -137,7 +135,6 @@ namespace S3Train.WebHeThong.Controllers
             taiLieuVanBan.SoKyHieu = model.SoKyHieu;
             taiLieuVanBan.SoTo = model.SoTo;
             taiLieuVanBan.Ten = model.Ten;
-            taiLieuVanBan.TrichYeu = model.TrichYeu;
             taiLieuVanBan.NgayBanHanh = model.NgayBanHanh;
             taiLieuVanBan.TinhTrang = "Trong Kho";
             taiLieuVanBan.TrangThai = true;
@@ -332,12 +329,13 @@ namespace S3Train.WebHeThong.Controllers
                Ten = x.Ten,
                TinhTrang = x.TinhTrang,
                TrangThai = x.TrangThai,
-               TrichYeu = x.TrichYeu,
                User = x.User,
                UserId = x.UserId,
                NgayBanHanh = x.NgayBanHanh,
                HinhAnh = x.HinhAnh,
-               HoSoId = x.HoSoId
+               HoSoId = x.HoSoId,
+               ViTri = x.HoSo.Hop.Ke.Tu.Ten + " kệ thứ " + x.HoSo.Hop.Ke.SoThuTu + " hộp số "
+                + x.HoSo.Hop.SoHop + " hồ sơ " + x.HoSo.PhongLuuTru
             };
 
             model.HoSoId = autoList.FirstOrDefault(p => p.Id == x.HoSoId).Text;
@@ -369,11 +367,12 @@ namespace S3Train.WebHeThong.Controllers
                 Ten = x.Ten,
                 TinhTrang = x.TinhTrang,
                 TrangThai = x.TrangThai,
-                TrichYeu = x.TrichYeu,
                 User = x.User,
                 UserId = x.UserId,
                 NgayBanHanh = x.NgayBanHanh,
-                HinhAnh = x.HinhAnh
+                HinhAnh = x.HinhAnh,
+                ViTri = x.HoSo.Hop.Ke.Tu.Ten + " kệ thứ " + x.HoSo.Hop.Ke.SoThuTu + " hộp số " 
+                + x.HoSo.Hop.SoHop+ " hồ sơ " + x.HoSo.PhongLuuTru
             }).ToList();
         }
     }

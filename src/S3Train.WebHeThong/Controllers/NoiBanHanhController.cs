@@ -49,7 +49,6 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpGet]
-        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public PartialViewResult CreateOrUpdate(string id)
         {
             var model = new NoiBanHanhViewModel();
@@ -72,7 +71,6 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpPost]
-        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public ActionResult CreateOrUpdate(NoiBanHanhViewModel model)
         {
             var noiBanHanh = string.IsNullOrEmpty(model.Id) ? new NoiBanHanh { NgayCapNhat = DateTime.Now }

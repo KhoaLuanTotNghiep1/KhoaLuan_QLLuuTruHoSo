@@ -42,7 +42,7 @@
                     <tr>
                         <td>@stt</td>
                         <td>@Html.DisplayFor(m => item.ChuyenDe)</td>
-                        <td>Kệ Thứ @Html.DisplayFor(m => item.Ke.SoThuTu) Hộp Số @Html.DisplayFor(m => item.SoHop)</td>
+                        <td>@item.ViTri</td>
                         <td>@Html.DisplayFor(m => item.PhongBan.Ten)</td>
                         <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
                         <td>

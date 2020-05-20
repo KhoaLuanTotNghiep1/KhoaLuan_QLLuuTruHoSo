@@ -72,7 +72,6 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpGet]
-        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public ActionResult CreateOrUpdate(string id)
         {
             var model = new HoSoViewModel();
@@ -94,7 +93,6 @@ namespace S3Train.WebHeThong.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        [Route("Tao-Moi-Hoac-Cap-Nhat")]
         public ActionResult CreateOrUpdate(HoSoViewModel model)
         {
             var hoSo = string.IsNullOrEmpty(model.Id) ? new HoSo { NgayCapNhat = DateTime.Now }
@@ -203,6 +201,7 @@ namespace S3Train.WebHeThong.Controllers
                 NgayTao = x.NgayTao,
                 NgayCapNhat = x.NgayCapNhat,
                 TrangThai = x.TrangThai,
+                ViTri = x.Hop.Ke.Tu.Ten + " kệ thứ " + x.Hop.Ke.SoThuTu + " hộp số " + x.Hop.SoHop
             };
 
             model.HopId = autoList.FirstOrDefault(p => p.Id == x.HopId).Text;
@@ -232,7 +231,8 @@ namespace S3Train.WebHeThong.Controllers
                 TaiLieuVanBans = x.TaiLieuVanBans,
                 NgayTao = x.NgayTao,
                 NgayCapNhat = x.NgayCapNhat,
-                TrangThai = x.TrangThai
+                TrangThai = x.TrangThai,
+                ViTri = x.Hop.Ke.Tu.Ten + " kệ thứ " + x.Hop.Ke.SoThuTu + " hộp số " + x.Hop.SoHop
             }).ToList();
         }
     }

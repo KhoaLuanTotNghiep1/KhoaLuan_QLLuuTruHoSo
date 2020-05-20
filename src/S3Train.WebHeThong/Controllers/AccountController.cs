@@ -86,8 +86,7 @@ namespace S3Train.WebHeThong.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
-            var user = await _userService.GetUserByUserName(model.UserName);
-            var roles = await _userService.GetRolesForUser(user.Id);
+
             switch (result)
             {
                 case SignInStatus.Success:

@@ -137,15 +137,12 @@ namespace S3Train.WebHeThong.Controllers
             taiLieuVanBan.Ten = model.Ten;
             taiLieuVanBan.NgayBanHanh = model.NgayBanHanh;
             taiLieuVanBan.TinhTrang = "Trong Kho";
-            taiLieuVanBan.TrangThai = true;
             taiLieuVanBan.UserId = userId;
             taiLieuVanBan.HinhAnh = hinhAnh;
             #endregion
 
             if (string.IsNullOrEmpty(model.Id))
             {
-                taiLieuVanBan.Id = Guid.NewGuid().ToString();
-                taiLieuVanBan.NgayTao = DateTime.Now;
                 _taiLieuVanBanService.Insert(taiLieuVanBan);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Create, userId, cthd);
                 TempData["AlertMessage"] = "Tạo Mới Thành Công";
@@ -170,7 +167,6 @@ namespace S3Train.WebHeThong.Controllers
             taiLieuVanBan.NguoiGuiHoacNhan = user.FullName;
             taiLieuVanBan.Dang = GlobalConfigs.DANG_DI;
             taiLieuVanBan.NoiNhan = model.NoiNhan;
-            taiLieuVanBan.NgayCapNhat = DateTime.Now;
             taiLieuVanBan.TinhTrang = GlobalConfigs.TINHTRANG_DAGOI;
 
             _taiLieuVanBanService.Update(taiLieuVanBan);
@@ -204,7 +200,6 @@ namespace S3Train.WebHeThong.Controllers
             var model = _taiLieuVanBanService.Get(m => m.Id == id);
 
             model.TrangThai = active;
-            model.NgayCapNhat = DateTime.Now;
 
             _taiLieuVanBanService.Update(model);
             _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(),

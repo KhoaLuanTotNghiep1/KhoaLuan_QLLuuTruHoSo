@@ -105,13 +105,10 @@ namespace S3Train.WebHeThong.Controllers
             hop.UserId = userId;
             hop.NgayBatDau = model.NgayBatDau;
             hop.NgayKetThuc = model.NgayKetThuc;
-            hop.TrangThai = true;
 
             if (string.IsNullOrEmpty(model.Id))
             {
-                hop.Id = Guid.NewGuid().ToString();
                 hop.TinhTrang = GlobalConfigs.TINHTRANG_TRONGKHO;
-                hop.NgayTao = DateTime.Now;
                 var result = UpdateTu_SoHopHienTai(hop.KeId, ActionWithObject.Update);
                 if (!result)
                 {
@@ -126,7 +123,6 @@ namespace S3Train.WebHeThong.Controllers
             }
             else
             {
-                hop.NgayCapNhat = DateTime.Now;
                 _hopService.Update(hop);
 
                 _functionLichSuHoatDongService.Create(ActionWithObject.Update, userId, chiTietHoatDong);
@@ -165,7 +161,6 @@ namespace S3Train.WebHeThong.Controllers
             string chiTietHoatDong = "hộp " + model.ChuyenDe + " trên kệ thứ " + model.Ke.SoThuTu + " thành " + active;
 
             model.TrangThai = active;
-            model.NgayCapNhat = DateTime.Now;
 
             _hopService.Update(model);
 

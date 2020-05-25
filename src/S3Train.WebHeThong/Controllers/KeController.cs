@@ -105,9 +105,7 @@ namespace S3Train.WebHeThong.Controllers
 
             if (string.IsNullOrEmpty(model.Id))
             {
-                ke.Id = Guid.NewGuid().ToString();
                 ke.SoHopHienTai = 0;
-                ke.NgayTao = DateTime.Now;
                 var result = UpdateTu_SoLuongHienTai(model.Tuid, ActionWithObject.Update);
                 if(!result)
                 {
@@ -121,7 +119,6 @@ namespace S3Train.WebHeThong.Controllers
             }
             else
             {
-                ke.NgayCapNhat = DateTime.Now;
                 _keService.Update(ke);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Update, userId, cthd);
                 TempData["AlertMessage"] = "Cập Nhật Thành Công";
@@ -132,9 +129,13 @@ namespace S3Train.WebHeThong.Controllers
         public ActionResult Delete(string id)
         {
             var ke = _keService.Get(m => m.Id == id);
+
             _keService.Remove(ke);
+
             UpdateTu_SoLuongHienTai(ke.Tuid, ActionWithObject.Delete);
+
             _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), "kệ: " + ke.Ten);
+
             TempData["AlertMessage"] = "Xóa Thành Công";
             return RedirectToAction("Index");
         }
@@ -152,7 +153,6 @@ namespace S3Train.WebHeThong.Controllers
             var model = _keService.Get(m => m.Id == id);
 
             model.TrangThai = active;
-            model.NgayCapNhat = DateTime.Now;
 
             _keService.Update(model);
             _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(), "kệ " + model.Ten + " thành "+ active);

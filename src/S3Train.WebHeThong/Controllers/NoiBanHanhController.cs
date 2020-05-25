@@ -78,19 +78,15 @@ namespace S3Train.WebHeThong.Controllers
 
             noiBanHanh.Ten = model.Ten;
             noiBanHanh.MoTa = model.MoTa;
-            noiBanHanh.TrangThai = true;
 
             if (string.IsNullOrEmpty(model.Id))
             {
-                noiBanHanh.Id = Guid.NewGuid().ToString();
-                noiBanHanh.NgayTao = DateTime.Now;
                 _noiBanHanhService.Insert(noiBanHanh);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Create, User.Identity.GetUserId(), "nơi ban hành: " + model.Ten);
                 TempData["AlertMessage"] = "Tạo Mới Thành Công";
             }
             else
             {
-                noiBanHanh.NgayCapNhat = DateTime.Now;
                 _noiBanHanhService.Update(noiBanHanh);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Update, User.Identity.GetUserId(), "nơi ban hành: " + model.Ten);
                 TempData["AlertMessage"] = "Cập Nhật Thành Công";

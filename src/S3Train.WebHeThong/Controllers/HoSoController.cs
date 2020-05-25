@@ -111,19 +111,15 @@ namespace S3Train.WebHeThong.Controllers
             hoSo.LoaiHoSoId = model.LoaiHoSoId;
             hoSo.HopId = autoList.FirstOrDefault(p => p.Text == model.HopId).Id;
             hoSo.UserId = userId;
-            hoSo.TrangThai = true;
 
             if (string.IsNullOrEmpty(model.Id))
             {
-                hoSo.Id = Guid.NewGuid().ToString();
-                hoSo.NgayTao = DateTime.Now;
                 _hoSoService.Insert(hoSo);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Create, userId, chiTietHoatDong);
                 TempData["AlertMessage"] = "Tạo Mới Thành Công";
             }
             else
             {
-                hoSo.NgayCapNhat = DateTime.Now;
                 _hoSoService.Update(hoSo);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Update, userId, chiTietHoatDong);
                 TempData["AlertMessage"] = "Cập Nhật Thành Công";
@@ -153,7 +149,6 @@ namespace S3Train.WebHeThong.Controllers
             var model = _hoSoService.Get(m => m.Id == id);
 
             model.TrangThai = active;
-            model.NgayCapNhat = DateTime.Now;
 
             _hoSoService.Update(model);
             _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(), "hồ sơ: " + model.PhongLuuTru + " thành " +active);

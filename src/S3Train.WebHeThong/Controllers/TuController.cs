@@ -97,19 +97,15 @@ namespace S3Train.WebHeThong.Controllers
             tu.SoLuongMax = model.SoLuongMax;
             tu.SoLuongHienTai = 0;
             tu.TinhTrang = model.TinhTrang;
-            tu.TrangThai = true;
 
             if(string.IsNullOrEmpty(model.Id))
             {
-                tu.Id = Guid.NewGuid().ToString();
-                tu.NgayTao = DateTime.Now;
                 _tuService.Insert(tu);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Create,userId,chiTietHoatDong);
                 TempData["AlertMessage"] = "Tạo Mới Thành Công";
             }
             else
             {
-                tu.NgayCapNhat = DateTime.Now;
                 _tuService.Update(tu);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Update, userId, chiTietHoatDong);
                 TempData["AlertMessage"] = "Cập Nhật Thành Công";

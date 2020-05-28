@@ -1,4 +1,5 @@
 ﻿using S3Train.Domain;
+using S3Train.WebHeThong.Controllers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,29 +19,24 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Văn bản/Tài liệu")]
         public string ThuMuon { get; set; }
 
+        public string VanThu { get; set; }
         
-        [Display(Name = "Danh Sách Mượn")]
-        public string DSMuon { get; set; }
-
         [Required(ErrorMessage = "Điền Ngày Mượn")]
         [Display(Name = "Ngày Mượn")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime NgayMuon { get; set; }
 
+        [Required(ErrorMessage = "Điền  Số Lượng Mượn")]
+        [Display(Name = "Số Lượng ")]
+        public int SoLuong { get; set; }
+
         [Required(ErrorMessage = "Điền Ngày Trả")]
         [Display(Name = "Ngày Trả")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime NgayTra { get; set; }
-
-        [Required(ErrorMessage = "Điền Tên Văn Thư")]
-        [Display(Name = "Văn Thư")]
-        public string VanThu { get; set; }
-
-        [Display(Name = "Số Lượng Mượn")]
-        public int SoLuong { get; set; }
-
+        
         [Display(Name = "Tình Trạng")]
         public string TinhTrang { get; set; }
 
@@ -49,16 +45,18 @@ namespace S3Train.WebHeThong.Models
         public DateTime? NgayCapNhat { get; set; }
 
 
-        [Display(Name = " Ngày Tạo")]
-        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
-        public DateTime? NgayTao { get; set; }
-
         [Display(Name = "Trạng Thái")]
         public bool TrangThai { get; set; }
 
         public virtual ApplicationUser User { get; set; }
 
+        public TaiLieuVanBan TaiLieuVanBan { get; set; }
+
+        //public TaiLieuVanBan TaiLieuVanBan { get; set; }
+
         public virtual ICollection<ChiTietMuonTra> ChiTietMuonTras { get; set; }
+        public ChiTietMuonTraViewModel ChiTietMuonTra { get; set; }
+        //public int SoLuong => ChiTietMuonTras.Count;
     }
 
     public class MuonTraIndexViewModel : IndexViewModelBase

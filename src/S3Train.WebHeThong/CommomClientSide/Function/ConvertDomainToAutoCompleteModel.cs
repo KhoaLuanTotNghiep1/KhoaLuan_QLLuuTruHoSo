@@ -36,16 +36,16 @@ namespace S3Train.WebHeThong.CommomClientSide.Function
 
             foreach (var item in taiLieuVanBans)
             {
-                string local = item.Ten;
-
-
-                var auto = new AutoCompleteTextModel()
+                if(item.TinhTrang != "Đang Mượn")
                 {
-                    Id = item.Id,
-                    Text = local,
-                };
-
-                list.Add(auto);
+                    var auto = new AutoCompleteTextModel()
+                    {
+                        Id = item.Id,
+                        Text = item.Ten,
+                    };
+                    list.Add(auto);
+                }
+               
             }
 
             return list;

@@ -254,6 +254,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\TaiLieuVanBanController.cs" />
     <Compile Include="Controllers\API\TestController.cs" />
+    <Compile Include="Controllers\TraController.cs" />
     <Compile Include="Migrations\202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.cs" />
     <Compile Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs" />
     <Compile Include="Migrations\202005160325216_AdjustToOldVersion.cs" />
@@ -275,7 +276,7 @@
     <Compile Include="Controllers\KeController.cs" />
     <Compile Include="Controllers\LHSAndPBController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\MuonTraController.cs" />
+    <Compile Include="Controllers\MuonController.cs" />
     <Compile Include="Controllers\NoiBanHanhController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\TaiLieuVanBanController.cs" />
@@ -2729,6 +2730,12 @@
     <Content Include="Views\Home\demo.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\MuonTra\Detail.cshtml" />
+    <Content Include="Views\Muon\Index.cshtml" />
+    <Content Include="Views\Muon\Detail.cshtml" />
+    <Content Include="Views\Muon\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Tra\Index.cshtml" />
+    <Content Include="Views\Tra\Detail.cshtml" />
     <None Include="Web.LocalConnectStrings.config">
       <SubType>Designer</SubType>
     </None>

@@ -108,8 +108,8 @@ namespace S3Train.Domain
             modelBuilder.Entity<MuonTra>().Property(p => p.VanThu).IsOptional();
             modelBuilder.Entity<MuonTra>().HasMany(p => p.ChiTietMuonTras).WithOptional(prod => prod.MuonTra);
 
+
             modelBuilder.Entity<ChiTietMuonTra>().ToTable("ChiTietMuonTra");
-            modelBuilder.Entity<ChiTietMuonTra>().Property(p => p.TaiLieuVanBanId).IsOptional();
             modelBuilder.Entity<ChiTietMuonTra>().Property(p => p.SoLuong).IsOptional();
 
             modelBuilder.Entity<NoiBanHanh>().ToTable("NoiBanHanh");

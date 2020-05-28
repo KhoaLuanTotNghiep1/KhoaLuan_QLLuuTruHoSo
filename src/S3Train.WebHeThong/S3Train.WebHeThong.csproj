@@ -320,6 +320,14 @@
     <Compile Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.designer.cs">
       <DependentUpon>202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005160325216_AdjustToOldVersion.cs" />
+    <Compile Include="Migrations\202005160325216_AdjustToOldVersion.designer.cs">
+      <DependentUpon>202005160325216_AdjustToOldVersion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005161447058_AddColumnHinhAnhTableTLVB.cs" />
+    <Compile Include="Migrations\202005161447058_AddColumnHinhAnhTableTLVB.designer.cs">
+      <DependentUpon>202005161447058_AddColumnHinhAnhTableTLVB.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AutoCompleteTextModel.cs" />
@@ -2807,6 +2815,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005161447058_AddColumnHinhAnhTableTLVB.resx">
       <DependentUpon>202005161447058_AddColumnHinhAnhTableTLVB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005191232224_AddForienKeyTLVBvsCTMT.resx">
+      <DependentUpon>202005191232224_AddForienKeyTLVBvsCTMT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005201439510_DeleteColumnTrichDan.resx">
+      <DependentUpon>202005201439510_DeleteColumnTrichDan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005271601281_DeleteColumnDienTichTableTu.resx">
+      <DependentUpon>202005271601281_DeleteColumnDienTichTableTu.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

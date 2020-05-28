@@ -15,5 +15,6 @@ namespace S3Train.Domain
         public virtual TaiLieuVanBan TaiLieuVanBan { get; set; }
 
         public virtual MuonTra MuonTra { get; set; }
+        public virtual TaiLieuVanBan TaiLieuVanBan { get; set; }
     }
 }

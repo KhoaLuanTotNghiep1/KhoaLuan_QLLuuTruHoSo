@@ -10,7 +10,7 @@
     <h1 class="h3 mb-0 text-gray-800">Thông Tin Chi Tiết Kệ</h1>
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="@Url.Action("Index","Ke")">Ke</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Detail</li>
+        <li class="breadcrumb-item active" aria-current="page">Thong-Tin-Chi-Tiet</li>
     </ol>
 </div>
 
@@ -28,8 +28,8 @@
                         <p>@Html.DisplayFor(item => Model.User.FullName)</p>
                     </div>
                     <div class="col-lg-4">
-                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoThuTu)</h6>
-                        <p>Kệ @Html.DisplayFor(item => Model.SoThuTu)</p>
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.ViTri)</h6>
+                        <p>@Model.ViTri kệ @Model.SoThuTu</p>
                     </div>
                 </div>
                 <div class="row">

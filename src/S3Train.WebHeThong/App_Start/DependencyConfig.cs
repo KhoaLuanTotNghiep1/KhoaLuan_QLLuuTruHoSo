@@ -57,8 +57,8 @@ namespace S3Train.WebHeThong.App_Start
             builder.RegisterAssemblyTypes(coreAssembly).AsImplementedInterfaces().InstancePerRequest();
             builder.RegisterAssemblyTypes(webAssembly).AsImplementedInterfaces().InstancePerRequest();
 
-            builder.RegisterControllers(webAssembly);
-            builder.RegisterApiControllers(webAssembly);
+            builder.RegisterControllers(webAssembly); // mvc
+            builder.RegisterApiControllers(webAssembly); // web api
             builder.RegisterModule(new AutofacWebTypesModule());
         }
 

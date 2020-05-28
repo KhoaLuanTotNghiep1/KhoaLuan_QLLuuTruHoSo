@@ -13,6 +13,7 @@ using System.Web.Mvc;
 namespace S3Train.WebHeThong.Controllers
 {
     [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC)]
+    [RoutePrefix("Tu")]
     public class TuController : Controller
     {
         private readonly ITuService _tuService;
@@ -32,6 +33,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: Tu
+        [Route("Danh-Sach")]
         public ActionResult Index(int? pageIndex, int? pageSize, string searchString, bool active = true)
         {
             pageIndex = (pageIndex ?? 1);
@@ -45,12 +47,12 @@ namespace S3Train.WebHeThong.Controllers
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var tus = _tuService.GetAllPaged(pageIndex, pageSize.Value,  p=> p.TrangThai == active, p => p.OrderBy(c => c.Ten), includes);
+            var tus = _tuService.GetAllPaged(pageIndex, pageSize.Value,  p=> p.TrangThai == active, p => p.OrderBy(c => c.NgayTao), includes);
 
             if(!string.IsNullOrEmpty(searchString))
             {
                 tus = _tuService.GetAllPaged(pageIndex, pageSize.Value, p => p.Ten.Contains(searchString) || p.NgươiQuanLy.Contains(searchString)
-                    && p.TrangThai == active, p => p.OrderBy(c => c.Ten), includes);
+                    && p.TrangThai == active, p => p.OrderBy(c => c.NgayTao), includes);
             }
 
             model.Paged = tus;
@@ -90,24 +92,19 @@ namespace S3Train.WebHeThong.Controllers
 
             tu.Ten = model.Ten;
             tu.ViTri = model.ViTri;
-            tu.DienTich = model.DienTich;
             tu.NgươiQuanLy = model.NgươiQuanLy;
             tu.SoLuongMax = model.SoLuongMax;
             tu.SoLuongHienTai = 0;
             tu.TinhTrang = model.TinhTrang;
-            tu.TrangThai = true;
 
             if(string.IsNullOrEmpty(model.Id))
             {
-                tu.Id = Guid.NewGuid().ToString();
-                tu.NgayTao = DateTime.Now;
                 _tuService.Insert(tu);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Create,userId,chiTietHoatDong);
                 TempData["AlertMessage"] = "Tạo Mới Thành Công";
             }
             else
             {
-                tu.NgayCapNhat = DateTime.Now;
                 _tuService.Update(tu);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Update, userId, chiTietHoatDong);
                 TempData["AlertMessage"] = "Cập Nhật Thành Công";
@@ -124,6 +121,7 @@ namespace S3Train.WebHeThong.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("Thong-Tin-Chi-Tiet")]
         public ActionResult Detail(string id)
         {
             var model = GetTu(_tuService.Get(m => m.Id == id));
@@ -136,7 +134,6 @@ namespace S3Train.WebHeThong.Controllers
             var model = _tuService.Get(m => m.Id == id);
 
             model.TrangThai = active;
-            model.NgayCapNhat = DateTime.Now;
 
             _tuService.Update(model);
             _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(), model.Ten + " thành " + active);
@@ -150,7 +147,6 @@ namespace S3Train.WebHeThong.Controllers
                 Id = tu.Id,
                 Ten = tu.Ten,
                 DonViTinh = tu.DonViTinh,
-                DienTich = tu.DienTich,
                 NgươiQuanLy = tu.NgươiQuanLy,
                 TinhTrang = tu.TinhTrang,
                 SoLuongHienTai = tu.SoLuongHienTai,
@@ -171,7 +167,6 @@ namespace S3Train.WebHeThong.Controllers
               Id = x.Id,
               Ten = x.Ten,
               DonViTinh = x.DonViTinh,
-              DienTich = x.DonViTinh,
               NgươiQuanLy = x.NgươiQuanLy,
               TinhTrang = x.TinhTrang,
               SoLuongHienTai = x.SoLuongHienTai,

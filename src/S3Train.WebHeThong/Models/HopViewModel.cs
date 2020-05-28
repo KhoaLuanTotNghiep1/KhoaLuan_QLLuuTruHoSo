@@ -23,6 +23,9 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Tình Trạng")]
         public string TinhTrang { get; set; } // Mượn hoặc Trả
 
+        [Display(Name = "Vị Trí")]
+        public string ViTri { get; set; }
+
         [Required(ErrorMessage = "Bạn chưa điền ngày bắt đầu lưu trữ")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
@@ -57,10 +60,10 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Trạng Thái")]
         public bool TrangThai { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
-        public virtual Ke Ke { get; set; }
-        public virtual PhongBan PhongBan { get; set; }
-        public virtual ICollection<HoSo> HoSos { get; set; }
+        public ApplicationUser User { get; set; }
+        public Ke Ke { get; set; }
+        public PhongBan PhongBan { get; set; }
+        public ICollection<HoSo> HoSos { get; set; }
     }
 
     public class HopViewIndexModel : IndexViewModelBase

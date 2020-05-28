@@ -2,10 +2,7 @@
 using S3Train.Domain;
 using S3Train.Model;
 using S3Train.Model.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using S3Train.Model.User;
 
 namespace S3Train.WebHeThong.App_Start
 {
@@ -18,6 +15,9 @@ namespace S3Train.WebHeThong.App_Start
 
             Mapper.CreateMap<TaiLieuVanBan, TaiLieuVanBanDto>();
             Mapper.CreateMap<TaiLieuVanBanDto, TaiLieuVanBan>();
+    
+            Mapper.CreateMap<ApplicationUser, UserViewModel>();
+            Mapper.CreateMap<UserViewModel, ApplicationUser>();
         }
     }
 }

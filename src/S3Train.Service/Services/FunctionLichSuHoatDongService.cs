@@ -17,11 +17,8 @@ namespace S3Train.Services
         {
             var lichSuHoatDong = new LichSuHoatDong()
             {
-                Id = Guid.NewGuid().ToString(),
                 HoatDong = ActionString(hoatDong),
                 ChiTietHoatDong = ActionString(hoatDong) + chiTietHoatDong,
-                NgayTao = DateTime.Now,
-                TrangThai = true,
                 UserId = userId
             };
 

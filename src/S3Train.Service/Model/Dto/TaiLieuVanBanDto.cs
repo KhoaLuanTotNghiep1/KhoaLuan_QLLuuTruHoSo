@@ -18,7 +18,6 @@ namespace S3Train.Model.Dto
         public string DuongDan { get; set; }
         public string GhiChu { get; set; }
         public string NoiDung { get; set; }
-        public string TrichYeu { get; set; }
         public string NoiNhan { get; set; }
         public string NguoiGuiHoacNhan { get; set; }
         public string NguoiKy { get; set; }

@@ -10,7 +10,7 @@
     <h1 class="h3 mb-0 text-gray-800">Hộp</h1>
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="@Url.Action("Index","Hop")">Hop</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Index</li>
+        <li class="breadcrumb-item active" aria-current="page">Danh-Sach</li>
     </ol>
 </div>
 
@@ -39,16 +39,16 @@
             <tbody>
                 @foreach (var item in Model.Items)
                 {
-                <tr>
-                    <td>@stt</td>
-                    <td>@Html.DisplayFor(m => item.ChuyenDe)</td>
-                    <td>Kệ Thứ @Html.DisplayFor(m => item.Ke.SoThuTu) Hộp Số @Html.DisplayFor(m => item.SoHop)</td>
-                    <td>@Html.DisplayFor(m => item.PhongBan.Ten)</td>
-                    <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
-                    <td>
-                        @Html.Partial("~/Views/Shared/_PartialActionBasic.cshtml", item.Id)
-                    </td>
-                </tr>
+                    <tr>
+                        <td>@stt</td>
+                        <td>@Html.DisplayFor(m => item.ChuyenDe)</td>
+                        <td style="width:200px">@item.ViTri</td>
+                        <td style="width:200px">@Html.DisplayFor(m => item.PhongBan.Ten)</td>
+                        <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
+                        <td>
+                            @Html.Partial("~/Views/Shared/_PartialActionBasic.cshtml", item.Id)
+                        </td>
+                    </tr>
                     stt += 1;
                 }
                 <tr class="pageging">

@@ -9,8 +9,8 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Thông Tin Chi Tiết Tài Liệu/Văn Bản</h1>
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="@Url.Action("Index","TaiLieuVanBan")">TaiLieuVanBan</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Detail</li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Index","TaiLieuVanBan")">Tai-Lieu-Van-Ban</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Thong-Tin-Chi-Tiet</li>
     </ol>
 </div>
 <div class="row">
@@ -33,16 +33,16 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.ViTri)</h6>
+                        <p>@Html.DisplayFor(item => Model.ViTri)</p>
+                    </div>
+                    <div class="col-md-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoKyHieu)</h6>
                         <p>@Html.DisplayFor(item => Model.SoKyHieu)</p>
                     </div>
                     <div class="col-md-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoTo)</h6>
                         <p>@Html.DisplayFor(item => Model.SoTo) trang</p>
-                    </div>
-                    <div class="col-md-4">
-                        <h6 class="m-0 font-weight-bold text-primary">Hồ Sơ</h6>
-                        <p>@Html.DisplayFor(item => Model.HoSo.PhongLuuTru)</p>
                     </div>
                 </div>
                 <div class="row">
@@ -156,13 +156,9 @@
 <div class="card">
     <div class="card-body">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md">
                 <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.GhiChu)</h6>
-                @Html.Raw(HttpUtility.HtmlDecode(Model.GhiChu)).ToString()
-            </div>
-            <div class="col-md-6">
-                <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.TrichYeu)</h6>
-                @Html.Raw(HttpUtility.HtmlDecode(Model.TrichYeu)).ToString()
+                @Html.DisplayFor(item => Model.GhiChu)
             </div>
         </div>
     </div>

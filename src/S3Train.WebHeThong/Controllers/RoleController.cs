@@ -15,7 +15,7 @@ using System.Web.Mvc;
 namespace S3Train.WebHeThong.Controllers
 {
     [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC)]
-    [RoutePrefix("QuyenTruyCap")]
+    [RoutePrefix("Quyen-Truy-Cap")]
     public class RoleController : Controller
     {
         private ApplicationRoleManager _roleManager;
@@ -49,7 +49,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: Admin/Role
-        [Route("danhSach")]
+        [Route("Danh-Sach")]
         public ActionResult Index()
         {
             List<RoleViewModel> list = new List<RoleViewModel>();

@@ -14,6 +14,7 @@ using System.Web.Mvc;
 namespace S3Train.WebHeThong.Controllers
 {
     [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
+    [RoutePrefix("Ke")]
     public class KeController : Controller
     {
         private readonly ITuService _tuService;
@@ -33,6 +34,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: Ke
+        [Route("Danh-Sach")]
         public ActionResult Index(int? pageIndex, int? pageSize, string searchString, bool active = true)
         {
             pageIndex = (pageIndex ?? 1);
@@ -46,12 +48,12 @@ namespace S3Train.WebHeThong.Controllers
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var kes = _keService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderBy(c => c.Ten), includes);
+            var kes = _keService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderBy(c => c.NgayTao), includes);
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 kes = _keService.GetAllPaged(pageIndex, pageSize.Value, p => p.Ten.Contains(searchString) && p.TrangThai == active
-                    && p.TrangThai == active, p => p.OrderBy(c => c.Ten), includes);
+                    && p.TrangThai == active, p => p.OrderBy(c => c.NgayTao), includes);
             }
 
             model.Paged = kes;
@@ -99,13 +101,10 @@ namespace S3Train.WebHeThong.Controllers
             ke.TinhTrang = model.TinhTrang;
             ke.UserId = User.Identity.GetUserId();
             ke.Tuid = model.Tuid;
-            ke.TrangThai = true;
 
             if (string.IsNullOrEmpty(model.Id))
             {
-                ke.Id = Guid.NewGuid().ToString();
                 ke.SoHopHienTai = 0;
-                ke.NgayTao = DateTime.Now;
                 var result = UpdateTu_SoLuongHienTai(model.Tuid, ActionWithObject.Update);
                 if(!result)
                 {
@@ -119,7 +118,6 @@ namespace S3Train.WebHeThong.Controllers
             }
             else
             {
-                ke.NgayCapNhat = DateTime.Now;
                 _keService.Update(ke);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Update, userId, cthd);
                 TempData["AlertMessage"] = "Cập Nhật Thành Công";
@@ -130,13 +128,17 @@ namespace S3Train.WebHeThong.Controllers
         public ActionResult Delete(string id)
         {
             var ke = _keService.Get(m => m.Id == id);
-            _keService.Remove(ke);
+            
             UpdateTu_SoLuongHienTai(ke.Tuid, ActionWithObject.Delete);
+            _keService.Remove(ke);
+
             _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), "kệ: " + ke.Ten);
+
             TempData["AlertMessage"] = "Xóa Thành Công";
             return RedirectToAction("Index");
         }
 
+        [Route("Thong-Tin-Chi-Tiet")]
         public ActionResult Detail(string id)
         {
             var model = GetKe(_keService.Get(m => m.Id == id));
@@ -149,7 +151,6 @@ namespace S3Train.WebHeThong.Controllers
             var model = _keService.Get(m => m.Id == id);
 
             model.TrangThai = active;
-            model.NgayCapNhat = DateTime.Now;
 
             _keService.Update(model);
             _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(), "kệ " + model.Ten + " thành "+ active);
@@ -217,7 +218,7 @@ namespace S3Train.WebHeThong.Controllers
                 Tuid = x.Tuid,
                 Tu = x.Tu,
                 Hops = x.Hops,
-                User = x.User
+                User = x.User,
             }).ToList();
         }
     }

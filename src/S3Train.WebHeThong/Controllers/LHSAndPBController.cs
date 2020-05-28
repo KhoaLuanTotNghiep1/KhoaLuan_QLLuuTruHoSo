@@ -68,19 +68,15 @@ namespace S3Train.WebHeThong.Controllers
 
             loaiHoSo.Ma = model.Ma;
             loaiHoSo.Ten = model.Ten;
-            loaiHoSo.TrangThai = true;
 
             if (string.IsNullOrEmpty(model.Id))
             {
-                loaiHoSo.Id = Guid.NewGuid().ToString();
-                loaiHoSo.NgayTao = DateTime.Now;
                 _loaiHoSoService.Insert(loaiHoSo);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Create, User.Identity.GetUserId(), "loại hồ sơ: " + loaiHoSo.Ten);
                 TempData["AlertMessage"] = "Tạo Mới Loại Hồ Sơ Thành Công";
             }
             else
             {
-                loaiHoSo.NgayCapNhat = DateTime.Now;
                 _loaiHoSoService.Update(loaiHoSo);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Update, User.Identity.GetUserId(), "loại hồ sơ: " + loaiHoSo.Ten);
                 TempData["AlertMessage"] = "Cập Nhật Loại Hồ Sơ Thành Công";
@@ -111,19 +107,15 @@ namespace S3Train.WebHeThong.Controllers
                 : _phongBanService.Get(m => m.Id == model.Id);
 
             phongBan.Ten = model.Ten;
-            phongBan.TrangThai = true;
 
             if (string.IsNullOrEmpty(model.Id))
             {
-                phongBan.Id = Guid.NewGuid().ToString();
-                phongBan.NgayTao = DateTime.Now;
                 _phongBanService.Insert(phongBan);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Create, User.Identity.GetUserId(), "phòng ban: " + phongBan.Ten);
                 TempData["AlertMessage"] = "Tạo Mới Phong Ban Thành Công";
             }
             else
             {
-                phongBan.NgayCapNhat = DateTime.Now;
                 _phongBanService.Update(phongBan);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Update, User.Identity.GetUserId(), "phòng ban: " + phongBan.Ten);
                 TempData["AlertMessage"] = "Cập Nhật Phòng Ban Thành Công";

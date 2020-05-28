@@ -30,7 +30,7 @@
                 <tr>
                     <th>STT</th>
                     <th>Phông Lưu Trữ</th>
-                    <th>Lưu Trữ</th>
+                    <th>Vị Trí</th>
                     <th>Ngày Tạo</th>
                     <th>Trạng Thái</th>
                     <th>Hoạt Động</th>
@@ -41,8 +41,8 @@
                 {
                     <tr>
                         <td>@stt</td>
-                        <td>@Html.DisplayFor(m => item.PhongLuuTru)</td>
-                        <td>@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", item.TinhTrang)</td>
+                        <td style="width:200px">@Html.DisplayFor(m => item.PhongLuuTru)</td>
+                        <td style="width:200px">@item.ViTri</td>
                         <td>@Html.DisplayFor(m => item.NgayTao)</td>
                         <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
                         <td>

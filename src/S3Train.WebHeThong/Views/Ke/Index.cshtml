@@ -4,13 +4,14 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
     int soLuong = 0;
+    int stt = 1;
 }
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Kệ</h1>
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="@Url.Action("Index","Ke")">Ke</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Index</li>
+        <li class="breadcrumb-item active" aria-current="page">Danh-Sach</li>
     </ol>
 </div>
 
@@ -28,8 +29,8 @@
         <table class="table table-responsive-lg">
             <thead>
                 <tr>
-                    <th>Tủ</th>
-                    <th>Số Thứ Tự</th>
+                    <th>STT</th>
+                    <th>Vị Trí</th>
                     <th>Tên</th>
                     <th>Lưu Trữ</th>
                     <th>Trạng Thái</th>
@@ -41,8 +42,8 @@
                 {
                     soLuong = item.SoHopToiDa - item.SoHopHienTai;
                     <tr>
+                        <td>@stt</td>
                         <td>@Html.DisplayFor(m => item.Tu.Ten)</td>
-                        <td>Kệ Số @Html.DisplayFor(m => item.SoThuTu)</td>
                         <td>@Html.DisplayFor(m => item.Ten)</td>
                         <td>@Html.Partial("~/Views/Shared/_PartialTinhTrang.cshtml", soLuong)</td>
                         <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
@@ -50,6 +51,7 @@
                             @Html.Partial("~/Views/Shared/_PartialActionBasic.cshtml", item.Id)
                         </td>
                     </tr>
+                    stt += 1;
                 }
                 <tr class="pageging">
                     <td colspan="8">

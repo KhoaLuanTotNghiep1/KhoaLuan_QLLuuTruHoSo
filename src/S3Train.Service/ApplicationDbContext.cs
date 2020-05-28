@@ -37,7 +37,6 @@ namespace S3Train.Domain
             modelBuilder.Entity<Tu>().ToTable("Tu");
             modelBuilder.Entity<Tu>().Property(p => p.Ten).HasMaxLength(300).IsOptional();
             modelBuilder.Entity<Tu>().Property(p => p.ViTri).HasMaxLength(300).IsOptional();
-            modelBuilder.Entity<Tu>().Property(p => p.DienTich).HasMaxLength(100).IsOptional();
             modelBuilder.Entity<Tu>().Property(p => p.NgươiQuanLy).HasMaxLength(100).IsOptional();
             modelBuilder.Entity<Tu>().Property(p => p.DonViTinh).HasMaxLength(30).IsOptional();
             modelBuilder.Entity<Tu>().Property(p => p.SoLuongMax).IsOptional();
@@ -86,7 +85,6 @@ namespace S3Train.Domain
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.Ten).HasMaxLength(300).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.Loai).HasMaxLength(300).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.SoKyHieu).HasMaxLength(100).IsOptional();
-            modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.TrichYeu).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.NoiDung).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.NguoiDuyet).HasMaxLength(100).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.NguoiKy).HasMaxLength(100).IsOptional();
@@ -110,7 +108,7 @@ namespace S3Train.Domain
 
 
             modelBuilder.Entity<ChiTietMuonTra>().ToTable("ChiTietMuonTra");
-            modelBuilder.Entity<ChiTietMuonTra>().Property(p => p.SoLuong).IsOptional();
+            modelBuilder.Entity<ChiTietMuonTra>().Property(p => p.ThuMuon).IsOptional();
 
             modelBuilder.Entity<NoiBanHanh>().ToTable("NoiBanHanh");
             modelBuilder.Entity<NoiBanHanh>().Property(p => p.Ten).IsOptional();

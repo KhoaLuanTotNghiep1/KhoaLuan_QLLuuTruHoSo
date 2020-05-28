@@ -29,14 +29,14 @@ namespace S3Train.WebHeThong.Controllers.API
 
         public IEnumerable<TaiLieuVanBanDto> GetAll()
         {
-            var taiLieuVanBanDtos = _taiLieuVanBanService.Gets(p => p.TrangThai == true, p => p.OrderBy(c => c.NgayTao))
+            var taiLieuVanBanDtos = _taiLieuVanBanService.Gets(p => p.TrangThai == true, p => p.OrderByDescending(c => c.NgayTao))
                   .ToList().Select(Mapper.Map<TaiLieuVanBan, TaiLieuVanBanDto>);
 
             return taiLieuVanBanDtos;
         }
 
         [ResponseType(typeof(NoiBanHanhDto))]
-        public IHttpActionResult Gets(string searchString)
+        public IHttpActionResult GetBysearchString(string searchString)
         {
             if (string.IsNullOrEmpty(searchString))
                 return BadRequest();
@@ -44,8 +44,42 @@ namespace S3Train.WebHeThong.Controllers.API
             var taiLieuVanBanDtos = _taiLieuVanBanService.Gets(p => p.TrangThai == true && p.Ten.Contains(searchString) || p.NoiDung.Contains(searchString),
                 p => p.OrderBy(c => c.NgayTao)).ToList().Select(Mapper.Map<TaiLieuVanBan, TaiLieuVanBanDto>);
 
+            if (taiLieuVanBanDtos == null)
+                return NotFound();
+
             return Ok(taiLieuVanBanDtos);
         }
 
+        [ResponseType(typeof(NoiBanHanhDto))]
+        public IHttpActionResult GetByDang(string dang)
+        {
+            if (string.IsNullOrEmpty(dang))
+                return BadRequest();
+
+            var taiLieuVanBanDtos = _taiLieuVanBanService.Gets(p => p.TrangThai == true && p.Dang == dang,
+                p => p.OrderBy(c => c.NgayTao)).ToList().Select(Mapper.Map<TaiLieuVanBan, TaiLieuVanBanDto>);
+
+            if (taiLieuVanBanDtos == null)
+                return NotFound();
+
+            return Ok(taiLieuVanBanDtos);
+        }
+
+        [ResponseType(typeof(NoiBanHanhDto))]
+        public IHttpActionResult GetByTime(DateTime? startTime, DateTime? endTime)
+        {
+            var taiLieuVanBans = _taiLieuVanBanService.Gets(p => p.TrangThai == true, p => p.OrderByDescending(c => c.NgayTao));
+
+            if (startTime.HasValue)
+                taiLieuVanBans = taiLieuVanBans.Where(p => p.NgayTao >= startTime).ToList();
+
+            if (endTime.HasValue)
+                taiLieuVanBans = taiLieuVanBans.Where(p => p.NgayTao <= endTime).ToList();
+
+            if (taiLieuVanBans == null)
+                return NotFound();
+
+            return Ok(taiLieuVanBans.Select(Mapper.Map<TaiLieuVanBan, TaiLieuVanBanDto>));
+        }
     }
 }

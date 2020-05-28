@@ -11,7 +11,7 @@
     <h1 class="h3 mb-0 text-gray-800">@title Tủ</h1>
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="@Url.Action("Index","Tu")">Tu</a></li>
-        <li class="breadcrumb-item active" aria-current="page">CreateOrUpdate</li>
+        <li class="breadcrumb-item active" aria-current="page">Tao-Moi-Hoac-Cap-Nhat</li>
     </ol>
 </div>
 
@@ -26,23 +26,19 @@
                     @Html.EditorFor(model => model.Ten, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tủ Lưu Trữ Số 1" } })
                     @Html.ValidationMessageFor(model => model.Ten, "", new { @class = "text-danger" })
                 </div>
+
                 <div class="col-md-6">
-                    <label>@Html.DisplayNameFor(item => Model.ViTri)</label>
-                    @Html.EditorFor(model => model.ViTri, new { htmlAttributes = new { @class = "form-control", @placeholder = "7/6/2 Đường Linh Đông/Phường Linh Dông/Quận Thủ Đức" } })
-                    @Html.ValidationMessageFor(model => model.ViTri, "", new { @class = "text-danger" })
+                    <label>@Html.DisplayNameFor(item => Model.NgươiQuanLy)</label>
+                    @Html.EditorFor(model => model.NgươiQuanLy, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nguyễn Văn A" } })
+                    @Html.ValidationMessageFor(model => model.NgươiQuanLy, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group row">
                 <div class="col-md-6">
-                    <label>@Html.DisplayNameFor(item => Model.DienTich)</label>
-                    @Html.EditorFor(model => model.DienTich, new { htmlAttributes = new { @class = "form-control", @placeholder = "100m2" } })
-                    @Html.ValidationMessageFor(model => model.DienTich, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-6">
-                    <label>@Html.DisplayNameFor(item => Model.NgươiQuanLy)</label>
-                    @Html.EditorFor(model => model.NgươiQuanLy, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nguyễn Văn A" } })
-                    @Html.ValidationMessageFor(model => model.NgươiQuanLy, "", new { @class = "text-danger" })
+                    <label>@Html.DisplayNameFor(item => Model.ViTri)</label>
+                    @Html.EditorFor(model => model.ViTri, new { htmlAttributes = new { @class = "form-control", @placeholder = "7/6/2 Đường Linh Đông/Phường Linh Dông/Quận Thủ Đức" } })
+                    @Html.ValidationMessageFor(model => model.ViTri, "", new { @class = "text-danger" })
                 </div>
             </div>
 

@@ -14,6 +14,7 @@ using System.Web.Mvc;
 namespace S3Train.WebHeThong.Controllers
 {
     [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
+    [RoutePrefix("Hop")]
     public class HopController : Controller
     {
         private readonly IKeService _keService;
@@ -36,6 +37,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: Hop
+        [Route("Danh-Sach")]
         public ActionResult Index(int? pageIndex, int? pageSize, string searchString, bool active = true)
         {
             pageIndex = (pageIndex ?? 1);
@@ -49,12 +51,13 @@ namespace S3Train.WebHeThong.Controllers
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var hops = _hopService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderBy(c => c.Ke.SoThuTu), includes);
+            var hops = _hopService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, 
+                p => p.OrderByDescending(c => c.NgayTao), includes);
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 hops = _hopService.GetAllPaged(pageIndex, pageSize.Value, p => p.ChuyenDe.Contains(searchString) || p.PhongBan.Ten.Contains(searchString)
-                    && p.TrangThai == active, p => p.OrderBy(c => c.Ke.SoThuTu), includes);
+                    && p.TrangThai == active, p => p.OrderBy(c => c.NgayTao), includes);
             }
 
             model.Paged = hops;
@@ -103,17 +106,14 @@ namespace S3Train.WebHeThong.Controllers
             hop.UserId = userId;
             hop.NgayBatDau = model.NgayBatDau;
             hop.NgayKetThuc = model.NgayKetThuc;
-            hop.TrangThai = true;
 
             if (string.IsNullOrEmpty(model.Id))
             {
-                hop.Id = Guid.NewGuid().ToString();
                 hop.TinhTrang = GlobalConfigs.TINHTRANG_TRONGKHO;
-                hop.NgayTao = DateTime.Now;
                 var result = UpdateTu_SoHopHienTai(hop.KeId, ActionWithObject.Update);
                 if (!result)
                 {
-                    TempData["AlertMessage"] = "Số Lượng Kệ Trong Tủ Bạn Chọn Đã Đầy";
+                    TempData["AlertMessage"] = "Số Lượng Hộp Trong Kệ Bạn Chọn Đã Đầy";
                     return View(model);
                 }
                 _hopService.Insert(hop);
@@ -124,7 +124,6 @@ namespace S3Train.WebHeThong.Controllers
             }
             else
             {
-                hop.NgayCapNhat = DateTime.Now;
                 _hopService.Update(hop);
 
                 _functionLichSuHoatDongService.Create(ActionWithObject.Update, userId, chiTietHoatDong);
@@ -149,6 +148,7 @@ namespace S3Train.WebHeThong.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("Thong-Tin-Chi-Tiet")]
         public ActionResult Detail(string id)
         {
             var model = GetHop(_hopService.Get(m => m.Id == id));
@@ -162,7 +162,6 @@ namespace S3Train.WebHeThong.Controllers
             string chiTietHoatDong = "hộp " + model.ChuyenDe + " trên kệ thứ " + model.Ke.SoThuTu + " thành " + active;
 
             model.TrangThai = active;
-            model.NgayCapNhat = DateTime.Now;
 
             _hopService.Update(model);
 
@@ -193,7 +192,6 @@ namespace S3Train.WebHeThong.Controllers
             else
             {
                 ke.SoHopHienTai = soluong;
-                ke.NgayCapNhat = DateTime.Now;
                 _keService.Update(ke);
                 return true;
             }
@@ -235,15 +233,19 @@ namespace S3Train.WebHeThong.Controllers
                 UserId = hop.UserId,
                 HoSos = hop.HoSos,
                 Ke = hop.Ke,
-                User = hop.User
+                User = hop.User,
+                KeId = hop.KeId,
+                ViTri = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text,
             };
 
-            model.KeId = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text;
+            //model.KeId = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text;
             return model;
         }
 
         private List<HopViewModel> GetHops(IList<Hop> hops)
         {
+            var autoList = AutoCompleteTextKes(_keService.GetAll());
+
             return hops.Select(hop => new HopViewModel
             {
                 Id = hop.Id,
@@ -261,7 +263,8 @@ namespace S3Train.WebHeThong.Controllers
                 UserId = hop.UserId,
                 HoSos = hop.HoSos,
                 Ke = hop.Ke,
-                User = hop.User
+                User = hop.User,
+                ViTri = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text,
             }).ToList();
         }
     }

@@ -14,7 +14,7 @@ using System.Web.Mvc;
 namespace S3Train.WebHeThong.Controllers
 {
     [Authorize]
-    [RoutePrefix("NguoiDung")]
+    [RoutePrefix("Nguoi-Dung")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -34,7 +34,7 @@ namespace S3Train.WebHeThong.Controllers
 
         // GET: User
         [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
-        [Route("DanhSach")]
+        [Route("Danh-Sach")]
         public async Task<ActionResult> IndexAsync()
         {
             var model = await _userService.GetUser(1,10);
@@ -43,7 +43,6 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpGet]
-        [Route("TaoTaiKhoanNguoiDung")]
         [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
         public async Task<ActionResult> CreateOrUpdate(string id)
         {
@@ -62,7 +61,6 @@ namespace S3Train.WebHeThong.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        [Route("TaoTaiKhoanNguoiDung")]
         public async Task<ActionResult> CreateOrUpdate(UserViewModel model)
         {
             if (string.IsNullOrEmpty(model.Id))
@@ -149,7 +147,7 @@ namespace S3Train.WebHeThong.Controllers
             return RedirectToAction("IndexAsync");
         }
 
-        [Route("ThongTinNguoiDung")]
+        [Route("Thong-Tin-Nguoi-Dung")]
         public async Task<ActionResult> UserProfile()
         {
             string id = User.Identity.GetUserId();

@@ -14,6 +14,7 @@ using System.Web.Mvc;
 namespace S3Train.WebHeThong.Controllers
 {
     [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
+    [RoutePrefix("Ho-So")]
     public class HoSoController : Controller
     {
         private readonly IHoSoService _hoSoService;
@@ -38,6 +39,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         // GET: HoSo
+        [Route("Danh-Sach")]
         public ActionResult Index(int? pageIndex, int? pageSize, string searchString, bool active = true)
         {
             pageIndex = (pageIndex ?? 1);
@@ -109,19 +111,15 @@ namespace S3Train.WebHeThong.Controllers
             hoSo.LoaiHoSoId = model.LoaiHoSoId;
             hoSo.HopId = autoList.FirstOrDefault(p => p.Text == model.HopId).Id;
             hoSo.UserId = userId;
-            hoSo.TrangThai = true;
 
             if (string.IsNullOrEmpty(model.Id))
             {
-                hoSo.Id = Guid.NewGuid().ToString();
-                hoSo.NgayTao = DateTime.Now;
                 _hoSoService.Insert(hoSo);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Create, userId, chiTietHoatDong);
                 TempData["AlertMessage"] = "Tạo Mới Thành Công";
             }
             else
             {
-                hoSo.NgayCapNhat = DateTime.Now;
                 _hoSoService.Update(hoSo);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Update, userId, chiTietHoatDong);
                 TempData["AlertMessage"] = "Cập Nhật Thành Công";
@@ -138,6 +136,7 @@ namespace S3Train.WebHeThong.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("Thong-Tin-Chi-Tiet")]
         public ActionResult Detail(string id)
         {
             var model = GetHoSo(_hoSoService.Get(m => m.Id == id));
@@ -150,7 +149,6 @@ namespace S3Train.WebHeThong.Controllers
             var model = _hoSoService.Get(m => m.Id == id);
 
             model.TrangThai = active;
-            model.NgayCapNhat = DateTime.Now;
 
             _hoSoService.Update(model);
             _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(), "hồ sơ: " + model.PhongLuuTru + " thành " +active);
@@ -198,15 +196,17 @@ namespace S3Train.WebHeThong.Controllers
                 NgayTao = x.NgayTao,
                 NgayCapNhat = x.NgayCapNhat,
                 TrangThai = x.TrangThai,
+                HopId = x.HopId,
+                ViTri = autoList.FirstOrDefault(p => p.Id == x.HopId).Text
             };
-
-            model.HopId = autoList.FirstOrDefault(p => p.Id == x.HopId).Text;
 
             return model;
         }
 
         private List<HoSoViewModel> GetHoSos(IList<HoSo> hoSos)
         {
+            var autoList = LocalHops(_hopService.GetAll());
+
             return hoSos.Select(x => new HoSoViewModel
             {
                 Id = x.Id,
@@ -227,7 +227,8 @@ namespace S3Train.WebHeThong.Controllers
                 TaiLieuVanBans = x.TaiLieuVanBans,
                 NgayTao = x.NgayTao,
                 NgayCapNhat = x.NgayCapNhat,
-                TrangThai = x.TrangThai
+                TrangThai = x.TrangThai,
+                ViTri = autoList.FirstOrDefault(p => p.Id == x.HopId).Text
             }).ToList();
         }
     }

@@ -51,7 +51,8 @@ namespace S3Train.WebHeThong.Controllers
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var hops = _hopService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderBy(c => c.NgayTao), includes);
+            var hops = _hopService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, 
+                p => p.OrderByDescending(c => c.NgayTao), includes);
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -105,17 +106,14 @@ namespace S3Train.WebHeThong.Controllers
             hop.UserId = userId;
             hop.NgayBatDau = model.NgayBatDau;
             hop.NgayKetThuc = model.NgayKetThuc;
-            hop.TrangThai = true;
 
             if (string.IsNullOrEmpty(model.Id))
             {
-                hop.Id = Guid.NewGuid().ToString();
                 hop.TinhTrang = GlobalConfigs.TINHTRANG_TRONGKHO;
-                hop.NgayTao = DateTime.Now;
                 var result = UpdateTu_SoHopHienTai(hop.KeId, ActionWithObject.Update);
                 if (!result)
                 {
-                    TempData["AlertMessage"] = "Số Lượng Kệ Trong Tủ Bạn Chọn Đã Đầy";
+                    TempData["AlertMessage"] = "Số Lượng Hộp Trong Kệ Bạn Chọn Đã Đầy";
                     return View(model);
                 }
                 _hopService.Insert(hop);
@@ -126,7 +124,6 @@ namespace S3Train.WebHeThong.Controllers
             }
             else
             {
-                hop.NgayCapNhat = DateTime.Now;
                 _hopService.Update(hop);
 
                 _functionLichSuHoatDongService.Create(ActionWithObject.Update, userId, chiTietHoatDong);
@@ -165,7 +162,6 @@ namespace S3Train.WebHeThong.Controllers
             string chiTietHoatDong = "hộp " + model.ChuyenDe + " trên kệ thứ " + model.Ke.SoThuTu + " thành " + active;
 
             model.TrangThai = active;
-            model.NgayCapNhat = DateTime.Now;
 
             _hopService.Update(model);
 
@@ -196,7 +192,6 @@ namespace S3Train.WebHeThong.Controllers
             else
             {
                 ke.SoHopHienTai = soluong;
-                ke.NgayCapNhat = DateTime.Now;
                 _keService.Update(ke);
                 return true;
             }
@@ -239,15 +234,18 @@ namespace S3Train.WebHeThong.Controllers
                 HoSos = hop.HoSos,
                 Ke = hop.Ke,
                 User = hop.User,
-                ViTri = hop.Ke.Tu.Ten + " kệ thứ " + hop.Ke.SoThuTu
+                KeId = hop.KeId,
+                ViTri = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text,
             };
 
-            model.KeId = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text;
+            //model.KeId = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text;
             return model;
         }
 
         private List<HopViewModel> GetHops(IList<Hop> hops)
         {
+            var autoList = AutoCompleteTextKes(_keService.GetAll());
+
             return hops.Select(hop => new HopViewModel
             {
                 Id = hop.Id,
@@ -266,7 +264,7 @@ namespace S3Train.WebHeThong.Controllers
                 HoSos = hop.HoSos,
                 Ke = hop.Ke,
                 User = hop.User,
-                ViTri = hop.Ke.Tu.Ten + " kệ thứ " + hop.Ke.SoThuTu
+                ViTri = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text,
             }).ToList();
         }
     }

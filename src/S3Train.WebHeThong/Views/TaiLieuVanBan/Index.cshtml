@@ -8,7 +8,7 @@
 }
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Tài Liệu/Văn Bản</h1>
+    <h1 class="h3 mb-0 text-gray-800">@ViewBag.Dang</h1>
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="@Url.Action("Index","TaiLieuVanBan")">Tai-Lieu-Van-Ban</a></li>
         <li class="breadcrumb-item active" aria-current="page">Danh-Sach</li>
@@ -22,7 +22,7 @@
             </div>
             <div class="col-md-6">
                 @Html.Partial("~/Views/Shared/_PartialSearch.cshtml")
-                <i><span>Tìm kiếm: theo tên văn bản hoặc loại văn bản</span></i>
+                <i><span>Tìm kiếm: theo tên, loại hoặc nội dung văn bản</span></i>
             </div>
         </div>
 
@@ -34,7 +34,14 @@
                     <th>Dạng Văn Bản</th>
                     <th>Vị Trí</th>
                     <th>Tình Trạng</th>
-                    <th>Hoạt Động</th>
+                    @if (!User.IsInRole(GlobalConfigs.ROLE_CANBO))
+                    {
+                        <th>Hoạt Động</th>
+                    }
+                    else
+                    {
+                        <th>Ngày Tạo</th>
+                    }
                 </tr>
             </thead>
             <tbody>
@@ -42,16 +49,25 @@
                 {
                     <tr>
                         <td>@stt</td>
-                        <td>@Html.DisplayFor(m => item.Ten)</td>
+                        <td style="width:150px">@Html.DisplayFor(m => item.Ten)</td>
                         <td>@Html.DisplayFor(m => item.Dang)</td>
-                        <td style="width:200px">@Html.DisplayFor(m => item.ViTri)</td>
+                        <td style="width:250px">@Html.DisplayFor(m => item.ViTri)</td>
                         <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
                         <td>
-                            @Html.Partial("~/Views/Shared/_PartialActionBasic.cshtml", item.Id)
-                            @if (item.Dang != GlobalConfigs.DANG_DI && item.TrangThai == true)
+                            @if (!User.IsInRole(GlobalConfigs.ROLE_CANBO))
                             {
-                                @Html.Partial("~/Views/Shared/_PartialChageDangTLVB.cshtml", item)
+                                @Html.Partial("~/Views/Shared/_PartialActionBasic.cshtml", item.Id)
+
+                                if (item.Dang != GlobalConfigs.DANG_DI && item.TrangThai == true)
+                                {
+                                    @Html.Partial("~/Views/Shared/_PartialChageDangTLVB.cshtml", item)
+                                }
                             }
+                            else
+                            {
+                                @Html.DisplayFor(m => item.NgayTao)
+                            }
+
                         </td>
                     </tr>
                     stt += 1;

@@ -63,9 +63,9 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Vị Trí")]
         public string ViTri { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
-        public virtual Tu Tu { get; set; }
-        public virtual ICollection<Hop> Hops { get; set; }
+        public ApplicationUser User { get; set; }
+        public Tu Tu { get; set; }
+        public ICollection<Hop> Hops { get; set; }
     }
 
     public class KeViewIndexModel : IndexViewModelBase

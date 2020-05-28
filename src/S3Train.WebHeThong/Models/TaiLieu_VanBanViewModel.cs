@@ -92,9 +92,9 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Nơi Ban Hành")]
         public string NoiBanHanhId { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
-        public virtual HoSo HoSo { get; set; }
-        public virtual NoiBanHanh NoiBanHanh { get; set; }
+        public ApplicationUser User { get; set; }
+        public HoSo HoSo { get; set; }
+        public NoiBanHanh NoiBanHanh { get; set; }
     }
 
     public class TaiLieuVanBanIndexViewModel : IndexViewModelBase

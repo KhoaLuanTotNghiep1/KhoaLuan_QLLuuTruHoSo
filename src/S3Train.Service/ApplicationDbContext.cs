@@ -37,7 +37,6 @@ namespace S3Train.Domain
             modelBuilder.Entity<Tu>().ToTable("Tu");
             modelBuilder.Entity<Tu>().Property(p => p.Ten).HasMaxLength(300).IsOptional();
             modelBuilder.Entity<Tu>().Property(p => p.ViTri).HasMaxLength(300).IsOptional();
-            modelBuilder.Entity<Tu>().Property(p => p.DienTich).HasMaxLength(100).IsOptional();
             modelBuilder.Entity<Tu>().Property(p => p.NgươiQuanLy).HasMaxLength(100).IsOptional();
             modelBuilder.Entity<Tu>().Property(p => p.DonViTinh).HasMaxLength(30).IsOptional();
             modelBuilder.Entity<Tu>().Property(p => p.SoLuongMax).IsOptional();

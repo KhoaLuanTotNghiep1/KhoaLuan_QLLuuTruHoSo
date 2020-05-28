@@ -68,7 +68,7 @@ namespace S3Train.WebHeThong.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
                 taiLieuVanBans = _taiLieuVanBanService.GetAllPaged(pageIndex, pageSize.Value, p => p.Ten.Contains(searchString) || p.Loai.Contains(searchString)
-                    || p.NoiDung.Contains(searchString) && p.TrangThai == active && p.Dang.Contains(dang), p => p.OrderBy(c => c.NgayTao), includes);
+                    || p.NoiDung.Contains(searchString), p => p.OrderByDescending(c => c.NgayTao), includes);
             }
 
             model.Paged = taiLieuVanBans;
@@ -114,11 +114,13 @@ namespace S3Train.WebHeThong.Controllers
             string userId = User.Identity.GetUserId();
             string cthd = model.Loai + ": " + model.Ten;
 
+            #region File
             string localFile = Server.MapPath("~/Content/HoSo/");
             string localImage = Server.MapPath("~/Content/HinhAnhTLVB/");
 
             string path = UpFileGetPathOrFileName(file.ElementAt(0), localFile, model.DuongDan,"path");
             string hinhAnh = UpFileGetPathOrFileName(file.ElementAt(1), localImage, model.HinhAnh);
+            #endregion
 
             #region taiLieuVanBan
             taiLieuVanBan.Dang = model.Dang;
@@ -137,22 +139,18 @@ namespace S3Train.WebHeThong.Controllers
             taiLieuVanBan.Ten = model.Ten;
             taiLieuVanBan.NgayBanHanh = model.NgayBanHanh;
             taiLieuVanBan.TinhTrang = "Trong Kho";
-            taiLieuVanBan.TrangThai = true;
             taiLieuVanBan.UserId = userId;
             taiLieuVanBan.HinhAnh = hinhAnh;
             #endregion
 
             if (string.IsNullOrEmpty(model.Id))
             {
-                taiLieuVanBan.Id = Guid.NewGuid().ToString();
-                taiLieuVanBan.NgayTao = DateTime.Now;
                 _taiLieuVanBanService.Insert(taiLieuVanBan);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Create, userId, cthd);
                 TempData["AlertMessage"] = "Tạo Mới Thành Công";
             }
             else
             {
-                taiLieuVanBan.NgayCapNhat = DateTime.Now;
                 _taiLieuVanBanService.Update(taiLieuVanBan);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Update, userId, cthd);
                 TempData["AlertMessage"] = "Cập Nhật Thành Công";
@@ -170,7 +168,6 @@ namespace S3Train.WebHeThong.Controllers
             taiLieuVanBan.NguoiGuiHoacNhan = user.FullName;
             taiLieuVanBan.Dang = GlobalConfigs.DANG_DI;
             taiLieuVanBan.NoiNhan = model.NoiNhan;
-            taiLieuVanBan.NgayCapNhat = DateTime.Now;
             taiLieuVanBan.TinhTrang = GlobalConfigs.TINHTRANG_DAGOI;
 
             _taiLieuVanBanService.Update(taiLieuVanBan);
@@ -204,7 +201,6 @@ namespace S3Train.WebHeThong.Controllers
             var model = _taiLieuVanBanService.Get(m => m.Id == id);
 
             model.TrangThai = active;
-            model.NgayCapNhat = DateTime.Now;
 
             _taiLieuVanBanService.Update(model);
             _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(),
@@ -334,16 +330,16 @@ namespace S3Train.WebHeThong.Controllers
                NgayBanHanh = x.NgayBanHanh,
                HinhAnh = x.HinhAnh,
                HoSoId = x.HoSoId,
-               ViTri = x.HoSo.Hop.Ke.Tu.Ten + " kệ thứ " + x.HoSo.Hop.Ke.SoThuTu + " hộp số "
-                + x.HoSo.Hop.SoHop + " hồ sơ " + x.HoSo.PhongLuuTru
+               ViTri = autoList.FirstOrDefault(p => p.Id == x.HoSoId).Text
             };
 
-            model.HoSoId = autoList.FirstOrDefault(p => p.Id == x.HoSoId).Text;
             return model;
         }
 
         private List<TaiLieu_VanBanViewModel> GetTaiLieuVanBans(IList<TaiLieuVanBan> taiLieuVanBans)
         {
+            var autoList = AutoCompleteTextHoSos(_hoSoService.GetAll());
+
             return taiLieuVanBans.Select(x => new TaiLieu_VanBanViewModel
             {
                 Id = x.Id,
@@ -371,8 +367,7 @@ namespace S3Train.WebHeThong.Controllers
                 UserId = x.UserId,
                 NgayBanHanh = x.NgayBanHanh,
                 HinhAnh = x.HinhAnh,
-                ViTri = x.HoSo.Hop.Ke.Tu.Ten + " kệ thứ " + x.HoSo.Hop.Ke.SoThuTu + " hộp số " 
-                + x.HoSo.Hop.SoHop+ " hồ sơ " + x.HoSo.PhongLuuTru
+                ViTri = autoList.FirstOrDefault(p => p.Id == x.HoSoId).Text
             }).ToList();
         }
     }

@@ -10,7 +10,6 @@ namespace S3Train.Domain
     {
         public string Ten { get; set; }
         public string ViTri { get; set; }
-        public string DienTich { get; set; }
         public string NgươiQuanLy { get; set; }
         public string DonViTinh { get; set; }
         public int SoLuongHienTai { get; set; }

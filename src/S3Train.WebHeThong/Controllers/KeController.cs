@@ -128,9 +128,12 @@ namespace S3Train.WebHeThong.Controllers
         public ActionResult Delete(string id)
         {
             var ke = _keService.Get(m => m.Id == id);
+            
             UpdateTu_SoLuongHienTai(ke.Tuid, ActionWithObject.Delete);
             _keService.Remove(ke);
+
             _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), "kệ: " + ke.Ten);
+
             TempData["AlertMessage"] = "Xóa Thành Công";
             return RedirectToAction("Index");
         }

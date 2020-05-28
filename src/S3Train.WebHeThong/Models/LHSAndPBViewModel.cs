@@ -37,7 +37,7 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Trạng Thái")]
         public bool TrangThai { get; set; }
 
-        public virtual ICollection<HoSo> HoSos { get; set; }
+        public ICollection<HoSo> HoSos { get; set; }
     }
 
     public class PhongBanViewModel
@@ -59,7 +59,7 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Trạng Thái")]
         public bool TrangThai { get; set; }
 
-        public virtual ICollection<Hop> Hops { get; set; }
+        public ICollection<Hop> Hops { get; set; }
     }
 
     public class LoaiHoSoVIndexiewModel : IndexViewModelBase

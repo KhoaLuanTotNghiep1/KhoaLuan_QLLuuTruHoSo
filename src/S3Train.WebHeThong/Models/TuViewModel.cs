@@ -18,10 +18,6 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Vị Trí")]
         public string ViTri { get; set; }
 
-        [Required(ErrorMessage = "Điền Diện Tích")]
-        [Display(Name = "Diện Tích")]
-        public string DienTich { get; set; }
-
         [Required(ErrorMessage = "Điền Tên Người Quản Lý")]
         [Display(Name = "Người Quản Lý")]
         public string NgươiQuanLy { get; set; }
@@ -51,7 +47,7 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Trạng Thái")]
         public bool TrangThai { get; set; }
 
-        public virtual ICollection<Ke> Kes { get; set; }
+        public ICollection<Ke> Kes { get; set; }
     }
 
     public class TuIndexViewModel : IndexViewModelBase

@@ -57,12 +57,12 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Trạng Thái")]
         public bool TrangThai { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
-        public virtual Hop Hop { get; set; }
-        public virtual HoSo TapHoSo { get; set; }
-        public virtual LoaiHoSo LoaiHoSo { get; set; }
-        public virtual ICollection<HoSo> HoSoCons { get; set; }
-        public virtual ICollection<TaiLieuVanBan> TaiLieuVanBans { get; set; }
+        public ApplicationUser User { get; set; }
+        public Hop Hop { get; set; }
+        public HoSo TapHoSo { get; set; }
+        public LoaiHoSo LoaiHoSo { get; set; }
+        public ICollection<HoSo> HoSoCons { get; set; }
+        public ICollection<TaiLieuVanBan> TaiLieuVanBans { get; set; }
     }
 
     public class HoSoIndexViewModel : IndexViewModelBase

@@ -9,7 +9,7 @@
         <hr class="sidebar-divider my-0">
     </li>
     @{
-        if (User.IsInRole("Giám Đốc") || User.IsInRole("Cán Bộ Văn Thư"))
+        if (User.IsInRole(GlobalConfigs.ROLE_GIAMDOC) || User.IsInRole(GlobalConfigs.ROLE_CANBOVANTHU))
         {
             <li class="nav-item active">
                 <a class="nav-link" href="@Url.Action("Dashboard","Home")">
@@ -32,7 +32,7 @@
                 <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Quản Lý Tủ/Kệ/Hộp</h6>
-                        @if (User.IsInRole("Giám Đốc"))
+                        @if (User.IsInRole(GlobalConfigs.ROLE_GIAMDOC))
                         {
                             <a class="collapse-item" href="@Url.Action("Index","Tu")">Quản Lý Tủ</a>
                         }
@@ -89,7 +89,7 @@
     </li>
 
     @{
-        if (User.IsInRole("Giám Đốc") || User.IsInRole("Cán Bộ Văn Thư"))
+        if (User.IsInRole(GlobalConfigs.ROLE_GIAMDOC) || User.IsInRole(GlobalConfigs.ROLE_CANBOVANTHU))
         {
             <li>
                 <hr class="sidebar-divider">
@@ -105,7 +105,7 @@
             </li>
         }
 
-        if (User.IsInRole("Giám Đốc"))
+        if (User.IsInRole(GlobalConfigs.ROLE_GIAMDOC))
         {
             <li>
                 <hr class="sidebar-divider">

@@ -42,8 +42,8 @@
                     <tr>
                         <td>@stt</td>
                         <td>@Html.DisplayFor(m => item.ChuyenDe)</td>
-                        <td>@item.ViTri</td>
-                        <td>@Html.DisplayFor(m => item.PhongBan.Ten)</td>
+                        <td style="width:200px">@item.ViTri</td>
+                        <td style="width:200px">@Html.DisplayFor(m => item.PhongBan.Ten)</td>
                         <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
                         <td>
                             @Html.Partial("~/Views/Shared/_PartialActionBasic.cshtml", item.Id)

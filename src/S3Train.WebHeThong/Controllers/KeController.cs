@@ -101,7 +101,6 @@ namespace S3Train.WebHeThong.Controllers
             ke.TinhTrang = model.TinhTrang;
             ke.UserId = User.Identity.GetUserId();
             ke.Tuid = model.Tuid;
-            ke.TrangThai = true;
 
             if (string.IsNullOrEmpty(model.Id))
             {
@@ -129,10 +128,9 @@ namespace S3Train.WebHeThong.Controllers
         public ActionResult Delete(string id)
         {
             var ke = _keService.Get(m => m.Id == id);
-
-            _keService.Remove(ke);
-
+            
             UpdateTu_SoLuongHienTai(ke.Tuid, ActionWithObject.Delete);
+            _keService.Remove(ke);
 
             _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), "kệ: " + ke.Ten);
 
@@ -196,8 +194,7 @@ namespace S3Train.WebHeThong.Controllers
                 Tuid = x.Tuid,
                 Tu = x.Tu,
                 Hops = x.Hops,
-                User = x.User,
-                ViTri = x.Tu.Ten
+                User = x.User
             };
             return model;
         }
@@ -222,7 +219,6 @@ namespace S3Train.WebHeThong.Controllers
                 Tu = x.Tu,
                 Hops = x.Hops,
                 User = x.User,
-                ViTri = x.Tu.Ten
             }).ToList();
         }
     }

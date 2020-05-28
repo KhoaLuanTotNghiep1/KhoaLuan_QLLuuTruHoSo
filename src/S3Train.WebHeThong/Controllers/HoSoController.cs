@@ -196,16 +196,17 @@ namespace S3Train.WebHeThong.Controllers
                 NgayTao = x.NgayTao,
                 NgayCapNhat = x.NgayCapNhat,
                 TrangThai = x.TrangThai,
-                ViTri = x.Hop.Ke.Tu.Ten + " kệ thứ " + x.Hop.Ke.SoThuTu + " hộp số " + x.Hop.SoHop
+                HopId = x.HopId,
+                ViTri = autoList.FirstOrDefault(p => p.Id == x.HopId).Text
             };
-
-            model.HopId = autoList.FirstOrDefault(p => p.Id == x.HopId).Text;
 
             return model;
         }
 
         private List<HoSoViewModel> GetHoSos(IList<HoSo> hoSos)
         {
+            var autoList = LocalHops(_hopService.GetAll());
+
             return hoSos.Select(x => new HoSoViewModel
             {
                 Id = x.Id,
@@ -227,7 +228,7 @@ namespace S3Train.WebHeThong.Controllers
                 NgayTao = x.NgayTao,
                 NgayCapNhat = x.NgayCapNhat,
                 TrangThai = x.TrangThai,
-                ViTri = x.Hop.Ke.Tu.Ten + " kệ thứ " + x.Hop.Ke.SoThuTu + " hộp số " + x.Hop.SoHop
+                ViTri = autoList.FirstOrDefault(p => p.Id == x.HopId).Text
             }).ToList();
         }
     }

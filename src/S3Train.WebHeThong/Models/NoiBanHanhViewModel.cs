@@ -30,7 +30,7 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Trạng Thái")]
         public bool TrangThai { get; set; }
 
-        public virtual ICollection<TaiLieuVanBan> TaiLieuVanBans { get; set; }
+        public ICollection<TaiLieuVanBan> TaiLieuVanBans { get; set; }
     }
 
     public class NoiBanHanhIndexViewModel : IndexViewModelBase

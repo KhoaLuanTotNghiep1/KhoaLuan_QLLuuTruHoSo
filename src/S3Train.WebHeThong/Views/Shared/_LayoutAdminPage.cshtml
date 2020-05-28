@@ -41,17 +41,17 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                                  aria-labelledby="searchDropdown">
-                                <form class="navbar-search">
+                                @using (Html.BeginForm("Index", "TaiLieuVanBan" ,"",FormMethod.Get, new { @class= "navbar-search" }))
+                                {
                                     <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-1 small" placeholder="What do you want to look for?"
-                                               aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
+                                         @Html.TextBox("searchString", "", new { @class = "form-control bg-light border-1 small", @placeholder = "Tìm kiếm văn bản", @style = "border-color: #3f51b5;" })
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
+                                            <button class="btn btn-primary" type="submit">
                                                 <i class="fas fa-search fa-sm"></i>
                                             </button>
                                         </div>
                                     </div>
-                                </form>
+                                }
                             </div>
                         </li>
                         <li class="nav-item dropdown no-arrow mx-1">
@@ -202,7 +202,7 @@
                                         <span class="ml-2 d-none d-lg-inline text-white small">
                                             @User.Identity.GetUserName()
                                         </span>
-                                    }
+                                        }
                                 }
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

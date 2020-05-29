@@ -118,7 +118,7 @@ namespace S3Train.WebHeThong.Controllers
             string localFile = Server.MapPath("~/Content/HoSo/");
             string localImage = Server.MapPath("~/Content/HinhAnhTLVB/");
 
-            string path = UpFileGetPathOrFileName(file.ElementAt(0), localFile, model.DuongDan,"path");
+            string path = UpFileGetPathOrFileName(file.ElementAt(0), localFile, model.DuongDan, "path");
             string hinhAnh = UpFileGetPathOrFileName(file.ElementAt(1), localImage, model.HinhAnh);
             #endregion
 

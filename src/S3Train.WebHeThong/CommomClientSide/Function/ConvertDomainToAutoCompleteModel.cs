@@ -1,10 +1,10 @@
 ﻿using S3Train.Domain;
 using S3Train.WebHeThong.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Web;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+
 
 namespace S3Train.WebHeThong.CommomClientSide.Function
 {
@@ -29,6 +29,49 @@ namespace S3Train.WebHeThong.CommomClientSide.Function
 
             return list;
         }
+
+        public static HashSet<AutoCompleteTextModel> LocalVanBan(IList<TaiLieuVanBan> taiLieuVanBans)
+        {
+            var list = new HashSet<AutoCompleteTextModel>();
+
+            foreach (var item in taiLieuVanBans)
+            {
+                if(item.TinhTrang != "Đang Mượn")
+                {
+                    var auto = new AutoCompleteTextModel()
+                    {
+                        Id = item.Id,
+                        Text = item.Ten,
+                    };
+                    list.Add(auto);
+                }
+               
+            }
+
+            return list;
+        }
+
+        public static HashSet<AutoCompleteTextModel> LocalUser(IList<ApplicationUser> users)
+        {
+            var list = new HashSet<AutoCompleteTextModel>();
+
+            foreach (var item in users)
+            {
+                string local = item.FullName;
+
+                var auto = new AutoCompleteTextModel()
+                {
+                    Id = item.Id,
+                    Text = local
+                };
+
+                list.Add(auto);
+            }
+
+            return list;
+        }
+
+       
 
         public static HashSet<AutoCompleteTextModel> LocalHop(IList<Ke> kes)
         {

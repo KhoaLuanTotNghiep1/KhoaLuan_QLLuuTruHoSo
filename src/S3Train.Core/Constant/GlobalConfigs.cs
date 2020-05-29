@@ -11,6 +11,7 @@
         public const string TINHTRANG_TRONGKHO = "Trong Kho";
         public const string TINHTRANG_DAGOI = "Đã Gởi";
         public const string TINHTRANG_DANGMUON = "Đang Mượn";
+        public const string TINHTRANG_DATRA = "Đã Trả";
 
         public const string ROLE_GIAMDOC = "Giám Đốc";
         public const string ROLE_CANBOVANTHU = "Cán Bộ Văn Thư";

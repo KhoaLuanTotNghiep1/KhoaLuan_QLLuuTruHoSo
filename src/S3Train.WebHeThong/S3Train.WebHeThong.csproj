@@ -254,13 +254,29 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\TaiLieuVanBanController.cs" />
     <Compile Include="Controllers\API\TestController.cs" />
-    <Compile Include="Controllers\API\UserController.cs" />
+    <Compile Include="Controllers\TraController.cs" />
+    <Compile Include="Migrations\202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.cs" />
+    <Compile Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs" />
+    <Compile Include="Migrations\202005160325216_AdjustToOldVersion.cs" />
+    <Compile Include="Migrations\202005160325216_AdjustToOldVersion.Designer.cs">
+      <DependentUpon>202005160325216_AdjustToOldVersion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005161447058_AddColumnHinhAnhTableTLVB.cs" />
+    <Compile Include="Migrations\202005161447058_AddColumnHinhAnhTableTLVB.Designer.cs">
+      <DependentUpon>202005161447058_AddColumnHinhAnhTableTLVB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005161612104_update-db.cs" />
+    <Compile Include="Migrations\202005161612104_update-db.Designer.cs">
+      <DependentUpon>202005161612104_update-db.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChiTietMuonTraViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HopController.cs" />
     <Compile Include="Controllers\HoSoController.cs" />
     <Compile Include="Controllers\KeController.cs" />
     <Compile Include="Controllers\LHSAndPBController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MuonController.cs" />
     <Compile Include="Controllers\NoiBanHanhController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\TaiLieuVanBanController.cs" />
@@ -298,11 +314,9 @@
     <Compile Include="Migrations\202004201255534_AddColumnOnTableUserAndTaiLieuVanBan.designer.cs">
       <DependentUpon>202004201255534_AddColumnOnTableUserAndTaiLieuVanBan.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.cs" />
     <Compile Include="Migrations\202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.designer.cs">
       <DependentUpon>202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs" />
     <Compile Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.designer.cs">
       <DependentUpon>202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs</DependentUpon>
     </Compile>
@@ -314,18 +328,6 @@
     <Compile Include="Migrations\202005161447058_AddColumnHinhAnhTableTLVB.designer.cs">
       <DependentUpon>202005161447058_AddColumnHinhAnhTableTLVB.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202005191232224_AddForienKeyTLVBvsCTMT.cs" />
-    <Compile Include="Migrations\202005191232224_AddForienKeyTLVBvsCTMT.designer.cs">
-      <DependentUpon>202005191232224_AddForienKeyTLVBvsCTMT.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005201439510_DeleteColumnTrichDan.cs" />
-    <Compile Include="Migrations\202005201439510_DeleteColumnTrichDan.designer.cs">
-      <DependentUpon>202005201439510_DeleteColumnTrichDan.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005271601281_DeleteColumnDienTichTableTu.cs" />
-    <Compile Include="Migrations\202005271601281_DeleteColumnDienTichTableTu.designer.cs">
-      <DependentUpon>202005271601281_DeleteColumnDienTichTableTu.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AutoCompleteTextModel.cs" />
@@ -336,6 +338,7 @@
     <Compile Include="Models\KeViewModel.cs" />
     <Compile Include="Models\LHSAndPBViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MuonTraViewModel.cs" />
     <Compile Include="Models\NoiBanHanhViewModel.cs" />
     <Compile Include="Models\RoleViewModel.cs" />
     <Compile Include="Models\TaiLieu_VanBanViewModel.cs" />
@@ -2703,24 +2706,22 @@
     <Content Include="Views\Ke\CreateOrUpdate.cshtml" />
     <Content Include="Views\Ke\Detail.cshtml" />
     <Content Include="Views\Hop\Index.cshtml" />
-    <Content Include="Views\Hop\CreateOrUpdate.cshtml" />
     <Content Include="Views\Shared\_PartialTinhTrangLuuTru.cshtml" />
     <Content Include="Views\Hop\Detail.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\NoiBanHanh\Index.cshtml" />
     <Content Include="Views\NoiBanHanh\_PartialCreateOrUpdateNoiBanHanh.cshtml" />
+    <Content Include="Views\HoSo\CreateOrUpdate.cshtml" />
+    <Content Include="Views\HoSo\Detail.cshtml" />
+    <Content Include="Views\HoSo\Index.cshtml" />
     <Content Include="Views\LHSAndPB\Index.cshtml" />
     <Content Include="Views\LHSAndPB\_PartialCreateOrUpdateLHS.cshtml" />
     <Content Include="Views\LHSAndPB\_PartialCreateOrUpdatePB.cshtml" />
-    <Content Include="Views\HoSo\Index.cshtml" />
-    <Content Include="Views\HoSo\CreateOrUpdate.cshtml" />
-    <Content Include="Views\HoSo\Detail.cshtml" />
-    <Content Include="Views\TaiLieuVanBan\Index.cshtml" />
+    <Content Include="Views\MuonTra\Index.cshtml" />
     <Content Include="Views\TaiLieuVanBan\CreateOrUpdate.cshtml" />
-    <Content Include="Views\TaiLieuVanBan\Detail.cshtml" />
-    <Content Include="Views\Shared\_PartialSearch.cshtml" />
     <Content Include="Views\TaiLieuVanBan\DemoKmeans.cshtml" />
-    <Content Include="Views\User\UserProfile.cshtml" />
+    <Content Include="Views\TaiLieuVanBan\Detail.cshtml" />
+    <Content Include="Views\TaiLieuVanBan\Index.cshtml" />
     <Content Include="Views\Shared\_PartialActionBasic.cshtml" />
     <Content Include="Views\Shared\_PartialActionCreateAndTrash.cshtml" />
     <Content Include="Views\ThongKe\Index.cshtml" />
@@ -2729,6 +2730,20 @@
     <Content Include="Views\Shared\_PartialSlidebar.cshtml" />
     <Content Include="Views\Home\NotFound.cshtml" />
     <Content Include="Views\Home\LichSuHoatDong.cshtml" />
+    <Content Include="Views\Shared\_PartialSearch.cshtml" />
+    <Content Include="Views\Hop\CreateOrUpdate.cshtml" />
+    <Content Include="Views\MuonTra\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\demo.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\MuonTra\Detail.cshtml" />
+    <Content Include="Views\Muon\Index.cshtml" />
+    <Content Include="Views\Muon\Detail.cshtml" />
+    <Content Include="Views\Muon\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Tra\Index.cshtml" />
+    <Content Include="Views\Tra\Detail.cshtml" />
     <None Include="Web.LocalConnectStrings.config">
       <SubType>Designer</SubType>
     </None>
@@ -2737,6 +2752,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\HinhAnhTLVB\" />
     <Folder Include="Content\HoSo\" />
+    <Folder Include="Views\LHSAnfPB\" />
+    <Folder Include="Views\Trash\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

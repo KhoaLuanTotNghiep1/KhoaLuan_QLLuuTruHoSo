@@ -90,6 +90,44 @@ namespace S3Train.WebHeThong.CommomClientSide.DropDownList
             return items;
         }
 
+
+        /// <summary>
+        /// format Hop from domain to SelectListItem
+        /// </summary>
+        /// <param name="taiLieuVanBans">list Hop</param>
+        /// <returns>Select List</returns>
+        public static List<SelectListItem> SelectListItem_VanBanTaiLieu(IList<TaiLieuVanBan> taiLieuVanBans)
+        {
+            List<SelectListItem> items = new List<SelectListItem>()
+            {
+                new SelectListItem { Text = "", Value = "" }
+            };
+            foreach (var item in taiLieuVanBans)
+            {
+                items.Add(new SelectListItem { Text = item.Ten, Value = item.Id });
+            }
+            return items;
+        }
+
+
+        /// <summary>
+        /// format Hop from domain to SelectListItem
+        /// </summary>
+        /// <param name="users">list Hop</param>
+        /// <returns>Select List</returns>
+        public static List<SelectListItem> SelectListItem_User(IList<ApplicationUser> users)
+        {
+            List<SelectListItem> items = new List<SelectListItem>()
+            {
+                new SelectListItem { Text = "", Value = "" }
+            };
+            foreach (var item in users)
+            {
+                items.Add(new SelectListItem { Text = item.FullName, Value = item.Id });
+            }
+            return items;
+        }
+
         /// <summary>
         /// format Hop from domain to SelectListItem
         /// </summary>

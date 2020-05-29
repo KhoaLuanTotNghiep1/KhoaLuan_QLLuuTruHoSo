@@ -1,0 +1,148 @@
+﻿@using S3Train.WebHeThong.Models
+@model MuonTraViewModel
+
+@{
+    ViewBag.Title = "CreateOrUpdate";
+    Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
+}
+
+<div class="card">
+    <div class="card-body" id="myForm">
+        @Html.AntiForgeryToken()
+        <div class="form-group row">
+            <div class="col-md-6">
+
+                <label>@Html.DisplayNameFor(item => Model.UserId)</label>
+                @Html.EditorFor(model => Model.UserId, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                @Html.ValidationMessageFor(model => Model.UserId, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="col-md-6">
+                <label>@Html.DisplayNameFor(item => Model.ThuMuon)</label>
+                @Html.EditorFor(model => Model.ThuMuon, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                @Html.ValidationMessageFor(model => Model.ThuMuon, "", new { @class = "text-danger" })
+                <p id="array"></p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label>@Html.DisplayNameFor(item => Model.SoLuong)</label>
+                @Html.EditorFor(model => model.SoLuong, new { htmlAttributes = new { @class = "form-control", @min = "1", @max = "1" } })
+                @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label>@Html.DisplayNameFor(item => Model.NgayMuon)</label>
+                @Html.EditorFor(model => model.NgayMuon, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NgayMuon, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6">
+                <label>@Html.DisplayNameFor(item => Model.NgayTra)</label>
+                @Html.EditorFor(model => model.NgayTra, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NgayTra, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input id="b" type="submit" value="Submit" class="btn btn-success" />
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["AlertMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+        $(document).ready(function () {
+            $("#ThuMuon").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Muon/AutoCompleteText",
+                        type: "POST",
+                        dataType: "json",
+                        data: { text: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.Text, value: item.Text };
+                            }))
+
+                        }
+                    })
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $("#UserId").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Muon/AutoCompleteTextUser",
+                        type: "POST",
+                        dataType: "json",
+                        data: { text: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.Text, value: item.Id };
+                            }))
+
+                        }
+                    })
+                }
+            });
+        });
+
+        var arrayMuon = [];
+        var pval = "";
+        $("#ThuMuon").change(function () {
+           
+            var inputText = $("#ThuMuon").val();
+            if (inputText.length > 1) {
+                arrayMuon.push(inputText);
+                var pval = "";
+                for (i = 0; i < arrayMuon.length; i++) {
+                    pval = pval + arrayMuon[i] + "<br/>";
+                }
+                document.getElementById('array').innerHTML = pval;
+            }
+            else {
+                document.getElementById('array').innerHTML = arrayMuon + "<br/>";
+            }
+           
+            
+           
+        });
+
+        $("#b").click(function () {
+            var token = $('input[name="__RequestVerificationToken"]').val();
+            var user = $('#UserId').val();
+            var ngayKT = $('#NgayTra').val();
+            var soLuongMuon = $("#SoLuong").val();
+            $.ajax({
+                type: "POST",
+                url: '/Muon/CreateOrUpdate',
+                data: {
+                    userId: user,
+                    array: arrayMuon,
+                    ngayTra: ngayKT,
+                    soLuong: soLuongMuon,
+                    __RequestVerificationToken: token
+                },
+                success: function (data) {
+                    window.location.href = "http://localhost:19873/Muon/Index";
+                    TempData["AlertMessage"] = "Tạo Mới Thành Công";
+                }
+                
+            });
+        });
+        
+    </script>
+
+}
+
+

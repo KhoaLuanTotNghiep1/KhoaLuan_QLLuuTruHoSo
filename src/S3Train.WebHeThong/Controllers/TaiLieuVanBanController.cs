@@ -14,6 +14,8 @@ using S3Train.WebHeThong.CommomClientSide.Function;
 using System.Web;
 using System.IO;
 using System.Threading.Tasks;
+using S3Train.Core.Enum;
+using S3Train.Core.Extension;
 
 namespace S3Train.WebHeThong.Controllers
 {
@@ -48,7 +50,7 @@ namespace S3Train.WebHeThong.Controllers
         // GET: TaiLieuVanBan
         [Route("Danh-Sach")]
         public ActionResult Index(int? pageIndex, int? pageSize, string searchString, 
-            string dang = GlobalConfigs.DANG_DEN, bool active = true)
+            string dang, bool active = true)
         {
             pageIndex = (pageIndex ?? 1);
             pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
@@ -63,7 +65,7 @@ namespace S3Train.WebHeThong.Controllers
             };
 
             var taiLieuVanBans = _taiLieuVanBanService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active && 
-                p.Dang.Contains(dang), p => p.OrderBy(c => c.NgayTao), includes);
+                p.Dang.Contains(dang), p => p.OrderByDescending(c => c.NgayTao), includes);
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -138,7 +140,7 @@ namespace S3Train.WebHeThong.Controllers
             taiLieuVanBan.SoTo = model.SoTo;
             taiLieuVanBan.Ten = model.Ten;
             taiLieuVanBan.NgayBanHanh = model.NgayBanHanh;
-            taiLieuVanBan.TinhTrang = "Trong Kho";
+            taiLieuVanBan.TinhTrang = EnumTinhTrang.TrongKho;
             taiLieuVanBan.UserId = userId;
             taiLieuVanBan.HinhAnh = hinhAnh;
             #endregion
@@ -155,7 +157,7 @@ namespace S3Train.WebHeThong.Controllers
                 _functionLichSuHoatDongService.Create(ActionWithObject.Update, userId, cthd);
                 TempData["AlertMessage"] = "Cập Nhật Thành Công";
             }
-            return RedirectToAction("Index", new { dang = model.Dang});
+            return RedirectToAction("Index", new { dang =  model.Dang});
         }
 
         [Authorize(Roles = GlobalConfigs.ROLE_GIAMDOC_CANBOVANTHU)]
@@ -168,7 +170,7 @@ namespace S3Train.WebHeThong.Controllers
             taiLieuVanBan.NguoiGuiHoacNhan = user.FullName;
             taiLieuVanBan.Dang = GlobalConfigs.DANG_DI;
             taiLieuVanBan.NoiNhan = model.NoiNhan;
-            taiLieuVanBan.TinhTrang = GlobalConfigs.TINHTRANG_DAGOI;
+            taiLieuVanBan.TinhTrang = EnumTinhTrang.DaGoi;
 
             _taiLieuVanBanService.Update(taiLieuVanBan);
             _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(),"gởi văn bản đi: " + model.Ten);
@@ -256,7 +258,6 @@ namespace S3Train.WebHeThong.Controllers
             {
                 DocumentList = list
             };
-            
             List<DocumentVector> vSpace = VectorSpaceModel.ProcessDocumentCollection(docCollection);
             List<Centroid> resultSet = DocumnetClustering.DocumentCluster(3, vSpace, ViewBag.da);
 
@@ -314,7 +315,7 @@ namespace S3Train.WebHeThong.Controllers
                NgayCapNhat =  x.NgayCapNhat,
                NgayTao = x.NgayTao,
                NguoiDuyet = x.NguoiDuyet,
-               NoiDung = x.NoiDung,
+               NoiDung = AttributeExtension.GetDecription(x.Dang),
                NguoiGuiHoacNhan = x.NguoiGuiHoacNhan,
                NguoiKy = x.NguoiKy,
                NoiBanHanh = x.NoiBanHanh,
@@ -352,7 +353,7 @@ namespace S3Train.WebHeThong.Controllers
                 NgayCapNhat = x.NgayCapNhat,
                 NgayTao = x.NgayTao,
                 NguoiDuyet = x.NguoiDuyet,
-                NoiDung = x.NoiDung,
+                NoiDung = AttributeExtension.GetDecription(x.Dang),
                 NguoiGuiHoacNhan = x.NguoiGuiHoacNhan,
                 NguoiKy = x.NguoiKy,
                 NoiBanHanh = x.NoiBanHanh,

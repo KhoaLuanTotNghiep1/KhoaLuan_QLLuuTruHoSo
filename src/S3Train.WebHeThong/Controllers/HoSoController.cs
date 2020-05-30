@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using S3Train.Contract;
 using S3Train.Core.Constant;
+using S3Train.Core.Extension;
 using S3Train.Domain;
 using S3Train.WebHeThong.CommomClientSide.DropDownList;
 using S3Train.WebHeThong.CommomClientSide.Function;
@@ -53,12 +54,12 @@ namespace S3Train.WebHeThong.Controllers
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var hoSos = _hoSoService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderBy(c => c.PhongLuuTru), includes);
+            var hoSos = _hoSoService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderByDescending(c => c.PhongLuuTru), includes);
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 hoSos = _hoSoService.GetAllPaged(pageIndex, pageSize.Value, p => p.PhongLuuTru.Contains(searchString) || p.TapHoSo.PhongLuuTru.Contains(searchString)
-                   || p.User.FullName.Contains(searchString) && p.TrangThai == active, p => p.OrderBy(c => c.PhongLuuTru), includes);
+                   || p.User.FullName.Contains(searchString) && p.TrangThai == active, p => p.OrderByDescending(c => c.PhongLuuTru), includes);
             }
 
             model.Paged = hoSos;
@@ -104,7 +105,7 @@ namespace S3Train.WebHeThong.Controllers
 
             hoSo.TapHoSoId = model.TapHoSoId;
             hoSo.PhongLuuTru = model.PhongLuuTru;
-            hoSo.TinhTrang = GlobalConfigs.TINHTRANG_TRONGKHO;
+            hoSo.TinhTrang = EnumTinhTrang.TrongKho;
             hoSo.ThoiGianBaoQuan = model.ThoiGianBaoQuan;
             hoSo.GhiChu = model.GhiChu;
             hoSo.BienMucHoSo = model.BienMucHoSo;
@@ -181,23 +182,19 @@ namespace S3Train.WebHeThong.Controllers
                 Id = x.Id,
                 BienMucHoSo = x.BienMucHoSo,
                 GhiChu = x.GhiChu,
-                Hop = x.Hop,
                 PhongLuuTru = x.PhongLuuTru,
-                LoaiHoSoId = x.LoaiHoSoId,
                 LoaiHoSo = x.LoaiHoSo,
                 HoSoCons = x.HoSoCons,
                 TapHoSo = x.TapHoSo,
-                TapHoSoId = x.TapHoSoId,
                 TinhTrang = x.TinhTrang,
                 ThoiGianBaoQuan = x.ThoiGianBaoQuan,
                 User = x.User,
-                UserId = x.UserId,
                 TaiLieuVanBans = x.TaiLieuVanBans,
                 NgayTao = x.NgayTao,
                 NgayCapNhat = x.NgayCapNhat,
                 TrangThai = x.TrangThai,
-                HopId = x.HopId,
-                ViTri = autoList.FirstOrDefault(p => p.Id == x.HopId).Text
+                Hop = x.Hop,
+                HopId = autoList.FirstOrDefault(p => p.Id == x.HopId).Text,
             };
 
             return model;
@@ -210,25 +207,11 @@ namespace S3Train.WebHeThong.Controllers
             return hoSos.Select(x => new HoSoViewModel
             {
                 Id = x.Id,
-                BienMucHoSo = x.BienMucHoSo,
-                GhiChu = x.GhiChu,
-                Hop = x.Hop,
                 PhongLuuTru = x.PhongLuuTru,
-                HopId = x.HopId,
-                LoaiHoSoId = x.LoaiHoSoId,
-                LoaiHoSo = x.LoaiHoSo,
-                HoSoCons = x.HoSoCons,
-                TapHoSo = x.TapHoSo,
-                TapHoSoId = x.TapHoSoId,
+                HopId = autoList.FirstOrDefault(p => p.Id == x.HopId).Text,
                 TinhTrang = x.TinhTrang,
-                ThoiGianBaoQuan = x.ThoiGianBaoQuan,
-                User = x.User,
-                UserId = x.UserId,
-                TaiLieuVanBans = x.TaiLieuVanBans,
                 NgayTao = x.NgayTao,
-                NgayCapNhat = x.NgayCapNhat,
                 TrangThai = x.TrangThai,
-                ViTri = autoList.FirstOrDefault(p => p.Id == x.HopId).Text
             }).ToList();
         }
     }

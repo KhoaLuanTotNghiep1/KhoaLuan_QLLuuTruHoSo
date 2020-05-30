@@ -28,10 +28,10 @@ namespace S3Train.WebHeThong.Models
         public bool TrangThai { get; set; }
 
         public ApplicationUser User { get; set; }
-        public virtual MuonTra MuonTra { get; set; }
+        public MuonTra MuonTra { get; set; }
 
         public IList<MuonTraViewModel> MuonTras { get; set; }
-        public virtual TaiLieuVanBan TaiLieuVanBan { get; set; }
+        public TaiLieuVanBan TaiLieuVanBan { get; set; }
 
     }
 }

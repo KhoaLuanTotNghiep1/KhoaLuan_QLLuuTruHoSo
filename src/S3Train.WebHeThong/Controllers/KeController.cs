@@ -48,12 +48,12 @@ namespace S3Train.WebHeThong.Controllers
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var kes = _keService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderBy(c => c.NgayTao), includes);
+            var kes = _keService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderByDescending(c => c.NgayTao), includes);
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 kes = _keService.GetAllPaged(pageIndex, pageSize.Value, p => p.Ten.Contains(searchString) && p.TrangThai == active
-                    && p.TrangThai == active, p => p.OrderBy(c => c.NgayTao), includes);
+                    && p.TrangThai == active, p => p.OrderByDescending(c => c.NgayTao), includes);
             }
 
             model.Paged = kes;
@@ -154,6 +154,9 @@ namespace S3Train.WebHeThong.Controllers
 
             _keService.Update(model);
             _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(), "kệ " + model.Ten + " thành "+ active);
+
+            TempData["AlertMessage"] = "Xóa Thành Công";
+
             return RedirectToAction("Index");
         }
 
@@ -192,14 +195,14 @@ namespace S3Train.WebHeThong.Controllers
                 TrangThai = x.TrangThai,
                 UserId = x.UserId,
                 Tuid = x.Tuid,
-                Tu = x.Tu,
                 Hops = x.Hops,
-                User = x.User
+                User = x.User,
+                ViTri = x.Tu.Ten
             };
             return model;
         }
 
-        private List<KeViewModel> GetKes(IList<Ke> kes)
+        private List<KeViewModel> GetKes(IEnumerable<Ke> kes)
         {
             return kes.Select(x => new KeViewModel
             {
@@ -216,9 +219,8 @@ namespace S3Train.WebHeThong.Controllers
                 TrangThai = x.TrangThai,
                 UserId = x.UserId,
                 Tuid = x.Tuid,
-                Tu = x.Tu,
-                Hops = x.Hops,
                 User = x.User,
+                ViTri = x.Tu.Ten
             }).ToList();
         }
     }

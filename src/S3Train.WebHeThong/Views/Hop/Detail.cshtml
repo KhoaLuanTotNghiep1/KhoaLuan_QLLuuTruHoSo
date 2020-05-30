@@ -20,7 +20,7 @@
         <div class="card mb-4">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">Vị Trí</h6>
                         <p>@Html.DisplayFor(item => Model.ViTri)</p>
                     </div>
@@ -28,12 +28,12 @@
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoHop)</h6>
                         <p>Hộp số @Html.DisplayFor(item => Model.SoHop)</p>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">Phòng Ban</h6>
                         <p>@Html.DisplayFor(item => Model.PhongBan.Ten)</p>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">Người Tạo</h6>
                         <p>@Html.DisplayFor(item => Model.User.FullName)</p>
@@ -42,12 +42,12 @@
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayBatDau)</h6>
                         <p>@Html.DisplayFor(item => Model.NgayBatDau)</p>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayKetThuc)</h6>
                         <p>@Html.DisplayFor(item => Model.NgayKetThuc)</p>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayTao)</h6>
                         <p>@Html.DisplayFor(item => Model.NgayTao)</p>
@@ -91,10 +91,6 @@
                             <div class="col">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">Lưu Trữ</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", Model.TinhTrang)</div>
-                                <div class="mt-2 mb-0 text-muted text-xs">
-                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                    <span>Since last month</span>
-                                </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-primary"></i>

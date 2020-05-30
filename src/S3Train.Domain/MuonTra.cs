@@ -9,9 +9,10 @@ namespace S3Train.Domain
         public DateTime NgayMuon { get; set; }
         public DateTime NgayKetThuc { get; set; }
         
-        public string TinhTrang { get; set; }
+        public EnumTinhTrang TinhTrang { get; set; }
         public string UserId { get; set; }
         public string VanThu { get; set; }
+        public int SoLuong { get; set; }
 
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }

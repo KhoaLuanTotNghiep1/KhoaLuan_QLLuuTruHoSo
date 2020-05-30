@@ -33,7 +33,7 @@ namespace S3Train.WebHeThong.Models
         public int SoTo { get; set; }
 
         [Display(Name = "Tình Trạng Lưu Trữ")]
-        public string TinhTrang { get; set; } // còn trong kho hay đã cho mượn
+        public EnumTinhTrang TinhTrang { get; set; } // còn trong kho hay đã cho mượn
 
         [Display(Name = "Đương Dẫn File")]
         public string DuongDan { get; set; }

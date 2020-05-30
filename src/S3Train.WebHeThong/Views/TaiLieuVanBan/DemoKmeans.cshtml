@@ -1,4 +1,6 @@
 ﻿@using AlgorithmLibrary.Kmeans
+@using S3Train.Core.Enum
+
 @model IEnumerable<Centroid>
 
 @{
@@ -13,6 +15,7 @@
     <title>DemoKmeans</title>
 </head>
 <body>
+
     <div>
         @foreach (var item in Model)
         {

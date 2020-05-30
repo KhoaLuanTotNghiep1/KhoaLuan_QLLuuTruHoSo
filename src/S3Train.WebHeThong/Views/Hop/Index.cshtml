@@ -28,7 +28,7 @@
         <table class="table table-responsive-lg">
             <thead>
                 <tr>
-                    <th>STT</th>
+                    <th>#</th>
                     <th>Chuyên Đề</th>
                     <th>Vị Trí Hộp</th>
                     <th>Phòng Ban</th>
@@ -42,7 +42,7 @@
                     <tr>
                         <td>@stt</td>
                         <td>@Html.DisplayFor(m => item.ChuyenDe)</td>
-                        <td style="width:200px">@item.ViTri</td>
+                        <td style="width:200px">@item.KeId</td>
                         <td style="width:200px">@Html.DisplayFor(m => item.PhongBan.Ten)</td>
                         <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
                         <td>

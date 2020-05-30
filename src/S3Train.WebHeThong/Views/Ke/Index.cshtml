@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
-    int soLuong = 0;
     int stt = 1;
 }
 
@@ -29,10 +28,10 @@
         <table class="table table-responsive-lg">
             <thead>
                 <tr>
-                    <th>STT</th>
-                    <th>Vị Trí</th>
-                    <th>Tên</th>
-                    <th>Lưu Trữ</th>
+                    <th>#</th>
+                    <th>Vị Trí Kệ</th>
+                    <th>Tên Kệ</th>
+                    <th>Ngày Tạo</th>
                     <th>Trạng Thái</th>
                     <th>Hoạt Động</th>
                 </tr>
@@ -40,12 +39,11 @@
             <tbody>
                 @foreach (var item in Model.Items)
                 {
-                    soLuong = item.SoHopToiDa - item.SoHopHienTai;
                     <tr>
                         <td>@stt</td>
-                        <td>@Html.DisplayFor(m => item.Tu.Ten)</td>
+                        <td>@Html.DisplayFor(m => item.ViTri)</td>
                         <td>@Html.DisplayFor(m => item.Ten)</td>
-                        <td>@Html.Partial("~/Views/Shared/_PartialTinhTrang.cshtml", soLuong)</td>
+                        <td>@Html.DisplayFor(m => item.NgayTao)</td>
                         <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
                         <td>
                             @Html.Partial("~/Views/Shared/_PartialActionBasic.cshtml", item.Id)

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using S3Train.Contract;
 using S3Train.Core.Constant;
+using S3Train.Core.Extension;
 using S3Train.Domain;
 using S3Train.Service;
 using S3Train.WebHeThong.CommomClientSide.DropDownList;
@@ -52,11 +53,11 @@ namespace S3Train.WebHeThong.Controllers
                 PageSize = pageSize.Value
             };
             var muontras = _muonTraService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active
-            && p.TinhTrang == tinhTrang, p => p.OrderBy(c => c.NgayMuon));
+            && p.TinhTrang == EnumTinhTrang.DangMuon, p => p.OrderBy(c => c.NgayMuon));
             if (!string.IsNullOrEmpty(searchString))
             {
                 muontras = _muonTraService.GetAllPaged(pageIndex, pageSize.Value, p => p.User.FullName.Contains(searchString) || p.VanThu.Contains(searchString)
-                    && p.TrangThai == active && p.TinhTrang == tinhTrang, p => p.OrderBy(c => c.NgayMuon), includes);
+                    && p.TrangThai == active && p.TinhTrang == EnumTinhTrang.DangMuon, p => p.OrderBy(c => c.NgayMuon), includes);
             }
             model.Paged = muontras;
             model.Items = GetMuonTras(muontras.ToList());
@@ -97,20 +98,19 @@ namespace S3Train.WebHeThong.Controllers
             muontra.VanThu = User.Identity.GetUserId();
             muontra.NgayMuon = DateTime.Now;
             muontra.NgayKetThuc = ngayTra;
-            muontra.TinhTrang = "Đang Mượn";
+            muontra.TinhTrang = EnumTinhTrang.DangMuon;
             _muonTraService.Insert(muontra);
 
             for (int i = 0; i < array.Length; i++)
             {
                 var chitietmuontra = new ChiTietMuonTra();
-                chitietmuontra.SoLuong = SoLuong;
                 var b = array[i];
                 var a = autoList.FirstOrDefault(p => p.Text == b).Id; 
                 chitietmuontra.TaiLieuVanBanId = a;
                 chitietmuontra.MuonTraID = muontra.Id;
                 _chiTietMuonTraService.Insert(chitietmuontra);
                 var vanBan = _taiLieuVanBanService.Get(m => m.Id == a);
-                vanBan.TinhTrang = "Đang Mượn";
+                vanBan.TinhTrang = EnumTinhTrang.DangMuon;
                 _taiLieuVanBanService.Update(vanBan);
 
             }
@@ -121,24 +121,29 @@ namespace S3Train.WebHeThong.Controllers
         [HttpPost]
         public ActionResult CreateOrUpdateTra(string userId, string NgayMuon, int SoLuong, string Id)
         {
-            var muontra = new MuonTra();
-
-            muontra.UserId = userId;
-            muontra.VanThu = User.Identity.GetUserId();
-            muontra.NgayMuon = DateTime.Parse(NgayMuon);
-            muontra.NgayKetThuc = DateTime.Now;
-            muontra.TinhTrang = "Đã Trả";
+            var muontra = new MuonTra
+            {
+                UserId = userId,
+                VanThu = User.Identity.GetUserId(),
+                NgayMuon = DateTime.Parse(NgayMuon),
+                NgayKetThuc = DateTime.Now,
+                TinhTrang = EnumTinhTrang.DaTra
+            };
             _muonTraService.Insert(muontra);
+
             var muon = _chiTietMuonTraService.Get(m => m.TaiLieuVanBanId == Id);
             muon.TrangThai = false;
             _chiTietMuonTraService.Update(muon);
-            var chitietmuontra = new ChiTietMuonTra();
-            chitietmuontra.SoLuong = SoLuong;
-            chitietmuontra.TaiLieuVanBanId = Id;
-            chitietmuontra.MuonTraID = muontra.Id;
+
+            var chitietmuontra = new ChiTietMuonTra
+            {
+                TaiLieuVanBanId = Id,
+                MuonTraID = muontra.Id
+            };
             _chiTietMuonTraService.Insert(chitietmuontra);
+
             var vanBan = _taiLieuVanBanService.Get(m => m.Id == Id);
-            vanBan.TinhTrang = "Trong Kho";
+            vanBan.TinhTrang = EnumTinhTrang.TrongKho;
             _taiLieuVanBanService.Update(vanBan);
            
             TempData["AlertMessage"] = "Tạo Mới Thành Công";
@@ -169,7 +174,7 @@ namespace S3Train.WebHeThong.Controllers
                     {
                         if (vb.Id == item.TaiLieuVanBanId)
                         {
-                            vb.TinhTrang = "Trong Kho";
+                            vb.TinhTrang = EnumTinhTrang.TrongKho;
                             _taiLieuVanBanService.Update(vb);
                         }
                     }
@@ -216,7 +221,6 @@ namespace S3Train.WebHeThong.Controllers
                     model.Add(new ChiTietMuonTraViewModel
                     {
                         Id = item.Id,
-                        SoLuong = item.SoLuong,
                         MuonTraId = item.MuonTraID,
                         TaiLieuVanBan = item.TaiLieuVanBan,
                         TaiLieuVanBanId = item.TaiLieuVanBanId,
@@ -286,7 +290,7 @@ namespace S3Train.WebHeThong.Controllers
                 NgayCapNhat = muonTra.NgayCapNhat,
                 NgayTra = muonTra.NgayKetThuc,
                 UserId = muonTra.UserId,
-                TinhTrang = muonTra.TinhTrang,
+                TinhTrang = AttributeExtension.GetDecription(muonTra.TinhTrang),
                 TrangThai = muonTra.TrangThai,
                 User = muonTra.User,
                 
@@ -304,7 +308,7 @@ namespace S3Train.WebHeThong.Controllers
                 NgayMuon = x.NgayMuon,
                 NgayTra = x.NgayKetThuc,
                 NgayCapNhat = x.NgayCapNhat,
-                TinhTrang = x.TinhTrang,
+                TinhTrang = AttributeExtension.GetDecription(x.TinhTrang),
                 TrangThai = x.TrangThai,
                 UserId = x.UserId,
                 User = x.User,
@@ -319,7 +323,6 @@ namespace S3Train.WebHeThong.Controllers
             return chiTietMuonTras.Select(x => new ChiTietMuonTraViewModel
             {
                 Id = x.Id,
-                SoLuong = x.SoLuong,
                 MuonTraId = x.MuonTraID,
                 TaiLieuVanBan = x.TaiLieuVanBan,
                 TaiLieuVanBanId = x.TaiLieuVanBanId,

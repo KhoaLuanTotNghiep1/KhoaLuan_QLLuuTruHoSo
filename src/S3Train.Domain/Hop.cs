@@ -11,7 +11,7 @@ namespace S3Train.Domain
     {
         public string ChuyenDe { get; set; }
         public int SoHop { get; set; }
-        public string TinhTrang { get; set; }
+        public EnumTinhTrang TinhTrang { get; set; }
         public DateTime NgayBatDau { get; set; }
         public DateTime NgayKetThuc { get; set; }
 

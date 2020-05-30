@@ -76,7 +76,7 @@ namespace S3Train.Domain
             modelBuilder.Entity<HoSo>().Property(p => p.ThoiGianBaoQuan).IsOptional();
             modelBuilder.Entity<HoSo>().Property(p => p.GhiChu).IsOptional();
             modelBuilder.Entity<HoSo>().Property(p => p.BienMucHoSo).IsOptional();
-            modelBuilder.Entity<HoSo>().Property(p => p.TinhTrang).HasMaxLength(150).IsOptional();
+            modelBuilder.Entity<HoSo>().Property(p => p.TinhTrang).IsOptional();
             modelBuilder.Entity<HoSo>().HasMany(p => p.TaiLieuVanBans).WithRequired(prod => prod.HoSo);
             modelBuilder.Entity<HoSo>().HasOptional(p => p.TapHoSo).WithMany(c => c.HoSoCons).HasForeignKey(b => b.TapHoSoId);
 
@@ -91,11 +91,11 @@ namespace S3Train.Domain
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.NguoiGuiHoacNhan).HasMaxLength(100).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.NoiNhan).HasMaxLength(200).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.SoTo).IsOptional();
-            modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.TinhTrang).HasMaxLength(150).IsOptional();
+            modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.TinhTrang).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.GhiChu).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.DuongDan).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.NgayBanHanh).IsOptional();
-            modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.Dang).HasMaxLength(50).IsOptional();
+            modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.Dang).HasMaxLength(30).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().Property(p => p.HinhAnh).IsOptional();
             modelBuilder.Entity<TaiLieuVanBan>().HasMany(p => p.ChiTietMuonTras).WithOptional(p => p.TaiLieuVanBan);
 
@@ -104,11 +104,11 @@ namespace S3Train.Domain
             modelBuilder.Entity<MuonTra>().Property(p => p.NgayKetThuc).IsOptional();
             modelBuilder.Entity<MuonTra>().Property(p => p.TinhTrang).IsOptional();
             modelBuilder.Entity<MuonTra>().Property(p => p.VanThu).IsOptional();
+            modelBuilder.Entity<MuonTra>().Property(p => p.SoLuong).IsOptional();
             modelBuilder.Entity<MuonTra>().HasMany(p => p.ChiTietMuonTras).WithOptional(prod => prod.MuonTra);
 
 
             modelBuilder.Entity<ChiTietMuonTra>().ToTable("ChiTietMuonTra");
-            modelBuilder.Entity<ChiTietMuonTra>().Property(p => p.ThuMuon).IsOptional();
 
             modelBuilder.Entity<NoiBanHanh>().ToTable("NoiBanHanh");
             modelBuilder.Entity<NoiBanHanh>().Property(p => p.Ten).IsOptional();

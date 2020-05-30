@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using S3Train.Contract;
 using S3Train.Core.Constant;
+using S3Train.Core.Extension;
 using S3Train.Domain;
 using S3Train.WebHeThong.CommomClientSide.DropDownList;
 using S3Train.WebHeThong.CommomClientSide.Function;
@@ -57,7 +58,7 @@ namespace S3Train.WebHeThong.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
                 hops = _hopService.GetAllPaged(pageIndex, pageSize.Value, p => p.ChuyenDe.Contains(searchString) || p.PhongBan.Ten.Contains(searchString)
-                    && p.TrangThai == active, p => p.OrderBy(c => c.NgayTao), includes);
+                    && p.TrangThai == active, p => p.OrderByDescending(c => c.NgayTao), includes);
             }
 
             model.Paged = hops;
@@ -109,7 +110,7 @@ namespace S3Train.WebHeThong.Controllers
 
             if (string.IsNullOrEmpty(model.Id))
             {
-                hop.TinhTrang = GlobalConfigs.TINHTRANG_TRONGKHO;
+                hop.TinhTrang = EnumTinhTrang.TrongKho;
                 var result = UpdateTu_SoHopHienTai(hop.KeId, ActionWithObject.Update);
                 if (!result)
                 {
@@ -172,7 +173,7 @@ namespace S3Train.WebHeThong.Controllers
         [HttpPost]
         public ActionResult AutoCompleteText(string text)
         {
-            var model = AutoCompleteTextKes(_keService.GetAll());
+            var model = AutoCompleteTextKes(_keService.Gets(p=>p.TrangThai == true));
 
             model = model.Where(p => p.Text.Contains(text)).ToHashSet();
 
@@ -201,12 +202,9 @@ namespace S3Train.WebHeThong.Controllers
         {
             ViewBag.PhongBans = SelectListItemFromDomain.SelectListItem_PhongBan(
                 _phongBanService.GetAll(m => m.OrderBy(t => t.Ten)));
-
-            ViewBag.Kes = SelectListItemFromDomain.SelectListItem_Ke(
-                _keService.GetAll(m => m.OrderBy(t => t.Tu.Ten)));
         }
 
-        private HashSet<AutoCompleteTextModel> AutoCompleteTextKes(IList<Ke> kes)
+        private HashSet<AutoCompleteTextModel> AutoCompleteTextKes(IEnumerable<Ke> kes)
         {
             var list = ConvertDomainToAutoCompleteModel.LocalHop(kes);
 
@@ -234,11 +232,9 @@ namespace S3Train.WebHeThong.Controllers
                 HoSos = hop.HoSos,
                 Ke = hop.Ke,
                 User = hop.User,
-                KeId = hop.KeId,
-                ViTri = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text,
+                KeId = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text
             };
 
-            //model.KeId = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text;
             return model;
         }
 
@@ -255,7 +251,7 @@ namespace S3Train.WebHeThong.Controllers
                 PhongBan = hop.PhongBan,
                 SoHop = hop.SoHop,
                 PhongBanId = hop.PhongBanId,
-                KeId = hop.KeId,
+                KeId = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text,
                 TinhTrang = hop.TinhTrang,
                 NgayTao = hop.NgayTao,
                 NgayCapNhat = hop.NgayCapNhat,
@@ -263,8 +259,7 @@ namespace S3Train.WebHeThong.Controllers
                 UserId = hop.UserId,
                 HoSos = hop.HoSos,
                 Ke = hop.Ke,
-                User = hop.User,
-                ViTri = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text,
+                User = hop.User
             }).ToList();
         }
     }

@@ -21,7 +21,7 @@ namespace S3Train.WebHeThong.Models
         public int SoHop { get; set; }
 
         [Display(Name = "Tình Trạng")]
-        public string TinhTrang { get; set; } // Mượn hoặc Trả
+        public EnumTinhTrang TinhTrang { get; set; } // Mượn hoặc Trả
 
         [Display(Name = "Vị Trí")]
         public string ViTri { get; set; }

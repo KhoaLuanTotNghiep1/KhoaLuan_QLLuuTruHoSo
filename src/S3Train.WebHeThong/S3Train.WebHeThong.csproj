@@ -258,7 +258,7 @@
     <Compile Include="Migrations\202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.cs" />
     <Compile Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs" />
     <Compile Include="Migrations\202005160325216_AdjustToOldVersion.cs" />
-    <Compile Include="Migrations\202005160325216_AdjustToOldVersion.Designer.cs">
+    <Compile Include="Migrations\202005160325216_AdjustToOldVersion.designer.cs">
       <DependentUpon>202005160325216_AdjustToOldVersion.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202005161447058_AddColumnHinhAnhTableTLVB.cs" />
@@ -319,14 +319,6 @@
     </Compile>
     <Compile Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.designer.cs">
       <DependentUpon>202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005160325216_AdjustToOldVersion.cs" />
-    <Compile Include="Migrations\202005160325216_AdjustToOldVersion.designer.cs">
-      <DependentUpon>202005160325216_AdjustToOldVersion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005161447058_AddColumnHinhAnhTableTLVB.cs" />
-    <Compile Include="Migrations\202005161447058_AddColumnHinhAnhTableTLVB.designer.cs">
-      <DependentUpon>202005161447058_AddColumnHinhAnhTableTLVB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -713,6 +705,7 @@
     <Content Include="Content\images\ui-icons_777777_256x240.png" />
     <Content Include="Content\images\ui-icons_cc0000_256x240.png" />
     <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\images\baseline_close_black_18dp.png" />
     <Content Include="Content\img\boy.png" />
     <Content Include="Content\img\error.svg" />
     <Content Include="Content\img\girl.png" />

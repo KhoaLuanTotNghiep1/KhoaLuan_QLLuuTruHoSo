@@ -136,18 +136,30 @@
                 alertify.success(successMessage);
         });
 
-        var ctMuon = [];
+        
         $(document).ready(function () {
             $(".b").each(function () {
                 var _this = $(this);
                 ($(this).find(".check")).on('click', function () {
+                    var id = _this.find(".check").val();
                     if ($('.check').is(':checked')) {
-                        var id = _this.find(".check").val();
+                       
                         $.ajax({
                             type: "POST",
                             url: '/Tra/AddItems',
                             data: {
-                                Id:id
+                                Id: id
+                            },
+                            success: function (data) {
+                            }
+                        });
+                    }
+                    else {
+                        $.ajax({
+                            type: "POST",
+                            url: '/Tra/RemoveItem',
+                            data: {
+                                Id: id
                             },
                             success: function (data) {
                             }
@@ -159,16 +171,21 @@
         });
 
         $("#tra").click(function () {
-            $.ajax({
-                type: "POST",
-                url: '/Tra/CreateOrUpdate',
-                data: {
-                },
-                success: function (data) {
-                    window.location.href = "http://localhost:19873/Tra/Index";
-                    TempData["AlertMessage"] = "Trả Thành Công";
-                }
-            });
+            if ($('.check').is(':checked')) {
+                $.ajax({
+                    type: "POST",
+                    url: '/Tra/CreateOrUpdate',
+                    data: {
+                    },
+                    success: function (data) {
+                        window.location.href = "http://localhost:19873/Tra/Index";
+                        
+                    }
+                });
+            }
+            else {
+                alert("Bạn chưa chọn TL/VB để trả");
+            }
         });
     </script>
 }

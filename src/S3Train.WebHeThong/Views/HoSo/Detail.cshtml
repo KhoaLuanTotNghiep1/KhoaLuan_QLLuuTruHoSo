@@ -49,8 +49,8 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-8">
-                        <h6 class="m-0 font-weight-bold text-primary">Vị Trí</h6>
-                        <p>@Model.ViTri</p>
+                        <h6 class="m-0 font-weight-bold text-primary">Vị Trí Hộp</h6>
+                        <p>@Model.HopId</p>
                     </div>
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.ThoiGianBaoQuan)</h6>
@@ -58,12 +58,12 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.BienMucHoSo)</h6>
                         <p>@Html.Raw(HttpUtility.HtmlDecode(Model.BienMucHoSo))</p>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.GhiChu)</h6>
                         <p>@Html.Raw(HttpUtility.HtmlDecode(Model.GhiChu))</p>
                     </div>
@@ -80,10 +80,6 @@
                             <div class="col">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">Trạng Thái</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", Model.TrangThai)</div>
-                                <div class="mt-2 mb-0 text-muted text-xs">
-                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                    <span>Since last month</span>
-                                </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-primary"></i>
@@ -102,10 +98,6 @@
                             <div class="col">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">Lưu Trữ</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", Model.TinhTrang)</div>
-                                <div class="mt-2 mb-0 text-muted text-xs">
-                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                    <span>Since last month</span>
-                                </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-primary"></i>
@@ -129,7 +121,7 @@
                                 <tr>
                                     <th>STT</th>
                                     <th>Phông Lưu Trữ</th>
-                                    <th>Vị Trí Lưu Trữ</th>
+                                    <th>Ngày Tạo</th>
                                     <th>Lưu Trữ</th>
                                     <th>Trạng Thái</th>
                                     <th>Hoạt Động</th>
@@ -141,7 +133,7 @@
                                     <tr>
                                         <td>@stt2</td>
                                         <td>@Html.DisplayFor(item => hoso.PhongLuuTru)</td>
-                                        <td>@hoso.Hop.Ke.Tu.Ten kệ thứ @hoso.Hop.Ke.SoThuTu hộp số @hoso.Hop.SoHop</td>
+                                        <td>@Html.DisplayFor(item => hoso.NgayTao)</td>
                                         <td>@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", hoso.TinhTrang)</td>
                                         <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", hoso.TrangThai)</td>
                                         <td>
@@ -177,7 +169,7 @@
                         <table class="table table-responsive-md">
                             <thead>
                                 <tr>
-                                    <th>STT</th>
+                                    <th>#</th>
                                     <th>Tên</th>
                                     <th>Số Ký Hiệu</th>
                                     <th>Lưu Trữ</th>

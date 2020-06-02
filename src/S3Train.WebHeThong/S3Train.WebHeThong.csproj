@@ -246,6 +246,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="CommomClientSide\DropDownList\SelectListEnum.cs" />
     <Compile Include="CommomClientSide\DropDownList\SelectListItemFromDomain.cs" />
     <Compile Include="CommomClientSide\Function\AddList.cs" />
     <Compile Include="CommomClientSide\Function\Compute.cs" />
@@ -258,16 +259,29 @@
     <Compile Include="Migrations\202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.cs" />
     <Compile Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs" />
     <Compile Include="Migrations\202005160325216_AdjustToOldVersion.cs" />
-    <Compile Include="Migrations\202005160325216_AdjustToOldVersion.designer.cs">
-      <DependentUpon>202005160325216_AdjustToOldVersion.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\202005161447058_AddColumnHinhAnhTableTLVB.cs" />
-    <Compile Include="Migrations\202005161447058_AddColumnHinhAnhTableTLVB.Designer.cs">
-      <DependentUpon>202005161447058_AddColumnHinhAnhTableTLVB.cs</DependentUpon>
+    <Compile Include="Migrations\202005191232224_AddForienKeyTLVBvsCTMT.cs" />
+    <Compile Include="Migrations\202005201439510_DeleteColumnTrichDan.cs" />
+    <Compile Include="Migrations\202005271601281_DeleteColumnDienTichTableTu.cs" />
+    <Compile Include="Migrations\202005291003469_AddColumnVanThuAndSoLuongOnTableMuonTra.cs" />
+    <Compile Include="Migrations\202005291003469_AddColumnVanThuAndSoLuongOnTableMuonTra.designer.cs">
+      <DependentUpon>202005291003469_AddColumnVanThuAndSoLuongOnTableMuonTra.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202005161612104_update-db.cs" />
-    <Compile Include="Migrations\202005161612104_update-db.Designer.cs">
-      <DependentUpon>202005161612104_update-db.cs</DependentUpon>
+    <Compile Include="Migrations\202005291441419_AdjustColumnsToEnum.cs" />
+    <Compile Include="Migrations\202005291441419_AdjustColumnsToEnum.designer.cs">
+      <DependentUpon>202005291441419_AdjustColumnsToEnum.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005291458579_AddColumnNotRunInMigration.cs" />
+    <Compile Include="Migrations\202005291458579_AddColumnNotRunInMigration.designer.cs">
+      <DependentUpon>202005291458579_AddColumnNotRunInMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005291505295_DeleteDienTich.cs" />
+    <Compile Include="Migrations\202005291505295_DeleteDienTich.designer.cs">
+      <DependentUpon>202005291505295_DeleteDienTich.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005300601539_ChangeTypeToStringColumnDangVB.cs" />
+    <Compile Include="Migrations\202005300601539_ChangeTypeToStringColumnDangVB.designer.cs">
+      <DependentUpon>202005300601539_ChangeTypeToStringColumnDangVB.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\ChiTietMuonTraViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -2737,6 +2751,7 @@
     <Content Include="Views\Muon\CreateOrUpdate.cshtml" />
     <Content Include="Views\Tra\Index.cshtml" />
     <Content Include="Views\Tra\Detail.cshtml" />
+    <Content Include="Views\User\UserProfile.cshtml" />
     <None Include="Web.LocalConnectStrings.config">
       <SubType>Designer</SubType>
     </None>
@@ -2803,20 +2818,20 @@
     <EmbeddedResource Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.resx">
       <DependentUpon>202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005160325216_AdjustToOldVersion.resx">
-      <DependentUpon>202005160325216_AdjustToOldVersion.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005291003469_AddColumnVanThuAndSoLuongOnTableMuonTra.resx">
+      <DependentUpon>202005291003469_AddColumnVanThuAndSoLuongOnTableMuonTra.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005161447058_AddColumnHinhAnhTableTLVB.resx">
-      <DependentUpon>202005161447058_AddColumnHinhAnhTableTLVB.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005291441419_AdjustColumnsToEnum.resx">
+      <DependentUpon>202005291441419_AdjustColumnsToEnum.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005191232224_AddForienKeyTLVBvsCTMT.resx">
-      <DependentUpon>202005191232224_AddForienKeyTLVBvsCTMT.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005291458579_AddColumnNotRunInMigration.resx">
+      <DependentUpon>202005291458579_AddColumnNotRunInMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005201439510_DeleteColumnTrichDan.resx">
-      <DependentUpon>202005201439510_DeleteColumnTrichDan.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005291505295_DeleteDienTich.resx">
+      <DependentUpon>202005291505295_DeleteDienTich.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005271601281_DeleteColumnDienTichTableTu.resx">
-      <DependentUpon>202005271601281_DeleteColumnDienTichTableTu.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005300601539_ChangeTypeToStringColumnDangVB.resx">
+      <DependentUpon>202005300601539_ChangeTypeToStringColumnDangVB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

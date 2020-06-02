@@ -1,21 +1,22 @@
-﻿@model string
+﻿@using S3Train.Domain
+@model EnumTinhTrang
 
 @{
-    if (Model == GlobalConfigs.TINHTRANG_TRONGKHO)
+    if (Model == EnumTinhTrang.TrongKho)
     {
         <span class="badge badge-primary">Trong Kho</span>
     }
 
-    if (Model == GlobalConfigs.TINHTRANG_DANGMUON)
+    if (Model == EnumTinhTrang.DangMuon)
     {
         <span class="badge badge-warning">Đang Mượn</span>
     }
 
-    if (Model == GlobalConfigs.TINHTRANG_DAGOI)
+    if (Model == EnumTinhTrang.DaGoi)
     {
         <span class="badge badge-warning">Đã Gởi</span>
     }
-    if (Model == GlobalConfigs.TINHTRANG_DATRA)
+    if (Model == EnumTinhTrang.DaTra)
     {
         <span class="badge badge-warning">Đã Trả</span>
     }

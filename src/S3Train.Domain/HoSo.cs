@@ -11,7 +11,7 @@ namespace S3Train.Domain
     {
         public string TapHoSoId { get; set; }
         public string PhongLuuTru { get; set; }
-        public string TinhTrang { get; set; }
+        public EnumTinhTrang TinhTrang { get; set; }
         public int ThoiGianBaoQuan { get; set; }
         public string GhiChu { get; set; }
         public string BienMucHoSo { get; set; }

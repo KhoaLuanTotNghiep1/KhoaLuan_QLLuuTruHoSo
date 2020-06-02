@@ -1,8 +1,6 @@
 ﻿using S3Train.Domain;
 using S3Train.WebHeThong.Models;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 
 
@@ -16,7 +14,7 @@ namespace S3Train.WebHeThong.CommomClientSide.Function
 
             foreach(var item in hoSos)
             {
-                string local = item.Hop.Ke.Tu.Ten + " kệ thứ " + item.Hop.Ke.SoThuTu + " hộp số " + item.Hop.SoHop + " hồ sơ " + item.PhongLuuTru;
+                string local = item.Hop.Ke.Tu.Ten + " kệ " + item.Hop.Ke.Ten + " hộp số " + item.Hop.SoHop + " hồ sơ " + item.PhongLuuTru;
 
                 var auto = new AutoCompleteTextModel()
                 {
@@ -36,7 +34,7 @@ namespace S3Train.WebHeThong.CommomClientSide.Function
 
             foreach (var item in taiLieuVanBans)
             {
-                if(item.TinhTrang != "Đang Mượn")
+                if(item.TinhTrang != EnumTinhTrang.DangMuon && item.TinhTrang != EnumTinhTrang.DaGoi)
                 {
                     var auto = new AutoCompleteTextModel()
                     {
@@ -69,17 +67,15 @@ namespace S3Train.WebHeThong.CommomClientSide.Function
             }
 
             return list;
-        }
+        }      
 
-       
-
-        public static HashSet<AutoCompleteTextModel> LocalHop(IList<Ke> kes)
+        public static HashSet<AutoCompleteTextModel> LocalHop(IEnumerable<Ke> kes)
         {
             var list = new HashSet<AutoCompleteTextModel>();
 
             foreach (var item in kes)
             {
-                string local = item.Tu.Ten + " kệ thứ " + item.SoThuTu;
+                string local = "Kệ " + item.Ten;
 
                 var auto = new AutoCompleteTextModel()
                 {
@@ -99,7 +95,7 @@ namespace S3Train.WebHeThong.CommomClientSide.Function
 
             foreach (var item in hops)
             {
-                string local = item.Ke.Tu.Ten + " kệ thứ " + item.Ke.SoThuTu + " hộp số " + item.SoHop;
+                string local = item.Ke.Tu.Ten + " kệ " + item.Ke.Ten + " hộp số " + item.SoHop;
 
                 var auto = new AutoCompleteTextModel()
                 {

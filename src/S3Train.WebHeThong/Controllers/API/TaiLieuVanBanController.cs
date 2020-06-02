@@ -50,20 +50,20 @@ namespace S3Train.WebHeThong.Controllers.API
             return Ok(taiLieuVanBanDtos);
         }
 
-        [ResponseType(typeof(NoiBanHanhDto))]
-        public IHttpActionResult GetByDang(string dang)
-        {
-            if (string.IsNullOrEmpty(dang))
-                return BadRequest();
+        //[ResponseType(typeof(NoiBanHanhDto))]
+        //public IHttpActionResult GetByDang(EnumDangVanBan dang)
+        //{
+        //    if (dang != null)
+        //        return BadRequest();
 
-            var taiLieuVanBanDtos = _taiLieuVanBanService.Gets(p => p.TrangThai == true && p.Dang == dang,
-                p => p.OrderBy(c => c.NgayTao)).ToList().Select(Mapper.Map<TaiLieuVanBan, TaiLieuVanBanDto>);
+        //    var taiLieuVanBanDtos = _taiLieuVanBanService.Gets(p => p.TrangThai == true && p.Dang == dang,
+        //        p => p.OrderBy(c => c.NgayTao)).ToList().Select(Mapper.Map<TaiLieuVanBan, TaiLieuVanBanDto>);
 
-            if (taiLieuVanBanDtos == null)
-                return NotFound();
+        //    if (taiLieuVanBanDtos == null)
+        //        return NotFound();
 
-            return Ok(taiLieuVanBanDtos);
-        }
+        //    return Ok(taiLieuVanBanDtos);
+        //}
 
         [ResponseType(typeof(NoiBanHanhDto))]
         public IHttpActionResult GetByTime(DateTime? startTime, DateTime? endTime)

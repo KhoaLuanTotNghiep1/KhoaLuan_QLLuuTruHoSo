@@ -23,7 +23,7 @@ namespace S3Train.WebHeThong.Models
         public string PhongLuuTru { get; set; }
 
         [Display(Name = "Tình Trạng Lưu Trữ")]
-        public string TinhTrang { get; set; }
+        public EnumTinhTrang TinhTrang { get; set; }
 
         [Required(ErrorMessage = "Bạn chưa điền thời gian bảo quản")]
         [Display(Name = "Thời Gian Bảo Quản")]

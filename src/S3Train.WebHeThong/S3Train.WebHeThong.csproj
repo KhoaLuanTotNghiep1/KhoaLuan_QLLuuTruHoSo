@@ -719,6 +719,7 @@
     <Content Include="Content\images\ui-icons_777777_256x240.png" />
     <Content Include="Content\images\ui-icons_cc0000_256x240.png" />
     <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\images\baseline_close_black_18dp.png" />
     <Content Include="Content\img\boy.png" />
     <Content Include="Content\img\error.svg" />
     <Content Include="Content\img\girl.png" />
@@ -2750,6 +2751,7 @@
     <Content Include="Views\Muon\CreateOrUpdate.cshtml" />
     <Content Include="Views\Tra\Index.cshtml" />
     <Content Include="Views\Tra\Detail.cshtml" />
+    <Content Include="Views\User\UserProfile.cshtml" />
     <None Include="Web.LocalConnectStrings.config">
       <SubType>Designer</SubType>
     </None>

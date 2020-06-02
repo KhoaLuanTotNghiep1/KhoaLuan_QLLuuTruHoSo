@@ -3,8 +3,6 @@ using S3Train.Contract;
 using S3Train.Core.Constant;
 using S3Train.Core.Extension;
 using S3Train.Domain;
-using S3Train.Service;
-using S3Train.WebHeThong.CommomClientSide.DropDownList;
 using S3Train.WebHeThong.CommomClientSide.Function;
 using S3Train.WebHeThong.Models;
 using System;
@@ -24,8 +22,7 @@ namespace S3Train.WebHeThong.Controllers
         private readonly ITaiLieuVanBanService _taiLieuVanBanService;
         private readonly IHoSoService _hoSoService;
         private readonly IUserService _userService;
-
-        public const string MuonSession = "MuonSession";
+        
 
         public TraController()
         {
@@ -52,11 +49,13 @@ namespace S3Train.WebHeThong.Controllers
                 PageSize = pageSize.Value
             };
             var muontras = _muonTraService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active
-            && p.TinhTrang == EnumTinhTrang.DangMuon, p => p.OrderBy(c => c.NgayMuon));
+            && p.TinhTrang == EnumTinhTrang.DaTra, p => p.OrderBy(c => c.NgayMuon));
             if (!string.IsNullOrEmpty(searchString))
             {
                 muontras = _muonTraService.GetAllPaged(pageIndex, pageSize.Value, p => p.User.FullName.Contains(searchString) || p.VanThu.Contains(searchString)
                     && p.TrangThai == active, p => p.OrderBy(c => c.NgayMuon));
+
+
             }
             model.Paged = muontras;
             model.Items = GetMuonTras(muontras.ToList());
@@ -64,13 +63,13 @@ namespace S3Train.WebHeThong.Controllers
 
             ViewBag.Active = active;
             ViewBag.searchString = searchString;
-            ViewBag.Controller = "MuonTra";
+            ViewBag.Controller = "Tra";
             ViewBag.TinhTrang = tinhTrang;
             return View(model);
         }
 
         [HttpGet]
-        public ActionResult CreateOrUpdate(string id)
+        public ActionResult Create(string id)
         {
             var model = new MuonTraViewModel();
 
@@ -86,112 +85,72 @@ namespace S3Train.WebHeThong.Controllers
             }
         }
 
-        public ActionResult AddItems(string Id)
-        {
-                var MuonItem = _chiTietMuonTraService.Get(m => m.TaiLieuVanBanId == Id);
-                var currentMuonItems = (List<MuonTraViewModel>)Session[MuonSession] ?? new List<MuonTraViewModel>();
-                if (currentMuonItems.Exists(x => x.ChiTietMuonTra.TaiLieuVanBanId == Id))
-                {
-                    TempData["AlertMessage"] = "Đã chọn trả";
-                }
-                else
-                {
-                    currentMuonItems.Add(new MuonTraViewModel
-                    {
-                        ChiTietMuonTra = new ChiTietMuonTraViewModel
-                        {
-                            Id = Id,
-
-                            User = MuonItem.MuonTra.User,
-                            TaiLieuVanBan = MuonItem.TaiLieuVanBan,
-                            TaiLieuVanBanId = MuonItem.TaiLieuVanBanId,
-                            MuonTra = MuonItem.MuonTra,
-                        },
-
-                    });
-                }
-                Session[MuonSession] = currentMuonItems;
-            return Json(new
-            {
-                status = "success",
-            });
-        }
-
         [HttpPost]
-        public ActionResult CreateOrUpdate()
+        public ActionResult Create(List<ChiTietMuonTraViewModel> model)
         {
-            
-            var vanThu = User.Identity.GetUserId();
-            var muonSession = (List<MuonTraViewModel>)Session[MuonSession];
-            var model = new List<ChiTietMuonTraViewModel>();
-            var ctMuon = _chiTietMuonTraService.GetAll();
-            foreach(var item in ctMuon)
+            var ctMuon = new List<ChiTietMuonTraViewModel>();
+            foreach (var item in model)
             {
-                if(item.MuonTraID == muonSession.First().ChiTietMuonTra.MuonTra.Id && item.TrangThai == true)
+                var vanBan = _taiLieuVanBanService.Get(m => m.Id == item.TaiLieuVanBanId);
+                var chiTietMuonTras = _chiTietMuonTraService.GetAll();
+                if (item.Checkbox == true)
                 {
-                   model.Add(new ChiTietMuonTraViewModel
+                    ctMuon.Add(new ChiTietMuonTraViewModel
                     {
                         Id = item.Id,
-
-                        MuonTraId = item.MuonTraID,
+                        MuonTraId = item.MuonTraId,
                         TaiLieuVanBan = item.TaiLieuVanBan,
                         TaiLieuVanBanId = item.TaiLieuVanBanId,
                         MuonTra = item.MuonTra,
                         User = item.MuonTra.User,
                     });
-                }
-            }
 
-            if (muonSession.Count() == model.Count())
-            {
-                foreach(var item in muonSession)
-                {
-                    var vanBan = _taiLieuVanBanService.Get(m => m.Id == item.ChiTietMuonTra.TaiLieuVanBanId);
-                    vanBan.TinhTrang = EnumTinhTrang.TrongKho;
-                    _taiLieuVanBanService.Update(vanBan);
-                    var muonTra = _muonTraService.Get(m => m.Id == item.ChiTietMuonTra.MuonTra.Id);
-                    muonTra.TinhTrang = EnumTinhTrang.DaTra;
-                    _muonTraService.Update(muonTra);
-                   
-                }
-               
-            }
-            else
-            {
-                var tra = new MuonTra
-                {
-                    VanThu = vanThu,
-                    NgayMuon = muonSession.First().ChiTietMuonTra.MuonTra.NgayMuon,
-                    NgayKetThuc = DateTime.Now,
-                    UserId = muonSession.First().ChiTietMuonTra.MuonTra.UserId,
-                    TinhTrang = EnumTinhTrang.DaTra,
-                };
-                _muonTraService.Insert(tra);
-
-                foreach (var item in muonSession)
-                {
-                    var muon = _chiTietMuonTraService.Get(m => m.TaiLieuVanBanId == item.ChiTietMuonTra.TaiLieuVanBanId);
-                    muon.TrangThai = false;
-                  
-                    _chiTietMuonTraService.Update(muon);
-                    var chiTietTra = new ChiTietMuonTra
+                    if (model.Count() == ctMuon.Count())
                     {
-                        MuonTraID = tra.Id,
-                       
-                        TaiLieuVanBanId = item.ChiTietMuonTra.TaiLieuVanBanId,
-                    };
-                    _chiTietMuonTraService.Insert(chiTietTra);
+                        vanBan.TinhTrang = EnumTinhTrang.TrongKho;
+                        _taiLieuVanBanService.Update(vanBan);
+                        var muonTra = _muonTraService.Get(m => m.Id == item.MuonTra.Id);
+                        muonTra.TinhTrang = EnumTinhTrang.DaTra;
+                        _muonTraService.Update(muonTra);
+                    }
+                    else
+                    {
+                        var muontra = new MuonTra();
 
+                        muontra.UserId = item.MuonTra.UserId;
+                        muontra.VanThu = User.Identity.GetUserName();
+                        muontra.NgayMuon = item.MuonTra.NgayMuon;
+                        muontra.NgayKetThuc = DateTime.Now;
+                        muontra.TinhTrang = EnumTinhTrang.DaTra;
+                        muontra.SoLuong = ctMuon.Count();
+                        _muonTraService.Insert(muontra);
+                        int sl = 0;
+                        var muonTra = _muonTraService.Get(m => m.Id == item.MuonTra.Id);
+                        sl = model.Count() - ctMuon.Count();
+                        muonTra.SoLuong = sl;
+                        _muonTraService.Update(muonTra);
+
+                        var muon = _chiTietMuonTraService.Get(m => m.TaiLieuVanBanId == item.TaiLieuVanBanId);
+                        muon.TrangThai = false;
+                        _chiTietMuonTraService.Update(muon);
+
+                        var chitietmuontra = new ChiTietMuonTra();
+                        chitietmuontra.TaiLieuVanBanId = item.TaiLieuVanBanId;
+                        chitietmuontra.MuonTraID = muontra.Id;
+                        _chiTietMuonTraService.Insert(chitietmuontra);
+                        vanBan.TinhTrang = EnumTinhTrang.TrongKho;
+                        _taiLieuVanBanService.Update(vanBan);
+                    }
+                    TempData["AlertMessage"] = "Tạo Mới Thành Công";
+                }
+                else
+                {
+                    TempData["AlertMessage"] = "Bạn chưa chọn TL/VB để trả";
                 }
             }
-            
-            Session[MuonSession] = null;
-            
-            return Json(new
-            {
-                status = "success",
-            });
+            return RedirectToAction("Index");
         }
+        
 
         public ActionResult Delete(string id)
         {
@@ -218,51 +177,47 @@ namespace S3Train.WebHeThong.Controllers
             TempData["AlertMessage"] = "Xóa Thành Công";
             return RedirectToAction("Index");
         }
-        
+
 
         public ActionResult Detail(string id)
         {
             var model = new List<ChiTietMuonTraViewModel>();
             var chiTietMuonTras = _chiTietMuonTraService.GetAll();
-            //var chiTietMuonTra = _chiTietMuonTraService.Get(m => m.MuonTraID == id);
-            //var MuonTra = _muonTraService.Get(m => m.Id == id);
-            //var MuonTras = _muonTraService.GetAll();
-            //var users = await _userService.GetAllAsync();
-            //var TLVB = _taiLieuVanBanService.Get(m => m.Id == chiTietMuonTra.TaiLieuVanBanId);
+            var muonTra = GetMuonTra(_muonTraService.Get(m => m.Id == id));
             foreach (var item in chiTietMuonTras)
             {
-                if (item.MuonTraID == id)
+                if (item.MuonTraID == id && item.TrangThai == true)
                 {
+                    var taiLieuVanBan = _taiLieuVanBanService.Get(m => m.Id == item.TaiLieuVanBanId);
                     model.Add(new ChiTietMuonTraViewModel
                     {
                         Id = item.Id,
-
+                        MuonTra = muonTra,
+                        User = muonTra.User,
                         MuonTraId = item.MuonTraID,
-                        TaiLieuVanBan = item.TaiLieuVanBan,
+                        TaiLieuVanBan = taiLieuVanBan,
                         TaiLieuVanBanId = item.TaiLieuVanBanId,
-                        MuonTra = item.MuonTra,
-                        User = item.MuonTra.User,
+                        SoLuong = 1,
                     });
                 }
-
             }
             return View(model);
         }
 
         public ActionResult ChangeActive(string id, bool active)
-        {
-            var model = _muonTraService.Get(m => m.Id == id);
+    {
+        var model = _muonTraService.Get(m => m.Id == id);
 
-            model.TrangThai = active;
-            model.NgayCapNhat = DateTime.Now;
+        model.TrangThai = active;
+        model.NgayCapNhat = DateTime.Now;
 
-            _muonTraService.Update(model);
-            return RedirectToAction("Index");
-        }
+        _muonTraService.Update(model);
+        return RedirectToAction("Index");
+    }
 
         private MuonTraViewModel GetMuonTra(MuonTra muonTra)
         {
-           
+            var chiTietMuonTras = _chiTietMuonTraService.GetAll();
             var model = new MuonTraViewModel
             {
                 Id = muonTra.Id,
@@ -270,9 +225,12 @@ namespace S3Train.WebHeThong.Controllers
                 NgayCapNhat = muonTra.NgayCapNhat,
                 NgayTra = muonTra.NgayKetThuc,
                 UserId = muonTra.UserId,
-                TinhTrang = AttributeExtension.GetDecription(muonTra.TinhTrang),
+                TinhTrang = muonTra.TinhTrang,
                 TrangThai = muonTra.TrangThai,
                 User = muonTra.User,
+                SoLuong = muonTra.SoLuong,
+                VanThu = muonTra.VanThu,
+                ChiTietMuonTras = chiTietMuonTras,
 
             };
 
@@ -281,35 +239,23 @@ namespace S3Train.WebHeThong.Controllers
 
         private List<MuonTraViewModel> GetMuonTras(IList<MuonTra> muontras)
         {
-
+            var chiTietMuonTras = _chiTietMuonTraService.GetAll();
             return muontras.Select(x => new MuonTraViewModel
             {
                 Id = x.Id,
                 NgayMuon = x.NgayMuon,
                 NgayTra = x.NgayKetThuc,
                 NgayCapNhat = x.NgayCapNhat,
-                TinhTrang = AttributeExtension.GetDecription(x.TinhTrang),
+                TinhTrang = x.TinhTrang,
                 TrangThai = x.TrangThai,
+                VanThu = x.VanThu,
                 UserId = x.UserId,
                 User = x.User,
-                ChiTietMuonTras = x.ChiTietMuonTras,
+                SoLuong = x.SoLuong,
+                ChiTietMuonTras = chiTietMuonTras,
 
             }).ToList();
 
-        }
-
-        private List<ChiTietMuonTraViewModel> GetChiTietMuonTras(IList<ChiTietMuonTra> chiTietMuonTras)
-        {
-            return chiTietMuonTras.Select(x => new ChiTietMuonTraViewModel
-            {
-                Id = x.Id,
-
-                MuonTraId = x.MuonTraID,
-                TaiLieuVanBan = x.TaiLieuVanBan,
-                TaiLieuVanBanId = x.TaiLieuVanBanId,
-                MuonTra = x.MuonTra,
-                User = x.MuonTra.User,
-            }).ToList();
         }
 
     }

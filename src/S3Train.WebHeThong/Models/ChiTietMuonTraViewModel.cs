@@ -27,11 +27,12 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Trạng Thái")]
         public bool TrangThai { get; set; }
 
+        public bool Checkbox { get; set; }
         public ApplicationUser User { get; set; }
-        public MuonTra MuonTra { get; set; }
+        public MuonTraViewModel MuonTra { get; set; }
 
-        public IList<MuonTraViewModel> MuonTras { get; set; }
         public TaiLieuVanBan TaiLieuVanBan { get; set; }
-
+        
     }
+    
 }

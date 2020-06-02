@@ -12,7 +12,6 @@
             AddColumn("dbo.ChiTietMuonTra", "TaiLieuVanBanId", c => c.String(maxLength: 128));
             CreateIndex("dbo.ChiTietMuonTra", "TaiLieuVanBanId");
             AddForeignKey("dbo.ChiTietMuonTra", "TaiLieuVanBanId", "dbo.TaiLieuVanBan", "Id");
-            DropColumn("dbo.ChiTietMuonTra", "ThuMuon");
 
             DropColumn("dbo.TaiLieuVanBan", "TrichYeu");
         }
@@ -20,8 +19,6 @@
         public override void Down()
         {
             DropColumn("dbo.TaiLieuVanBan", "HinhAnh");
-
-            AddColumn("dbo.ChiTietMuonTra", "ThuMuon", c => c.String());
             DropForeignKey("dbo.ChiTietMuonTra", "TaiLieuVanBanId", "dbo.TaiLieuVanBan");
             DropIndex("dbo.ChiTietMuonTra", new[] { "TaiLieuVanBanId" });
             DropColumn("dbo.ChiTietMuonTra", "TaiLieuVanBanId");

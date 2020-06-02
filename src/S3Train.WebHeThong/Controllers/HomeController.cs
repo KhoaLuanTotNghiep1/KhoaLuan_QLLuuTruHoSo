@@ -62,20 +62,17 @@ namespace S3Train.WebHeThong.Controllers
             pageIndex = (pageIndex ?? 1);
             pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
 
-            string[] includeArray = {"User"};
-            var includes = AddList.AddItemByArray(includeArray);
-
             var model = new LichSuHoatDongIndexViewModel()
             {
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var lichSuHoatDongs = _lichSuHoatDongService.GetAllPaged(pageIndex, pageSize.Value, null, p => p.OrderByDescending(c => c.NgayTao), includes);
+            var lichSuHoatDongs = _lichSuHoatDongService.GetAllPaged(pageIndex, pageSize.Value, null, p => p.OrderByDescending(c => c.NgayTao));
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 lichSuHoatDongs = _lichSuHoatDongService.GetAllPaged(pageIndex, pageSize.Value, p => p.User.FullName.Contains(searchString) || 
-                    p.HoatDong.Contains(searchString), p => p.OrderBy(c => c.NgayTao), includes);
+                    p.HoatDong.Contains(searchString), p => p.OrderBy(c => c.NgayTao));
             }
 
             model.Paged = lichSuHoatDongs;

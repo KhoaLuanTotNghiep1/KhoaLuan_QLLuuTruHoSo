@@ -46,20 +46,17 @@ namespace S3Train.WebHeThong.Controllers
             pageIndex = (pageIndex ?? 1);
             pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
 
-            string[] includeArray = { "Hop", "TapHoSo", "LoaiHoSo", "User", "HoSoCons", "TaiLieuVanBans" };
-            var includes = AddList.AddItemByArray(includeArray);
-
             var model = new HoSoIndexViewModel()
             {
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var hoSos = _hoSoService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderByDescending(c => c.PhongLuuTru), includes);
+            var hoSos = _hoSoService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderByDescending(c => c.PhongLuuTru));
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 hoSos = _hoSoService.GetAllPaged(pageIndex, pageSize.Value, p => p.PhongLuuTru.Contains(searchString) || p.TapHoSo.PhongLuuTru.Contains(searchString)
-                   || p.User.FullName.Contains(searchString) && p.TrangThai == active, p => p.OrderByDescending(c => c.PhongLuuTru), includes);
+                   || p.User.FullName.Contains(searchString) && p.TrangThai == active, p => p.OrderByDescending(c => c.PhongLuuTru));
             }
 
             model.Paged = hoSos;
@@ -99,7 +96,7 @@ namespace S3Train.WebHeThong.Controllers
             var hoSo = string.IsNullOrEmpty(model.Id) ? new HoSo { NgayCapNhat = DateTime.Now }
                 : _hoSoService.Get(m => m.Id == model.Id);
 
-            var autoList = LocalHops(_hopService.GetAll());
+            var autoList = LocalHops(GetHops());
             var userId = User.Identity.GetUserId();
             var chiTietHoatDong = "hồ sơ: " + model.PhongLuuTru;
 
@@ -159,23 +156,32 @@ namespace S3Train.WebHeThong.Controllers
         [HttpPost]
         public ActionResult AutoCompleteText(string text)
         {
-            var model = LocalHops(_hopService.GetAll());
+            var model = LocalHops(GetHops());
 
             model = model.Where(p => p.Text.Contains(text)).ToHashSet();
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        private HashSet<AutoCompleteTextModel> LocalHops(IList<Hop> hops)
+        private HashSet<AutoCompleteTextModel> LocalHops(IEnumerable<Hop> hops)
         {
             var list = ConvertDomainToAutoCompleteModel.LocalHoSo(hops);
 
             return list;
         }
 
+        private IEnumerable<Hop> GetHops()
+        {
+            var listKe = _hopService.GetAllHaveJoinKe();
+
+            var model = listKe.Where(p => p.TrangThai == true);
+
+            return model;
+        }
+
         private HoSoViewModel GetHoSo(HoSo x)
         {
-            var autoList = LocalHops(_hopService.GetAll());
+            var autoList = LocalHops(GetHops());
 
             var model = new HoSoViewModel
             {
@@ -195,6 +201,9 @@ namespace S3Train.WebHeThong.Controllers
                 TrangThai = x.TrangThai,
                 Hop = x.Hop,
                 HopId = autoList.FirstOrDefault(p => p.Id == x.HopId).Text,
+                LoaiHoSoId = x.LoaiHoSoId,
+                TapHoSoId = x.TapHoSoId,
+                UserId = x.UserId
             };
 
             return model;
@@ -202,7 +211,7 @@ namespace S3Train.WebHeThong.Controllers
 
         private List<HoSoViewModel> GetHoSos(IList<HoSo> hoSos)
         {
-            var autoList = LocalHops(_hopService.GetAll());
+            var autoList = LocalHops(GetHops());
 
             return hoSos.Select(x => new HoSoViewModel
             {

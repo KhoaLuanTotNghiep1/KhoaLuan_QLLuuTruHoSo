@@ -48,12 +48,15 @@ namespace S3Train.WebHeThong.Controllers
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var kes = _keService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderByDescending(c => c.NgayTao), includes);
+            var listKe = _keService.GetAllHaveJoinTu();
+
+            var kes = _keService.GetAllPaged(listKe, pageIndex, pageSize.Value, p => p.TrangThai == active, 
+                p => p.OrderByDescending(c => c.NgayTao));
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                kes = _keService.GetAllPaged(pageIndex, pageSize.Value, p => p.Ten.Contains(searchString) && p.TrangThai == active
-                    && p.TrangThai == active, p => p.OrderByDescending(c => c.NgayTao), includes);
+                kes = _keService.GetAllPaged(listKe, pageIndex, pageSize.Value, p => p.Ten.Contains(searchString) && p.TrangThai == active
+                    && p.TrangThai == active, p => p.OrderByDescending(c => c.NgayTao));
             }
 
             model.Paged = kes;
@@ -105,8 +108,9 @@ namespace S3Train.WebHeThong.Controllers
             if (string.IsNullOrEmpty(model.Id))
             {
                 ke.SoHopHienTai = 0;
+
                 var result = UpdateTu_SoLuongHienTai(model.Tuid, ActionWithObject.Update);
-                if(!result)
+                if (!result)
                 {
                     TempData["AlertMessage"] = "Số Lượng Kệ Trong Tủ Bạn Chọn Đã Đầy";
                     return View(model);
@@ -162,8 +166,14 @@ namespace S3Train.WebHeThong.Controllers
 
         public bool UpdateTu_SoLuongHienTai(string id, ActionWithObject action)
         {
+            int soluong = 0;
             var tu = _tuService.GetById(id);
-            var soluong = Compute.ComputeAmountWithAction(tu.SoLuongHienTai, action);
+
+            if (tu == null)
+                return false;
+
+            soluong = Compute.ComputeAmountWithAction(tu.SoLuongHienTai, action);
+
             if (soluong > tu.SoLuongMax)
             {
                 ViewBag.Tus = SelectListItemFromDomain.SelectListItem_Tu(_tuService.GetAll(m => m.OrderBy(t => t.Ten)));
@@ -172,7 +182,7 @@ namespace S3Train.WebHeThong.Controllers
             else
             {
                 tu.SoLuongHienTai = soluong;
-                tu.NgayCapNhat = DateTime.Now;
+
                 _tuService.Update(tu);
                 return true;
             }
@@ -197,7 +207,7 @@ namespace S3Train.WebHeThong.Controllers
                 Tuid = x.Tuid,
                 Hops = x.Hops,
                 User = x.User,
-                ViTri = x.Tu.Ten
+                Tu = x.Tu
             };
             return model;
         }
@@ -208,19 +218,10 @@ namespace S3Train.WebHeThong.Controllers
             {
                 Id = x.Id,
                 Ten = x.Ten,
-                SoHopToiDa = x.SoHopToiDa,
-                SoHopHienTai = x.SoHopHienTai,
-                NamBatDau = x.NamBatDau,
-                NamKetThuc = x.NamKetThuc,
-                SoThuTu = x.SoThuTu,
                 TinhTrang = x.TinhTrang,
                 NgayTao = x.NgayTao,
-                NgayCapNhat = x.NgayCapNhat,
                 TrangThai = x.TrangThai,
-                UserId = x.UserId,
-                Tuid = x.Tuid,
-                User = x.User,
-                ViTri = x.Tu.Ten
+                Tu = x.Tu
             }).ToList();
         }
     }

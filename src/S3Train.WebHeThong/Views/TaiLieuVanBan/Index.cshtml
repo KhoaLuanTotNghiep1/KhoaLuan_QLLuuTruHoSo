@@ -31,10 +31,10 @@
         <table class="table table-responsive-lg">
             <thead>
                 <tr>
-                    <th>STT</th>
+                    <th>#</th>
                     <th>Tên</th>
-                    <th>Dạng Văn Bản</th>
-                    <th>Vị Trí</th>
+                    <th>Dạng</th>
+                    <th>Vị Trí Lưu Trữ</th>
                     <th>Tình Trạng</th>
                     @if (!User.IsInRole(GlobalConfigs.ROLE_CANBO))
                     {
@@ -51,9 +51,9 @@
                 {
                     <tr>
                         <td>@stt</td>
-                        <td style="width:150px">@Html.DisplayFor(m => item.Ten)</td>
+                        <td style="width:15%">@Html.DisplayFor(m => item.Ten)</td>
                         <td>@Html.DisplayFor(m => item.Dang)</td>
-                        <td style="width:250px">@Html.DisplayFor(m => item.ViTri)</td>
+                        <td style="width:30%">@Html.DisplayFor(m => item.ViTri)</td>
                         <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
                         <td>
                             @if (!User.IsInRole(GlobalConfigs.ROLE_CANBO))

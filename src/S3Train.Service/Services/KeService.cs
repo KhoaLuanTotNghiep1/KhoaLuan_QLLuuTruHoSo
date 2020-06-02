@@ -1,5 +1,7 @@
-﻿using S3Train.Contract;
+﻿using System.Linq;
+using S3Train.Contract;
 using S3Train.Domain;
+using System.Data.Entity;
 
 namespace S3Train.Services
 {
@@ -7,6 +9,13 @@ namespace S3Train.Services
     {
         public KeService(ApplicationDbContext dbContext) : base(dbContext)
         {
+        }
+
+        public IQueryable<Ke> GetAllHaveJoinTu()
+        {
+            var list = EntityDbSet.Include(p => p.Tu);
+
+            return list;
         }
     }
 }

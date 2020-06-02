@@ -55,9 +55,6 @@ namespace S3Train.WebHeThong.Controllers
             pageIndex = (pageIndex ?? 1);
             pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
 
-            string[] includeArray = { "NoiBanHanh", "User", "HoSo" };
-            var includes = AddList.AddItemByArray(includeArray);
-
             var model = new TaiLieuVanBanIndexViewModel()
             {
                 PageIndex = pageIndex.Value,
@@ -65,12 +62,12 @@ namespace S3Train.WebHeThong.Controllers
             };
 
             var taiLieuVanBans = _taiLieuVanBanService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active && 
-                p.Dang.Contains(dang), p => p.OrderByDescending(c => c.NgayTao), includes);
+                p.Dang.Contains(dang), p => p.OrderByDescending(c => c.NgayTao));
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 taiLieuVanBans = _taiLieuVanBanService.GetAllPaged(pageIndex, pageSize.Value, p => p.Ten.Contains(searchString) || p.Loai.Contains(searchString)
-                    || p.NoiDung.Contains(searchString), p => p.OrderByDescending(c => c.NgayTao), includes);
+                    || p.NoiDung.Contains(searchString), p => p.OrderByDescending(c => c.NgayTao));
             }
 
             model.Paged = taiLieuVanBans;
@@ -112,7 +109,7 @@ namespace S3Train.WebHeThong.Controllers
             var taiLieuVanBan = string.IsNullOrEmpty(model.Id) ? new TaiLieuVanBan { NgayCapNhat = DateTime.Now }
                 : _taiLieuVanBanService.Get(m => m.Id == model.Id);
 
-            var autoList = AutoCompleteTextHoSos(_hoSoService.GetAll());
+            var autoList = AutoCompleteTextHoSos(GetHoSos());
             string userId = User.Identity.GetUserId();
             string cthd = model.Loai + ": " + model.Ten;
 
@@ -215,7 +212,7 @@ namespace S3Train.WebHeThong.Controllers
         [HttpPost]
         public ActionResult AutoCompleteText(string text)
         {
-            var model = AutoCompleteTextHoSos(_hoSoService.GetAll());
+            var model = AutoCompleteTextHoSos(GetHoSos());
 
             model = model.Where(p => p.Text.Contains(text)).ToHashSet();
 
@@ -293,16 +290,25 @@ namespace S3Train.WebHeThong.Controllers
             }
         }
 
-        private HashSet<AutoCompleteTextModel> AutoCompleteTextHoSos(IList<HoSo> hoSos)
+        private HashSet<AutoCompleteTextModel> AutoCompleteTextHoSos(IEnumerable<HoSo> hoSos)
         {
             var list = ConvertDomainToAutoCompleteModel.LocalTaiLieu(hoSos);
 
             return list;
         }
 
+        private IEnumerable<HoSo> GetHoSos()
+        {
+            var listKe = _hoSoService.GetAllHaveJoinHoSo();
+
+            var model = listKe.Where(p => p.TrangThai == true);
+
+            return model;
+        }
+
         private TaiLieu_VanBanViewModel GetTaiLieuVanBan(TaiLieuVanBan x)
         {
-            var autoList = AutoCompleteTextHoSos(_hoSoService.GetAll());
+            var autoList = AutoCompleteTextHoSos(GetHoSos());
 
             var model = new TaiLieu_VanBanViewModel
             {
@@ -339,35 +345,16 @@ namespace S3Train.WebHeThong.Controllers
 
         private List<TaiLieu_VanBanViewModel> GetTaiLieuVanBans(IList<TaiLieuVanBan> taiLieuVanBans)
         {
-            var autoList = AutoCompleteTextHoSos(_hoSoService.GetAll());
+            var autoList = AutoCompleteTextHoSos(GetHoSos());
 
             return taiLieuVanBans.Select(x => new TaiLieu_VanBanViewModel
             {
                 Id = x.Id,
-                Dang = x.Dang,
-                DuongDan = x.DuongDan,
-                GhiChu = x.GhiChu,
-                HoSo = x.HoSo,
-                HoSoId = x.HoSoId,
-                Loai = x.Loai,
-                NgayCapNhat = x.NgayCapNhat,
                 NgayTao = x.NgayTao,
-                NguoiDuyet = x.NguoiDuyet,
-                NoiDung = AttributeExtension.GetDecription(x.Dang),
-                NguoiGuiHoacNhan = x.NguoiGuiHoacNhan,
-                NguoiKy = x.NguoiKy,
-                NoiBanHanh = x.NoiBanHanh,
-                NoiBanHanhId = x.NoiBanHanhId,
-                NoiNhan = x.NoiNhan,
-                SoKyHieu = x.SoKyHieu,
-                SoTo = x.SoTo,
                 Ten = x.Ten,
                 TinhTrang = x.TinhTrang,
                 TrangThai = x.TrangThai,
-                User = x.User,
-                UserId = x.UserId,
-                NgayBanHanh = x.NgayBanHanh,
-                HinhAnh = x.HinhAnh,
+                Dang = x.Dang,
                 ViTri = autoList.FirstOrDefault(p => p.Id == x.HoSoId).Text
             }).ToList();
         }

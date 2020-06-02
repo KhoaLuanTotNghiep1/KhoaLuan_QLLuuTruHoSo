@@ -39,20 +39,17 @@ namespace S3Train.WebHeThong.Controllers
             pageIndex = (pageIndex ?? 1);
             pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
 
-            string[] includeArray = { "NoiBanHanh", "User", "HoSo" };
-            var includes = AddList.AddItemByArray(includeArray);
-
             var model = new TuIndexViewModel()
             {
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var tus = _tuService.GetAllPaged(pageIndex, pageSize.Value,  p=> p.TrangThai == active, p => p.OrderBy(c => c.NgayTao), includes);
+            var tus = _tuService.GetAllPaged(pageIndex, pageSize.Value,  p=> p.TrangThai == active, p => p.OrderByDescending(c => c.NgayTao));
 
             if(!string.IsNullOrEmpty(searchString))
             {
                 tus = _tuService.GetAllPaged(pageIndex, pageSize.Value, p => p.Ten.Contains(searchString) || p.NgươiQuanLy.Contains(searchString)
-                    && p.TrangThai == active, p => p.OrderBy(c => c.NgayTao), includes);
+                    && p.TrangThai == active, p => p.OrderByDescending(c => c.NgayTao));
             }
 
             model.Paged = tus;
@@ -96,6 +93,7 @@ namespace S3Train.WebHeThong.Controllers
             tu.SoLuongMax = model.SoLuongMax;
             tu.SoLuongHienTai = 0;
             tu.TinhTrang = model.TinhTrang;
+            tu.Kes = model.Kes;
 
             if(string.IsNullOrEmpty(model.Id))
             {
@@ -114,17 +112,27 @@ namespace S3Train.WebHeThong.Controllers
 
         public ActionResult Delete(string id)
         {
-            var tu = _tuService.Get(m => m.Id == id);
+            var listTu = _tuService.GetAllHaveJoinKes();
+
+            var tu = _tuService.Get(listTu, p => p.Id == id);
+
             _tuService.Remove(tu);
+
             _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), tu.Ten);
+
             TempData["AlertMessage"] = "Xóa Thành Công";
+
             return RedirectToAction("Index");
         }
 
         [Route("Thong-Tin-Chi-Tiet")]
         public ActionResult Detail(string id)
         {
-            var model = GetTu(_tuService.Get(m => m.Id == id));
+            var listTu = _tuService.GetAllHaveJoinKes();
+
+            var tu = _tuService.Get(listTu, p => p.Id == id);
+
+            var model = GetTu(tu);
 
             return View(model);
         }

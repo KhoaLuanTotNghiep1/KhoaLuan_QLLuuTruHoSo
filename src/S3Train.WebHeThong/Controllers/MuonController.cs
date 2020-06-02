@@ -44,9 +44,6 @@ namespace S3Train.WebHeThong.Controllers
             pageIndex = (pageIndex ?? 1);
             pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
 
-            string[] includeArray = { "ChiTietMuonTras", "User" };
-            var includes = AddList.AddItemByArray(includeArray);
-
             var model = new MuonTraIndexViewModel()
             {
                 PageIndex = pageIndex.Value,
@@ -57,7 +54,7 @@ namespace S3Train.WebHeThong.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
                 muontras = _muonTraService.GetAllPaged(pageIndex, pageSize.Value, p => p.User.FullName.Contains(searchString) || p.VanThu.Contains(searchString)
-                    && p.TrangThai == active && p.TinhTrang == EnumTinhTrang.DangMuon, p => p.OrderBy(c => c.NgayMuon), includes);
+                    && p.TrangThai == active && p.TinhTrang == EnumTinhTrang.DangMuon, p => p.OrderBy(c => c.NgayMuon));
             }
             model.Paged = muontras;
             model.Items = GetMuonTras(muontras.ToList());

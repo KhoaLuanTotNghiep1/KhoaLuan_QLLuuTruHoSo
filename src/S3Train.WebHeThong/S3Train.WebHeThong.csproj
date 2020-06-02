@@ -2760,8 +2760,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\HinhAnhTLVB\" />
     <Folder Include="Content\HoSo\" />
-    <Folder Include="Views\LHSAnfPB\" />
-    <Folder Include="Views\Trash\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

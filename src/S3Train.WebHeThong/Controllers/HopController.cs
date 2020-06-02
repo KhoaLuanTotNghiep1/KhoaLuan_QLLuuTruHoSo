@@ -44,21 +44,18 @@ namespace S3Train.WebHeThong.Controllers
             pageIndex = (pageIndex ?? 1);
             pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
 
-            string[] includeArray = { "HoSos", "PhongBan", "Ke", "User" };
-            var includes = AddList.AddItemByArray(includeArray);
-
             var model = new HopViewIndexModel()
             {
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
             var hops = _hopService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, 
-                p => p.OrderByDescending(c => c.NgayTao), includes);
+                p => p.OrderByDescending(c => c.NgayTao));
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 hops = _hopService.GetAllPaged(pageIndex, pageSize.Value, p => p.ChuyenDe.Contains(searchString) || p.PhongBan.Ten.Contains(searchString)
-                    && p.TrangThai == active, p => p.OrderByDescending(c => c.NgayTao), includes);
+                    && p.TrangThai == active, p => p.OrderByDescending(c => c.NgayTao));
             }
 
             model.Paged = hops;
@@ -96,7 +93,7 @@ namespace S3Train.WebHeThong.Controllers
             var hop = string.IsNullOrEmpty(model.Id) ? new Hop { NgayCapNhat = DateTime.Now }
                 : _hopService.Get(m => m.Id == model.Id);
 
-            var autoList = AutoCompleteTextKes(_keService.GetAll());
+            var autoList = AutoCompleteTextKes(GetKes());
             string userId = User.Identity.GetUserId();
             string chiTietHoatDong = "hộp: " + hop.ChuyenDe;
 
@@ -173,7 +170,7 @@ namespace S3Train.WebHeThong.Controllers
         [HttpPost]
         public ActionResult AutoCompleteText(string text)
         {
-            var model = AutoCompleteTextKes(_keService.Gets(p=>p.TrangThai == true));
+            var model = AutoCompleteTextKes(GetKes());
 
             model = model.Where(p => p.Text.Contains(text)).ToHashSet();
 
@@ -183,6 +180,10 @@ namespace S3Train.WebHeThong.Controllers
         public bool UpdateTu_SoHopHienTai(string id, ActionWithObject action)
         {
             var ke = _keService.GetById(id);
+
+            if (ke == null)
+                return false;
+
             var soluong = Compute.ComputeAmountWithAction(ke.SoHopHienTai, action);
 
             if (soluong > ke.SoHopToiDa)
@@ -211,9 +212,18 @@ namespace S3Train.WebHeThong.Controllers
             return list;
         }
 
+        private IEnumerable<Ke> GetKes()
+        {
+            var listKe = _keService.GetAllHaveJoinTu();
+
+            var model = listKe.Where(p => p.TrangThai == true);
+
+            return model;
+        }
+
         private HopViewModel GetHop(Hop hop)
         {
-            var autoList = AutoCompleteTextKes(_keService.GetAll());
+            var autoList = AutoCompleteTextKes(GetKes());
 
             var model = new HopViewModel
             {
@@ -240,26 +250,19 @@ namespace S3Train.WebHeThong.Controllers
 
         private List<HopViewModel> GetHops(IList<Hop> hops)
         {
-            var autoList = AutoCompleteTextKes(_keService.GetAll());
+            var autoList = AutoCompleteTextKes(GetKes());
 
             return hops.Select(hop => new HopViewModel
             {
                 Id = hop.Id,
                 ChuyenDe = hop.ChuyenDe,
-                NgayBatDau = hop.NgayBatDau,
-                NgayKetThuc = hop.NgayKetThuc,
                 PhongBan = hop.PhongBan,
-                SoHop = hop.SoHop,
-                PhongBanId = hop.PhongBanId,
-                KeId = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text,
                 TinhTrang = hop.TinhTrang,
                 NgayTao = hop.NgayTao,
-                NgayCapNhat = hop.NgayCapNhat,
                 TrangThai = hop.TrangThai,
-                UserId = hop.UserId,
-                HoSos = hop.HoSos,
                 Ke = hop.Ke,
-                User = hop.User
+                User = hop.User,
+                ViTri = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text
             }).ToList();
         }
     }

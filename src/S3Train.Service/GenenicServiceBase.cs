@@ -88,6 +88,11 @@ namespace S3Train
             return EntityDbSet.FirstOrDefault(predicate);
         }
 
+        public T Get(IQueryable<T> list, Expression<Func<T, bool>> predicate)
+        {
+            return list.FirstOrDefault(predicate);
+        }
+
         /// <summary>
         /// Get first item with the condition for attributes
         /// </summary>
@@ -162,20 +167,22 @@ namespace S3Train
             DbContext.SaveChanges();
         }
 
-        public IPagedList<T> GetAllPaged(int? pageIndex, int pageSize = 20, Expression<Func<T, bool>> where = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, List<string> includes = null)
+        public IPagedList<T> GetAllPaged(int? pageIndex, int pageSize = 20, Expression<Func<T, bool>> where = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null)
         {
             var page = pageIndex ?? 1;
 
             var entity = EntityDbSet;
 
-            if (includes != null)
-            {
-                foreach (var a in includes)
-                {
-                    entity.Include(a);
-                }
-            }
             var iQueryableDbSet = @where != null ? entity.Where(@where) : entity;
+
+            return orderBy != null ? orderBy(iQueryableDbSet).ToPagedList(page, pageSize) : iQueryableDbSet.ToPagedList(page, pageSize);
+        }
+
+        public IPagedList<T> GetAllPaged(IQueryable<T> list, int? pageIndex, int pageSize = 20, Expression<Func<T, bool>> where = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null)
+        {
+            var page = pageIndex ?? 1;
+
+            var iQueryableDbSet = @where != null ? list.Where(@where) : list;
 
             return orderBy != null ? orderBy(iQueryableDbSet).ToPagedList(page, pageSize) : iQueryableDbSet.ToPagedList(page, pageSize);
         }

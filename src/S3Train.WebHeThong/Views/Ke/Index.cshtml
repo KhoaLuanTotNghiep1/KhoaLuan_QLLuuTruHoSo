@@ -29,8 +29,8 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Vị Trí Kệ</th>
                     <th>Tên Kệ</th>
+                    <th>Vị Trí Kệ</th>
                     <th>Ngày Tạo</th>
                     <th>Trạng Thái</th>
                     <th>Hoạt Động</th>
@@ -41,8 +41,8 @@
                 {
                     <tr>
                         <td>@stt</td>
-                        <td>@Html.DisplayFor(m => item.ViTri)</td>
                         <td>@Html.DisplayFor(m => item.Ten)</td>
+                        <td>@Html.DisplayFor(m => item.Tu.Ten)</td>
                         <td>@Html.DisplayFor(m => item.NgayTao)</td>
                         <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
                         <td>

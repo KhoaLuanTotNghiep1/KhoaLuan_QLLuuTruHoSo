@@ -8,7 +8,7 @@ namespace S3Train.WebHeThong.CommomClientSide.Function
 {
     public static class ConvertDomainToAutoCompleteModel
     {
-        public static HashSet<AutoCompleteTextModel> LocalTaiLieu(IList<HoSo> hoSos)
+        public static HashSet<AutoCompleteTextModel> LocalTaiLieu(IEnumerable<HoSo> hoSos)
         {
             var list = new HashSet<AutoCompleteTextModel>();
 
@@ -75,7 +75,7 @@ namespace S3Train.WebHeThong.CommomClientSide.Function
 
             foreach (var item in kes)
             {
-                string local = "Kệ " + item.Ten;
+                string local = item.Tu.Ten + " " + item.Ten;
 
                 var auto = new AutoCompleteTextModel()
                 {
@@ -89,7 +89,7 @@ namespace S3Train.WebHeThong.CommomClientSide.Function
             return list;
         }
 
-        public static HashSet<AutoCompleteTextModel> LocalHoSo(IList<Hop> hops)
+        public static HashSet<AutoCompleteTextModel> LocalHoSo(IEnumerable<Hop> hops)
         {
             var list = new HashSet<AutoCompleteTextModel>();
 

@@ -38,7 +38,7 @@ namespace S3Train.WebHeThong.Models
         public DateTime NgayTra { get; set; }
         
         [Display(Name = "Tình Trạng")]
-        public string TinhTrang { get; set; }
+        public EnumTinhTrang TinhTrang { get; set; }
 
         [Display(Name = " Ngày Cập Nhật")]
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
@@ -48,15 +48,12 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Trạng Thái")]
         public bool TrangThai { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
+        public ApplicationUser User { get; set; }
 
         public TaiLieuVanBan TaiLieuVanBan { get; set; }
 
-        //public TaiLieuVanBan TaiLieuVanBan { get; set; }
-
-        public virtual ICollection<ChiTietMuonTra> ChiTietMuonTras { get; set; }
+        public  ICollection<ChiTietMuonTra> ChiTietMuonTras { get; set; }
         public ChiTietMuonTraViewModel ChiTietMuonTra { get; set; }
-        //public int SoLuong => ChiTietMuonTras.Count;
     }
 
     public class MuonTraIndexViewModel : IndexViewModelBase

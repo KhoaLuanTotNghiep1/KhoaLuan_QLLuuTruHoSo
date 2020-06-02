@@ -64,8 +64,8 @@
                 <div id="collapseMuonTra" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Quản Lý Mượn/Trả</h6>
-                        <a class="collapse-item" href="simple-tables.html">Danh Sách Mượn</a>
-                        <a class="collapse-item" href="datatables.html">Danh Sách Trả</a>
+                        <a class="collapse-item" href="@Url.Action("Index","Muon", new { tinhTrang = GlobalConfigs.TINHTRANG_DANGMUON})">Danh Sách Mượn</a>
+                        <a class="collapse-item" href="@Url.Action("Index","Tra", new { tinhTrang = GlobalConfigs.TINHTRANG_DATRA})">Danh Sách Trả</a>
                     </div>
                 </div>
             </li>

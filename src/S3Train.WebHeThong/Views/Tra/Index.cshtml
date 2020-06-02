@@ -41,7 +41,7 @@
                 <tr>
                     <th>STT</th>
                     <th>Đơn Vị Mượn/Người Mượn</th>
-                    @*<th>Số Lượng</th>*@
+                    <th>Số Lượng</th>
                     <th>Văn Thư</th>
                     <th>Ngày Mượn</th>
                     <th>Ngày Trả</th>
@@ -52,13 +52,11 @@
             <tbody>
                 @foreach (var item in Model.Items)
                 {
-                    @*@if (item.TinhTrang == "Đã Trả")
-                    {*@
-                        //var SoLuong = item.ChiTietMuonTras.Count();
+                       
                         <tr>
                             <td>@stt</td>
                             <td>@Html.DisplayFor(m => item.User.FullName)</td>
-                            @*<td>@item.ChiTietMuonTras.Count()</td>*@
+                            <td>@Html.DisplayFor(m => item.SoLuong)</td>
                             <td>@Html.DisplayFor(m => item.User.FullName)</td>
                             <td>@Html.DisplayFor(m => item.NgayMuon)</td>
                             <td>@Html.DisplayFor(m => item.NgayTra)</td>
@@ -73,7 +71,7 @@
                             </td>
                         </tr>
                             stt += 1;
-                        @*}*@
+                        
                     }
                 <tr class="pageging">
                     <td colspan="8">

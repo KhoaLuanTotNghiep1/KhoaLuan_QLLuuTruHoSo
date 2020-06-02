@@ -21,47 +21,40 @@
             <div class="card-body" id="b">
                 <div class="row">
                     <div class="col-lg-4">
-                        <h6 class="m-0 font-weight-bold text-primary">Đơn vị/Người mượn</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Đơn Vị/Người Trả</h6>
                         @if (muon.User.Id == muon.MuonTra.UserId)
                         {
                             <p id="SoLuong">@Html.DisplayFor(item => muon.MuonTra.User.FullName)</p>
-                            <input id="User" value="@muon.MuonTra.UserId" type="hidden" />
                         }
 
                     </div>
                     <div class="col-lg-4">
-                        <h6 class="m-0 font-weight-bold text-primary">Tl/VB mượn</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Tl/VB Trả</h6>
                         @if (muon.TaiLieuVanBan.Id == muon.TaiLieuVanBanId)
                         {
                             <p>@Html.DisplayFor(item => muon.TaiLieuVanBan.Ten)</p>
-                            <input id="TLVB" value="@muon.TaiLieuVanBan.Id" type="hidden" />
                         }
 
                     </div>
                     <div class="col-lg-4">
-                        <h6 class="m-0 font-weight-bold text-primary">Số Lượng Mượn</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Số Lượng Trả</h6>
                         <p>@Html.DisplayFor(item => muon.SoLuong)</p>
                         <input value="@muon.SoLuong" type="hidden" />
-                        <input id="SLuong" value="@muon.SoLuong" type="hidden" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">Văn Thư</h6>
-                        @if (muon.MuonTra.VanThu == muon.MuonTra.User.Id)
-                        {
-                            <p>@Html.DisplayFor(item => muon.MuonTra.User.FullName)</p>
+                        <p>@Html.DisplayFor(item => muon.MuonTra.VanThu)</p>
                             
-                        }
                     </div>
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary" id="NgayMuon">Ngày Mượn</h6>
                         <p>@Html.DisplayFor(item => muon.MuonTra.NgayMuon)</p>
-                        <input id="NgMuon" value="@muon.MuonTra.NgayMuon" type="hidden" />
                     </div>
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">Ngày Trả</h6>
-                        <p>@Html.DisplayFor(item => muon.MuonTra.NgayKetThuc)</p>
+                        <p>@Html.DisplayFor(item => muon.MuonTra.NgayTra)</p>
                     </div>
                 </div>
             </div>
@@ -100,7 +93,7 @@
                         <div class="row align-items-center">
                             <div class="col">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">Tình Trạng</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", Model.First().MuonTra.TinhTrang)</div>
+                                @*<div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", Model.First().MuonTra.TinhTrang)</div>*@
                                 <div class="mt-2 mb-0 text-muted text-xs">
                                     <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
                                     <span>Since last month</span>

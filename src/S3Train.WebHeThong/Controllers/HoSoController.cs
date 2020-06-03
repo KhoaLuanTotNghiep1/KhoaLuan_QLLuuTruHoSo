@@ -22,6 +22,7 @@ namespace S3Train.WebHeThong.Controllers
         private readonly ILoaiHoSoService _loaiHoSoService;
         private readonly IPhongBanService _phongBanService;
         private readonly IHopService _hopService;
+        private readonly ITaiLieuVanBanService _taiLieuVanBanService;
         private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
 
         public HoSoController()
@@ -29,13 +30,14 @@ namespace S3Train.WebHeThong.Controllers
 
         }
 
-        public HoSoController(IHoSoService hoSoService, ILoaiHoSoService loaiHoSoService, 
+        public HoSoController(IHoSoService hoSoService, ILoaiHoSoService loaiHoSoService, ITaiLieuVanBanService taiLieuVanBanService,
             IPhongBanService phongBanService, IHopService hopService, IFunctionLichSuHoatDongService functionLichSuHoatDongService)
         {
             _hoSoService = hoSoService;
             _loaiHoSoService = loaiHoSoService;
             _phongBanService = phongBanService;
             _hopService = hopService;
+            _taiLieuVanBanService = taiLieuVanBanService;
             _functionLichSuHoatDongService = functionLichSuHoatDongService;
         }
 
@@ -128,6 +130,15 @@ namespace S3Train.WebHeThong.Controllers
         public ActionResult Delete(string id)
         {
             var hoSo = _hoSoService.Get(m => m.Id == id);
+
+            var countvb = _taiLieuVanBanService.Gets(p => p.HoSoId == id).Count();
+
+            if (countvb > 0)
+            {
+                TempData["AlertMessage"] = "Không Thể Xóa Vì Có " + countvb + " Tài Liệu Văn Bản Phụ Thuộc";
+                return RedirectToAction("Index", new { active = false });
+            }
+
             _hoSoService.Remove(hoSo);
             TempData["AlertMessage"] = "Xóa Thành Công";
             _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), "hồ sơ: "+ hoSo.PhongLuuTru);
@@ -150,6 +161,10 @@ namespace S3Train.WebHeThong.Controllers
 
             _hoSoService.Update(model);
             _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(), "hồ sơ: " + model.PhongLuuTru + " thành " +active);
+
+            var messenge = Messenger.ChangeActiveMessenge(active);
+
+            TempData["AlertMessage"] = messenge;
             return RedirectToAction("Index");
         }
 

@@ -28,6 +28,7 @@ namespace S3Train.WebHeThong.Controllers
         private readonly IHoSoService _hoSoService;
         private readonly ILoaiHoSoService _loaiHoSoService;
         private readonly IUserService _userService;
+        private readonly IChiTietMuonTraService _chiTietMuonTraService;
         private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
 
         public TaiLieuVanBanController()
@@ -37,13 +38,14 @@ namespace S3Train.WebHeThong.Controllers
 
         public TaiLieuVanBanController(ITaiLieuVanBanService taiLieuVanBanService, INoiBanHanhService noiBanHanhService, 
             IHoSoService hoSoService, ILoaiHoSoService loaiHoSoService, IUserService userService, 
-            IFunctionLichSuHoatDongService functionLichSuHoatDongService)
+            IFunctionLichSuHoatDongService functionLichSuHoatDongService, IChiTietMuonTraService chiTietMuonTraService)
         {
             _taiLieuVanBanService = taiLieuVanBanService;
             _noiBanHanhService = noiBanHanhService;
             _hoSoService = hoSoService;
             _loaiHoSoService = loaiHoSoService;
             _userService = userService;
+            _chiTietMuonTraService = chiTietMuonTraService;
             _functionLichSuHoatDongService = functionLichSuHoatDongService;
         }
 
@@ -180,6 +182,15 @@ namespace S3Train.WebHeThong.Controllers
         public ActionResult Delete(string id)
         {
             var taiLieuVanBan = _taiLieuVanBanService.Get(m => m.Id == id);
+
+            var count = _chiTietMuonTraService.Gets(p => p.TaiLieuVanBanId == id).Count();
+
+            if (count > 0)
+            {
+                TempData["AlertMessage"] = "Không Thể Xóa Vì Có " + count + " Chi Tiết Mượn Trả Phụ Thuộc";
+                return RedirectToAction("Index", new { active = false });
+            }
+
             _taiLieuVanBanService.Remove(taiLieuVanBan);
             TempData["AlertMessage"] = "Xóa Thành Công";
             _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), taiLieuVanBan.Loai + ": " + taiLieuVanBan.Ten);
@@ -205,7 +216,10 @@ namespace S3Train.WebHeThong.Controllers
             _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(),
                 model.Loai + ": " + model.Ten + " thành "+ active);
 
-            TempData["AlertMessage"] = "Xóa Thành Công";
+            var messenge = Messenger.ChangeActiveMessenge(active);
+
+            TempData["AlertMessage"] = messenge;
+
             return RedirectToAction("Index", new { dang = model.Dang});
         }
 

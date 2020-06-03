@@ -20,6 +20,7 @@ namespace S3Train.WebHeThong.Controllers
     {
         private readonly IKeService _keService;
         private readonly IHopService _hopService;
+        private readonly IHoSoService _hoSoService;
         private readonly IPhongBanService _phongBanService;
         private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
 
@@ -29,11 +30,12 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         public HopController(IKeService keService, IHopService hopService, IPhongBanService phongBanService,
-            IFunctionLichSuHoatDongService functionLichSuHoatDongService)
+            IFunctionLichSuHoatDongService functionLichSuHoatDongService, IHoSoService hoSoService)
         {
             _keService = keService;
             _hopService = hopService;
             _phongBanService = phongBanService;
+            _hoSoService = hoSoService;
             _functionLichSuHoatDongService = functionLichSuHoatDongService;
         }
 
@@ -133,6 +135,14 @@ namespace S3Train.WebHeThong.Controllers
         public ActionResult Delete(string id)
         {
             var hop = _hopService.Get(m => m.Id == id);
+            var hosos = _hoSoService.Gets(m => m.HopId == id).Count();
+
+            if (hosos > 0)
+            {
+                TempData["AlertMessage"] = "Không Thể Xóa Vì Có " + hosos + " Hồ Sơ Phụ Thuộc";
+                return RedirectToAction("Index", new { active = false });
+            }
+
             string chiTietHoatDong = "hộp " + hop.ChuyenDe + " trên kệ thứ " + hop.Ke.SoThuTu;
 
             UpdateTu_SoHopHienTai(hop.KeId, ActionWithObject.Delete);
@@ -164,6 +174,10 @@ namespace S3Train.WebHeThong.Controllers
             _hopService.Update(model);
 
             _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(), chiTietHoatDong);
+
+            var messenge = Messenger.ChangeActiveMessenge(active);
+
+            TempData["AlertMessage"] = messenge;
             return RedirectToAction("Index");
         }
 

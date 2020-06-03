@@ -93,6 +93,7 @@ namespace S3Train.WebHeThong.Controllers
             tu.SoLuongMax = model.SoLuongMax;
             tu.SoLuongHienTai = 0;
             tu.TinhTrang = model.TinhTrang;
+            tu.DonViTinh = model.DonViTinh;
             tu.Kes = model.Kes;
 
             if(string.IsNullOrEmpty(model.Id))
@@ -112,9 +113,15 @@ namespace S3Train.WebHeThong.Controllers
 
         public ActionResult Delete(string id)
         {
-            var listTu = _tuService.GetAllHaveJoinKes();
+            var tu = _tuService.GetById(id);
 
-            var tu = _tuService.Get(listTu, p => p.Id == id);
+            var kes = _keService.Gets(p => p.Tuid == id).Count();
+
+            if (kes > 0 )
+            {
+                TempData["AlertMessage"] = "Không Thể Xóa Vì Có " + kes + " Kệ Phụ Thuộc";
+                return RedirectToAction("Index", new { active = false });
+            }
 
             _tuService.Remove(tu);
 
@@ -145,6 +152,10 @@ namespace S3Train.WebHeThong.Controllers
 
             _tuService.Update(model);
             _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(), model.Ten + " thành " + active);
+
+            var messenge = Messenger.ChangeActiveMessenge(active);
+
+            TempData["AlertMessage"] = messenge;
             return RedirectToAction("Index");
         }
 

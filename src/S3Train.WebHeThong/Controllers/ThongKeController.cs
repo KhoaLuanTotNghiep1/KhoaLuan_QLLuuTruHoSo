@@ -122,34 +122,24 @@ namespace S3Train.WebHeThong.Controllers
             var list = new Dictionary<string, List<TaiLieuVanBan>>();
 
             var taiLieuVanBans = _taiLieuVanBanService.GetAll();
-            var muonTras = _muonTraService.GetAll();
 
             if (startTime.HasValue)
             {
                 taiLieuVanBans = taiLieuVanBans.Where(p => p.NgayTao >= startTime).ToList();
-                muonTras = muonTras.Where(p => p.NgayTao >= startTime).ToList();
-            }
-               
-
+            }              
 
             if (endTime.HasValue)
             {
                 taiLieuVanBans = taiLieuVanBans.Where(p => p.NgayTao <= endTime).ToList();
-                muonTras = muonTras.Where(p => p.NgayTao <= endTime).ToList();
-            }
-               
+            }              
 
             var a = taiLieuVanBans.Where(p => p.Dang == GlobalConfigs.DANG_DEN).ToList();
             var b = taiLieuVanBans.Where(p => p.Dang == GlobalConfigs.DANG_DI).ToList();
             var c = taiLieuVanBans.Where(p => p.Dang == GlobalConfigs.DANG_NOIBO).ToList();
-            var d = muonTras.Where(p => p.TinhTrang == EnumTinhTrang.DangMuon).ToList();
-            var e = muonTras.Where(p => p.TinhTrang == EnumTinhTrang.DaTra).ToList();
 
             list.Add(GlobalConfigs.DANG_DEN, a);
             list.Add(GlobalConfigs.DANG_DI, b);
             list.Add(GlobalConfigs.DANG_NOIBO, c);
-            list.Add(GlobalConfigs.TINHTRANG_DANGMUON, d);
-            list.Add(GlobalConfigs.TINHTRANG_DATRA, e);
 
             return list;
         }

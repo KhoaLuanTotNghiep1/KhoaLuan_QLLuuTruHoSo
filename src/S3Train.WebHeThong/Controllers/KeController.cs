@@ -19,6 +19,7 @@ namespace S3Train.WebHeThong.Controllers
     {
         private readonly ITuService _tuService;
         private readonly IKeService _keService;
+        private readonly IHopService _hopService;
         private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
 
         public KeController()
@@ -26,10 +27,11 @@ namespace S3Train.WebHeThong.Controllers
 
         }
 
-        public KeController(ITuService tuService, IKeService keService, IFunctionLichSuHoatDongService functionLichSuHoatDongService)
+        public KeController(ITuService tuService, IKeService keService, IFunctionLichSuHoatDongService functionLichSuHoatDongService, IHopService hopService)
         {
             _tuService = tuService;
             _keService = keService;
+            _hopService = hopService;
             _functionLichSuHoatDongService = functionLichSuHoatDongService;
         }
 
@@ -39,9 +41,6 @@ namespace S3Train.WebHeThong.Controllers
         {
             pageIndex = (pageIndex ?? 1);
             pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
-
-            string[] includeArray = { "Hops", "User", "Tu" };
-            var includes = AddList.AddItemByArray(includeArray);
 
             var model = new KeViewIndexModel()
             {
@@ -132,7 +131,15 @@ namespace S3Train.WebHeThong.Controllers
         public ActionResult Delete(string id)
         {
             var ke = _keService.Get(m => m.Id == id);
-            
+
+            var hops = _hopService.Gets(p => p.KeId == id).Count();
+
+            if (hops > 0)
+            {
+                TempData["AlertMessage"] = "Không Thể Xóa Vì Có " + hops + " Hộp Phụ Thuộc";
+                return RedirectToAction("Index", new { active = false });
+            }
+
             UpdateTu_SoLuongHienTai(ke.Tuid, ActionWithObject.Delete);
             _keService.Remove(ke);
 
@@ -159,7 +166,9 @@ namespace S3Train.WebHeThong.Controllers
             _keService.Update(model);
             _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(), "kệ " + model.Ten + " thành "+ active);
 
-            TempData["AlertMessage"] = "Xóa Thành Công";
+            var messenge = Messenger.ChangeActiveMessenge(active);
+
+            TempData["AlertMessage"] = messenge;
 
             return RedirectToAction("Index");
         }

@@ -16,6 +16,7 @@ namespace S3Train.WebHeThong.Controllers
     public class NoiBanHanhController : Controller
     {
         private readonly INoiBanHanhService _noiBanHanhService;
+        private readonly ITaiLieuVanBanService _taiLieuVanBanService;
         private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
 
         public NoiBanHanhController()
@@ -23,10 +24,12 @@ namespace S3Train.WebHeThong.Controllers
 
         }
 
-        public NoiBanHanhController(INoiBanHanhService noiBanHanhService, IFunctionLichSuHoatDongService functionLichSuHoatDongService)
+        public NoiBanHanhController(INoiBanHanhService noiBanHanhService, IFunctionLichSuHoatDongService functionLichSuHoatDongService,
+            ITaiLieuVanBanService taiLieuVanBanService)
         {
             _noiBanHanhService = noiBanHanhService;
             _functionLichSuHoatDongService = functionLichSuHoatDongService;
+            _taiLieuVanBanService = taiLieuVanBanService;
         }
 
         // GET: NoiBanHanh
@@ -97,6 +100,15 @@ namespace S3Train.WebHeThong.Controllers
         public ActionResult Delete(string id)
         {
             var noiBanHanh = _noiBanHanhService.Get(m => m.Id == id);
+
+            var count = _taiLieuVanBanService.Gets(p => p.NoiBanHanhId == id).Count();
+
+            if (count > 0)
+            {
+                TempData["AlertMessage"] = "Không Thể Xóa Vì Có " + count + " Tài Liệu Văn bản Phụ Thuộc";
+                return RedirectToAction("Index", new { active = false });
+            }
+
             _noiBanHanhService.Remove(noiBanHanh);
             _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), "nơi ban hành: " + noiBanHanh.Ten);
             TempData["AlertMessage"] = "Xóa Thành Công";

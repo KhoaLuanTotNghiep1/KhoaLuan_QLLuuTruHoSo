@@ -34,15 +34,14 @@ namespace S3Train.WebHeThong.CommomClientSide.Function
 
             foreach (var item in taiLieuVanBans)
             {
-                if(item.TinhTrang != EnumTinhTrang.DangMuon && item.TinhTrang != EnumTinhTrang.DaGoi)
+                var auto = new AutoCompleteTextModel()
                 {
-                    var auto = new AutoCompleteTextModel()
-                    {
-                        Id = item.Id,
-                        Text = item.Ten,
-                    };
-                    list.Add(auto);
-                }
+                    Id = item.Id,
+                    Text = item.Ten,
+                    TinhTrang = item.TinhTrang,
+                };
+                list.Add(auto);
+                
                
             }
 

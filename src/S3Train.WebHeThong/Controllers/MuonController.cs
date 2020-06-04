@@ -187,11 +187,12 @@ namespace S3Train.WebHeThong.Controllers
         }
         
         [HttpPost]
-        public ActionResult AutoCompleteText(string text)
+        public ActionResult AutoCompleteText(string pre)
         {
+            List<TaiLieuVanBan> tlvb = new List<TaiLieuVanBan>();
             var model = AutoCompleteTextHoSos( _taiLieuVanBanService.GetAll());
 
-            model = model.Where(p => p.Text.Contains(text)).ToHashSet();
+            model = model.Where(p => p.Text.StartsWith(pre)).ToHashSet();
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }

@@ -148,8 +148,6 @@ namespace S3Train.WebHeThong.Controllers
             list.Add(GlobalConfigs.DANG_DEN, a);
             list.Add(GlobalConfigs.DANG_DI, b);
             list.Add(GlobalConfigs.DANG_NOIBO, c);
-            list.Add(GlobalConfigs.TINHTRANG_DANGMUON, d);
-            list.Add(GlobalConfigs.TINHTRANG_DATRA, e);
 
             return list;
         }

@@ -60,6 +60,13 @@
     </div>
 </div>
 
+      <table style="display:none" id="table">
+          <tr>
+              <th width="100">Tên</th>
+              <th>Id</th>
+          </tr>
+      </table>
+
 @section scripts{
     <script>
         $(function () {
@@ -67,23 +74,57 @@
             if (successMessage != '')
                 alertify.success(successMessage);
         });
+
         $(document).ready(function () {
             $("#ThuMuon").autocomplete({
                 source: function (request, response) {
                     $.ajax({
                         url: "/Muon/AutoCompleteText",
-                        type: "POST",
+                        data: "{ 'pre':'" + request.term + "'}",
                         dataType: "json",
-                        data: { text: request.term },
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
                         success: function (data) {
                             response($.map(data, function (item) {
-                                return { label: item.Text, value: item.Text };
+                                return {
+                                    Text: item.Text,
+                                    Id: item.Id,
+                                    TinhTrang: item.TinhTrang,
+                                    json: item
+                                }
                             }))
-
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert(textStatus);
                         }
-                    })
-                }
-            });
+                    });
+                },
+                focus: function (event, ui) {
+                    $("#ThuMuon").val(ui.item.Text);
+                    return false;
+                },
+                select: function (event, ui) {
+                    $("#ThuMuon").val(ui.item.Text);
+                    return false;
+                },
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                var str = '<table style="width:100%;">';
+                str += '<tr>';
+                str += '<th width="400"></th>'
+                str += '<th ></th>'
+                str += '</tr>';
+                str += '<tbody>';
+                str += '<tr>';
+                str += "<td>" + item.Text + "</td>" + "<td>" + item.TinhTrang + "</td>"
+                
+                str += '</tr>';
+                str += '</tbody>';
+                str += '</table>';
+           
+                return $("<table>")
+                    .append(str)
+                    .appendTo(ul);
+            };
         });
 
         $(document).ready(function () {

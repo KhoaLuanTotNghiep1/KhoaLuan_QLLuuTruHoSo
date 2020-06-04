@@ -16,7 +16,7 @@ namespace S3Train.WebHeThong.CommomClientSide.Function
             return list;
         }
 
-        public static List<DataPoint> ListDataPonit(Dictionary<string, List<TaiLieuVanBan>> keyValuePairs)
+        public static List<DataPoint> ListDataPonit<T>(Dictionary<string, List<T>> keyValuePairs)
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
             DataPoint dataPoint;

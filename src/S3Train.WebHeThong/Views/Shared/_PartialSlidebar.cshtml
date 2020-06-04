@@ -91,17 +91,19 @@
     @{
         if (User.IsInRole(GlobalConfigs.ROLE_GIAMDOC) || User.IsInRole(GlobalConfigs.ROLE_CANBOVANTHU))
         {
-            <li>
-                <hr class="sidebar-divider">
-                <div class="sidebar-heading">
-                    Thống Kê/Báo Cáo
-                </div>
-            </li>
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Index","ThongKe")">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThongKe" aria-expanded="true"
+                   aria-controls="collapseThongKe">
+                    <i class="fas fa-fw fa-reply"></i>
                     <span>Thống Kê</span>
                 </a>
+                <div id="collapseThongKe" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Quản Lý Mượn/Trả</h6>
+                        <a class="collapse-item" href="@Url.Action("Index","ThongKe")">Tài Liệu/Văn Bản</a>
+                        <a class="collapse-item" href="@Url.Action("MuonTra","ThongKe")">Mượn Trả</a>
+                    </div>
+                </div>
             </li>
         }
 

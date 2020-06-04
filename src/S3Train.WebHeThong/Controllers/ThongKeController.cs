@@ -104,13 +104,9 @@ namespace S3Train.WebHeThong.Controllers
                 chiTietMuonTras = dictionary.FirstOrDefault(p => p.Key == dang).Value;
 
             if (type == "excel")
-            {
-                ExportFileCSVMuonTra(chiTietMuonTras);
-            }
-            else
-            {
                 ExportFileExelMuonTra(chiTietMuonTras);
-            }
+            else
+                ExportFileCSVMuonTra(chiTietMuonTras);
         }
 
         public void ExportFileCSV(List<TaiLieuVanBan> taiLieuVanBans)

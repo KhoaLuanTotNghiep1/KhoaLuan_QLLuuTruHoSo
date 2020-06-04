@@ -2725,7 +2725,6 @@
     <Content Include="Views\LHSAndPB\Index.cshtml" />
     <Content Include="Views\LHSAndPB\_PartialCreateOrUpdateLHS.cshtml" />
     <Content Include="Views\LHSAndPB\_PartialCreateOrUpdatePB.cshtml" />
-    <Content Include="Views\MuonTra\Index.cshtml" />
     <Content Include="Views\TaiLieuVanBan\CreateOrUpdate.cshtml" />
     <Content Include="Views\TaiLieuVanBan\DemoKmeans.cshtml" />
     <Content Include="Views\TaiLieuVanBan\Detail.cshtml" />
@@ -2740,19 +2739,18 @@
     <Content Include="Views\Home\LichSuHoatDong.cshtml" />
     <Content Include="Views\Shared\_PartialSearch.cshtml" />
     <Content Include="Views\Hop\CreateOrUpdate.cshtml" />
-    <Content Include="Views\MuonTra\CreateOrUpdate.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\demo.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\MuonTra\Detail.cshtml" />
     <Content Include="Views\Muon\Index.cshtml" />
     <Content Include="Views\Muon\Detail.cshtml" />
     <Content Include="Views\Muon\CreateOrUpdate.cshtml" />
     <Content Include="Views\Tra\Index.cshtml" />
     <Content Include="Views\Tra\Detail.cshtml" />
     <Content Include="Views\User\UserProfile.cshtml" />
+    <Content Include="Views\ThongKe\MuonTra.cshtml" />
     <None Include="Web.LocalConnectStrings.config">
       <SubType>Designer</SubType>
     </None>

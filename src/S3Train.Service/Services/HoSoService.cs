@@ -17,5 +17,15 @@ namespace S3Train.Services
 
             return list;
         }
+
+        public HoSo GetByIdHaveJoin(string id)
+        {
+            var hoSo = EntityDbSet.Include(p => p.Hop)
+                                  .Include(p => p.User)
+                                  .Include(p => p.TapHoSo)
+                                  .Include(p => p.TaiLieuVanBans).FirstOrDefault(p => p.Id == id);
+
+            return hoSo;
+        }
     }
 }

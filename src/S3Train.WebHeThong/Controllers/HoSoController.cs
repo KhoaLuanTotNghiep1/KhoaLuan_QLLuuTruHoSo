@@ -148,7 +148,7 @@ namespace S3Train.WebHeThong.Controllers
         [Route("Thong-Tin-Chi-Tiet")]
         public ActionResult Detail(string id)
         {
-            var model = GetHoSo(_hoSoService.Get(m => m.Id == id));
+            var model = GetHoSo(_hoSoService.GetByIdHaveJoin(id));
 
             return View(model);
         }

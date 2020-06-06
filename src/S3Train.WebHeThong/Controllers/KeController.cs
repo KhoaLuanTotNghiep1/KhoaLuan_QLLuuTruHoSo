@@ -152,7 +152,9 @@ namespace S3Train.WebHeThong.Controllers
         [Route("Thong-Tin-Chi-Tiet")]
         public ActionResult Detail(string id)
         {
-            var model = GetKe(_keService.Get(m => m.Id == id));
+            var kes = _keService.GetAllHaveJoinAll();
+
+            var model = GetKe(kes.FirstOrDefault(p => p.Id == id));
 
             return View(model);
         }

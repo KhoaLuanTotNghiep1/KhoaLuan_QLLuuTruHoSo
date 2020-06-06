@@ -200,7 +200,7 @@ namespace S3Train.WebHeThong.Controllers
         [Route("Thong-Tin-Chi-Tiet")]
         public ActionResult Detail(string id)
         {
-            var model = GetTaiLieuVanBan(_taiLieuVanBanService.Get(m => m.Id == id));
+            var model = GetTaiLieuVanBan(_taiLieuVanBanService.GetByIdHaveJoin(id));
 
             return View(model);
         }
@@ -350,8 +350,7 @@ namespace S3Train.WebHeThong.Controllers
                UserId = x.UserId,
                NgayBanHanh = x.NgayBanHanh,
                HinhAnh = x.HinhAnh,
-               HoSoId = x.HoSoId,
-               ViTri = autoList.FirstOrDefault(p => p.Id == x.HoSoId).Text
+               HoSoId = autoList.FirstOrDefault(p => p.Id == x.HoSoId).Text
             };
 
             return model;
@@ -369,7 +368,7 @@ namespace S3Train.WebHeThong.Controllers
                 TinhTrang = x.TinhTrang,
                 TrangThai = x.TrangThai,
                 Dang = x.Dang,
-                ViTri = autoList.FirstOrDefault(p => p.Id == x.HoSoId).Text
+                HoSoId = autoList.FirstOrDefault(p => p.Id == x.HoSoId).Text
             }).ToList();
         }
     }

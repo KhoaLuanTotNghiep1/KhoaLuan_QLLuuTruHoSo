@@ -46,17 +46,19 @@ namespace S3Train.WebHeThong.Controllers
             pageIndex = (pageIndex ?? 1);
             pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
 
+            var listHop = _hopService.GetAllHaveJoinAll();
+
             var model = new HopViewIndexModel()
             {
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var hops = _hopService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, 
+            var hops = _hopService.GetAllPaged(listHop,pageIndex, pageSize.Value, p => p.TrangThai == active, 
                 p => p.OrderByDescending(c => c.NgayTao));
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                hops = _hopService.GetAllPaged(pageIndex, pageSize.Value, p => p.ChuyenDe.Contains(searchString) || p.PhongBan.Ten.Contains(searchString)
+                hops = _hopService.GetAllPaged(listHop,pageIndex, pageSize.Value, p => p.ChuyenDe.Contains(searchString) || p.PhongBan.Ten.Contains(searchString)
                     && p.TrangThai == active, p => p.OrderByDescending(c => c.NgayTao));
             }
 
@@ -159,7 +161,9 @@ namespace S3Train.WebHeThong.Controllers
         [Route("Thong-Tin-Chi-Tiet")]
         public ActionResult Detail(string id)
         {
-            var model = GetHop(_hopService.Get(m => m.Id == id));
+            var hops = _hopService.GetAllHaveJoinAll();
+
+            var model = GetHop(hops.FirstOrDefault(p => p.Id == id));
             
             return View(model);
         }
@@ -274,9 +278,7 @@ namespace S3Train.WebHeThong.Controllers
                 TinhTrang = hop.TinhTrang,
                 NgayTao = hop.NgayTao,
                 TrangThai = hop.TrangThai,
-                Ke = hop.Ke,
-                User = hop.User,
-                ViTri = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text
+                KeId = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text
             }).ToList();
         }
     }

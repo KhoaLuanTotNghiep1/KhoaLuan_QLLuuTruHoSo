@@ -23,9 +23,6 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Tình Trạng")]
         public EnumTinhTrang TinhTrang { get; set; } // Mượn hoặc Trả
 
-        [Display(Name = "Vị Trí")]
-        public string ViTri { get; set; }
-
         [Required(ErrorMessage = "Bạn chưa điền ngày bắt đầu lưu trữ")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]

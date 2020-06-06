@@ -33,7 +33,7 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Sức Chứa")]
         public int SoLuongMax { get; set; }
 
-        [Display(Name = "Tình Trạng")]
+        [Display(Name = "Tình Trạng Tủ Lưu Trữ")]
         public string TinhTrang { get; set; }
 
         [Display(Name = "Ngày Tạo")]

@@ -7,5 +7,6 @@ namespace S3Train.Contract
     public interface IKeService : IGenenicServiceBase<Ke>
     {
         IQueryable<Ke> GetAllHaveJoinTu();
+        IQueryable<Ke> GetAllHaveJoinAll();
     }
 }

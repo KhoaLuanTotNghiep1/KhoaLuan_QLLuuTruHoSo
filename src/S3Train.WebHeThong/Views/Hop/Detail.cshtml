@@ -21,7 +21,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-4">
-                        <h6 class="m-0 font-weight-bold text-primary">Vị Trí</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Vị Trí Lưu Trữ</h6>
                         <p>@Html.DisplayFor(item => Model.KeId)</p>
                     </div>
                     <div class="col-lg-4">
@@ -69,13 +69,9 @@
                             <div class="col">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">Trạng Thái</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", Model.TrangThai)</div>
-                                <div class="mt-2 mb-0 text-muted text-xs">
-                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                    <span>Since last month</span>
-                                </div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-primary"></i>
+                                <i class="fas fa-window-restore fa-2x text-primary"></i>
                             </div>
                         </div>
                     </div>
@@ -89,7 +85,7 @@
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">Lưu Trữ</div>
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Tình Trạng Lưu Trữ</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", Model.TinhTrang)</div>
                             </div>
                             <div class="col-auto">
@@ -103,7 +99,7 @@
     </div>
 
     @{
-        if (Model.HoSos != null)
+        if (Model.HoSos.Count() > 0)
         {
             <div class="col-lg-12">
                 <div class="card mb-4">
@@ -115,31 +111,31 @@
                                 <tr>
                                     <th>STT</th>
                                     <th>Phông Lưu Trữ</th>
-                                    <th>Loại Hồ Sơ</th>
                                     <th>Thời Gian Bảo Quản</th>
+                                    <th>Ngày Tạo</th>
                                     <th>Hoạt Động</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var hoso in Model.HoSos)
                                 {
-                                    <tr>
-                                        <td>@stt</td>
-                                        <td>@Html.DisplayFor(item => hoso.PhongLuuTru)</td>
-                                        <td>@Html.DisplayFor(item => hoso.LoaiHoSo.Ten)</td>
-                                        <td>@Html.DisplayFor(item => hoso.ThoiGianBaoQuan)</td>
-                                        <td>
-                                            <a href="@Url.Action("Detail","HoSo", new { id=hoso.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
-                                                <i class="fas fa-info"></i>
-                                            </a>
-                                            <a href="@Url.Action("CreateOrUpdate","HoSo", new { id=hoso.Id})" class="btn btn-primary" title="Cập Nhật">
-                                                <i class="fas fa-sync"></i>
-                                            </a>
-                                            <a href="@Url.Action("Delete","HoSo", new { id=hoso.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @hoso.PhongLuuTru?');" title="Xóa">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>@stt</td>
+                                    <td>@Html.DisplayFor(item => hoso.PhongLuuTru)</td>
+                                    <td>@Html.DisplayFor(item => hoso.ThoiGianBaoQuan) tháng</td>
+                                    <td>@Html.DisplayFor(item => hoso.NgayTao)</td>
+                                    <td>
+                                        <a href="@Url.Action("Detail","HoSo", new { id=hoso.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
+                                            <i class="fas fa-info"></i>
+                                        </a>
+                                        <a href="@Url.Action("CreateOrUpdate","HoSo", new { id=hoso.Id})" class="btn btn-primary" title="Cập Nhật">
+                                            <i class="fas fa-sync"></i>
+                                        </a>
+                                        <a href="@Url.Action("Delete","HoSo", new { id=hoso.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @hoso.PhongLuuTru?');" title="Xóa">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
                                     stt += 1;
                                 }
                             </tbody>

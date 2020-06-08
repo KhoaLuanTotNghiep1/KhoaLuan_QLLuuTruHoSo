@@ -82,7 +82,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", Model.TrangThai)</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-primary"></i>
+                                <i class="fas fa-window-restore fa-2x text-primary"></i>
                             </div>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">Lưu Trữ</div>
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Tình Trạng Lưu Trữ</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", Model.TinhTrang)</div>
                             </div>
                             <div class="col-auto">
@@ -109,7 +109,7 @@
         </div>
     </div>
     @{
-        if (Model.HoSoCons != null)
+        if (Model.HoSoCons.Count() > 0)
         {
             <div class="col-lg-12">
                 <div class="card mb-4">
@@ -159,7 +159,7 @@
     }
 
     @{
-        if (Model.TaiLieuVanBans != null)
+        if (Model.TaiLieuVanBans.Count() > 0)
         {
             <div class="col-lg-12">
                 <div class="card mb-4">
@@ -170,9 +170,10 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Hình Ảnh</th>
                                     <th>Tên</th>
-                                    <th>Số Ký Hiệu</th>
-                                    <th>Lưu Trữ</th>
+                                    <th>Loại</th>
+                                    <th>Tình Trạng Lưu Trữ</th>
                                     <th>Trạng Thái</th>
                                     <th>Hoạt Động</th>
                                 </tr>
@@ -182,8 +183,11 @@
                                 {
                                     <tr>
                                         <td>@stt</td>
+                                        <td>
+                                            <img src="~/Content/HinhAnhTLVB/@taiLieuVanBan.HinhAnh" class="img-profile rounded" style="max-width:50px" alt="Hình Ảnh Văn Bản" id="ImageAvatar"/>
+                                        </td>
                                         <td>@Html.DisplayFor(item => taiLieuVanBan.Ten)</td>
-                                        <td>@Html.DisplayFor(item => taiLieuVanBan.SoKyHieu)</td>
+                                        <td>@Html.DisplayFor(item => taiLieuVanBan.Loai)</td>
                                         <td>@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", taiLieuVanBan.TinhTrang)</td>
                                         <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", taiLieuVanBan.TrangThai)</td>
                                         <td>

@@ -78,13 +78,9 @@
                             <div class="col">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">Trạng Thái</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", Model.TrangThai)</div>
-                                <div class="mt-2 mb-0 text-muted text-xs">
-                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                    <span>Since last month</span>
-                                </div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-primary"></i>
+                                <i class="fas fa-window-restore fa-2x text-primary"></i>
                             </div>
                         </div>
                     </div>
@@ -98,12 +94,8 @@
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">Lưu Trữ</div>
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Tình Trạng Lưu Trữ</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTinhTrang.cshtml", Convert.ToInt32(Model.SoHopToiDa - Model.SoHopHienTai))</div>
-                                <div class="mt-2 mb-0 text-muted text-xs">
-                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                    <span>Since last month</span>
-                                </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-primary"></i>
@@ -116,7 +108,7 @@
     </div>
 
     @{
-        if (Model.Hops != null)
+        if (Model.Hops.Count() > 1)
         {
             <div class="col-lg-12">
                 <div class="card mb-4">
@@ -129,8 +121,8 @@
                                     <th>STT</th>
                                     <th>Chuyên Đề</th>
                                     <th>Phòng Ban</th>
-                                    <th>Số Hộp</th>
                                     <th>Lưu Trữ</th>
+                                    <th>Trạng Thái</th>
                                     <th>Hoạt Động</th>
                                 </tr>
                             </thead>
@@ -141,8 +133,8 @@
                                         <td>@stt</td>
                                         <td>@Html.DisplayFor(item => hop.ChuyenDe)</td>
                                         <td>@Html.DisplayFor(item => hop.PhongBan.Ten)</td>
-                                        <td>Hộp số @Html.DisplayFor(item => hop.SoHop)</td>
                                         <td>@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", hop.TinhTrang)</td>
+                                        <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", hop.TrangThai)</td>
                                         <td>
                                             <a href="@Url.Action("Detail","Hop", new { id=hop.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
                                                 <i class="fas fa-info"></i>

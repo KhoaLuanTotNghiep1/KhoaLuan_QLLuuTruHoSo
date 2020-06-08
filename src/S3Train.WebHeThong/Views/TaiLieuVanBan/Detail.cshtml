@@ -33,8 +33,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.ViTri)</h6>
-                        <p>@Html.DisplayFor(item => Model.ViTri)</p>
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.HoSoId)</h6>
+                        <p>@Html.DisplayFor(item => Model.HoSoId)</p>
                     </div>
                     <div class="col-md-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoKyHieu)</h6>
@@ -59,30 +59,6 @@
                         <p>@Html.DisplayFor(item => Model.NgayBanHanh)</p>
                     </div>
                 </div>
-                @{
-                    if (Model.Dang == "Đi")
-                    {
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h6 class="m-0 font-weight-bold text-primary">Người Gửi</h6>
-                                <p>@Html.DisplayFor(item => Model.NguoiGuiHoacNhan)</p>
-                            </div>
-                            <div class="col-md-4">
-                                <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NoiNhan)</h6>
-                                <p>@Html.DisplayFor(item => Model.NoiNhan)</p>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h6 class="m-0 font-weight-bold text-primary">Người Nhận</h6>
-                                <p>@Html.DisplayFor(item => Model.NguoiGuiHoacNhan)</p>
-                            </div>
-                        </div>
-                    }
-                }
                 <div class="row">
                     <div class="col-md-4">
                         <h6 class="m-0 font-weight-bold text-primary">Người Tạo</h6>
@@ -97,7 +73,38 @@
                         <p>@Html.DisplayFor(item => Model.NgayCapNhat)</p>
                     </div>
                 </div>
-
+                @{
+                    if (Model.Dang == "Đi")
+                    {
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h6 class="m-0 font-weight-bold text-primary">Người Gửi</h6>
+                                <p>@Html.DisplayFor(item => Model.NguoiGuiHoacNhan)</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NoiNhan)</h6>
+                                <p>@Html.DisplayFor(item => Model.NoiNhan)</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.GhiChu)</h6>
+                                @Html.DisplayFor(item => Model.GhiChu)
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h6 class="m-0 font-weight-bold text-primary">Người Nhận</h6>
+                                <p>@Html.DisplayFor(item => Model.NguoiGuiHoacNhan)</p>
+                            </div>
+                            <div class="col-md-8">
+                                <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.GhiChu)</h6>
+                                @Html.DisplayFor(item => Model.GhiChu)
+                            </div>
+                        </div>
+                    }
+                }
                 <div class="row">
                     <div class="col-md">
                         <h6 class="m-0 font-weight-bold text-primary">Đường Dẫn File</h6>
@@ -118,7 +125,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", Model.TrangThai)</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-primary"></i>
+                                <i class="fas fa-window-restore fa-2x text-primary"></i>
                             </div>
                         </div>
                     </div>
@@ -132,7 +139,7 @@
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">Lưu Trữ</div>
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Tình Trạng Lưu Trữ</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", Model.TinhTrang)</div>
                             </div>
                             <div class="col-auto">
@@ -152,15 +159,3 @@
         </div>
     </div>
 </div>
-
-<div class="card">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md">
-                <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.GhiChu)</h6>
-                @Html.DisplayFor(item => Model.GhiChu)
-            </div>
-        </div>
-    </div>
-</div>
-<br />

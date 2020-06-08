@@ -20,6 +20,7 @@ namespace S3Train.WebHeThong.Controllers
     {
         private readonly IKeService _keService;
         private readonly IHopService _hopService;
+        private readonly IHoSoService _hoSoService;
         private readonly IPhongBanService _phongBanService;
         private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
 
@@ -29,11 +30,12 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         public HopController(IKeService keService, IHopService hopService, IPhongBanService phongBanService,
-            IFunctionLichSuHoatDongService functionLichSuHoatDongService)
+            IFunctionLichSuHoatDongService functionLichSuHoatDongService, IHoSoService hoSoService)
         {
             _keService = keService;
             _hopService = hopService;
             _phongBanService = phongBanService;
+            _hoSoService = hoSoService;
             _functionLichSuHoatDongService = functionLichSuHoatDongService;
         }
 
@@ -44,17 +46,19 @@ namespace S3Train.WebHeThong.Controllers
             pageIndex = (pageIndex ?? 1);
             pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
 
+            var listHop = _hopService.GetAllHaveJoinAll();
+
             var model = new HopViewIndexModel()
             {
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var hops = _hopService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active, 
+            var hops = _hopService.GetAllPaged(listHop,pageIndex, pageSize.Value, p => p.TrangThai == active, 
                 p => p.OrderByDescending(c => c.NgayTao));
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                hops = _hopService.GetAllPaged(pageIndex, pageSize.Value, p => p.ChuyenDe.Contains(searchString) || p.PhongBan.Ten.Contains(searchString)
+                hops = _hopService.GetAllPaged(listHop,pageIndex, pageSize.Value, p => p.ChuyenDe.Contains(searchString) || p.PhongBan.Ten.Contains(searchString)
                     && p.TrangThai == active, p => p.OrderByDescending(c => c.NgayTao));
             }
 
@@ -133,6 +137,14 @@ namespace S3Train.WebHeThong.Controllers
         public ActionResult Delete(string id)
         {
             var hop = _hopService.Get(m => m.Id == id);
+            var hosos = _hoSoService.Gets(m => m.HopId == id).Count();
+
+            if (hosos > 0)
+            {
+                TempData["AlertMessage"] = "Không Thể Xóa Vì Có " + hosos + " Hồ Sơ Phụ Thuộc";
+                return RedirectToAction("Index", new { active = false });
+            }
+
             string chiTietHoatDong = "hộp " + hop.ChuyenDe + " trên kệ thứ " + hop.Ke.SoThuTu;
 
             UpdateTu_SoHopHienTai(hop.KeId, ActionWithObject.Delete);
@@ -149,7 +161,9 @@ namespace S3Train.WebHeThong.Controllers
         [Route("Thong-Tin-Chi-Tiet")]
         public ActionResult Detail(string id)
         {
-            var model = GetHop(_hopService.Get(m => m.Id == id));
+            var hops = _hopService.GetAllHaveJoinAll();
+
+            var model = GetHop(hops.FirstOrDefault(p => p.Id == id));
             
             return View(model);
         }
@@ -164,6 +178,10 @@ namespace S3Train.WebHeThong.Controllers
             _hopService.Update(model);
 
             _functionLichSuHoatDongService.Create(ActionWithObject.ChangeStatus, User.Identity.GetUserId(), chiTietHoatDong);
+
+            var messenge = Messenger.ChangeActiveMessenge(active);
+
+            TempData["AlertMessage"] = messenge;
             return RedirectToAction("Index");
         }
 
@@ -260,9 +278,7 @@ namespace S3Train.WebHeThong.Controllers
                 TinhTrang = hop.TinhTrang,
                 NgayTao = hop.NgayTao,
                 TrangThai = hop.TrangThai,
-                Ke = hop.Ke,
-                User = hop.User,
-                ViTri = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text
+                KeId = autoList.FirstOrDefault(p => p.Id == hop.KeId).Text
             }).ToList();
         }
     }

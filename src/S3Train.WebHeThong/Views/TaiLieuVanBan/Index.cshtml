@@ -1,5 +1,4 @@
 ﻿@using S3Train.WebHeThong.Models
-@using S3Train.Domain
 
 @model TaiLieuVanBanIndexViewModel
 
@@ -53,7 +52,7 @@
                         <td>@stt</td>
                         <td style="width:15%">@Html.DisplayFor(m => item.Ten)</td>
                         <td>@Html.DisplayFor(m => item.Dang)</td>
-                        <td style="width:30%">@Html.DisplayFor(m => item.ViTri)</td>
+                        <td style="width:30%">@Html.DisplayFor(m => item.HoSoId)</td>
                         <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
                         <td>
                             @if (!User.IsInRole(GlobalConfigs.ROLE_CANBO))

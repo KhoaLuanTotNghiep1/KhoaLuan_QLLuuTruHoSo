@@ -50,7 +50,9 @@ namespace S3Train.WebHeThong.Controllers
 
             ViewBag.DataPoints = JsonConvert.SerializeObject(AddList.ListDataPonit(GetDoc()));
 
-            var lichSuHoatDongs = _lichSuHoatDongService.Gets(p => p.NgayTao <= DateTime.Now).OrderByDescending(p => p.NgayTao).Take(5);
+            var listKe = _lichSuHoatDongService.GetAllHaveJoinUser();
+
+            var lichSuHoatDongs = listKe.Where(p => p.NgayTao <= DateTime.Now).OrderByDescending(p => p.NgayTao).Take(5);
             ViewBag.LichSuHoatDong = lichSuHoatDongs;
 
             return View();
@@ -67,11 +69,14 @@ namespace S3Train.WebHeThong.Controllers
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var lichSuHoatDongs = _lichSuHoatDongService.GetAllPaged(pageIndex, pageSize.Value, null, p => p.OrderByDescending(c => c.NgayTao));
+
+            var listKe = _lichSuHoatDongService.GetAllHaveJoinUser();
+
+            var lichSuHoatDongs = _lichSuHoatDongService.GetAllPaged(listKe, pageIndex, pageSize.Value, null, p => p.OrderByDescending(c => c.NgayTao));
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                lichSuHoatDongs = _lichSuHoatDongService.GetAllPaged(pageIndex, pageSize.Value, p => p.User.FullName.Contains(searchString) || 
+                lichSuHoatDongs = _lichSuHoatDongService.GetAllPaged(listKe, pageIndex, pageSize.Value, p => p.User.FullName.Contains(searchString) || 
                     p.HoatDong.Contains(searchString), p => p.OrderBy(c => c.NgayTao));
             }
 
@@ -156,6 +161,8 @@ namespace S3Train.WebHeThong.Controllers
 
         private int ComputePercent(double max, double number)
         {
+            if (max <= 0)
+                return 0;
             var a = number / max;
             return Convert.ToInt32((number / max)*100);
         }

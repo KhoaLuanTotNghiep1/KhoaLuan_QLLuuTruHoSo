@@ -1,4 +1,6 @@
 ﻿@using S3Train.WebHeThong.Models
+@using S3Train.Domain
+
 @model MuonTraViewModel
 
 @{
@@ -115,24 +117,27 @@
                     return false;
                 },
             }).data("ui-autocomplete")._renderItem = function (ul, item) {
-                var str = '<table style="width:100%;">';
-                str += '<tr>';
-                str += '<th width="400"></th>'
-                str += '<th ></th>'
-                str += '</tr>';
-                str += '<tbody>';
-                str += '<tr>';
-                str += "<td>" + item.Text + "</td>" + "<td>" + item.TinhTrang + "</td>"
-                str += '</tr>';
-                str += '</tbody>';
-                str += '</table>';
-
-                return $("<table>")
+                var str = '<div class = "row">';
+                str += '<div class="col-9">' + item.Text + "</div>" + '<div class="col-3">' + SetTinhTrangHTML(item.TinhTrang) + "</div>";
+                
+                str += '</div>';
+           
+                return $("<div>")
                     .append(str)
                     .appendTo(ul);
                 };
         });
 
+        function SetTinhTrangHTML(tinhTrang) {
+            if (tinhTrang == 1)
+                return "<span class='badge badge-primary'>Trong Kho</span>";
+            if (tinhTrang == 2)
+                return "<span class='badge badge-warning'>Đang Mượn</span>";
+            if (tinhTrang == 3)
+                return "<span class='badge badge-secondary'>Đã Trả</span>";
+            if (tinhTrang ==  4)
+                return "<span class='badge badge-success'>Đã Gởi</span>";
+        }
 
         $(document).ready(function () {
             $("#UserId").autocomplete({

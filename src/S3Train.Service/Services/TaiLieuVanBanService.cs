@@ -1,6 +1,7 @@
 ﻿using S3Train.Contract;
 using S3Train.Domain;
 using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace S3Train.Services
 {
@@ -22,6 +23,13 @@ namespace S3Train.Services
             return result;
         }
 
-
+        public TaiLieuVanBan GetByIdHaveJoin(string id)
+        {
+            var taiLieuVanBan = EntityDbSet.Include(p => p.HoSo)
+                               .Include(p => p.User)
+                               .Include(p => p.NoiBanHanh)
+                               .FirstOrDefaultAsync(p => p.Id == id).Result;
+            return taiLieuVanBan;
+        }
     }
 }

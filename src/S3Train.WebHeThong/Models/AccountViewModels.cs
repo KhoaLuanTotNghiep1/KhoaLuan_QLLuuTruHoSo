@@ -41,8 +41,7 @@ namespace S3Train.WebHeThong.Models
 
     public class ForgotViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
+        [Required(ErrorMessage = "Bạn chưa điền Email")]
         public string Email { get; set; }
     }
 
@@ -82,20 +81,21 @@ namespace S3Train.WebHeThong.Models
 
     public class ResetPasswordViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Bạn chưa điền Email")]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Bạn chưa điền mật khẩu")]
+        [StringLength(100, ErrorMessage = "{0} nên có ít nhất {2} ký tự.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Mật Khẩu")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Xác Nhận Mật Khẩu")]
+        [Compare("Password", ErrorMessage = "Mật khẩu và Xác Nhận Mật Khẩu không giống nhau.")]
+        [Required(ErrorMessage = "Bạn chưa điền mật khẩu")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

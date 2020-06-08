@@ -4,6 +4,7 @@
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
     int soLuong = Model.SoLuongMax - Model.SoLuongHienTai;
+    int stt = 1;
 }
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -27,12 +28,12 @@
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgươiQuanLy)</h6>
                         <p>@Html.DisplayFor(item => Model.NgươiQuanLy)</p>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.DonViTinh)</h6>
                         <p>@Html.DisplayFor(item => Model.DonViTinh)</p>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoLuongMax)</h6>
                         <p>@Html.DisplayFor(item => Model.SoLuongMax) @Html.DisplayFor(item => Model.DonViTinh)</p>
@@ -40,6 +41,10 @@
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoLuongHienTai)</h6>
                         <p>@Html.DisplayFor(item => Model.SoLuongHienTai) @Html.DisplayFor(item => Model.DonViTinh)</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.TinhTrang)</h6>
+                        <p>@Html.DisplayFor(item => Model.TinhTrang)</p>
                     </div>
                 </div>
                 <div class="row">
@@ -50,10 +55,6 @@
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayCapNhat)</h6>
                         <p>@Html.DisplayFor(item => Model.NgayCapNhat)</p>
-                    </div>
-                    <div class="col-lg-4">
-                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.TinhTrang)</h6>
-                        <p>@Html.DisplayFor(item => Model.TinhTrang)</p>
                     </div>
                 </div>
             </div>
@@ -68,13 +69,9 @@
                             <div class="col">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">Trạng Thái</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", Model.TrangThai)</div>
-                                <div class="mt-2 mb-0 text-muted text-xs">
-                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                    <span>Since last month</span>
-                                </div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-primary"></i>
+                                <i class="fas fa-fw fa-window-restore fa-2x text-primary"></i>
                             </div>
                         </div>
                     </div>
@@ -88,12 +85,8 @@
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">Lưu Trữ</div>
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Tình Trạng Lưu Trữ</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTinhTrang.cshtml", soLuong)</div>
-                                <div class="mt-2 mb-0 text-muted text-xs">
-                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                    <span>Since last month</span>
-                                </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-primary"></i>
@@ -106,20 +99,20 @@
     </div>
 
     @{
-        if (Model.Kes != null)
+        if (Model.Kes.Count() > 1)
         {
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <h5 class="m-0 font-weight-bold text-primary">Danh Sách Kệ Của kho</h5>
+                        <h5 class="m-0 font-weight-bold text-primary">Danh Sách Kệ Trong Tủ</h5>
                         <br />
                         <table class="table table-responsive-md">
                             <thead>
                                 <tr>
-                                    <th>Tên</th>
                                     <th>STT</th>
-                                    <th>Số Hộp Hiện Tại</th>
-                                    <th>Lưu Trữ</th>
+                                    <th>Tên</th>
+                                    <th>Tình Trạng Lưu Trữ</th>
+                                    <th>Trạng Thái</th>
                                     <th>Hoạt Động</th>
                                 </tr>
                             </thead>
@@ -127,10 +120,10 @@
                                 @foreach (var ke in Model.Kes)
                                 {
                                     <tr>
+                                        <td>@stt</td>
                                         <td>@Html.DisplayFor(m => ke.Ten)</td>
-                                        <td>@Html.DisplayFor(m => ke.SoHopHienTai)</td>
-                                        <td>@Html.DisplayFor(m => ke.SoHopHienTai)</td>
-                                        <td>@Html.Partial("~/Views/Shared/_PartialTinhTrang.cshtml", Convert.ToInt32(ke.SoHopToiDa - ke.SoHopHienTai))</td>
+                                         <td>@Html.Partial("~/Views/Shared/_PartialTinhTrang.cshtml", Convert.ToInt32(ke.SoHopToiDa - ke.SoHopHienTai))</td>
+                                        <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", ke.TrangThai)</td>
                                         <td>
                                             <a href="@Url.Action("Detail","Ke", new { id=ke.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
                                                 <i class="fas fa-info"></i>
@@ -143,6 +136,8 @@
                                             </a>
                                         </td>
                                     </tr>
+
+                                    stt+= 1;
                                 }
                             </tbody>
                         </table>

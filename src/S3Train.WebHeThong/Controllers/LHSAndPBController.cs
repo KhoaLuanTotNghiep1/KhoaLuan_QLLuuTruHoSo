@@ -15,7 +15,10 @@ namespace S3Train.WebHeThong.Controllers
     public class LHSAndPBController : Controller
     {
         private readonly ILoaiHoSoService _loaiHoSoService;
+        private readonly IHopService _hopService;
+        private readonly IHoSoService _hoSoService;
         private readonly IPhongBanService _phongBanService;
+
         private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
 
         public LHSAndPBController()
@@ -24,10 +27,12 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         public LHSAndPBController(ILoaiHoSoService loaiHoSoService, IPhongBanService phongBanService,
-            IFunctionLichSuHoatDongService functionLichSuHoatDongService)
+            IFunctionLichSuHoatDongService functionLichSuHoatDongService, IHoSoService hoSoService, IHopService hopService)
         {
             _loaiHoSoService = loaiHoSoService;
             _phongBanService = phongBanService;
+            _hopService = hopService;
+            _hoSoService = hoSoService;
             _functionLichSuHoatDongService = functionLichSuHoatDongService;
         }
 
@@ -126,6 +131,15 @@ namespace S3Train.WebHeThong.Controllers
         public ActionResult DeleteLHS(string id)
         {
             var loaiHoSo = _loaiHoSoService.Get(m => m.Id == id);
+
+            var count = _hoSoService.Gets(p => p.LoaiHoSoId == id).Count();
+
+            if (count > 0)
+            {
+                TempData["AlertMessage"] = "Không Thể Xóa Vì Có " + count + " Hồ Sơ Phụ Thuộc";
+                return RedirectToAction("Index", new { active = false });
+            }
+
             _loaiHoSoService.Remove(loaiHoSo);
             _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), "loại hồ sơ: " + loaiHoSo.Ten);
             TempData["AlertMessage"] = "Xóa Loại Hồ Sơ Thành Công";
@@ -135,6 +149,15 @@ namespace S3Train.WebHeThong.Controllers
         public ActionResult DeletePB(string id)
         {
             var phongBan = _phongBanService.Get(m => m.Id == id);
+
+            var count = _hopService.Gets(p => p.PhongBanId == id).Count();
+
+            if (count > 0)
+            {
+                TempData["AlertMessage"] = "Không Thể Xóa Vì Có " + count + " Hộp Phụ Thuộc";
+                return RedirectToAction("Index", new { active = false });
+            }
+
             _phongBanService.Remove(phongBan);
             _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(), "phòng ban: " + phongBan.Ten);
             TempData["AlertMessage"] = "Xóa Phòng Ban Thành Công";

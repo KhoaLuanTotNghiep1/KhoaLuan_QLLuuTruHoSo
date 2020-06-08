@@ -113,11 +113,11 @@ namespace S3Train.WebHeThong.Controllers
                             muontra.NgayMuon = item.MuonTra.NgayMuon;
                             muontra.NgayKetThuc = DateTime.Now;
                             muontra.TinhTrang = EnumTinhTrang.DaTra;
-                            muontra.SoLuong = ctMuon.Count();
+                            muontra.SoLuong = dem;
                             _muonTraService.Insert(muontra);
                             int sl = 0;
                             var muonTra = _muonTraService.Get(m => m.Id == item.MuonTra.Id);
-                            sl = model.Count() - ctMuon.Count();
+                            sl = model.Count() - dem;
                             muonTra.SoLuong = sl;
                             _muonTraService.Update(muonTra);
 

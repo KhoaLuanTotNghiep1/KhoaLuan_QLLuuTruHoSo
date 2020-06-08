@@ -89,65 +89,54 @@ namespace S3Train.WebHeThong.Controllers
         public ActionResult Create(List<ChiTietMuonTraViewModel> model)
         {
             var ctMuon = new List<ChiTietMuonTraViewModel>();
+            var dem = model.Count(m => m.Checkbox == true);
             foreach (var item in model)
             {
-                var vanBan = _taiLieuVanBanService.Get(m => m.Id == item.TaiLieuVanBanId);
+                var vanBan = _taiLieuVanBanService.Get(p => p.Id == item.TaiLieuVanBanId);
                 var chiTietMuonTras = _chiTietMuonTraService.GetAll();
-                if (item.Checkbox == true)
+                if (model.Count() == dem)
                 {
-                    ctMuon.Add(new ChiTietMuonTraViewModel
-                    {
-                        Id = item.Id,
-                        MuonTraId = item.MuonTraId,
-                        TaiLieuVanBan = item.TaiLieuVanBan,
-                        TaiLieuVanBanId = item.TaiLieuVanBanId,
-                        MuonTra = item.MuonTra,
-                        User = item.MuonTra.User,
-                    });
-
-                    if (model.Count() == ctMuon.Count())
-                    {
-                        vanBan.TinhTrang = EnumTinhTrang.TrongKho;
-                        _taiLieuVanBanService.Update(vanBan);
-                        var muonTra = _muonTraService.Get(m => m.Id == item.MuonTra.Id);
-                        muonTra.TinhTrang = EnumTinhTrang.DaTra;
-                        _muonTraService.Update(muonTra);
-                    }
-                    else
-                    {
-                        var muontra = new MuonTra();
-
-                        muontra.UserId = item.MuonTra.UserId;
-                        muontra.VanThu = User.Identity.GetUserName();
-                        muontra.NgayMuon = item.MuonTra.NgayMuon;
-                        muontra.NgayKetThuc = DateTime.Now;
-                        muontra.TinhTrang = EnumTinhTrang.DaTra;
-                        muontra.SoLuong = ctMuon.Count();
-                        _muonTraService.Insert(muontra);
-                        int sl = 0;
-                        var muonTra = _muonTraService.Get(m => m.Id == item.MuonTra.Id);
-                        sl = model.Count() - ctMuon.Count();
-                        muonTra.SoLuong = sl;
-                        _muonTraService.Update(muonTra);
-
-                        var muon = _chiTietMuonTraService.Get(m => m.TaiLieuVanBanId == item.TaiLieuVanBanId);
-                        muon.TrangThai = false;
-                        _chiTietMuonTraService.Update(muon);
-
-                        var chitietmuontra = new ChiTietMuonTra();
-                        chitietmuontra.TaiLieuVanBanId = item.TaiLieuVanBanId;
-                        chitietmuontra.MuonTraID = muontra.Id;
-                        _chiTietMuonTraService.Insert(chitietmuontra);
-                        vanBan.TinhTrang = EnumTinhTrang.TrongKho;
-                        _taiLieuVanBanService.Update(vanBan);
-                    }
-                    TempData["AlertMessage"] = "Tạo Mới Thành Công";
+                    vanBan.TinhTrang = EnumTinhTrang.TrongKho;
+                    _taiLieuVanBanService.Update(vanBan);
+                    var muonTra = _muonTraService.Get(m => m.Id == item.MuonTra.Id);
+                    muonTra.TinhTrang = EnumTinhTrang.DaTra;
+                    _muonTraService.Update(muonTra);
                 }
-                else
-                {
-                    TempData["AlertMessage"] = "Bạn chưa chọn TL/VB để trả";
-                }
+                else 
+                    if(item.Checkbox == true)
+                    {
+                 
+                            var muontra = new MuonTra();
+
+                            muontra.UserId = item.MuonTra.UserId;
+                            muontra.VanThu = User.Identity.GetUserName();
+                            muontra.NgayMuon = item.MuonTra.NgayMuon;
+                            muontra.NgayKetThuc = DateTime.Now;
+                            muontra.TinhTrang = EnumTinhTrang.DaTra;
+                            muontra.SoLuong = ctMuon.Count();
+                            _muonTraService.Insert(muontra);
+                            int sl = 0;
+                            var muonTra = _muonTraService.Get(m => m.Id == item.MuonTra.Id);
+                            sl = model.Count() - ctMuon.Count();
+                            muonTra.SoLuong = sl;
+                            _muonTraService.Update(muonTra);
+
+                            var muon = _chiTietMuonTraService.Get(m => m.TaiLieuVanBanId == item.TaiLieuVanBanId);
+                            muon.TrangThai = false;
+                            _chiTietMuonTraService.Update(muon);
+
+                            var chitietmuontra = new ChiTietMuonTra();
+                            chitietmuontra.TaiLieuVanBanId = item.TaiLieuVanBanId;
+                            chitietmuontra.MuonTraID = muontra.Id;
+                            _chiTietMuonTraService.Insert(chitietmuontra);
+                            vanBan.TinhTrang = EnumTinhTrang.TrongKho;
+                            _taiLieuVanBanService.Update(vanBan);
+                    
+                    }
+                TempData["AlertMessage"] = "Tạo Mới Thành Công";
             }
+            if(dem == 0)
+                TempData["AlertMessage"] = "Bạn Chưa Chọn TL/VB Để Trả";
             return RedirectToAction("Index");
         }
         

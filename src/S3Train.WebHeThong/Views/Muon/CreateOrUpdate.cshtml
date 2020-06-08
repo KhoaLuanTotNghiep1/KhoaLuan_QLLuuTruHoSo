@@ -22,20 +22,13 @@
                 <label>@Html.DisplayNameFor(item => Model.UserId)</label>
                 @Html.EditorFor(model => Model.UserId, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
                 @Html.ValidationMessageFor(model => Model.UserId, "", new { @class = "text-danger" })
+                <input type="hidden" id="UserId">
 
             </div>
             <div class="col-md-6">
                 <label>@Html.DisplayNameFor(item => Model.ThuMuon)</label>
                 @Html.EditorFor(model => Model.ThuMuon, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
                 @Html.ValidationMessageFor(model => Model.ThuMuon, "", new { @class = "text-danger" })
-                <p id="array"></p>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-md-6">
-                <label>@Html.DisplayNameFor(item => Model.SoLuong)</label>
-                @Html.EditorFor(model => model.SoLuong, new { htmlAttributes = new { @class = "form-control", @min = "1", @max = "1" } })
-                @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger" })
 
             </div>
         </div>
@@ -49,31 +42,41 @@
                 <label>@Html.DisplayNameFor(item => Model.NgayTra)</label>
                 @Html.EditorFor(model => model.NgayTra, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.NgayTra, "", new { @class = "text-danger" })
-                
+
+
             </div>
         </div>
-
+        <button style="display:none" data-pro-id="" class="btn btn-danger" id="delete" onclick="return confirm(" Bạn Có Chắc Muốn Xóa Phiếu Mượn Này?");" title="Xóa"><i class="fas fa-trash"></i></button>
         <div class="form-group">
             <input id="b" type="submit" value="Submit" class="btn btn-success" />
 
         </div>
+        <table class="table table-responsive-lg" id="table" style="display:none">
+            <tr>
+                <th width="300">Tên</th>
+                <th width="200">Vị Trí Lưu Trữ</th>
+                <th width="150">Tình Trạng</th>
+                <th width="150">Hoạt Động</th>
+
+            </tr>
+            <tbody></tbody>
+        </table>
+
     </div>
+    
 </div>
 
-      <table style="display:none" id="table">
-          <tr>
-              <th width="100">Tên</th>
-              <th>Id</th>
-          </tr>
-      </table>
 
 @section scripts{
-    <script>
+      <div>
+          <script>
         $(function () {
             var successMessage = '@TempData["AlertMessage"]'
             if (successMessage != '')
                 alertify.success(successMessage);
         });
+
+
 
         $(document).ready(function () {
             $("#ThuMuon").autocomplete({
@@ -90,6 +93,7 @@
                                     Text: item.Text,
                                     Id: item.Id,
                                     TinhTrang: item.TinhTrang,
+                                    ViTri: item.ViTri,
                                     json: item
                                 }
                             }))
@@ -99,12 +103,15 @@
                         }
                     });
                 },
-                focus: function (event, ui) {
-                    $("#ThuMuon").val(ui.item.Text);
-                    return false;
-                },
                 select: function (event, ui) {
                     $("#ThuMuon").val(ui.item.Text);
+                    var markup = "<tr>";
+                    markup += '<td class="name"> ' + ui.item.Text + "</td>" + "<td> " + ui.item.ViTri + "</td>" + "<td>" + ui.item.TinhTrang + "</td>";
+                    markup += '<td> <button class="btn btn-danger delete"  value = "ui.item.Text"  onclick="return confirm("Bạn Có Chắc Muốn Xóa Phiếu Mượn Này?");" title="Xóa"><i class="fas fa-trash"></i></button>';
+                    markup += '</tr>';
+                    $("table").append(markup);
+                    $("#table").show();
+
                     return false;
                 },
             }).data("ui-autocomplete")._renderItem = function (ul, item) {
@@ -116,40 +123,112 @@
                 str += '<tbody>';
                 str += '<tr>';
                 str += "<td>" + item.Text + "</td>" + "<td>" + item.TinhTrang + "</td>"
-                
                 str += '</tr>';
                 str += '</tbody>';
                 str += '</table>';
-           
+
                 return $("<table>")
                     .append(str)
                     .appendTo(ul);
-            };
+                };
         });
+
 
         $(document).ready(function () {
             $("#UserId").autocomplete({
                 source: function (request, response) {
                     $.ajax({
                         url: "/Muon/AutoCompleteTextUser",
-                        type: "POST",
+                        data: "{ 'user':'" + request.term + "'}",
                         dataType: "json",
-                        data: { text: request.term },
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
                         success: function (data) {
                             response($.map(data, function (item) {
-                                return { label: item.Text, value: item.Id };
+                                return {
+                                    Text: item.Text,
+                                    Id: item.Id,
+                                    SoLuongMuon: item.SoLuongMuon,
+                                    json: item
+                                }
                             }))
-
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert(textStatus);
                         }
-                    })
-                }
-            });
+                    });
+                },
+                select: function (event, ui) {
+                    $("#UserId").val(ui.item.Text);
+                    if (ui.item.SoLuongMuon >= 3) {
+                        alert("Đã mượn tối đa 3 TLVB, vui lòng trả rồi mượn tiếp!");
+                        window.location.href = "http://localhost:19873/Muon/Index";
+                    }
+                       
+                    return false;
+                },
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                var str = '<table style="width:100%;">';
+                str += '<tr>';
+                str += '<th width="400">Tên</th>'
+                str += '<th >Số Lượng Đang Mượn</th>'
+                str += '</tr>';
+                str += '<tbody>';
+                str += '<tr>';
+                str += "<td>" + item.Text + "</td>" + "<td>" + item.SoLuongMuon + "</td>"
+                str += '</tr>';
+                str += '</tbody>';
+                str += '</table>';
+
+                return $("<table>")
+                    .append(str)
+                    .appendTo(ul);
+            };
         });
+
+            $('input').blur( function (e) {
+                var userId = $('#UserId').val();
+                var today = new Date();
+                var day = today.getDate();
+                var month = (today.getMonth() + 1);
+                var year = today.getFullYear();
+                var a = [];
+                $.ajax({
+                    type: 'GET',
+                    url: "/Muon/KiemTraHanTra",
+                    data: {
+                        user: userId
+                    },
+                    success: function (data) {
+                        for (i = 0; i < data.d.length; i++) {
+                            var dt = new Date(parseInt(data.d[i].NgayTra.replace('/Date(', '')))
+                            var dtFinal = AddLeadingZeros(dt.getFullYear(), 4) + '/' +
+                                AddLeadingZeros(dt.getMonth() + 1, 2) + '/' +
+                                AddLeadingZeros(dt.getDate(), 2)
+                            var d = AddLeadingZeros(dt.getDate(), 2);
+                            var m = AddLeadingZeros(dt.getMonth() + 1, 2);
+                            var y = AddLeadingZeros(dt.getFullYear(), 4);
+                            var da = d.replace(/^0+/, '');
+                            var mo = m.replace(/^0+/, '');
+                            if ((da <= day && mo <= month && y <= year) || (da >= day && mo < month && y <= year) || y < year) {
+                                 alert("Bạn chưa trả TL/VB theo hạn trả, vui lòng trả rồi mượn tiếp");
+                                window.location.href = "http://localhost:19873/Muon/Index";
+                            }
+                               
+                        }
+                    },
+                });
+            });
+
+        function AddLeadingZeros(number, size) {
+            var s = "0000" + number;
+            return s.substr(s.length - size);
+        }
 
         var arrayMuon = [];
         var pval = "";
         $("#ThuMuon").change(function () {
-           
+
             var inputText = $("#ThuMuon").val();
             if (inputText.length > 1) {
                 arrayMuon.push(inputText);
@@ -157,40 +236,54 @@
                 for (i = 0; i < arrayMuon.length; i++) {
                     pval = pval + arrayMuon[i] + "<br/>";
                 }
-                document.getElementById('array').innerHTML = pval;
             }
-            else {
-                document.getElementById('array').innerHTML = arrayMuon + "<br/>";
-            }
-           
-            
-           
         });
+
+            $(document).on("click", '.delete', function () {
+                var arrayText = [];
+                var _tr = $(this).closest('tr');
+                var text = $(_tr).find('.name').text();
+                var name = text.trim();
+                var a = jQuery.extend(true, [], arrayText);
+                var b = jQuery.extend(true, [], arrayMuon);
+                for (i = 0; i < b.length; i++) {
+                    if (name == arrayMuon[i])
+                        arrayMuon.splice(i, 1);
+                }
+                $(this).parent().parent('tr').remove();
+
+            });
+
+       
 
         $("#b").click(function () {
             var token = $('input[name="__RequestVerificationToken"]').val();
             var user = $('#UserId').val();
             var ngayKT = $('#NgayTra').val();
-            var soLuongMuon = $("#SoLuong").val();
-            $.ajax({
-                type: "POST",
-                url: '/Muon/CreateOrUpdate',
-                data: {
-                    userId: user,
-                    array: arrayMuon,
-                    ngayTra: ngayKT,
-                    soLuong: soLuongMuon,
-                    __RequestVerificationToken: token
-                },
-                success: function (data) {
-                    window.location.href = "http://localhost:19873/Muon/Index";
-                    TempData["AlertMessage"] = "Tạo Mới Thành Công";
-                }
-                
-            });
+            if (arrayMuon.length > 3)
+                alert("Bạn chỉ mượn tối đa được 3 TL/VB");
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: '/Muon/CreateOrUpdate',
+                    data: {
+                        userId: user,
+                        array: arrayMuon,
+                        ngayTra: ngayKT,
+                        __RequestVerificationToken: token
+                    },
+                    success: function (data) {
+                        window.location.href = "http://localhost:19873/Muon/Index";
+                        TempData["AlertMessage"] = "Tạo Mới Thành Công";
+                    }
+
+                });
+            }
+            
         });
-        
-    </script>
+
+   </script>
+      </div>
 
 }
 

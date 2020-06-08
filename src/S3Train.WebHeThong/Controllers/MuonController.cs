@@ -45,11 +45,13 @@ namespace S3Train.WebHeThong.Controllers
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var muontras = _muonTraService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active
+            var listMuonTra = _muonTraService.GetAllHaveJoinUser();
+            var muontras = _muonTraService.GetAllPaged(listMuonTra, pageIndex, pageSize.Value, p => p.TrangThai == active
             && p.TinhTrang == EnumTinhTrang.DangMuon, p => p.OrderBy(c => c.NgayMuon));
+            
             if (!string.IsNullOrEmpty(searchString))
             {
-                muontras = _muonTraService.GetAllPaged(pageIndex, pageSize.Value, p => p.User.FullName.Contains(searchString) || p.VanThu.Contains(searchString)
+                muontras = _muonTraService.GetAllPaged(listMuonTra, pageIndex, pageSize.Value, p => p.User.FullName.Contains(searchString) || p.VanThu.Contains(searchString)
                     && p.TrangThai == active && p.TinhTrang == EnumTinhTrang.DangMuon, p => p.OrderBy(c => c.NgayMuon));
             }
             model.Paged = muontras;
@@ -80,12 +82,15 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpPost]
-        public  ActionResult CreateOrUpdate(string userId, string[] array, DateTime ngayTra, int SoLuong)
+        public async Task<ActionResult> CreateOrUpdate(string userId, string[] array, DateTime ngayTra)
         {
             var muontra = new MuonTra();
             var autoList = AutoCompleteTextHoSos(_taiLieuVanBanService.Gets(p => p.TrangThai == true, p => p.OrderBy(x => x.Ten)).ToList());
-            
-            muontra.UserId = userId;
+            var users = await _userService.GetAllAsync();
+            var muonTras = new List<MuonTra>();
+            var model = Users(users, muonTras);
+
+            muontra.UserId = model.FirstOrDefault(m => m.Text == userId).Id;
             muontra.VanThu = User.Identity.GetUserName();
             muontra.NgayMuon = DateTime.Now;
             muontra.NgayKetThuc = ngayTra;
@@ -154,6 +159,7 @@ namespace S3Train.WebHeThong.Controllers
             var model = new List<ChiTietMuonTraViewModel>();
             var chiTietMuonTras = _chiTietMuonTraService.GetAll();
             var muonTra = GetMuonTra(_muonTraService.Get(m => m.Id == id));
+            var autoList = AutoCompleteTextHoSos(_taiLieuVanBanService.Gets(p => p.TrangThai == true, p => p.OrderBy(x => x.Ten)).ToList());
             foreach (var item in chiTietMuonTras)
             {
                 if (item.MuonTraID == id && item.TrangThai == true)
@@ -168,6 +174,7 @@ namespace S3Train.WebHeThong.Controllers
                         TaiLieuVanBan = taiLieuVanBan,
                         TaiLieuVanBanId = item.TaiLieuVanBanId,
                         SoLuong = 1,
+                        ViTri = autoList.First().ViTri,
                     });
                 }
             }
@@ -198,19 +205,20 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AutoCompleteTextUser(string text)
+        public async Task<ActionResult> AutoCompleteTextUser(string user)
         {
             var users = await _userService.GetAllAsync();
-            var model = Users(users);
+            var muonTras = _muonTraService.GetAll();
+            var model = Users(users, muonTras);
 
-            model = model.Where(x => x.Text.Contains(text)).ToHashSet();
+            model = model.Where(x => x.Text.StartsWith(user)).ToHashSet();
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        private HashSet<AutoCompleteTextModel> Users(IList<ApplicationUser> users)
+        private HashSet<AutoCompleteTextModel> Users(IList<ApplicationUser> users, IList<MuonTra> muonTras)
         {
-            var list = ConvertDomainToAutoCompleteModel.LocalUser(users);
+            var list = ConvertDomainToAutoCompleteModel.LocalUser(users, muonTras);
             return list;
         }
 
@@ -221,6 +229,26 @@ namespace S3Train.WebHeThong.Controllers
             return list;
         }
 
+        [HttpGet]
+        public ActionResult KiemTraHanTra(string user)
+        {
+            var muonTras = _muonTraService.GetAll();
+            var list = new List<MuonTraViewModel>();
+            foreach (var item in muonTras)
+            {
+                if (user == item.User.FullName && item.TinhTrang == EnumTinhTrang.DangMuon)
+                {
+
+                    list.Add(new MuonTraViewModel
+                    {
+                        UserId = item.UserId,
+                        NgayTra = item.NgayKetThuc,
+                    });
+                }
+
+            }
+            return Json(new { d = list }, JsonRequestBehavior.AllowGet);
+        }
         
         private MuonTraViewModel GetMuonTra(MuonTra muonTra)
         {

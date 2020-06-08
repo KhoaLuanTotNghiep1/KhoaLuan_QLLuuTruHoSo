@@ -21,7 +21,9 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                @Html.Partial("~/Views/Shared/_PartialActionCreateAndTrash.cshtml", "Muon")
+                <a href="@Url.Action("CreateOrUpdate","Muon", new { dang = ViewBag.Dang})" class="btn btn-info m-2 btn">
+                    <i class="fas fa-plus"></i> Tạo Mới
+                </a>
             </div>
             <div class="col-md-6">
                 @Html.Partial("~/Views/Shared/_PartialSearch.cshtml")
@@ -56,9 +58,6 @@
                     <td>
                         <a href="@Url.Action("Detail","Muon", new { id=item.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
                             <i class="fas fa-info"></i>
-                        </a>
-                        <a href="@Url.Action("Delete","Muon", new { id=item.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa Phiếu Mượn Này?');" title="Xóa">
-                            <i class="fas fa-trash"></i>
                         </a>
                     </td>
                 </tr>

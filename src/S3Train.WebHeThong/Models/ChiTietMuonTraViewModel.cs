@@ -28,6 +28,7 @@ namespace S3Train.WebHeThong.Models
         public bool TrangThai { get; set; }
 
         public bool Checkbox { get; set; }
+        public string ViTri { get; set; }
         public ApplicationUser User { get; set; }
         public MuonTraViewModel MuonTra { get; set; }
 

@@ -31,8 +31,8 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Số Lượng ")]
         public int SoLuong { get; set; }
 
-        [Required(ErrorMessage = "Điền Ngày Trả")]
-        [Display(Name = "Ngày Trả")]
+        [Required(ErrorMessage = "Điền Hạn Trả")]
+        [Display(Name = "Hạn Trả")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime NgayTra { get; set; }

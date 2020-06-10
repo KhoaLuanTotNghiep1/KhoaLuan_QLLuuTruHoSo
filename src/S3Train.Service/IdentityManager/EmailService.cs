@@ -39,7 +39,8 @@ namespace S3Train.IdentityManager
                 using (var mess = new MailMessage(senderEmail, receiverEmail)
                 {
                     Subject = message.Subject,
-                    Body = message.Body
+                    Body = message.Body,
+                    IsBodyHtml = true
                 })
                 {
                     smtp.Send(mess);

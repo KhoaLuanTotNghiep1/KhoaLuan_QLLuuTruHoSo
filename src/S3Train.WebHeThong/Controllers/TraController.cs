@@ -133,7 +133,7 @@ namespace S3Train.WebHeThong.Controllers
                             _taiLieuVanBanService.Update(vanBan);
                     
                     }
-                TempData["AlertMessage"] = "Tạo Mới Thành Công";
+                TempData["AlertMessage"] = "Trả Văn Bản Thành Công";
             }
             if(dem == 0)
                 TempData["AlertMessage"] = "Bạn Chưa Chọn TL/VB Để Trả";

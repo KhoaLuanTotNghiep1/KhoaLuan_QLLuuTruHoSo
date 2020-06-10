@@ -40,7 +40,7 @@
             <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Đơn Vị Mượn/Người Mượn</th>
+                    <th>Đơn Vị/Người Mượn</th>
                     <th>Số Lượng</th>
                     <th>Văn Thư</th>
                     <th>Ngày Mượn</th>
@@ -57,7 +57,7 @@
                             <td>@stt</td>
                             <td>@Html.DisplayFor(m => item.User.FullName)</td>
                             <td>@Html.DisplayFor(m => item.SoLuong)</td>
-                            <td>@Html.DisplayFor(m => item.User.FullName)</td>
+                            <td>@Html.DisplayFor(m => item.VanThu)</td>
                             <td>@Html.DisplayFor(m => item.NgayMuon)</td>
                             <td>@Html.DisplayFor(m => item.NgayTra)</td>
                             <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>

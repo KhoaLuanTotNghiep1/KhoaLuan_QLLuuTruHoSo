@@ -12,6 +12,7 @@ namespace S3Train.WebHeThong.Models
         public string Text { get; set; }
         public EnumTinhTrang TinhTrang { get; set; }
         public string ViTri { get; set; }
+        public string UserName { get; set; }
         public int SoLuongMuon { get; set; }
         public DateTime HanTra { get; set; }
     }

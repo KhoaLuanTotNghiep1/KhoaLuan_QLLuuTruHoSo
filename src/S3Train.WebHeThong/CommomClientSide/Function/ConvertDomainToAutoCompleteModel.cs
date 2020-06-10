@@ -77,6 +77,7 @@ namespace S3Train.WebHeThong.CommomClientSide.Function
                     Id = item.Id,
                     Text = item.FullName,
                     SoLuongMuon = sl,
+                    UserName = item.UserName,
                 };
                 list.Add(auto);
                 sl = 0;

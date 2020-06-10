@@ -12,7 +12,7 @@ namespace S3Train.WebHeThong.Models
         public string Id { get; set; }
 
         [Required(ErrorMessage = "Điền Tên")]
-        [Display(Name = "Đơn vị mượn/Người mượn")]
+        [Display(Name = "Đơn vị/Người mượn")]
         public string UserId { get; set; }
 
         [Required(ErrorMessage = "Điền  VB/TL mượn")]

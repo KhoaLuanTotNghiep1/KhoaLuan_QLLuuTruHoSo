@@ -6,5 +6,6 @@ namespace S3Train.Contract
     public interface IMuonTraService : IGenenicServiceBase<MuonTra>
     {
         IQueryable<MuonTra> GetAllHaveJoinUser();
+        IQueryable<MuonTra> GetAllHaveJoinChiTietMuonTra();
     }
 }

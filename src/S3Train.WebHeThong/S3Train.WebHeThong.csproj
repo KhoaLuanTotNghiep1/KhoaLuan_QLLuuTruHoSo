@@ -256,6 +256,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\TaiLieuVanBanController.cs" />
     <Compile Include="Controllers\API\TestController.cs" />
+    <Compile Include="Controllers\API\UserAPIController.cs" />
     <Compile Include="Controllers\TraController.cs" />
     <Compile Include="Migrations\202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.cs" />
     <Compile Include="Migrations\202004251529305_AddColumnNgayBanHanhOnTableTaiLieuVanBan.cs" />
@@ -2750,6 +2751,8 @@
     <Content Include="Views\User\UserProfile.cshtml" />
     <Content Include="Views\ThongKe\MuonTra.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\User\ResetPassword.cshtml" />
+    <Content Include="Views\User\BodySendEmail.cshtml" />
     <None Include="Web.LocalConnectStrings.config">
       <SubType>Designer</SubType>
     </None>

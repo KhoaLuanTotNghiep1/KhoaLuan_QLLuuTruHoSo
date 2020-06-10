@@ -13,6 +13,7 @@ using System.Web.Http.Description;
 
 namespace S3Train.WebHeThong.Controllers.API
 {
+    [RoutePrefix("TaiLieuVanBan")]
     public class TaiLieuVanBanController : ApiController
     {
         private readonly ITaiLieuVanBanService _taiLieuVanBanService;
@@ -35,7 +36,6 @@ namespace S3Train.WebHeThong.Controllers.API
             return taiLieuVanBanDtos;
         }
 
-        [ResponseType(typeof(NoiBanHanhDto))]
         public IHttpActionResult GetBysearchString(string searchString)
         {
             if (string.IsNullOrEmpty(searchString))
@@ -48,33 +48,18 @@ namespace S3Train.WebHeThong.Controllers.API
                 return NotFound();
 
             return Ok(taiLieuVanBanDtos);
-        }
+        }   
 
-        //[ResponseType(typeof(NoiBanHanhDto))]
-        //public IHttpActionResult GetByDang(EnumDangVanBan dang)
-        //{
-        //    if (dang != null)
-        //        return BadRequest();
-
-        //    var taiLieuVanBanDtos = _taiLieuVanBanService.Gets(p => p.TrangThai == true && p.Dang == dang,
-        //        p => p.OrderBy(c => c.NgayTao)).ToList().Select(Mapper.Map<TaiLieuVanBan, TaiLieuVanBanDto>);
-
-        //    if (taiLieuVanBanDtos == null)
-        //        return NotFound();
-
-        //    return Ok(taiLieuVanBanDtos);
-        //}
-
-        [ResponseType(typeof(NoiBanHanhDto))]
-        public IHttpActionResult GetByTime(DateTime? startTime, DateTime? endTime)
+        [Route("date/{startTime:datetime}")]
+        public IHttpActionResult GetByTime(DateTime startTime)
         {
             var taiLieuVanBans = _taiLieuVanBanService.Gets(p => p.TrangThai == true, p => p.OrderByDescending(c => c.NgayTao));
 
-            if (startTime.HasValue)
-                taiLieuVanBans = taiLieuVanBans.Where(p => p.NgayTao >= startTime).ToList();
+  
+            taiLieuVanBans = taiLieuVanBans.Where(p => p.NgayTao >= startTime).ToList();
 
-            if (endTime.HasValue)
-                taiLieuVanBans = taiLieuVanBans.Where(p => p.NgayTao <= endTime).ToList();
+            //if (endTime.HasValue)
+            //    taiLieuVanBans = taiLieuVanBans.Where(p => p.NgayTao <= endTime).ToList();
 
             if (taiLieuVanBans == null)
                 return NotFound();

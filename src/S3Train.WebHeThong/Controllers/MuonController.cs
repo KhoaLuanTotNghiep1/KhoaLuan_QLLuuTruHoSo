@@ -45,21 +45,20 @@ namespace S3Train.WebHeThong.Controllers
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
+            var a = new List<MuonTra>();
             var listMuonTra = _muonTraService.GetAllHaveJoinUser();
-            var Muon = _muonTraService.GetAll();
+            var Muon = _muonTraService.GetAllHaveJoinChiTietMuonTra();
             var muontras = _muonTraService.GetAllPaged(listMuonTra, pageIndex, pageSize.Value, p => p.TrangThai == active
             && p.TinhTrang == EnumTinhTrang.DangMuon, p => p.OrderBy(c => c.NgayMuon));
-            var a = _muonTraService.GetAllPaged(listMuonTra, pageIndex, pageSize.Value, p => p.TrangThai == active
-            , p => p.OrderBy(c => c.NgayMuon));
-            if (!string.IsNullOrEmpty(searchString) && muontras.FirstOrDefault().TinhTrang == EnumTinhTrang.DangMuon)
+            if (!string.IsNullOrEmpty(searchString))
             {
-                muontras = _muonTraService.GetAllPaged(listMuonTra, pageIndex, pageSize.Value, p => p.User.FullName.Contains(searchString) 
-                || p.ChiTietMuonTras.FirstOrDefault().TaiLieuVanBan.Ten.Contains(searchString) || p.VanThu.Contains(searchString)
-                            && p.TrangThai == active && p.TinhTrang == EnumTinhTrang.DangMuon, p => p.OrderBy(c => c.NgayMuon));
-                
+                muontras = _muonTraService.GetAllPaged(listMuonTra, pageIndex, pageSize.Value, p => p.User.FullName.Contains(searchString)
+                    || p.ChiTietMuonTras.FirstOrDefault().TaiLieuVanBan.Ten.Contains(searchString) || p.VanThu.Contains(searchString)
+                                && p.TrangThai == active && .TinhTrang == EnumTinhTrang.DangMuon, p => p.OrderBy(c => c.NgayMuon));
+
             }
             model.Paged = muontras;
-            
+
             model.Items = GetMuonTras(muontras.ToList());
 
 
@@ -205,7 +204,7 @@ namespace S3Train.WebHeThong.Controllers
             List<TaiLieuVanBan> tlvb = new List<TaiLieuVanBan>();
             var model = AutoCompleteTextHoSos( _taiLieuVanBanService.GetAll());
 
-            model = model.Where(p => p.Text.StartsWith(pre)).ToHashSet();
+            model = model.Where(p => p.Text.Contains(pre)).ToHashSet();
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -217,7 +216,7 @@ namespace S3Train.WebHeThong.Controllers
             var muonTras = _muonTraService.GetAll();
             var model = Users(users, muonTras);
 
-            model = model.Where(x => x.Text.StartsWith(user)).ToHashSet();
+            model = model.Where(x => x.Text.Contains(user)).ToHashSet();
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }

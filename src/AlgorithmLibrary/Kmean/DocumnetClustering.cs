@@ -218,25 +218,27 @@ namespace AlgorithmLibrary.Kmeans
 
         public static string FindClosestDocument()
         {
-            int countCenter = centroid.GroupedDocument.Count() - 1;
-            float[] similarityMeasure = new float[countCenter];
-            float max = 0;
-            string doc = "";
-            // Tính độ tương tự của document với các center rồi add vào mảng similarityMeasure
-            foreach(var ce in centroid.GroupedDocument)
+            if (centroid != null)
             {
-                if(ce.Content != documentVector.Content)
+                int countCenter = centroid.GroupedDocument.Count() - 1;
+                float max = 0;
+                string doc = "";
+                // Tính độ tương tự của document với các center rồi add vào mảng similarityMeasure
+                foreach (var ce in centroid.GroupedDocument)
                 {
-                    float current = SimilarityMatrics.FindCosineSimilarity(ce.VectorSpace, documentVector.VectorSpace);
-                    if (max < current)
+                    if (ce.Content != documentVector.Content)
                     {
-                        max = current;
-                        doc = ce.Content;
+                        float current = SimilarityMatrics.FindCosineSimilarity(ce.VectorSpace, documentVector.VectorSpace);
+                        if (max < current)
+                        {
+                            max = current;
+                            doc = ce.Content;
+                        }
                     }
                 }
+                return doc;
             }
-            return doc;
-
+            return null;
         }
 
         // Tính lại center cho các Cluster

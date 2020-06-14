@@ -17,7 +17,7 @@ namespace S3Train.WebHeThong.CommomClientSide.Function
 {
     public static class ConvertDomainToAutoCompleteModel
     {
-        public static HashSet<AutoCompleteTextModel> LocalTaiLieu(IEnumerable<HoSo> hoSos)
+        public static HashSet<AutoCompleteTextModel> LocalTaiLieu(IList<HoSo> hoSos)
         {
             var list = new HashSet<AutoCompleteTextModel>();
             

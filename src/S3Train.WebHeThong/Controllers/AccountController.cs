@@ -225,7 +225,7 @@ namespace S3Train.WebHeThong.Controllers
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "User", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                 await UserManager.SendEmailAsync(user.Id, "Mật Khẩu", ReadHTMLSendEmail(callbackUrl));
-                return RedirectToAction("Login", "Account");
+                return View("ForgotPasswordConfirmation");
             }
 
             // If we got this far, something failed, redisplay form

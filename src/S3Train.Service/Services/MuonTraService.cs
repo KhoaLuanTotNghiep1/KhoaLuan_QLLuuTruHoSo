@@ -18,7 +18,7 @@ namespace S3Train.Services
         }
         public IQueryable<MuonTra> GetAllHaveJoinChiTietMuonTra()
         {
-            var list = EntityDbSet.Include(p => p.ChiTietMuonTras).Where(p => p.TinhTrang == EnumTinhTrang.DangMuon);
+            var list = EntityDbSet.Include(p => p.ChiTietMuonTras);
 
             return list;
         }

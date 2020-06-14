@@ -160,7 +160,7 @@
                             if (data.da == "Không tìm thấy tài liêu/văn bản có cùng nội dung! Tạo hồ sơ mới.")
                                 $("#viTri").text(vt);
                             else
-                                $("#HoSoId").val(data);
+                                $("#HoSoId").val(data.da);
                             $("#Button1").hide();
                         },
                         error: function () {

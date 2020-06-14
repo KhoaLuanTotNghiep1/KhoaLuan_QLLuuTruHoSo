@@ -237,8 +237,12 @@ namespace S3Train.WebHeThong.Controllers
         public ActionResult StorageSuggestion(string document)
         {
             string local = "Không tìm thấy tài liêu/văn bản có cùng nội dung! Tạo hồ sơ mới.";
+
+            var hosos = AutoCompleteTextHoSos(GetHoSos());
+
             var list = _taiLieuVanBanService.GetDocuments();
             list.Add(document);
+
             var docCollection = new DocumentCollection()
             {
                 DocumentList = list
@@ -253,28 +257,10 @@ namespace S3Train.WebHeThong.Controllers
             {
                 var taiLieuVanBan = _taiLieuVanBanService.Get(p => p.NoiDung == documentNeedSearch);
 
-                local = taiLieuVanBan.HoSo.Hop.Ke.Tu.Ten + " kệ thứ " + taiLieuVanBan.HoSo.Hop.Ke.Ten + 
-                    " hộp số " + taiLieuVanBan.HoSo.Hop.SoHop + " hồ sơ " + taiLieuVanBan.HoSo.PhongLuuTru;
+                local = hosos.FirstOrDefault(p => p.Id == taiLieuVanBan.HoSoId).Text;
             }
 
             return Json(new { da = local}, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult DemoKmeans()
-        {
-            var list = _taiLieuVanBanService.GetDocuments();
-            ViewBag.da = "Những bài văn viết về người thầy cũ đã nghỉ hưu, người bố làm nghề xe ôm hay người mẹ đơn thân thần tảo nuôi con… đã lấy được nước mắt của người đọc.";
-            list.Add(ViewBag.da);
-            var docCollection = new DocumentCollection()
-            {
-                DocumentList = list
-            };
-            List<DocumentVector> vSpace = VectorSpaceModel.ProcessDocumentCollection(docCollection);
-            List<Centroid> resultSet = DocumnetClustering.DocumentCluster(3, vSpace, ViewBag.da);
-
-            ViewBag.data = DocumnetClustering.FindClosestDocument();
-
-            return View(resultSet);
         }
 
         /// <summary>
@@ -304,20 +290,20 @@ namespace S3Train.WebHeThong.Controllers
             }
         }
 
-        private HashSet<AutoCompleteTextModel> AutoCompleteTextHoSos(IEnumerable<HoSo> hoSos)
+        private HashSet<AutoCompleteTextModel> AutoCompleteTextHoSos(IList<HoSo> hoSos)
         {
             var list = ConvertDomainToAutoCompleteModel.LocalTaiLieu(hoSos);
 
             return list;
         }
 
-        private IEnumerable<HoSo> GetHoSos()
+        private IList<HoSo> GetHoSos()
         {
             var listKe = _hoSoService.GetAllHaveJoinHoSo();
 
             var model = listKe.Where(p => p.TrangThai == true);
 
-            return model;
+            return model.ToList();
         }
 
         private TaiLieu_VanBanViewModel GetTaiLieuVanBan(TaiLieuVanBan x)
@@ -335,7 +321,7 @@ namespace S3Train.WebHeThong.Controllers
                NgayCapNhat =  x.NgayCapNhat,
                NgayTao = x.NgayTao,
                NguoiDuyet = x.NguoiDuyet,
-               NoiDung = AttributeExtension.GetDecription(x.Dang),
+               NoiDung = x.Dang.GetDecription(),
                NguoiGuiHoacNhan = x.NguoiGuiHoacNhan,
                NguoiKy = x.NguoiKy,
                NoiBanHanh = x.NoiBanHanh,

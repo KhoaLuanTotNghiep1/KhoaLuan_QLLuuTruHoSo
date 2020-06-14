@@ -39,7 +39,7 @@ namespace S3Train.WebHeThong.Controllers
         [Route("Danh-Sach")]
         public async Task<ActionResult> IndexAsync()
         {
-            var model = await _userService.GetUser(1,10);
+            var model = await _userService.GetUser(1,GlobalConfigs.DEFAULT_PAGESIZE);
             ViewBag.Roles = DropDownRole();
             return View(model);
         }
@@ -218,6 +218,7 @@ namespace S3Train.WebHeThong.Controllers
             var user = await _userService.GetUserByEmail(model.Email);
             if (user == null)
             {
+                TempData["AlertMessage"] = "Email Bạn Nhập Không Đúng.";
                 return RedirectToAction("ResetPassword", "User");
             }
             var result = await _userService.UpdatePassword(user.Id, model.Password);

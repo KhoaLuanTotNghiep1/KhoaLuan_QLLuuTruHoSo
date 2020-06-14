@@ -64,6 +64,16 @@ namespace S3Train.WebHeThong.Controllers
             return View(list);
         }
 
+        public ActionResult UsersOverBorrowDocument()
+        {
+            var list = _muonTraService.GetAllHaveJoinUser().Where(p => p.TinhTrang == EnumTinhTrang.DangMuon && p.TrangThai == true);
+            var users = list.Where(p => DateTime.Compare(p.NgayKetThuc, DateTime.Now) >= 0);
+
+            HttpContext.Session["ListMT"] = users;
+
+            return View(users);
+        }
+
 
         public void Export(string type, string dang)
         {

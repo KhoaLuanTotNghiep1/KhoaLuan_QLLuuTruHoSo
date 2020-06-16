@@ -234,7 +234,7 @@ namespace S3Train.WebHeThong.Controllers
         }
 
         [HttpGet]
-        public ActionResult StorageSuggestion(string document)
+        public ActionResult StorageSuggestion(string document, string type)
         {
             string local = "Không tìm thấy tài liêu/văn bản có cùng nội dung! Tạo hồ sơ mới.";
 
@@ -248,20 +248,40 @@ namespace S3Train.WebHeThong.Controllers
                 DocumentList = list
             };
 
+            var cluster = _taiLieuVanBanService.CountDocumentType(type);
+
             List<DocumentVector> vSpace = VectorSpaceModel.ProcessDocumentCollection(docCollection);
-            List<Centroid> resultSet = DocumnetClustering.DocumentCluster(3, vSpace, document);
+            List<Centroid> resultSet = DocumnetClustering.DocumentCluster(cluster, vSpace, document);
 
             string documentNeedSearch = DocumnetClustering.FindClosestDocument();
 
             if(!string.IsNullOrEmpty(documentNeedSearch))
             {
-                var taiLieuVanBan = _taiLieuVanBanService.Get(p => p.NoiDung == "Thầy B");
+                var taiLieuVanBan = _taiLieuVanBanService.Get(p => p.NoiDung.Contains(documentNeedSearch));
 
                 local = hosos.FirstOrDefault(p => p.Id == taiLieuVanBan.HoSoId).Text;
             }
 
             return Json(new { da = local}, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Test()
+        {
+            var list = _taiLieuVanBanService.GetDocuments();
+
+            var docCollection = new DocumentCollection()
+            {
+                DocumentList = list
+            };
+
+            var cluster = _taiLieuVanBanService.CountDocumentType("Thông Báo");
+
+            List<DocumentVector> vSpace = VectorSpaceModel.ProcessDocumentCollection(docCollection);
+            List<Centroid> resultSet = DocumnetClustering.DocumentCluster(cluster, vSpace, "thôn báo chính phủ mới");
+
+            return View(resultSet);
+        }
+
 
         /// <summary>
         /// Upload file

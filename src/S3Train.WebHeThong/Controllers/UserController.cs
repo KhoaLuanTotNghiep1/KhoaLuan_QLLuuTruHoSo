@@ -21,16 +21,19 @@ namespace S3Train.WebHeThong.Controllers
     {
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
+        private readonly IMuonTraService _muonTraService;
         private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
 
         public UserController()
         {
 
         }
-        public UserController(IUserService userService, IRoleService roleService, IFunctionLichSuHoatDongService functionLichSuHoatDongService)
+        public UserController(IUserService userService, IRoleService roleService, IMuonTraService muonTraService,
+            IFunctionLichSuHoatDongService functionLichSuHoatDongService)
         {
             _userService = userService;
             _roleService = roleService;
+            _muonTraService = muonTraService;
             _functionLichSuHoatDongService = functionLichSuHoatDongService;
         }
 
@@ -161,6 +164,9 @@ namespace S3Train.WebHeThong.Controllers
             {
                 Role = roles.Count() > 0 ? roles[0].ToString() : ""
             };
+
+            ViewBag.MuonTras = _muonTraService.Gets(p => p.UserId == id && p.TinhTrang == EnumTinhTrang.DangMuon);
+
             return View(model);
         }
 

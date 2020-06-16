@@ -14,13 +14,33 @@ namespace S3Train.Services
         public List<string> GetDocuments()
         {
             var result = new List<string>();
+            string document;
 
-            foreach(var item in EntityDbSet)
+            foreach (var item in EntityDbSet)
             {
-                result.Add(item.NoiDung);
+                document = item.NoiDung;
+                result.Add(document);
             }
 
             return result;
+        }
+
+        public int CountDocumentType(string type)
+        {
+            List<string> listType = new List<string>
+            {
+                type
+            };
+
+            foreach (var item in EntityDbSet)
+            {
+                var check = listType.Find(p => p.Equals(item.Loai));
+                if (check == null)
+                    listType.Add(item.Loai);
+            }
+
+            return listType.Count;
+
         }
 
         public TaiLieuVanBan GetByIdHaveJoin(string id)

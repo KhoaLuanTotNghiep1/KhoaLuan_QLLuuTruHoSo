@@ -1,9 +1,12 @@
 ﻿@using S3Train.Model.User
+@using S3Train.Domain
+
 @model UserViewModel
 
 @{
     ViewBag.Title = "UserProfile";
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
+    int stt = 1;
 }
 
 <div class="card">
@@ -79,6 +82,44 @@
                                 @Html.DisplayFor(model => model.Role)
                             </div>
                         </div>
+                        <br />
+
+                        @if (ViewBag.MuonTras != null)
+                        {
+                            <div class="row">
+                                <div class="col-12 col-sm-12">
+                                    Danh Sách Phiếu Mượn Hiện Tại
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-12">
+                                    <table class="table table-responsive table-responsive-md">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Số Lượng</th>
+                                                <th>Ngày Mượn</th>
+                                                <th>Ngày Trả</th>
+                                                <th>Trạng Thái</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in ViewBag.MuonTras as IEnumerable<MuonTra>)
+                                            {
+                                                <tr>
+                                                    <td>@stt</td>
+                                                    <td>@item.SoLuong văn bản</td>
+                                                    <td>@item.NgayMuon.ToString("dd MMM yyyy")</td>
+                                                    <td>@item.NgayKetThuc.ToString("dd MMM yyyy")</td>
+                                                    <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
+                                                </tr>
+                                                stt += 1;
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
                     </div>
 
                     <div class="tab-pane" id="edit">

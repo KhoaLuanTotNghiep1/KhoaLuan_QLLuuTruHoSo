@@ -16,15 +16,17 @@ namespace S3Train.WebHeThong.Controllers.API
     public class UserAPIController : ApiController
     {
         private readonly IUserService _userService;
+        private readonly IMuonTraService _muonTraService;
 
         public UserAPIController()
         {
 
         }
 
-        public UserAPIController(IUserService userService)
+        public UserAPIController(IUserService userService, IMuonTraService muonTraService)
         {
             _userService = userService;
+            _muonTraService = muonTraService;
         }
 
         public async Task<IHttpActionResult> Get()
@@ -36,7 +38,7 @@ namespace S3Train.WebHeThong.Controllers.API
         }
 
         [ResponseType(typeof(UserViewModel))]
-        public async Task<IHttpActionResult> Get(string userName, string passWord)
+        public async Task<IHttpActionResult> GetLogin(string userName, string passWord)
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(passWord))
                 return BadRequest();
@@ -51,7 +53,7 @@ namespace S3Train.WebHeThong.Controllers.API
             return Ok(user);
         }
 
-        public async Task<IHttpActionResult> Get(string email)
+        public async Task<IHttpActionResult> GetByEmail(string email)
         {
             if (string.IsNullOrEmpty(email))
                 return BadRequest();
@@ -62,6 +64,32 @@ namespace S3Train.WebHeThong.Controllers.API
                 return NotFound();
 
             return Ok();
+        }
+
+        public async Task<IHttpActionResult> GetById(string Id)
+        {
+            if (string.IsNullOrEmpty(Id))
+                return BadRequest();
+
+            var result = await _userService.GetUserById(Id);
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
+        }
+
+        public async Task<IHttpActionResult> GetByUser(string user)
+        {
+            if (string.IsNullOrEmpty(user))
+                return BadRequest();
+
+            var result = await _userService.GetUserByUserName(user);
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
         }
     }
 }

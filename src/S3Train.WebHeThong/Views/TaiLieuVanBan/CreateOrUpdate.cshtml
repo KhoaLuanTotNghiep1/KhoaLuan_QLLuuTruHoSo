@@ -145,6 +145,7 @@
             $('#Button1').click(function (e) {
                 e.preventDefault();
                 var noiDung = $("#NoiDung").val();
+                var loai = $("#Loai").val();
                 if (noiDung.length == 0) {
                     alert("Muốn sử dụng chức năng gợi ý nơi lưu trữ thì nội dung không được để trống?")
                 } else {
@@ -152,7 +153,8 @@
                         url: "/TaiLieuVanBan/StorageSuggestion",
                         type: 'GET',
                         data: {
-                            document: noiDung
+                            document: noiDung,
+                            type: loai
                         },
                         success: function (data) {
                             console.log(data);

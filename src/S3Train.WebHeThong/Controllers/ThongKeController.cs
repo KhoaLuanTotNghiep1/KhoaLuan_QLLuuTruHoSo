@@ -56,7 +56,7 @@ namespace S3Train.WebHeThong.Controllers
             var list = GetMuonTra(startTime, endTime);
 
             HttpContext.Session["ListMT"] = list;
-
+            ViewBag.UsersBorrowDocument = GetUsersBorrowDocument();
             var dataPoints = AddList.ListDataPonit(list);
 
             ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
@@ -64,14 +64,12 @@ namespace S3Train.WebHeThong.Controllers
             return View(list);
         }
 
-        public ActionResult UsersOverBorrowDocument()
+        public List<MuonTra> GetUsersBorrowDocument()
         {
-            var list = _muonTraService.GetAllHaveJoinUser().Where(p => p.TinhTrang == EnumTinhTrang.DangMuon && p.TrangThai == true);
-            var users = list.Where(p => DateTime.Compare(p.NgayKetThuc, DateTime.Now) >= 0);
+            var list = _muonTraService.GetAllHaveJoinUser();
+            var users = list.Where(p => p.NgayKetThuc > DateTime.Now && p.TinhTrang == EnumTinhTrang.DangMuon && p.TrangThai == true);
 
-            HttpContext.Session["ListMT"] = users;
-
-            return View(users);
+            return users.ToList();
         }
 
 

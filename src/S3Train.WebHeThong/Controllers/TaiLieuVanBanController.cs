@@ -257,7 +257,7 @@ namespace S3Train.WebHeThong.Controllers
 
             if(!string.IsNullOrEmpty(documentNeedSearch))
             {
-                var taiLieuVanBan = _taiLieuVanBanService.Get(p => p.NoiDung.Contains(documentNeedSearch));
+                var taiLieuVanBan = _taiLieuVanBanService.Get(p => p.NoiDung == documentNeedSearch);
 
                 local = hosos.FirstOrDefault(p => p.Id == taiLieuVanBan.HoSoId).Text;
             }

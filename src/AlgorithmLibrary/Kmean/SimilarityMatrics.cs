@@ -39,5 +39,20 @@ namespace TAlgorithmLibrary.Kmeans
         {
             return (float)Math.Sqrt(DotProduct(vector, vector));
         }
+
+        #region Extended Jaccard
+        //Combines properties of both cosine similarity and Euclidean distance
+        public static float FindExtendedJaccard(float[] vecA, float[] vecB)
+        {
+            var dotProduct = DotProduct(vecA, vecB);
+            var magnitudeOfA = Magnitude(vecA);
+            var magnitudeOfB = Magnitude(vecB);
+
+            return dotProduct / (magnitudeOfA + magnitudeOfB - dotProduct);
+
+        }
+        #endregion
+
+        
     }
 }

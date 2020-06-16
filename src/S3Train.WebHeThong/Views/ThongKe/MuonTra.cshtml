@@ -55,49 +55,90 @@
     {
         foreach (var item in Model)
         {
-            <div class="mb-4"></div>
+            if (item.Value.Count() > 0)
+            {
+                <div class="mb-4"></div>
 
-            <div class="align-items-center justify-content-between mb-1">
-                <div class="row">
-                    <div class="col-md-8">
-                        <h1 class="h3 mb-0 text-gray-800">Danh Sách @item.Key</h1>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="@Url.Action("ExportMuontra","ThongKe", new { type = "excel", dang = item.Key})" class="btn btn-info">Xuất file exel</a>
+                <div class="align-items-center justify-content-between mb-1">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1 class="h3 mb-0 text-gray-800">Danh Sách @item.Key</h1>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="@Url.Action("ExportMuontra","ThongKe", new { type = "excel", dang = item.Key})" class="btn btn-info">Xuất file exel</a>
 
-                        <a class="btn btn-warning" href="@Url.Action("ExportMuontra","ThongKe", new { type = "csv", dang = item.Key})">Xuất file CSV</a>
+                            <a class="btn btn-warning" href="@Url.Action("ExportMuontra","ThongKe", new { type = "csv", dang = item.Key})">Xuất file CSV</a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="card">
-                <div class="card-body">
-                    <table class="table table-responsive-lg" style="overflow:scroll; overflow:auto;">
-                        <thead>
-                            <tr>
-                                <th>STT</th>
-                                <th>Tên Văn Bản</th>
-                                <th>Người Mượn</th>
-                                <th>Ngày Tạo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var mt in item.Value)
-                            {
+                <div class="card">
+                    <div class="card-body" style="height:500px; overflow:auto;">
+                        <table class="table table-responsive-lg" style="overflow:scroll; overflow:auto;">
+                            <thead>
                                 <tr>
-                                    <td>@stt</td>
-                                    <td>@Html.DisplayFor(m => mt.TaiLieuVanBan.Ten)</td>
-                                    <td>@Html.DisplayFor(m => mt.MuonTra.User.FullName)</td>
-                                    <td>@Html.DisplayFor(m => mt.NgayTao)</td>
+                                    <th>#</th>
+                                    <th>Tên Văn Bản</th>
+                                    <th>Người Mượn</th>
+                                    <th>Ngày Tạo</th>
                                 </tr>
-                                stt += 1;
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var mt in item.Value)
+                                {
+                                    <tr>
+                                        <td>@stt</td>
+                                        <td style="width:40%">@Html.DisplayFor(m => mt.TaiLieuVanBan.Ten)</td>
+                                        <td>@Html.DisplayFor(m => mt.MuonTra.User.FullName)</td>
+                                        <td>@mt.NgayTao.ToString("dd MMM yyyy")</td>
+                                    </tr>
+                                    stt += 1;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            }
         }
     }
+}
+<br />
+@if (ViewBag.UsersBorrowDocument != null)
+{
+    <h1 class="h3 mb-0 text-gray-800">Danh Sách Người Mượn Hết Hạn Mượn</h1>
+    <div class="card">
+        <div class="card-body" style="height:500px; overflow:auto;">
+            <table class="table table-responsive-lg" style="overflow:scroll; overflow:auto;">
+                <thead>
+                    <tr>
+                        <th>Tên Người Mượn</th>
+                        <th>Tài Khoản</th>
+                        <th>Số Lượn</th>
+                        <th>Ngày Mượn</th>
+                        <th>Ngày Trả</th>
+                        <th>Hoạt Động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var mt in ViewBag.UsersBorrowDocument as IEnumerable<MuonTra>)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(m => mt.User.FullName)</td>
+                            <td>@Html.DisplayFor(m => mt.User.UserName)</td>
+                            <td>@Html.DisplayFor(m => mt.SoLuong) văn bản</td>
+                            <td>@mt.NgayMuon.ToString("dd MMM yyyy")</td>
+                            <td>@mt.NgayKetThuc.ToString("dd MMM yyyy")</td>
+                            <td>
+                                <a href="@Url.Action("Detail","Muon", new { id=mt.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
+                                    <i class="fas fa-info"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 }
 
 

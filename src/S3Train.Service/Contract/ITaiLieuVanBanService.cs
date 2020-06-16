@@ -7,5 +7,6 @@ namespace S3Train.Contract
     {
         List<string> GetDocuments();
         TaiLieuVanBan GetByIdHaveJoin(string id);
+        int CountDocumentType(string type);
     }
 }

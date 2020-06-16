@@ -20,31 +20,23 @@
         @Html.AntiForgeryToken()
         <div class="form-group row">
             <div class="col-md-6">
-
                 <label>@Html.DisplayNameFor(item => Model.UserId)</label>
                 @Html.EditorFor(model => Model.UserId, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
                 @Html.ValidationMessageFor(model => Model.UserId, "", new { @class = "text-danger" })
                 <input type="hidden" id="UserId">
+            </div>
 
-            </div>
-            <div class="col-md-6">
-                <label>@Html.DisplayNameFor(item => Model.ThuMuon)</label>
-                @Html.EditorFor(model => Model.ThuMuon, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
-                @Html.ValidationMessageFor(model => Model.ThuMuon, "", new { @class = "text-danger" })
-
-            </div>
-        </div>
-        <div class="form-group row" >
-            <div class="col-md-6">
-                <label>@Html.DisplayNameFor(item => Model.NgayMuon)</label>
-                @Html.EditorFor(model => model.NgayMuon, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NgayMuon, "", new { @class = "text-danger" })
-            </div>
             <div class="col-md-6">
                 <label>@Html.DisplayNameFor(item => Model.NgayTra)</label>
                 @Html.EditorFor(model => model.NgayTra, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.NgayTra, "", new { @class = "text-danger" })
-
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label>@Html.DisplayNameFor(item => Model.ThuMuon)</label>
+                @Html.EditorFor(model => Model.ThuMuon, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                @Html.ValidationMessageFor(model => Model.ThuMuon, "", new { @class = "text-danger" })
 
             </div>
         </div>
@@ -118,7 +110,7 @@
                 },
             }).data("ui-autocomplete")._renderItem = function (ul, item) {
                 var str = '<div class = "row">';
-                str += '<div class="col-6">' + item.Text + "</div>" + '<div class="col-3">' + SetTinhTrangHTML(item.TinhTrang) + "</div>";
+                str += '<div class="col-8">' + item.Text + "</div>" + '<div class="col-3">' + SetTinhTrangHTML(item.TinhTrang) + "</div>";
                 
                 str += '</div>';
            

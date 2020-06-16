@@ -54,25 +54,28 @@
     {
         foreach (var item in Model)
         {
-            <div class="mb-4"></div>
+            if (item.Value.Count() > 0)
+            {
+                <div class="mb-4"></div>
 
-            <div class="align-items-center justify-content-between mb-1">
-                <div class="row">
-                    <div class="col-md-8">
-                        <h1 class="h3 mb-0 text-gray-800">Danh Sách @item.Key</h1>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="@Url.Action("Export","ThongKe", new { type = "excel", dang = item.Key})" class="btn btn-info">Xuất file exel</a>
+                <div class="align-items-center justify-content-between mb-1">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1 class="h3 mb-0 text-gray-800">Danh Sách @item.Key</h1>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="@Url.Action("Export", "ThongKe", new { type = "excel", dang = item.Key })" class="btn btn-info">Xuất file exel</a>
 
-                        <a class="btn btn-warning" href="@Url.Action("Export","ThongKe", new { type = "csv", dang = item.Key})">Xuất file CSV</a>
+                            <a class="btn btn-warning" href="@Url.Action("Export", "ThongKe", new { type = "csv", dang = item.Key })">Xuất file CSV</a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            @Html.Partial("~/Views/Shared/_PartialTaiLieuVanBanIndexSmall.cshtml", item.Value)
+                @Html.Partial("~/Views/Shared/_PartialTaiLieuVanBanIndexSmall.cshtml", item.Value)
+                }
+            }
         }
     }
-}
 
 
 @section scripts{

@@ -1,0 +1,42 @@
+﻿@using AlgorithmLibrary.Kmeans
+@model List<Centroid>
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test</title>
+</head>
+<body>
+    <div>
+       
+        @foreach(var item in Model)
+        {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var doc in item.GroupedDocument)
+                    {
+                        <tr>
+                            <td>@doc.Content</td>
+                            <td></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div>-----------------------------------@item.GroupedDocument.Count()--------------------------------------</div>
+        }
+    </div>
+</body>
+</html>

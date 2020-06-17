@@ -115,8 +115,10 @@ namespace AlgorithmLibrary.Kmeans
             List<Centroid> centroids = new List<Centroid>();
             for (int i = 0; i < count; i++)
             {
-                var c = new Centroid();
-                c.GroupedDocument = new List<DocumentVector>();
+                var c = new Centroid
+                {
+                    GroupedDocument = new List<DocumentVector>()
+                };
                 centroids.Add(c);
             }
 
@@ -199,7 +201,7 @@ namespace AlgorithmLibrary.Kmeans
             // Tính độ tương tự của document với các center rồi add vào mảng similarityMeasure
             for (int i = 0; i < countCenter; i++)
             {
-                similarityMeasure[i] = SimilarityMatrics.FindCosineSimilarity(clusterCenters[i].GroupedDocument[0].VectorSpace, obj.VectorSpace);
+                similarityMeasure[i] = SimilarityMatrics.FindExtendedJaccard(clusterCenters[i].GroupedDocument[0].VectorSpace, obj.VectorSpace);
             }
 
             // Tìm max trong mảng similarityMeasure

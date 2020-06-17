@@ -6,7 +6,7 @@
 }
 
 <div class="card">
-    <div class="card-body">
+    <div class="card-body" style="height:700px; overflow:auto;">
         <table class="table table-responsive-lg">
             <thead>
                 <tr>
@@ -24,7 +24,7 @@
                     <tr>
                         <td>@stt</td>
                         <td>@Html.DisplayFor(m => item.SoKyHieu)</td>
-                        <td>@Html.DisplayFor(m => item.Ten)</td>
+                        <td style="width:30%; text-align:justify">@Html.DisplayFor(m => item.Ten)</td>
                         <td>@Html.DisplayFor(m => item.Loai)</td>
                         <td>@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", item.TinhTrang)</td>
                         <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>

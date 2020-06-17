@@ -39,8 +39,8 @@
         <table class="table table-responsive-lg">
             <thead>
                 <tr>
-                    <th>STT</th>
-                    <th>Đơn Vị/Người Mượn</th>
+                    <th>#</th>
+                    <th>Người Mượn</th>
                     <th>Số Lượng</th>
                     <th>Văn Thư</th>
                     <th>Ngày Mượn</th>
@@ -51,8 +51,7 @@
             </thead>
             <tbody>
                 @foreach (var item in Model.Items)
-                {
-                       
+                { 
                         <tr>
                             <td>@stt</td>
                             <td>@Html.DisplayFor(m => item.User.FullName)</td>

@@ -25,7 +25,7 @@
                 @Html.ValidationMessageFor(model => Model.UserId, "", new { @class = "text-danger" })
                 <input type="hidden" id="UserId">
             </div>
-
+           
             <div class="col-md-6">
                 <label>@Html.DisplayNameFor(item => Model.NgayTra)</label>
                 @Html.EditorFor(model => model.NgayTra, new { htmlAttributes = new { @class = "form-control" } })
@@ -57,7 +57,7 @@
         </table>
 
     </div>
-    
+    @Html.Hidden("RedirectTo", Url.Action("Index", "Muon"));
 </div>
 
 
@@ -70,6 +70,7 @@
                 alertify.success(successMessage);
         });
 
+        var url = $("#RedirectTo").val();
 
 
         $(document).ready(function () {
@@ -160,7 +161,7 @@
                     $("#UserId").val(ui.item.Text);
                     if (ui.item.SoLuongMuon >= 3) {
                         alert("Đã mượn tối đa 3 TLVB, vui lòng trả rồi mượn tiếp!");
-                        window.location.href = "http://localhost:19873/Muon/Index";
+                        location.href = url;
                     }
                        
                     return false;
@@ -211,7 +212,7 @@
                             var mo = m.replace(/^0+/, '');
                             if ((da <= day && mo <= month && y <= year) || (da >= day && mo < month && y <= year) || y < year) {
                                  alert("Bạn chưa trả TL/VB theo hạn trả, vui lòng trả rồi mượn tiếp");
-                                window.location.href = "http://localhost:19873/Muon/Index";
+                                 location.href = url;
                             }
                                
                         }
@@ -255,8 +256,12 @@
         
 
               $("#NgayTra").change(function () {
-                  var ngayMuon = $("#NgayMuon").val();
-                  var ngayTra = $("#NgayTra").val()
+                  var d = new Date(),
+                      month = '' + AddLeadingZeros(d.getMonth() + 1, 2),
+                      day = '' + AddLeadingZeros(d.getDate(), 2),
+                      year = d.getFullYear();
+                  var ngayMuon = [year, month, day].join('-');
+                  var ngayTra = $("#NgayTra").val();
                   if (ngayTra < ngayMuon)
                       alert("Hạn Trả Phải Sau Ngày Mượn!");
               });
@@ -279,7 +284,7 @@
                         __RequestVerificationToken: token
                     },
                     success: function (data) {
-                        window.location.href = "http://localhost:19873/Muon/Index";
+                        location.href = url;
                         TempData["AlertMessage"] = "Tạo Mới Thành Công";
                     }
 

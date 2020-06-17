@@ -260,8 +260,15 @@
                 $(this).parent().parent('tr').remove();
 
             });
+        
 
-       
+              $("#NgayTra").change(function () {
+                  var ngayMuon = $("#NgayMuon").val();
+                  var ngayTra = $("#NgayTra").val()
+                  if (ngayTra < ngayMuon)
+                      alert("Hạn Trả Phải Sau Ngày Mượn!");
+              });
+
 
         $("#b").click(function () {
             var token = $('input[name="__RequestVerificationToken"]').val();

@@ -48,13 +48,18 @@ namespace S3Train.WebHeThong.Controllers
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
-            var muontras = _muonTraService.GetAllPaged(pageIndex, pageSize.Value, p => p.TrangThai == active
-            && p.TinhTrang == EnumTinhTrang.DaTra, p => p.OrderBy(c => c.NgayMuon));
+            var listMuonTra = _muonTraService.GetAllHaveJoinUser();
+
+            listMuonTra = listMuonTra.Where(p => p.TinhTrang == EnumTinhTrang.DaTra);
+
+            var muontras = _muonTraService.GetAllPaged(listMuonTra, pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderBy(c => c.NgayMuon));
+
+
             if (!string.IsNullOrEmpty(searchString))
             {
-                muontras = _muonTraService.GetAllPaged(pageIndex, pageSize.Value, p => p.User.FullName.Contains(searchString) || p.VanThu.Contains(searchString)
-                    && p.TrangThai == active, p => p.OrderBy(c => c.NgayMuon));
-
+                muontras = _muonTraService.GetAllPaged(listMuonTra, pageIndex, pageSize.Value, p => p.User.FullName.Contains(searchString)
+                || p.ChiTietMuonTras.FirstOrDefault().TaiLieuVanBan.Ten.Contains(searchString) || p.VanThu.Contains(searchString)
+                            && p.TrangThai == active, p => p.OrderBy(c => c.NgayMuon));
 
             }
             model.Paged = muontras;
@@ -133,7 +138,7 @@ namespace S3Train.WebHeThong.Controllers
                             _taiLieuVanBanService.Update(vanBan);
                     
                     }
-                TempData["AlertMessage"] = "Tạo Mới Thành Công";
+                TempData["AlertMessage"] = "Trả Văn Bản Thành Công";
             }
             if(dem == 0)
                 TempData["AlertMessage"] = "Bạn Chưa Chọn TL/VB Để Trả";

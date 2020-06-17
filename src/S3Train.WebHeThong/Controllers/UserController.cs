@@ -4,8 +4,10 @@ using S3Train.Core.Constant;
 using S3Train.Domain;
 using S3Train.Model.User;
 using S3Train.WebHeThong.CommomClientSide.Function;
+using S3Train.WebHeThong.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -37,7 +39,7 @@ namespace S3Train.WebHeThong.Controllers
         [Route("Danh-Sach")]
         public async Task<ActionResult> IndexAsync()
         {
-            var model = await _userService.GetUser(1,10);
+            var model = await _userService.GetUser(1,GlobalConfigs.DEFAULT_PAGESIZE);
             ViewBag.Roles = DropDownRole();
             return View(model);
         }
@@ -84,7 +86,7 @@ namespace S3Train.WebHeThong.Controllers
                     await _userService.UserAddToRoles(user.Id, model.Role);
                     _functionLichSuHoatDongService.Create(ActionWithObject.Create, User.Identity.GetUserId(), "tài khoản: " + user.UserName);
                     TempData["AlertMessage"] = "Tạo Mới Thành Công";
-                    return RedirectToAction("DanhSach","NguoiDung");
+                    return RedirectToAction("IndexAsync");
                 }
                 else
                 {
@@ -191,6 +193,41 @@ namespace S3Train.WebHeThong.Controllers
             TempData["AlertMessage"] = "Đổi mật khẩu thành công";
 
             return RedirectToAction("UserProfile");
+        }
+
+
+        [AllowAnonymous]
+        public ActionResult ResetPassword(string code)
+        {
+            if (code == null)
+                return RedirectToAction("NotFound", "Home");
+            return View();
+        }
+
+        //
+        // POST: /Account/ResetPassword
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user = await _userService.GetUserByEmail(model.Email);
+            if (user == null)
+            {
+                TempData["AlertMessage"] = "Email Bạn Nhập Không Đúng.";
+                return RedirectToAction("ResetPassword", "User");
+            }
+            var result = await _userService.UpdatePassword(user.Id, model.Password);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            return View();
         }
 
         private List<SelectListItem> DropDownRole()

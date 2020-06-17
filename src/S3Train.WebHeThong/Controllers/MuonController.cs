@@ -47,16 +47,20 @@ namespace S3Train.WebHeThong.Controllers
             };
             var a = new List<MuonTra>();
             var listMuonTra = _muonTraService.GetAllHaveJoinUser();
-            var Muon = _muonTraService.GetAllHaveJoinChiTietMuonTra();
-            var muontras = _muonTraService.GetAllPaged(listMuonTra, pageIndex, pageSize.Value, p => p.TrangThai == active
-            && p.TinhTrang == EnumTinhTrang.DangMuon, p => p.OrderBy(c => c.NgayMuon));
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                muontras = _muonTraService.GetAllPaged(listMuonTra, pageIndex, pageSize.Value, p => p.User.FullName.Contains(searchString)
-                    || p.ChiTietMuonTras.FirstOrDefault().TaiLieuVanBan.Ten.Contains(searchString) || p.VanThu.Contains(searchString)
-                                && p.TrangThai == active && .TinhTrang == EnumTinhTrang.DangMuon, p => p.OrderBy(c => c.NgayMuon));
 
-            }
+            listMuonTra = listMuonTra.Where(p => p.TinhTrang == EnumTinhTrang.DangMuon);
+
+            var muontras = _muonTraService.GetAllPaged(listMuonTra, pageIndex, pageSize.Value, p => p.TrangThai == active, p => p.OrderBy(c => c.NgayMuon));
+           
+              if (!string.IsNullOrEmpty(searchString))
+                {
+                    muontras = _muonTraService.GetAllPaged(listMuonTra, pageIndex, pageSize.Value, p => p.User.FullName.Contains(searchString)
+                                || p.ChiTietMuonTras.FirstOrDefault().TaiLieuVanBan.Ten.Contains(searchString) || p.VanThu.Contains(searchString)
+                                && p.TrangThai == active, p => p.OrderBy(c => c.NgayMuon));
+
+                }
+             
+            
             model.Paged = muontras;
 
             model.Items = GetMuonTras(muontras.ToList());

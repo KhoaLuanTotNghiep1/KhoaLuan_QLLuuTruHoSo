@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -222,9 +223,9 @@ namespace S3Train.WebHeThong.Controllers
                 }
 
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Mật Khẩu", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                return RedirectToAction("Login", "Account");
+                var callbackUrl = Url.Action("ResetPassword", "User", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Mật Khẩu", ReadHTMLSendEmail(callbackUrl));
+                return View("ForgotPasswordConfirmation");
             }
 
             // If we got this far, something failed, redisplay form
@@ -411,6 +412,18 @@ namespace S3Train.WebHeThong.Controllers
         public ActionResult ExternalLoginFailure()
         {
             return View();
+        }
+
+        private string ReadHTMLSendEmail(string url)
+        {
+            string body = string.Empty;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/User/BodySendEmail.cshtml")))
+            {
+                body = reader.ReadToEnd();
+            }
+            body = body.Replace("{Url}", url);
+
+            return body;
         }
 
         protected override void Dispose(bool disposing)

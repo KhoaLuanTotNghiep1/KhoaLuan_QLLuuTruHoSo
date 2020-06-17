@@ -45,6 +45,7 @@ namespace S3Train.WebHeThong.Controllers
                 PageIndex = pageIndex.Value,
                 PageSize = pageSize.Value
             };
+            var a = new List<MuonTra>();
             var listMuonTra = _muonTraService.GetAllHaveJoinUser();
 
             listMuonTra = listMuonTra.Where(p => p.TinhTrang == EnumTinhTrang.DangMuon);
@@ -61,7 +62,7 @@ namespace S3Train.WebHeThong.Controllers
              
             
             model.Paged = muontras;
-            
+
             model.Items = GetMuonTras(muontras.ToList());
 
 
@@ -207,7 +208,7 @@ namespace S3Train.WebHeThong.Controllers
             List<TaiLieuVanBan> tlvb = new List<TaiLieuVanBan>();
             var model = AutoCompleteTextHoSos( _taiLieuVanBanService.GetAll());
 
-            model = model.Where(p => p.Text.StartsWith(pre)).ToHashSet();
+            model = model.Where(p => p.Text.Contains(pre)).ToHashSet();
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -219,7 +220,7 @@ namespace S3Train.WebHeThong.Controllers
             var muonTras = _muonTraService.GetAll();
             var model = Users(users, muonTras);
 
-            model = model.Where(x => x.Text.StartsWith(user)).ToHashSet();
+            model = model.Where(x => x.Text.Contains(user)).ToHashSet();
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }

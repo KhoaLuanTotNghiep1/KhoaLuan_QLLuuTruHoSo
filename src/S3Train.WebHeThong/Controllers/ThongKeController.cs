@@ -67,7 +67,7 @@ namespace S3Train.WebHeThong.Controllers
         public List<MuonTra> GetUsersBorrowDocument()
         {
             var list = _muonTraService.GetAllHaveJoinUser();
-            var users = list.Where(p => p.NgayKetThuc > DateTime.Now && p.TinhTrang == EnumTinhTrang.DangMuon && p.TrangThai == true);
+            var users = list.Where(p => p.NgayKetThuc < DateTime.Now && p.TinhTrang == EnumTinhTrang.DangMuon && p.TrangThai == true);
 
             return users.ToList();
         }

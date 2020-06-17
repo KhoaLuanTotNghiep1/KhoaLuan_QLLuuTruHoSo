@@ -34,8 +34,8 @@
         <table class="table table-responsive-lg">
             <thead>
                 <tr>
-                    <th >STT</th>
-                    <th>Đơn Vị/Người Mượn</th>
+                    <th>#</th>
+                    <th>Người Mượn</th>
                     <th>Số Lượng</th>
                     <th>Văn Thư</th>
                     <th>Ngày Mượn</th>
@@ -50,7 +50,7 @@
                 <tr>
                     <td>@stt</td>
                     <td>@Html.DisplayFor(m => item.User.FullName)</td>
-                    <td>@Html.DisplayFor(m => item.SoLuong)</td>
+                    <td>@Html.DisplayFor(m => item.SoLuong) văn bản</td>
                     <td>@Html.DisplayFor(m => item.VanThu)</td>
                     <td>@Html.DisplayFor(m => item.NgayMuon)</td>
                     <td>@Html.DisplayFor(m => item.NgayTra)</td>

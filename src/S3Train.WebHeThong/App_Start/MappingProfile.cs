@@ -3,6 +3,7 @@ using S3Train.Domain;
 using S3Train.Model;
 using S3Train.Model.Dto;
 using S3Train.Model.User;
+using System.Collections.Generic;
 
 namespace S3Train.WebHeThong.App_Start
 {
@@ -15,7 +16,13 @@ namespace S3Train.WebHeThong.App_Start
 
             Mapper.CreateMap<TaiLieuVanBan, TaiLieuVanBanDto>();
             Mapper.CreateMap<TaiLieuVanBanDto, TaiLieuVanBan>();
-    
+
+            Mapper.CreateMap<HoSo, HoSoDto>();
+            Mapper.CreateMap<HoSoDto, HoSo>();
+
+            Mapper.CreateMap<MuonTra, MuonTraDto>();
+            Mapper.CreateMap<MuonTraDto, MuonTra>();
+
             Mapper.CreateMap<ApplicationUser, UserViewModel>();
             Mapper.CreateMap<UserViewModel, ApplicationUser>();
         }

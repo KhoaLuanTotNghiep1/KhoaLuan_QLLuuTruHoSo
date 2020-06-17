@@ -18,7 +18,7 @@ namespace S3Train.Services
 
             foreach (var item in EntityDbSet)
             {
-                document = item.NoiDung;
+                document = item.Ten;
                 result.Add(document);
             }
 

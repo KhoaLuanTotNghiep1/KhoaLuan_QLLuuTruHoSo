@@ -57,6 +57,8 @@
         {
             if (item.Value.Count() > 0)
             {
+                stt = 1;
+
                 <div class="mb-4"></div>
 
                 <div class="align-items-center justify-content-between mb-1">
@@ -105,12 +107,14 @@
 <br />
 @if (ViewBag.UsersBorrowDocument != null)
 {
+    stt = 1;
     <h1 class="h3 mb-0 text-gray-800">Danh Sách Người Mượn Hết Hạn Mượn</h1>
     <div class="card">
         <div class="card-body" style="height:500px; overflow:auto;">
             <table class="table table-responsive-lg" style="overflow:scroll; overflow:auto;">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Tên Người Mượn</th>
                         <th>Tài Khoản</th>
                         <th>Số Lượng</th>
@@ -123,6 +127,7 @@
                     @foreach (var mt in ViewBag.UsersBorrowDocument as IEnumerable<MuonTra>)
                     {
                         <tr>
+                            <td>@stt</td>
                             <td>@Html.DisplayFor(m => mt.User.FullName)</td>
                             <td>@Html.DisplayFor(m => mt.User.UserName)</td>
                             <td>@Html.DisplayFor(m => mt.SoLuong) văn bản</td>
@@ -134,6 +139,7 @@
                                 </a>
                             </td>
                         </tr>
+                        stt += 1;
                     }
                 </tbody>
             </table>

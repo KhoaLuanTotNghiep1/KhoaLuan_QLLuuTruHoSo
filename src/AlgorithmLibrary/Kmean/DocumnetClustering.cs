@@ -31,9 +31,14 @@ namespace AlgorithmLibrary.Kmeans
             
             foreach(int pos in uniqRand) 
             {
-                var c = new Centroid();                
-                c.GroupedDocument = new List<DocumentVector>();
-                c.GroupedDocument.Add(documentCollection[pos]);
+                var c = new Centroid
+                {
+                    GroupedDocument = new List<DocumentVector>
+                    {
+                        documentCollection[pos]
+                    }   
+                };
+
                 centroidCollection.Add(c);                
             }
 
@@ -79,27 +84,35 @@ namespace AlgorithmLibrary.Kmeans
         /// <returns></returns>
         private static HashSet<int> GenerateRandomNumber(int k, int docCount)
         {
-            Random r = new Random();
+            //Random r = new Random();
             HashSet<int> uniqRand = new HashSet<int>();
-
-            if (k > docCount)
-            {
-                do
-                {
-                    int pos = r.Next(0, docCount);
-                    uniqRand.Add(pos);
-
-                } while (uniqRand.Count != docCount);
-            }            
+            int count = 0;
+            if (k < docCount)
+                count = k;
             else
-            {
-                do
-                {
-                    int pos = r.Next(0, docCount);
-                    uniqRand.Add(pos);
+                count = docCount;
 
-                } while (uniqRand.Count != k);
-            }
+            for (int i = 1; i <= count; i++)
+                uniqRand.Add(i);
+
+            //if (k > docCount)
+            //{
+            //    do
+            //    {
+            //        int pos = r.Next(0, docCount);
+            //        uniqRand.Add(pos);
+
+            //    } while (uniqRand.Count != docCount);
+            //}            
+            //else
+            //{
+            //    do
+            //    {
+            //        int pos = r.Next(0, docCount);
+            //        uniqRand.Add(pos);
+
+            //    } while (uniqRand.Count != k);
+            //}
 
             return uniqRand;
         }

@@ -254,6 +254,7 @@
     <Compile Include="CommomClientSide\Function\Messenger.cs" />
     <Compile Include="CommomClientSide\Function\UploadFile.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\API\MuonTraAPIController.cs" />
     <Compile Include="Controllers\API\TaiLieuVanBanController.cs" />
     <Compile Include="Controllers\API\TestController.cs" />
     <Compile Include="Controllers\API\UserAPIController.cs" />

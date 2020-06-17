@@ -1,4 +1,5 @@
 ﻿using S3Train.Domain;
+using S3Train.Model.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +23,10 @@ namespace S3Train.Model.Dto
         public string NguoiGuiHoacNhan { get; set; }
         public string NguoiKy { get; set; }
         public string NguoiDuyet { get; set; }
-        public string UserId { get; set; }
         public DateTime NgayBanHanh { get; set; }
 
-        public string HoSoId { get; set; }
-        public string NoiBanHanhId { get; set; }
+        public HoSoDto HoSo { get; set; }
+        public NoiBanHanhDto NoiBanHanh { get; set; }
+        public UserViewModel User { get; set; }
     }
 }

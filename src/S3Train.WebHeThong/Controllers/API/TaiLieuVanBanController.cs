@@ -48,7 +48,20 @@ namespace S3Train.WebHeThong.Controllers.API
                 return NotFound();
 
             return Ok(taiLieuVanBanDtos);
-        }   
+        }
+
+        public IHttpActionResult GetById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return BadRequest();
+
+            var taiLieuVanBanDtos = _taiLieuVanBanService.Get(p => p.Id == id);
+
+            if (taiLieuVanBanDtos == null)
+                return NotFound();
+
+            return Ok(Mapper.Map<TaiLieuVanBan, TaiLieuVanBanDto>(taiLieuVanBanDtos));
+        }
 
         [Route("date/{startTime:datetime}")]
         public IHttpActionResult GetByTime(DateTime startTime)

@@ -24,7 +24,7 @@
                     <table class="table table-responsive-lg table-hover">
                         <thead>
                             <tr>
-                                <th>STT</th>
+                                <th>#</th>
                                 <th>Mã</th>
                                 <th>Tên</th>
                                 <th>Hoạt Động</th>
@@ -36,7 +36,7 @@
                                 <tr>
                                     <td>@stt</td>
                                     <td>@Html.DisplayFor(m => item.Ma)</td>
-                                    <td>@Html.DisplayFor(m => item.Ten)</td>
+                                    <td style="width:40%">@Html.DisplayFor(m => item.Ten)</td>
                                     <td>
                                         @Html.Partial("_PartialCreateOrUpdateLHS",item)
                                     </td>
@@ -81,7 +81,7 @@
                     <table class="table table-responsive-lg table-hover">
                         <thead>
                             <tr>
-                                <th>STT</th>
+                                <th>#</th>
                                 <th>Tên</th>
                                 <th>Hoạt Động</th>
                             </tr>
@@ -91,7 +91,7 @@
                             {
                                 <tr>
                                     <td>@stt2</td>
-                                    <td>@Html.DisplayFor(m => item.Ten)</td>
+                                    <td style="width:50%">@Html.DisplayFor(m => item.Ten)</td>
                                     <td>
                                         @Html.Partial("_PartialCreateOrUpdatePB", item)
                                     </td>

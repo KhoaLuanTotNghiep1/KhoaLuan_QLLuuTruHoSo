@@ -36,5 +36,17 @@ namespace S3Train.WebHeThong.Controllers.API
                 return NotFound();
             return Ok(muontra);
         }
+
+        public IHttpActionResult GetById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return BadRequest();
+
+            var muontra = _muonTraService.Gets(p => p.Id == id).ToList().Select(Mapper.Map<MuonTra, MuonTraDto>);
+
+            if (muontra == null)
+                return NotFound();
+            return Ok(muontra);
+        }
     }
 }

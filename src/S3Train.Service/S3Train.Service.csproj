@@ -152,6 +152,7 @@
     <Compile Include="IdentityManager\EmailService.cs" />
     <Compile Include="IdentityManager\SmsService.cs" />
     <Compile Include="IGenenicServiceBase.cs" />
+    <Compile Include="Model\Dto\ChiTietMuonTraDto.cs" />
     <Compile Include="Model\Dto\HoSoDto.cs" />
     <Compile Include="Model\Dto\MuonTraDto.cs" />
     <Compile Include="Model\Dto\NoiBanHanhDto.cs" />

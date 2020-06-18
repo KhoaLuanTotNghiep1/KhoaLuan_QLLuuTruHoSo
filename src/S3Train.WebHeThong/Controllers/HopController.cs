@@ -97,6 +97,14 @@ namespace S3Train.WebHeThong.Controllers
             var hop = string.IsNullOrEmpty(model.Id) ? new Hop { NgayCapNhat = DateTime.Now }
                 : _hopService.Get(m => m.Id == model.Id);
 
+            var checkName = _hopService.Get(m => m.ChuyenDe == model.ChuyenDe);
+
+            if(checkName != null)
+            {
+                TempData["AlertMessage"] = "Hộp Chuyên Đề Đã Tồn Tại";
+                return View(model);
+            }
+
             var autoList = AutoCompleteTextKes(GetKes());
             string userId = User.Identity.GetUserId();
             string chiTietHoatDong = "hộp: " + hop.ChuyenDe;

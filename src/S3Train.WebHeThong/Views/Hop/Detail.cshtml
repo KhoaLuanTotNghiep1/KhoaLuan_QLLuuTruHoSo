@@ -123,7 +123,7 @@
                                     <td>@stt</td>
                                     <td>@Html.DisplayFor(item => hoso.PhongLuuTru)</td>
                                     <td>@Html.DisplayFor(item => hoso.ThoiGianBaoQuan) tháng</td>
-                                    <td>@Html.DisplayFor(item => hoso.NgayTao)</td>
+                                    <td>@hoso.NgayTao.ToString("dd MMM yyyy")</td>
                                     <td>
                                         <a href="@Url.Action("Detail","HoSo", new { id=hoso.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
                                             <i class="fas fa-info"></i>

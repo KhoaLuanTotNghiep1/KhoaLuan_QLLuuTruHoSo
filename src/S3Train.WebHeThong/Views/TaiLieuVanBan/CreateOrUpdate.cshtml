@@ -209,7 +209,7 @@
             })
 
             $('input').blur(function (e) {
-                var ten = $("#Ten").val().trim();
+                var ten = $("#Ten").val();
                 $.ajax({
                     type: 'GET',
                     url: "/TaiLieuVanBan/KiemTraTrungTen",
@@ -218,8 +218,11 @@
                     },
                     success: function (data) {
                         for (i = 0; i < data.d.length; i++) {
-                            if (ten == data.d[i].Ten)
+                            if (ten == data.d[i].Ten) {
                                 alert("TL/VB Đã Tồn Tại!");
+                                
+                            }
+                                
                         }
                     }
                 });

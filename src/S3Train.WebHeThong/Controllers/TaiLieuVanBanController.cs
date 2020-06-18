@@ -89,9 +89,7 @@ namespace S3Train.WebHeThong.Controllers
             var model = new TaiLieu_VanBanViewModel();
             var dangs = new List<object> { GlobalConfigs.DANG_DEN, GlobalConfigs.DANG_NOIBO };
 
-            ViewBag.LoaiHoSos = SelectListItemFromDomain.SelectListItem_LoaiHoSo(_loaiHoSoService.GetAll(m => m.OrderBy(t => t.Ten)));
-            ViewBag.NoiBanHanhs = SelectListItemFromDomain.SelectListItem_NoiBanHanh(_noiBanHanhService.GetAll(m => m.OrderBy(t => t.Ten)));
-            ViewBag.Dangs = SelectListItemFromDomain.SelectListItem_Object(dangs);
+            DropDowmn();
 
             if (string.IsNullOrEmpty(id))
             {
@@ -105,11 +103,30 @@ namespace S3Train.WebHeThong.Controllers
             }
         }
 
+        public void DropDowmn()
+        {
+            var dangs = new List<object> { GlobalConfigs.DANG_DEN, GlobalConfigs.DANG_NOIBO };
+
+            ViewBag.LoaiHoSos = SelectListItemFromDomain.SelectListItem_LoaiHoSo(_loaiHoSoService.GetAll(m => m.OrderBy(t => t.Ten)));
+            ViewBag.NoiBanHanhs = SelectListItemFromDomain.SelectListItem_NoiBanHanh(_noiBanHanhService.GetAll(m => m.OrderBy(t => t.Ten)));
+            ViewBag.Dangs = SelectListItemFromDomain.SelectListItem_Object(dangs);
+        }
+
         [HttpPost]
         public ActionResult CreateOrUpdate(TaiLieu_VanBanViewModel model, IEnumerable<HttpPostedFileBase> file)
         {
             var taiLieuVanBan = string.IsNullOrEmpty(model.Id) ? new TaiLieuVanBan { NgayCapNhat = DateTime.Now }
                 : _taiLieuVanBanService.Get(m => m.Id == model.Id);
+
+            DropDowmn();
+
+            var checkName = _taiLieuVanBanService.Get(m => m.Ten == model.Ten);
+
+            if (checkName != null)
+            {
+                TempData["AlertMessage"] = "Văn Bản Có Cùng Tên Đã Tồn Tại";
+                return View(model);
+            }
 
             var autoList = AutoCompleteTextHoSos(GetHoSos());
             string userId = User.Identity.GetUserId();
@@ -296,7 +313,7 @@ namespace S3Train.WebHeThong.Controllers
             var cluster = _taiLieuVanBanService.CountDocumentType("Thông Báo");
 
             List<DocumentVector> vSpace = VectorSpaceModel.ProcessDocumentCollection(docCollection);
-            List<Centroid> resultSet = DocumnetClustering.DocumentCluster(cluster, vSpace, "thôn báo chính phủ mới");
+            List<Centroid> resultSet = DocumnetClustering.DocumentCluster(cluster, vSpace, "thông báo chính phủ mới");
 
             return View(resultSet);
         }

@@ -63,21 +63,21 @@ namespace S3Train.WebHeThong.Controllers.API
             return Ok(Mapper.Map<TaiLieuVanBan, TaiLieuVanBanDto>(taiLieuVanBanDtos));
         }
 
-        [Route("date/{startTime:datetime}")]
-        public IHttpActionResult GetByTime(DateTime startTime)
-        {
-            var taiLieuVanBans = _taiLieuVanBanService.Gets(p => p.TrangThai == true, p => p.OrderByDescending(c => c.NgayTao));
+        //[Route("date/{startTime:datetime}")]
+        //public IHttpActionResult GetByTime(DateTime startTime)
+        //{
+        //    var taiLieuVanBans = _taiLieuVanBanService.Gets(p => p.TrangThai == true, p => p.OrderByDescending(c => c.NgayTao));
 
   
-            taiLieuVanBans = taiLieuVanBans.Where(p => p.NgayTao >= startTime).ToList();
+        //    taiLieuVanBans = taiLieuVanBans.Where(p => p.NgayTao >= startTime).ToList();
 
-            //if (endTime.HasValue)
-            //    taiLieuVanBans = taiLieuVanBans.Where(p => p.NgayTao <= endTime).ToList();
+        //    //if (endTime.HasValue)
+        //    //    taiLieuVanBans = taiLieuVanBans.Where(p => p.NgayTao <= endTime).ToList();
 
-            if (taiLieuVanBans == null)
-                return NotFound();
+        //    if (taiLieuVanBans == null)
+        //        return NotFound();
 
-            return Ok(taiLieuVanBans.Select(Mapper.Map<TaiLieuVanBan, TaiLieuVanBanDto>));
-        }
+        //    return Ok(taiLieuVanBans.Select(Mapper.Map<TaiLieuVanBan, TaiLieuVanBanDto>));
+        //}
     }
 }

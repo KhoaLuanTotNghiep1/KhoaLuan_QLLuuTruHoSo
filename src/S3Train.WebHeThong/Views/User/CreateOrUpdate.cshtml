@@ -67,13 +67,22 @@
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label>@Html.DisplayNameFor(item => Model.Role)</label>
                     @Html.DropDownListFor(m => m.Role, new SelectList(ViewBag.Roles, "Value", "Text"), new { @class = "form-control" })
                 </div>
+                <div class="col-md-6">
+                    <ul>
+                        <li>Có ít nhất 10 ký tự</li>
+                        <li>Có ký tự in hoa</li>
+                        <li>Có ký tự thường</li>
+                        <li>Có Số</li>
+                        <li>Có một ký tự đặc biệt (!, #, $, &,...)</li>
+                    </ul>
+                </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-success" />
+                <input type="submit" value="Lưu" class="btn btn-success" />
             </div>
         }
     </div>

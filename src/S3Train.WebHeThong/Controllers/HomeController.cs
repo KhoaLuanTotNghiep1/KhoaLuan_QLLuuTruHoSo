@@ -102,7 +102,7 @@ namespace S3Train.WebHeThong.Controllers
         {
             _functionLichSuHoatDongService.Remove(dateTime);
             _functionLichSuHoatDongService.Create(ActionWithObject.Delete, User.Identity.GetUserId(),
-                " tất cả các hoạt độn trước ngày " + dateTime.ToString());
+                " tất cả các hoạt động trước ngày " + dateTime.ToString());
 
             TempData["AlertMessage"] = "Xóa Thành Công Các Hoạt Động Trước Ngày " + dateTime.ToString();
             return RedirectToAction("LichSuHoatDong");

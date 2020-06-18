@@ -254,9 +254,9 @@
     <Compile Include="CommomClientSide\Function\Messenger.cs" />
     <Compile Include="CommomClientSide\Function\UploadFile.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\API\ChiTietMuonTraApiController.cs" />
     <Compile Include="Controllers\API\MuonTraAPIController.cs" />
     <Compile Include="Controllers\API\TaiLieuVanBanController.cs" />
-    <Compile Include="Controllers\API\TestController.cs" />
     <Compile Include="Controllers\API\UserAPIController.cs" />
     <Compile Include="Controllers\TraController.cs" />
     <Compile Include="Migrations\202004250206382_DeleteColumnHoSoChaIdOnTableHoSo.cs" />

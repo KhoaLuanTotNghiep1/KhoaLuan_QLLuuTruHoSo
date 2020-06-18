@@ -158,7 +158,7 @@
                     });
                 },
                 select: function (event, ui) {
-                    $("#UserId").val(ui.item.Text);
+                    $("#UserId").val(ui.item.UserName);
                     if (ui.item.SoLuongMuon >= 3) {
                         alert("Đã mượn tối đa 3 TLVB, vui lòng trả rồi mượn tiếp!");
                         location.href = url;

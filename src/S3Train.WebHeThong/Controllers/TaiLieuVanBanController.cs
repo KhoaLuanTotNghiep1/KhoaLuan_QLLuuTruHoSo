@@ -265,6 +265,25 @@ namespace S3Train.WebHeThong.Controllers
             return Json(new { da = local}, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult KiemTraTrungTen(string vanBan)
+        {
+            var vanBans = _taiLieuVanBanService.GetAll();;
+            var list = new List<TaiLieu_VanBanViewModel>();
+            foreach (var item in vanBans)
+            {
+                if (vanBan == item.Ten)
+                {
+
+                    list.Add(new TaiLieu_VanBanViewModel
+                    {
+                        Ten = item.Ten,
+                    });
+                }
+
+            }
+            return Json(new { d = list }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Test()
         {
             var list = _taiLieuVanBanService.GetDocuments();

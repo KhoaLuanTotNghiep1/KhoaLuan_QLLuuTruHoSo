@@ -110,7 +110,7 @@ namespace S3Train.WebHeThong.Controllers
             {
                 var chitietmuontra = new ChiTietMuonTra();
                 var b = array[i];
-                var a = autoList.FirstOrDefault(p => p.Text == b).Id; 
+                var a = autoList.FirstOrDefault(p => p.UserName == b).Id; 
                 chitietmuontra.TaiLieuVanBanId = a;
                 chitietmuontra.MuonTraID = muontra.Id;
                 _chiTietMuonTraService.Insert(chitietmuontra);

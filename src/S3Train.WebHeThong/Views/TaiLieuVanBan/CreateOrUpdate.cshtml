@@ -27,6 +27,7 @@
                     <label>@Html.DisplayNameFor(item => Model.Ten)</label>
                     @Html.EditorFor(model => model.Ten, new { htmlAttributes = new { @class = "form-control", @placeholder = "Thông Báo Đóng Học Phí Học Kỳ 2 Năm 2019-2020" } })
                     @Html.ValidationMessageFor(model => model.Ten, "", new { @class = "text-danger" })
+                    <input type="hidden" id="Ten">
                 </div>
             </div>
 
@@ -206,6 +207,25 @@
                 /*Loading the dataurl to reader*/
                 readerFile.readAsDataURL(imgFile)
             })
+
+            $('input').blur(function (e) {
+                var ten = $("#Ten").val().trim();
+                $.ajax({
+                    type: 'GET',
+                    url: "/TaiLieuVanBan/KiemTraTrungTen",
+                    data: {
+                        VanBan: ten
+                    },
+                    success: function (data) {
+                        for (i = 0; i < data.d.length; i++) {
+                            if (ten == data.d[i].Ten)
+                                alert("TL/VB Đã Tồn Tại!");
+                        }
+                    }
+                });
+             })
         });
+
+
     </script>
 }

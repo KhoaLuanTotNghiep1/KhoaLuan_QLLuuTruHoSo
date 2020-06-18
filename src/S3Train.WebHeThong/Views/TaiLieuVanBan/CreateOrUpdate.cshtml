@@ -209,7 +209,7 @@
             })
 
             $('input').blur(function (e) {
-                var ten = $("#Ten").val().trim();
+                var ten = $("#Ten").val();
                 $.ajax({
                     type: 'GET',
                     url: "/TaiLieuVanBan/KiemTraTrungTen",

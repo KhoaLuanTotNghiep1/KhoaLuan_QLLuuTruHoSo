@@ -18,59 +18,71 @@
         <div class="card mb-4">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.Ten)</h6>
                         <p>@Html.DisplayFor(item => Model.Ten)</p>
                     </div>
-                    <div class="col-md-4">
-                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.Loai)</h6>
-                        <p>@Html.DisplayFor(item => Model.Loai)</p>
-                    </div>
-                    <div class="col-md-4">
-                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.Dang)</h6>
-                        <p>@Html.DisplayFor(item => Model.Dang)</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.HoSoId)</h6>
                         <p>@Html.DisplayFor(item => Model.HoSoId)</p>
                     </div>
-                    <div class="col-md-4">
+                   
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.Loai)</h6>
+                        <p>@Html.DisplayFor(item => Model.Loai)</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.Dang)</h6>
+                        <p>@Html.DisplayFor(item => Model.Dang)</p>
+                    </div>
+                    <div class="col-md-3">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoKyHieu)</h6>
                         <p>@Html.DisplayFor(item => Model.SoKyHieu)</p>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.SoTo)</h6>
                         <p>@Html.DisplayFor(item => Model.SoTo) trang</p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NguoiDuyet)</h6>
                         <p>@Html.DisplayFor(item => Model.NguoiDuyet)</p>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NguoiKy)</h6>
                         <p>@Html.DisplayFor(item => Model.NguoiKy)</p>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayBanHanh)</h6>
                         <p>@Html.DisplayFor(item => Model.NgayBanHanh)</p>
                     </div>
+                    @if (Model.Dang != "Đi")
+                    {
+                        <div class="col-md-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Người Nhận</h6>
+                            <p>@Html.DisplayFor(item => Model.NguoiGuiHoacNhan)</p>
+                        </div>
+                    }
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <h6 class="m-0 font-weight-bold text-primary">Người Tạo</h6>
                         <p>@Html.DisplayFor(item => Model.User.FullName)</p>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayTao)</h6>
                         <p>@Html.DisplayFor(item => Model.NgayTao)</p>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.NgayCapNhat)</h6>
                         <p>@Html.DisplayFor(item => Model.NgayCapNhat)</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.GhiChu)</h6>
+                        @Html.DisplayFor(item => Model.GhiChu)
                     </div>
                 </div>
                 @{
@@ -86,19 +98,6 @@
                                 <p>@Html.DisplayFor(item => Model.NoiNhan)</p>
                             </div>
                             <div class="col-md-4">
-                                <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.GhiChu)</h6>
-                                @Html.DisplayFor(item => Model.GhiChu)
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h6 class="m-0 font-weight-bold text-primary">Người Nhận</h6>
-                                <p>@Html.DisplayFor(item => Model.NguoiGuiHoacNhan)</p>
-                            </div>
-                            <div class="col-md-8">
                                 <h6 class="m-0 font-weight-bold text-primary">@Html.DisplayNameFor(item => Model.GhiChu)</h6>
                                 @Html.DisplayFor(item => Model.GhiChu)
                             </div>
@@ -151,10 +150,26 @@
             </div>
         </div>
         <br />
+        <div class="modal fade" id="myModal" role="dialog" tabindex="-1" style="height:100%" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <i class="fas fa-window-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="dynamic-content">
+                        <img src="~/Content/HinhAnhTLVB/@Model.HinhAnh" class="img-fluid rounded" style="height:100%; width:100%; display:block" />
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col" style="width:150px; height:200px">
-                <img src="~/Content/HinhAnhTLVB/@Model.HinhAnh" class="img-fluid rounded"
-                     alt="Hình Ảnh Tài Liệu/Văn Bản" id="ImageAvatar" style="max-height:100%; max-width:100%; display:block" />
+                <a href="#myModal" role="button" data-toggle="modal">
+                    <img src="~/Content/HinhAnhTLVB/@Model.HinhAnh" class="img-fluid rounded"
+                         alt="Hình Ảnh Tài Liệu/Văn Bản" id="ImageAvatar" style="max-height:100%; max-width:100%; display:block" />
+                </a>
             </div>
         </div>
     </div>

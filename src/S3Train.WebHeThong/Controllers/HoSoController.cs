@@ -98,6 +98,17 @@ namespace S3Train.WebHeThong.Controllers
             var hoSo = string.IsNullOrEmpty(model.Id) ? new HoSo { NgayCapNhat = DateTime.Now }
                 : _hoSoService.Get(m => m.Id == model.Id);
 
+            ViewBag.LoaiHoSos = SelectListItemFromDomain.SelectListItem_LoaiHoSo(_loaiHoSoService.GetAll(m => m.OrderBy(t => t.Ten)));
+            ViewBag.TapHoSos = SelectListItemFromDomain.SelectListItem_HoSo(_hoSoService.GetAll(m => m.OrderBy(t => t.PhongLuuTru)));
+
+            var checkName = _hoSoService.Get(m => m.PhongLuuTru == model.PhongLuuTru);
+
+            if (checkName != null)
+            {
+                TempData["AlertMessage"] = "Hồ Sơ Có Cùng Phông Lưu Trữ Đã Tồn Tại";
+                return View(model);
+            }
+
             var autoList = LocalHops(GetHops());
             var userId = User.Identity.GetUserId();
             var chiTietHoatDong = "hồ sơ: " + model.PhongLuuTru;

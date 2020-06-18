@@ -29,7 +29,7 @@
                     <div class="card-body b">
                         <div class="row">
                             <div class="col-lg-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Đơn vị/Người mượn</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Người mượn</h6>
                                 @if (Model[i].User.Id == Model[i].MuonTra.UserId)
                                 {
                                     @Html.HiddenFor(item => Model[i].MuonTra.UserId)
@@ -39,6 +39,33 @@
 
                             </div>
                             <div class="col-lg-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Văn Thư</h6>
+                                @Html.HiddenFor(item => Model[i].MuonTra.VanThu)
+                                <p>@Html.DisplayFor(item => Model[i].MuonTra.VanThu)</p>
+                            </div>
+                            <div class="col-lg-2">
+                                <h6 class="m-0 font-weight-bold text-primary" id="NgayMuon">Ngày Mượn</h6>
+                                @Html.HiddenFor(item => Model[i].MuonTra.NgayMuon)
+                                <p>@Html.DisplayFor(item => Model[i].MuonTra.NgayMuon)</p>
+                            </div>
+                            <div class="col-lg-2">
+                                <h6 class="m-0 font-weight-bold text-primary">Hạn Trả</h6>
+                                <p>@Html.DisplayFor(item => Model[i].MuonTra.NgayTra)</p>
+                            </div>
+                            <div class="col-lg-2">
+                                <h6 class="m-0 font-weight-bold text-primary">Chọn Trả</h6>
+                                @Html.HiddenFor(item => Model[i].Id)
+                                @Html.HiddenFor(item => Model[i].MuonTraId)
+                                @Html.HiddenFor(item => Model[i].MuonTra.Id)
+                                @Html.EditorFor(item => Model[i].Checkbox, new { htmlAttributes = new { @class = "check", @id = Model[i].Id } })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h6 class="m-0 font-weight-bold text-primary">Vị Trí Lưu Trữ</h6>
+                                <p>@Html.DisplayFor(item => Model[i].ViTri)</p>
+                            </div>
+                            <div class="col-lg-6">
                                 <h6 class="m-0 font-weight-bold text-primary">Tl/VB mượn</h6>
                                 @if (Model[i].TaiLieuVanBanId == Model[i].TaiLieuVanBan.Id)
                                 {
@@ -46,36 +73,6 @@
                                     <p>@Html.DisplayFor(item => Model[i].TaiLieuVanBan.Ten)</p>
 
                                 }
-
-                            </div>
-                            <div class="col-lg-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Văn Thư</h6>
-                                @Html.HiddenFor(item => Model[i].MuonTra.VanThu)
-                                <p>@Html.DisplayFor(item => Model[i].MuonTra.VanThu)</p>
-                            </div>
-                            <div class="col-lg-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Chọn Trả</h6>
-                                @Html.HiddenFor(item => Model[i].Id)
-                                @Html.HiddenFor(item => Model[i].MuonTraId)
-                                @Html.HiddenFor(item => Model[i].MuonTra.Id)
-                                @Html.EditorFor(item => Model[i].Checkbox, new { htmlAttributes = new { @class = "check", @id = Model[i].Id } })
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Vị Trí Lưu Trữ</h6>
-                                <p>@Html.DisplayFor(item => Model[i].ViTri)</p>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <h6 class="m-0 font-weight-bold text-primary" id="NgayMuon">Ngày Mượn</h6>
-                                @Html.HiddenFor(item => Model[i].MuonTra.NgayMuon)
-                                <p>@Html.DisplayFor(item => Model[i].MuonTra.NgayMuon)</p>
-                            </div>
-                            <div class="col-lg-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Hạn Trả</h6>
-                                <p>@Html.DisplayFor(item => Model[i].MuonTra.NgayTra)</p>
                             </div>
                         </div>
 

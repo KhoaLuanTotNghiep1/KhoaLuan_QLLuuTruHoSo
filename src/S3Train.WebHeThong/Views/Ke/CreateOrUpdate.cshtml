@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-md-6">
                     <label>@Html.DisplayNameFor(item => Model.SoThuTu)</label>
-                    @Html.EditorFor(model => model.SoThuTu, new { htmlAttributes = new { @class = "form-control", @placeholder = "25" } })
+                    @Html.EditorFor(model => model.SoThuTu, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.SoThuTu, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -37,7 +37,7 @@
             <div class="form-group row">
                 <div class="col-md">
                     <label>@Html.DisplayNameFor(item => Model.Ten)</label>
-                    @Html.EditorFor(model => model.Ten, new { htmlAttributes = new { @class = "form-control", @placeholder = "Kệ chuyên ngành công nghệ thông tin" } })
+                    @Html.EditorFor(model => model.Ten, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tên của kệ" } })
                     @Html.ValidationMessageFor(model => model.Ten, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -56,13 +56,13 @@
                     </div>
                     <div class="row-cols-1 form-group">
                         <label>@Html.DisplayNameFor(item => Model.SoHopToiDa)</label>
-                        @Html.EditorFor(model => model.SoHopToiDa, new { htmlAttributes = new { @class = "form-control", @placeholder = "Kệ" } })
+                        @Html.EditorFor(model => model.SoHopToiDa, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.SoHopToiDa, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="col-md-8">
                     <label>@Html.DisplayNameFor(item => Model.TinhTrang)</label>
-                    @Html.TextAreaFor(model => model.TinhTrang, new { @class = "form-control", placeholder = "Điều kiện hiện tại của kệ", rows = "9" })
+                    @Html.TextAreaFor(model => model.TinhTrang, new { @class = "form-control", @placeholder = "Điều kiện hiện tại của kệ", rows = "9" })
                 </div>
             </div>
             <div class="form-group">

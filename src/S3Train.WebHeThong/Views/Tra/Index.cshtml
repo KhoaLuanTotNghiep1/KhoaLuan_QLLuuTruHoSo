@@ -39,12 +39,12 @@
         <table class="table table-responsive-lg">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>STT</th>
                     <th>Người Mượn</th>
+                    <th>Tài Khoản</th>
                     <th>Số Lượng</th>
-                    <th>Văn Thư</th>
                     <th>Ngày Mượn</th>
-                    <th>Ngày Trả</th>
+                    <th>Hạn Trả</th>
                     <th>Trạng Thái</th>
                     <th>Hoạt Động</th>
                 </tr>
@@ -52,25 +52,24 @@
             <tbody>
                 @foreach (var item in Model.Items)
                 { 
-                        <tr>
-                            <td>@stt</td>
-                            <td>@Html.DisplayFor(m => item.User.FullName)</td>
-                            <td>@Html.DisplayFor(m => item.SoLuong)</td>
-                            <td>@Html.DisplayFor(m => item.VanThu)</td>
-                            <td>@Html.DisplayFor(m => item.NgayMuon)</td>
-                            <td>@Html.DisplayFor(m => item.NgayTra)</td>
-                            <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
-                            <td>
-                                <a href="@Url.Action("Detail", "Tra", new { id = item.Id })" class="btn btn-info" title="Thông Tin Chi Tiết">
-                                    <i class="fas fa-info"></i>
-                                </a>
-                                <a href="@Url.Action("Delete", "Tra", new { id = item.Id })" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa Phiếu Mượn Này?');" title="Xóa">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                            stt += 1;
-                        
+                    <tr>
+                        <td>@stt</td>
+                        <td>@Html.DisplayFor(m => item.User.FullName)</td>
+                        <td>@Html.DisplayFor(m => item.User.UserName)</td>
+                        <td>@Html.DisplayFor(m => item.SoLuong) văn bản</td>
+                        <td>@Html.DisplayFor(m => item.NgayMuon)</td>
+                        <td>@Html.DisplayFor(m => item.NgayTra)</td>
+                        <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
+                        <td>
+                             <a href="@Url.Action("Detail", "Tra", new { id = item.Id })" class="btn btn-info" title="Thông Tin Chi Tiết">
+                                <i class="fas fa-info"></i>
+                             </a>
+                             <a href="@Url.Action("Delete", "Tra", new { id = item.Id })" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa Phiếu Mượn Này?');" title="Xóa">
+                                <i class="fas fa-trash"></i>
+                             </a>
+                        </td>
+                    </tr>
+                    stt += 1;
                     }
                 <tr class="pageging">
                     <td colspan="8">

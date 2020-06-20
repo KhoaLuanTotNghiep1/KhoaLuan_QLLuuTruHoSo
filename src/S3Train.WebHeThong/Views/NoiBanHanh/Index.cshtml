@@ -1,12 +1,10 @@
 ﻿@using S3Train.WebHeThong.Models
 @model NoiBanHanhIndexViewModel
-
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
     int stt = 1;
 }
-
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Nơi Ban Hành</h1>
     <ol class="breadcrumb">
@@ -14,11 +12,9 @@
         <li class="breadcrumb-item active" aria-current="page">Index</li>
     </ol>
 </div>
-
 <div class="card">
     <div class="card-body">
         @Html.Partial("_PartialCreateOrUpdateNoiBanHanh", new NoiBanHanhViewModel())
-
         <table class="table table-responsive-lg table-hover">
             <thead>
                 <tr>
@@ -61,7 +57,6 @@
         </table>
     </div>
 </div>
-
 @section scripts{
     <script>
         $(function () {
@@ -71,5 +66,4 @@
         });
     </script>
 }
-
 

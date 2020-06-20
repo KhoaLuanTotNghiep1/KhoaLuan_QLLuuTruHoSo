@@ -1,14 +1,11 @@
 ﻿@using S3Train.WebHeThong.Models
 @using S3Train.Domain
-
 @model MuonTraViewModel
-
 @{
     ViewBag.Title = "CreateOrUpdate";
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
     string title = string.IsNullOrEmpty(Model.Id) ? "Tạo Mới" : "Cập Nhật";
 }
-
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">@title Phiếu Mượn</h1>
     <ol class="breadcrumb">
@@ -21,11 +18,11 @@
         <div class="form-group row">
             <div class="col-md-6">
                 <label>@Html.DisplayNameFor(item => Model.UserId)</label>
-                @Html.EditorFor(model => Model.UserId, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                @Html.EditorFor(model => Model.UserId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tên tài khoản người mượn" } })
                 @Html.ValidationMessageFor(model => Model.UserId, "", new { @class = "text-danger" })
                 <input type="hidden" id="UserId">
             </div>
-           
+
             <div class="col-md-6">
                 <label>@Html.DisplayNameFor(item => Model.NgayTra)</label>
                 @Html.EditorFor(model => model.NgayTra, new { htmlAttributes = new { @class = "form-control" } })
@@ -35,15 +32,13 @@
         <div class="form-group row">
             <div class="col-md-12">
                 <label>@Html.DisplayNameFor(item => Model.ThuMuon)</label>
-                @Html.EditorFor(model => Model.ThuMuon, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                @Html.EditorFor(model => Model.ThuMuon, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tên văn bản" } })
                 @Html.ValidationMessageFor(model => Model.ThuMuon, "", new { @class = "text-danger" })
-
             </div>
         </div>
         <button style="display:none" data-pro-id="" class="btn btn-danger" id="delete" onclick="return confirm(" Bạn Có Chắc Muốn Xóa Phiếu Mượn Này?");" title="Xóa"><i class="fas fa-trash"></i></button>
         <div class="form-group">
             <input id="b" type="submit" value="Lưu" class="btn btn-success" />
-
         </div>
         <table class="table table-responsive-lg" id="table" style="display:none">
             <tr>
@@ -51,19 +46,16 @@
                 <th width="200">Vị Trí Lưu Trữ</th>
                 <th width="150">Tình Trạng</th>
                 <th width="150">Hoạt Động</th>
-
             </tr>
             <tbody></tbody>
         </table>
-
     </div>
     @Html.Hidden("RedirectTo", Url.Action("Index", "Muon"));
 </div>
 
-
 @section scripts{
-      <div>
-          <script>
+    <div>
+        <script>
         $(function () {
             var successMessage = '@TempData["AlertMessage"]'
             if (successMessage != '')
@@ -112,9 +104,9 @@
             }).data("ui-autocomplete")._renderItem = function (ul, item) {
                 var str = '<div class = "row">';
                 str += '<div class="col-8">' + item.Text + "</div>" + '<div class="col-3">' + SetTinhTrangHTML(item.TinhTrang) + "</div>";
-                
+
                 str += '</div>';
-           
+
                 return $("<div>")
                     .append(str)
                     .appendTo(ul);
@@ -163,7 +155,7 @@
                         alert("Đã mượn tối đa 3 TLVB, vui lòng trả rồi mượn tiếp!");
                         location.href = url;
                     }
-                       
+
                     return false;
                 },
             }).data("ui-autocomplete")._renderItem = function (ul, item) {
@@ -214,7 +206,7 @@
                                  alert("Bạn chưa trả TL/VB theo hạn trả, vui lòng trả rồi mượn tiếp");
                                  location.href = url;
                             }
-                               
+
                         }
                     },
                 });
@@ -253,7 +245,7 @@
                 $(this).parent().parent('tr').remove();
 
             });
-        
+
 
               $("#NgayTra").change(function () {
                   var d = new Date(),
@@ -290,12 +282,10 @@
 
                 });
             }
-            
+
         });
 
-   </script>
-      </div>
-
+        </script>
+    </div>
 }
-
 

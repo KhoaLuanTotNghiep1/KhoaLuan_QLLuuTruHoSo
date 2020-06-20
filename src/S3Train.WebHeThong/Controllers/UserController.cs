@@ -20,6 +20,7 @@ namespace S3Train.WebHeThong.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IAccountManager _accountManager;
         private readonly IRoleService _roleService;
         private readonly IMuonTraService _muonTraService;
         private readonly IFunctionLichSuHoatDongService _functionLichSuHoatDongService;
@@ -29,11 +30,12 @@ namespace S3Train.WebHeThong.Controllers
 
         }
         public UserController(IUserService userService, IRoleService roleService, IMuonTraService muonTraService,
-            IFunctionLichSuHoatDongService functionLichSuHoatDongService)
+            IFunctionLichSuHoatDongService functionLichSuHoatDongService, IAccountManager accountManager)
         {
             _userService = userService;
             _roleService = roleService;
             _muonTraService = muonTraService;
+            _accountManager = accountManager;
             _functionLichSuHoatDongService = functionLichSuHoatDongService;
         }
 
@@ -234,6 +236,60 @@ namespace S3Train.WebHeThong.Controllers
             }
 
             return View();
+        }
+
+        // GET: /Account/ForgotPassword
+        [AllowAnonymous]
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Account/ForgotPassword
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userService.GetUserByEmail(model.Email);
+
+                if (user == null)
+                {
+                    ViewBag.Error = "Email Bạn Nhập Không Tồn Tại. Làm Ơn Kiểm Tra Lại";
+                    return View(model);
+                }
+
+                string code = await _accountManager.UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "User", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await _accountManager.UserManager.SendEmailAsync(user.Id, "Mật Khẩu", ReadHTMLSendEmail(callbackUrl));
+                return View("ForgotPasswordConfirmation");
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        //
+        // GET: /Account/ForgotPasswordConfirmation
+        [AllowAnonymous]
+        public ActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+
+        private string ReadHTMLSendEmail(string url)
+        {
+            string body = string.Empty;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/User/BodySendEmail.cshtml")))
+            {
+                body = reader.ReadToEnd();
+            }
+            body = body.Replace("{Url}", url);
+
+            return body;
         }
 
         private List<SelectListItem> DropDownRole()

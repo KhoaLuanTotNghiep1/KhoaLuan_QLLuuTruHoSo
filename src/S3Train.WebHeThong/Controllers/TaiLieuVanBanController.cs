@@ -118,16 +118,6 @@ namespace S3Train.WebHeThong.Controllers
             var taiLieuVanBan = string.IsNullOrEmpty(model.Id) ? new TaiLieuVanBan { NgayCapNhat = DateTime.Now }
                 : _taiLieuVanBanService.Get(m => m.Id == model.Id);
 
-            DropDowmn();
-
-            var checkName = _taiLieuVanBanService.Get(m => m.Ten == model.Ten);
-
-            if (checkName != null)
-            {
-                TempData["AlertMessage"] = "Văn Bản Có Cùng Tên Đã Tồn Tại";
-                return View(model);
-            }
-
             var autoList = AutoCompleteTextHoSos(GetHoSos());
             string userId = User.Identity.GetUserId();
             string cthd = model.Loai + ": " + model.Ten;
@@ -163,6 +153,15 @@ namespace S3Train.WebHeThong.Controllers
 
             if (string.IsNullOrEmpty(model.Id))
             {
+                var checkName = _taiLieuVanBanService.Get(m => m.Ten == model.Ten);
+
+                if (checkName != null)
+                {
+                    DropDowmn();
+                    TempData["AlertMessage"] = "Văn Bản Có Cùng Tên Đã Tồn Tại";
+                    return View(model);
+                }
+
                 _taiLieuVanBanService.Insert(taiLieuVanBan);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Create, userId, cthd);
                 TempData["AlertMessage"] = "Tạo Mới Thành Công";
@@ -280,25 +279,6 @@ namespace S3Train.WebHeThong.Controllers
             }
 
             return Json(new { da = local}, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult KiemTraTrungTen(string vanBan)
-        {
-            var vanBans = _taiLieuVanBanService.GetAll();;
-            var list = new List<TaiLieu_VanBanViewModel>();
-            foreach (var item in vanBans)
-            {
-                if (vanBan == item.Ten)
-                {
-
-                    list.Add(new TaiLieu_VanBanViewModel
-                    {
-                        Ten = item.Ten,
-                    });
-                }
-
-            }
-            return Json(new { d = list }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Test()

@@ -44,14 +44,14 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.MoTa, htmlAttributes: new { @class = "control-label col-md" })
                         <div class="col-md">
-                            @Html.TextAreaFor(model => model.MoTa, new { @class = "form-control", @rows = "5", @placeholder = "Mô tả" })
+                            @Html.TextAreaFor(model => model.MoTa, new { @class = "form-control", @rows = "5", @placeholder = "Mô tả nơi ban hành" })
                             @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
                 </div>
             </div>
         </div>

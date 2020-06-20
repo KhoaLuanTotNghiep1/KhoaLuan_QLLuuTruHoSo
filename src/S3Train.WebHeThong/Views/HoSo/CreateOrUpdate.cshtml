@@ -25,7 +25,7 @@
             <div class="form-group row">
                 <div class="col-md">
                     <label>@Html.DisplayNameFor(item => Model.HopId)</label>
-                    @Html.EditorFor(model => model.HopId, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                    @Html.EditorFor(model => model.HopId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Vị trí lưu trữ hồ sơ" } })
                     <i><span>Lưu ý: phải nhập đúng với kết quả được gợi ý</span></i>
                     @Html.ValidationMessageFor(model => model.HopId, "", new { @class = "text-danger" })
                 </div>
@@ -47,7 +47,7 @@
             <div class="form-group row">
                 <div class="col-md-6">
                     <label>@Html.DisplayNameFor(item => Model.PhongLuuTru)</label>
-                    @Html.EditorFor(model => model.PhongLuuTru, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                    @Html.EditorFor(model => model.PhongLuuTru, new { htmlAttributes = new { @class = "form-control", @placeholder = "Phông lưu trữ" } })
                     @Html.ValidationMessageFor(model => model.PhongLuuTru, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-md-6">
@@ -79,6 +79,11 @@
 
 @section scripts{
     <script>
+         $(function () {
+            var successMessage = '@TempData["AlertMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
         $(document).ready(function () {
             $("#HopId").autocomplete({
                 source: function (request, response) {

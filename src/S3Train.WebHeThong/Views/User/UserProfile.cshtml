@@ -1,14 +1,12 @@
 ﻿@using S3Train.Model.User
 @using S3Train.Domain
-
 @model UserViewModel
-
 @{
     ViewBag.Title = "UserProfile";
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
     int stt = 1;
+    var muonTras = ViewBag.MuonTras as IEnumerable<MuonTra>;
 }
-
 <div class="card">
     <div class="card-body">
         <div class="row m-y-2">
@@ -83,8 +81,7 @@
                             </div>
                         </div>
                         <br />
-
-                        @if (ViewBag.MuonTras != null)
+                        @if (muonTras.Count() > 0)
                         {
                             <div class="row">
                                 <div class="col-12 col-sm-12">
@@ -104,7 +101,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var item in ViewBag.MuonTras as IEnumerable<MuonTra>)
+                                            @foreach (var item in muonTras)
                                             {
                                                 <tr>
                                                     <td>@stt</td>
@@ -121,7 +118,6 @@
                             </div>
                         }
                     </div>
-
                     <div class="tab-pane" id="edit">
                         <h4 class="m-y-2">Chỉnh Sửa Thông Tin</h4>
                         @using (Html.BeginForm("CreateOrUpdate", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -174,7 +170,6 @@
                             </div>
                         }
                     </div>
-
                     <div class="tab-pane" id="passWord">
                         <h4 class="m-y-2">Đổi Mật Khẩu</h4>
                         @using (Html.BeginForm("UpdatePassWord", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -213,14 +208,13 @@
                     {
                         @Html.AntiForgeryToken()
                         <input type="file" id="file" name="file" class="custom-file-input" />
-                        <input type="submit" class="btn btn-danger" value="Lưu Thay Đổi Avatar" id="avatarSubmit"/>
+                        <input type="submit" class="btn btn-danger" value="Lưu Thay Đổi Avatar" id="avatarSubmit" />
                     }
                 </label>
             </div>
         </div>
     </div>
 </div>
-
 @section scripts{
     <script>
         $(function () {
@@ -234,7 +228,7 @@
 
             $('#ImageAvatar').click(function () {
                 $("#file").trigger('click');
-            }); 
+            });
 
             $('#file').on('change', function (e) {
 

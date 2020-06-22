@@ -372,6 +372,9 @@
     <Content Include="Content\alertifyjs\themes\semantic.min.css" />
     <Content Include="Content\alertifyjs\themes\semantic.rtl.css" />
     <Content Include="Content\alertifyjs\themes\semantic.rtl.min.css" />
+    <Content Include="Content\Avatar\1cfc0dfea0fb58a501ea.jpg" />
+    <Content Include="Content\Avatar\3-30403_photo-funny-minion-wallpapers-hd.jpg" />
+    <Content Include="Content\Avatar\5-59399_minions-hd-1080p.jpg" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -703,6 +706,14 @@
     <Content Include="Content\css\ruang-admin.min.css" />
     <Content Include="Content\Error.css" />
     <Content Include="Content\font\OFL.txt" />
+    <Content Include="Content\HinhAnhTLVB\1080p-anime-wallpapers-16.jpg" />
+    <Content Include="Content\HinhAnhTLVB\BHYT.PNG" />
+    <Content Include="Content\HinhAnhTLVB\GHhocPhi.PNG" />
+    <Content Include="Content\HinhAnhTLVB\HBongVK.PNG" />
+    <Content Include="Content\HinhAnhTLVB\LichThiCK2019-2020.PNG" />
+    <Content Include="Content\HinhAnhTLVB\ThayDoiLichHoc.PNG" />
+    <Content Include="Content\HinhAnhTLVB\ThuHocPhi2013.PNG" />
+    <Content Include="Content\HinhAnhTLVB\TotNghiep.PNG" />
     <Content Include="Content\images\baseline_close_black_18dp.png" />
     <Content Include="Content\Avatar\boy.png" />
     <Content Include="Content\img\logo\hufiicon.jpg" />
@@ -2538,6 +2549,21 @@
     <Content Include="Content\ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
     <Content Include="Content\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
     <Content Include="Content\ckeditor\skins\moono-lisa\readme.md" />
+    <Content Include="Content\HoSo\03-12-2019-13-22-08_thong-bao-dang-ky-hoc-phan-hoc-ky-2-nam-hoc-2019-2020.pdf" />
+    <Content Include="Content\HoSo\06-05-2020-08-01-02_tb-195-vv-tham-gia-bhyt-nam-2020-dot-2.pdf" />
+    <Content Include="Content\HoSo\11-05-2020-07-58-35_tb-194-vv-nhan-ho-so-xet-hoc-bong-sinh-vien-vuot-kho.pdf" />
+    <Content Include="Content\HoSo\12-05-2020-14-18-20_tb-ve-chedo-miengiam-hp-ii-19-20.doc" />
+    <Content Include="Content\HoSo\55.Thong bao nhan ho so xet trao hoc bong danh cho SV kho khan npm hoc 2014-2015.pdf" />
+    <Content Include="Content\HoSo\GDN 06 %28moi giang HK he%29.doc" />
+    <Content Include="Content\HoSo\Ke hoach nop do an, khoa luan.doc" />
+    <Content Include="Content\HoSo\Ke hoach phat bang TN.docx" />
+    <Content Include="Content\HoSo\Ke hoach phat bang TN.pdf" />
+    <Content Include="Content\HoSo\Ke hoach.doc" />
+    <Content Include="Content\HoSo\KTraDCBTN06.pdf" />
+    <Content Include="Content\HoSo\thiduakhenthuong.pdf" />
+    <Content Include="Content\HoSo\THONG BAO %28KE HOACH THI TOT NGHIEP LAN 1-2015%29.pdf" />
+    <Content Include="Content\HoSo\THONG BAO %28Thu hoc phi%29.pdf" />
+    <Content Include="Content\HoSo\Thong bao.docx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <None Include="Scripts\jquery-3.5.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.0.js" />
@@ -2718,8 +2744,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\HinhAnhTLVB\" />
-    <Folder Include="Content\HoSo\" />
     <Folder Include="Views\Manage\" />
   </ItemGroup>
   <ItemGroup>

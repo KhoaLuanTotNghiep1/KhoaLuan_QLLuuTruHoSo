@@ -37,12 +37,22 @@ namespace S3Train.WebHeThong.Controllers.API
             return Ok(muontra);
         }
 
+        public IHttpActionResult GetByTinhTrang(int tinhTrang)
+        {
+            EnumTinhTrang enumTinh = (EnumTinhTrang)tinhTrang;
+            var muontra = _muonTraService.Gets(p => p.TinhTrang == enumTinh).ToList().Select(Mapper.Map<MuonTra, MuonTraDto>);
+
+            if (muontra == null)
+                return NotFound();
+            return Ok(muontra);
+        }
+
         public IHttpActionResult GetById(string id)
         {
             if (string.IsNullOrEmpty(id))
                 return BadRequest();
 
-            var muontra = _muonTraService.Gets(p => p.Id == id).ToList().Select(Mapper.Map<MuonTra, MuonTraDto>);
+            var muontra = Mapper.Map<MuonTra, MuonTraDto>(_muonTraService.Get(p => p.Id == id));
 
             if (muontra == null)
                 return NotFound();

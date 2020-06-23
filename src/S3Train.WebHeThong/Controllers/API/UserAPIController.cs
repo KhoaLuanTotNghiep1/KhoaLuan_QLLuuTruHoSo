@@ -76,5 +76,19 @@ namespace S3Train.WebHeThong.Controllers.API
 
             return Ok(Mapper.Map<ApplicationUser, UserViewModel>(result));
         }
+
+        [ResponseType(typeof(UserViewModel))]
+        public async Task<IHttpActionResult> GetByEmail(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+                return BadRequest();
+
+            var result = await _userService.GetUserByEmail(email);
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(Mapper.Map<ApplicationUser, UserViewModel>(result));
+        }
     }
 }

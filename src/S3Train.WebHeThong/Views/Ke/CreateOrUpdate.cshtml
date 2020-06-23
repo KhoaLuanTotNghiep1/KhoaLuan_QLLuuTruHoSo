@@ -46,12 +46,12 @@
                 <div class="col-md-4">
                     <div class="row-cols-1 form-group">
                         <label>@Html.DisplayNameFor(item => Model.NamBatDau)</label>
-                        @Html.EditorFor(model => model.NamBatDau, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.NamBatDau, new { htmlAttributes = new { @class = "form-control Start-Date" } })
                         @Html.ValidationMessageFor(model => model.NamBatDau, "", new { @class = "text-danger" })
                     </div>
                     <div class="row-cols-1 form-group">
                         <label>@Html.DisplayNameFor(item => Model.NamKetThuc)</label>
-                        @Html.EditorFor(model => model.NamKetThuc, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.NamKetThuc, new { htmlAttributes = new { @class = "form-control End-Date" } })
                         @Html.ValidationMessageFor(model => model.NamKetThuc, "", new { @class = "text-danger" })
                     </div>
                     <div class="row-cols-1 form-group">

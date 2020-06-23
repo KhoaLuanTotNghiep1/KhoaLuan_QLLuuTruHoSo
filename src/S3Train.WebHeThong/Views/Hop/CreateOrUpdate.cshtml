@@ -50,12 +50,12 @@
             <div class="form-group row">
                 <div class="col-md-6">
                     <label>@Html.DisplayNameFor(item => Model.NgayBatDau)</label>
-                    @Html.EditorFor(model => model.NgayBatDau, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.NgayBatDau, new { htmlAttributes = new { @class = "form-control Start-Date" } })
                     @Html.ValidationMessageFor(model => model.NgayBatDau, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-md-6">
                     <label>@Html.DisplayNameFor(item => Model.NgayKetThuc)</label>
-                    @Html.EditorFor(model => model.NgayKetThuc, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.NgayKetThuc, new { htmlAttributes = new { @class = "form-control End-Date" } })
                     @Html.ValidationMessageFor(model => model.NgayKetThuc, "", new { @class = "text-danger" })
                 </div>
             </div>

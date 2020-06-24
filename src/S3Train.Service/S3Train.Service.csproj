@@ -153,10 +153,13 @@
     <Compile Include="IdentityManager\SmsService.cs" />
     <Compile Include="IGenenicServiceBase.cs" />
     <Compile Include="Model\Dto\ChiTietMuonTraDto.cs" />
+    <Compile Include="Model\Dto\HopDto.cs" />
     <Compile Include="Model\Dto\HoSoDto.cs" />
+    <Compile Include="Model\Dto\KeDto.cs" />
     <Compile Include="Model\Dto\MuonTraDto.cs" />
     <Compile Include="Model\Dto\NoiBanHanhDto.cs" />
     <Compile Include="Model\Dto\TaiLieuVanBanDto.cs" />
+    <Compile Include="Model\Dto\TuDto.cs" />
     <Compile Include="Model\Role\RoleViewModel.cs" />
     <Compile Include="Model\User\UserViewModel.cs" />
     <Compile Include="IndentityService\AccountManager.cs" />

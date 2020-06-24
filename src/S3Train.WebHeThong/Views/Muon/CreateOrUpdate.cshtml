@@ -247,16 +247,16 @@
             });
 
 
-              $("#NgayTra").change(function () {
-                  var d = new Date(),
-                      month = '' + AddLeadingZeros(d.getMonth() + 1, 2),
-                      day = '' + AddLeadingZeros(d.getDate(), 2),
-                      year = d.getFullYear();
-                  var ngayMuon = [year, month, day].join('-');
-                  var ngayTra = $("#NgayTra").val();
-                  if (ngayTra < ngayMuon)
-                      alert("Hạn Trả Phải Sau Ngày Mượn!");
-              });
+              //$("#NgayTra").change(function () {
+              //    var d = new Date(),
+              //        month = '' + AddLeadingZeros(d.getMonth() + 1, 2),
+              //        day = '' + AddLeadingZeros(d.getDate(), 2),
+              //        year = d.getFullYear();
+              //    var ngayMuon = [year, month, day].join('-');
+              //    var ngayTra = $("#NgayTra").val();
+              //    if (ngayTra < ngayMuon)
+              //        alert("Hạn Trả Phải Sau Ngày Mượn!");
+              //});
 
 
         $("#b").click(function () {

@@ -32,10 +32,10 @@ namespace S3Train.WebHeThong.Controllers.API
         {
             var result = await _userService.GetAllAsync();
 
-            return Ok(result.ToList().Select(Mapper.Map<ApplicationUser, UserViewModel>));
+            return Ok(result.ToList().Select(Mapper.Map<ApplicationUser, UserDto>));
         }
 
-        [ResponseType(typeof(UserViewModel))]
+        [ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> GetLogin(string userName, string passWord)
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(passWord))
@@ -46,10 +46,10 @@ namespace S3Train.WebHeThong.Controllers.API
             if (result == null)
                 return NotFound();
 
-            return Ok(Mapper.Map<ApplicationUser, UserViewModel>(result));
+            return Ok(Mapper.Map<ApplicationUser, UserDto>(result));
         }
 
-        [ResponseType(typeof(UserViewModel))]
+        [ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> GetById(string Id)
         {
             if (string.IsNullOrEmpty(Id))
@@ -60,10 +60,10 @@ namespace S3Train.WebHeThong.Controllers.API
             if (result == null)
                 return NotFound();
 
-            return Ok(Mapper.Map<ApplicationUser, UserViewModel>(result));
+            return Ok(Mapper.Map<ApplicationUser, UserDto>(result));
         }
 
-        [ResponseType(typeof(UserViewModel))]
+        [ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> GetByUserName(string userName)
         {
             if (string.IsNullOrEmpty(userName))
@@ -74,10 +74,10 @@ namespace S3Train.WebHeThong.Controllers.API
             if (result == null)
                 return NotFound();
 
-            return Ok(Mapper.Map<ApplicationUser, UserViewModel>(result));
+            return Ok(Mapper.Map<ApplicationUser, UserDto>(result));
         }
 
-        [ResponseType(typeof(UserViewModel))]
+        [ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> GetByEmail(string email)
         {
             if (string.IsNullOrEmpty(email))
@@ -88,7 +88,27 @@ namespace S3Train.WebHeThong.Controllers.API
             if (result == null)
                 return NotFound();
 
-            return Ok(Mapper.Map<ApplicationUser, UserViewModel>(result));
+            return Ok(Mapper.Map<ApplicationUser, UserDto>(result));
+        }
+
+        [HttpPut]
+        [ResponseType(typeof(UserDto))]
+        public async Task<IHttpActionResult> PutUser(string id, UserDto userDto)
+        {
+            if (string.IsNullOrEmpty(id) || !ModelState.IsValid)
+                return BadRequest();
+
+            var user = await _userService.GetUserById(id);
+
+            if (user == null)
+                return NotFound();
+
+            var userUpdate = Mapper.Map(userDto, user);
+
+            userUpdate.UpdatedDate = DateTime.Now;
+            await _userService.Update(userUpdate);
+
+            return Ok(userDto);
         }
     }
 }

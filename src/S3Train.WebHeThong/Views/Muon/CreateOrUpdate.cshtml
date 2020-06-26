@@ -62,10 +62,13 @@
                 alertify.success(successMessage);
         });
 
-        var url = $("#RedirectTo").val();
-
 
         $(document).ready(function () {
+
+            var arrayMuon = [];
+            var pval = "";
+            var url = $("#RedirectTo").val();
+
             $("#ThuMuon").autocomplete({
                 source: function (request, response) {
                     $.ajax({
@@ -111,20 +114,7 @@
                     .append(str)
                     .appendTo(ul);
                 };
-        });
 
-        function SetTinhTrangHTML(tinhTrang) {
-            if (tinhTrang == 1)
-                return "<span class='badge badge-primary'>Trong Kho</span>";
-            if (tinhTrang == 2)
-                return "<span class='badge badge-warning'>Đang Mượn</span>";
-            if (tinhTrang == 3)
-                return "<span class='badge badge-secondary'>Đã Trả</span>";
-            if (tinhTrang ==  4)
-                return "<span class='badge badge-success'>Đã Gởi</span>";
-        }
-
-        $(document).ready(function () {
             $("#UserId").autocomplete({
                 source: function (request, response) {
                     $.ajax({
@@ -167,7 +157,7 @@
                 str += '</tr>';
                 str += '<tbody>';
                 str += '<tr>';
-                str += "<td>" + item.Text + "</td>" + "<td>" + item.UserName + "</td>"+ "<td>" + item.SoLuongMuon + "</td>"
+                str += "<td>" + item.Text + "</td>" + "<td>" + item.UserName + "</td>" + "<td>" + item.SoLuongMuon + "</td>"
                 str += '</tr>';
                 str += '</tbody>';
                 str += '</table>';
@@ -175,10 +165,9 @@
                 return $("<table>")
                     .append(str)
                     .appendTo(ul);
-            };
-        });
+                };
 
-            $('input').blur( function (e) {
+            $('input').blur(function (e) {
                 var userId = $('#UserId').val();
                 var today = new Date();
                 var day = today.getDate();
@@ -203,8 +192,8 @@
                             var da = d.replace(/^0+/, '');
                             var mo = m.replace(/^0+/, '');
                             if ((da <= day && mo <= month && y <= year) || (da >= day && mo < month && y <= year) || y < year) {
-                                 alert("Bạn chưa trả TL/VB theo hạn trả, vui lòng trả rồi mượn tiếp");
-                                 location.href = url;
+                                alert("Bạn chưa trả TL/VB theo hạn trả, vui lòng trả rồi mượn tiếp");
+                                location.href = url;
                             }
 
                         }
@@ -212,24 +201,17 @@
                 });
             });
 
-        function AddLeadingZeros(number, size) {
-            var s = "0000" + number;
-            return s.substr(s.length - size);
-        }
+            $("#ThuMuon").change(function () {
 
-        var arrayMuon = [];
-        var pval = "";
-        $("#ThuMuon").change(function () {
-
-            var inputText = $("#ThuMuon").val();
-            if (inputText.length > 1) {
-                arrayMuon.push(inputText);
-                var pval = "";
-                for (i = 0; i < arrayMuon.length; i++) {
-                    pval = pval + arrayMuon[i] + "<br/>";
+                var inputText = $("#ThuMuon").val();
+                if (inputText.length > 1) {
+                    arrayMuon.push(inputText);
+                    var pval = "";
+                    for (i = 0; i < arrayMuon.length; i++) {
+                        pval = pval + arrayMuon[i] + "<br/>";
+                    }
                 }
-            }
-        });
+            });
 
             $(document).on("click", '.delete', function () {
                 var arrayText = [];
@@ -246,45 +228,51 @@
 
             });
 
+            $("#b").click(function () {
+                var token = $('input[name="__RequestVerificationToken"]').val();
+                var user = $('#UserId').val();
+                var ngayKT = $('#NgayTra').val();
+                if (arrayMuon.length > 3)
+                    alert("Bạn chỉ mượn tối đa được 3 TL/VB");
+                else {
+                    $.ajax({
+                        type: "POST",
+                        url: '/Muon/CreateOrUpdate',
+                        data: {
+                            userId: user,
+                            array: arrayMuon,
+                            ngayTra: ngayKT,
+                            __RequestVerificationToken: token
+                        },
+                        success: function (data) {
+                            location.href = url;
+                            TempData["AlertMessage"] = "Tạo Mới Thành Công";
+                        }
 
-              //$("#NgayTra").change(function () {
-              //    var d = new Date(),
-              //        month = '' + AddLeadingZeros(d.getMonth() + 1, 2),
-              //        day = '' + AddLeadingZeros(d.getDate(), 2),
-              //        year = d.getFullYear();
-              //    var ngayMuon = [year, month, day].join('-');
-              //    var ngayTra = $("#NgayTra").val();
-              //    if (ngayTra < ngayMuon)
-              //        alert("Hạn Trả Phải Sau Ngày Mượn!");
-              //});
+                    });
+                }
 
-
-        $("#b").click(function () {
-            var token = $('input[name="__RequestVerificationToken"]').val();
-            var user = $('#UserId').val();
-            var ngayKT = $('#NgayTra').val();
-            if (arrayMuon.length > 3)
-                alert("Bạn chỉ mượn tối đa được 3 TL/VB");
-            else {
-                $.ajax({
-                    type: "POST",
-                    url: '/Muon/CreateOrUpdate',
-                    data: {
-                        userId: user,
-                        array: arrayMuon,
-                        ngayTra: ngayKT,
-                        __RequestVerificationToken: token
-                    },
-                    success: function (data) {
-                        location.href = url;
-                        TempData["AlertMessage"] = "Tạo Mới Thành Công";
-                    }
-
-                });
-            }
-
+            });
         });
 
+            
+        function AddLeadingZeros(number, size) {
+            var s = "0000" + number;
+            return s.substr(s.length - size);
+        }
+
+
+        function SetTinhTrangHTML(tinhTrang) {
+            if (tinhTrang == 1)
+                return "<span class='badge badge-primary'>Trong Kho</span>";
+            if (tinhTrang == 2)
+                return "<span class='badge badge-warning'>Đang Mượn</span>";
+            if (tinhTrang == 3)
+                return "<span class='badge badge-secondary'>Đã Trả</span>";
+            if (tinhTrang ==  4)
+                return "<span class='badge badge-success'>Đã Gởi</span>";
+        }
+  
         </script>
     </div>
 }

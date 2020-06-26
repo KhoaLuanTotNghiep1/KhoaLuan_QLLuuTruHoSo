@@ -28,6 +28,6 @@ namespace S3Train.Model.Dto
 
         public HoSoDto HoSo { get; set; }
         public NoiBanHanhDto NoiBanHanh { get; set; }
-        public UserViewModel User { get; set; }
+        public UserDto User { get; set; }
     }
 }

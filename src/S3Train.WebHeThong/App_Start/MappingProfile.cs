@@ -32,6 +32,9 @@ namespace S3Train.WebHeThong.App_Start
             Mapper.CreateMap<ChiTietMuonTra, ChiTietMuonTraDto>();
             Mapper.CreateMap<ChiTietMuonTraDto, ChiTietMuonTra>();
 
+            Mapper.CreateMap<MuonTra, MuonTraDto>();
+            Mapper.CreateMap<MuonTraDto, MuonTra>();
+
             Mapper.CreateMap<ApplicationUser, UserDto>();
             Mapper.CreateMap<UserDto, ApplicationUser>();
         }

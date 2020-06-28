@@ -61,7 +61,7 @@
                 alertify.success(successMessage);
         });
 
-      var url = "http://hethongluutru.somee.com/Muon/Index?tinhTrang=%C4%90ang%20M%C6%B0%E1%BB%A3n";
+            
 
         $(document).ready(function () {
 
@@ -143,7 +143,7 @@
                     $("#UserId").val(ui.item.UserName);
                     if (ui.item.SoLuongMuon >= 3) {
                         alert("Đã mượn tối đa 3 TLVB, vui lòng trả rồi mượn tiếp!");
-                        location.href = url;
+                        window.location.href = "http://hethongluutru.somee.com/Muon/Index?tinhTrang=%C4%90ang%20M%C6%B0%E1%BB%A3n";
                     }
 
                     return false;
@@ -192,8 +192,8 @@
                             var da = d.replace(/^0+/, '');
                             var mo = m.replace(/^0+/, '');
                             if ((da <= day && mo <= month && y <= year) || (da >= day && mo < month && y <= year) || y < year) {
-                                 alert("Bạn chưa trả TL/VB theo hạn trả, vui lòng trả rồi mượn tiếp");
-                                 location.href = url;
+                                alert("Bạn chưa trả TL/VB theo hạn trả, vui lòng trả rồi mượn tiếp");
+                                window.location.href = "http://hethongluutru.somee.com/Muon/Index?tinhTrang=%C4%90ang%20M%C6%B0%E1%BB%A3n";
                             }
 
                         }
@@ -245,7 +245,7 @@
                             __RequestVerificationToken: token
                         },
                         success: function (data) {
-                            location.href = url;
+                            window.location.href = "http://hethongluutru.somee.com/Muon/Index?tinhTrang=%C4%90ang%20M%C6%B0%E1%BB%A3n";
                             TempData["AlertMessage"] = "Tạo Mới Thành Công";
                         }
 

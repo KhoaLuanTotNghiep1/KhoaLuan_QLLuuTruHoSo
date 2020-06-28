@@ -98,7 +98,7 @@ namespace S3Train.WebHeThong.Controllers
             var muonTras = new List<MuonTra>();
             var model = Users(users, muonTras);
 
-            muontra.UserId = model.FirstOrDefault(m => m.Text == userId).Id;
+            muontra.UserId = model.FirstOrDefault(m => m.UserName == userId).Id;
             muontra.VanThu = User.Identity.GetUserName();
             muontra.NgayMuon = DateTime.Now;
             muontra.NgayKetThuc = ngayTra;
@@ -110,7 +110,7 @@ namespace S3Train.WebHeThong.Controllers
             {
                 var chitietmuontra = new ChiTietMuonTra();
                 var b = array[i];
-                var a = autoList.FirstOrDefault(p => p.UserName == b).Id; 
+                var a = autoList.FirstOrDefault(p => p.Text == b).Id; 
                 chitietmuontra.TaiLieuVanBanId = a;
                 chitietmuontra.MuonTraID = muontra.Id;
                 _chiTietMuonTraService.Insert(chitietmuontra);
@@ -206,7 +206,7 @@ namespace S3Train.WebHeThong.Controllers
         public ActionResult AutoCompleteText(string pre)
         {
             List<TaiLieuVanBan> tlvb = new List<TaiLieuVanBan>();
-            var model = AutoCompleteTextHoSos( _taiLieuVanBanService.GetAll());
+            var model = AutoCompleteTextHoSos( _taiLieuVanBanService.GetAllHaveJoinAll());
 
             model = model.Where(p => p.Text.Contains(pre)).ToHashSet();
 

@@ -2,6 +2,7 @@
 using S3Train.Domain;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 
 namespace S3Train.Services
 {
@@ -50,6 +51,16 @@ namespace S3Train.Services
                                .Include(p => p.NoiBanHanh)
                                .FirstOrDefaultAsync(p => p.Id == id).Result;
             return taiLieuVanBan;
+        }
+
+        public IList<TaiLieuVanBan> GetAllHaveJoinAll()
+        {
+            var tailieuvanbans = EntityDbSet.Include(p => p.User)
+                                  .Include(p => p.ChiTietMuonTras)
+                                  .Include(p => p.NoiBanHanh)
+                                  .Where(p => p.TrangThai == true);
+
+            return tailieuvanbans.ToList();
         }
     }
 }

@@ -1,14 +1,11 @@
 ﻿@using S3Train.WebHeThong.Models
 @using S3Train.Domain
-
 @model MuonTraViewModel
-
 @{
     ViewBag.Title = "CreateOrUpdate";
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
     string title = string.IsNullOrEmpty(Model.Id) ? "Tạo Mới" : "Cập Nhật";
 }
-
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">@title Phiếu Mượn</h1>
     <ol class="breadcrumb">
@@ -21,11 +18,11 @@
         <div class="form-group row">
             <div class="col-md-6">
                 <label>@Html.DisplayNameFor(item => Model.UserId)</label>
-                @Html.EditorFor(model => Model.UserId, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                @Html.EditorFor(model => Model.UserId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tên tài khoản người mượn" } })
                 @Html.ValidationMessageFor(model => Model.UserId, "", new { @class = "text-danger" })
                 <input type="hidden" id="UserId">
             </div>
-           
+
             <div class="col-md-6">
                 <label>@Html.DisplayNameFor(item => Model.NgayTra)</label>
                 @Html.EditorFor(model => model.NgayTra, new { htmlAttributes = new { @class = "form-control" } })
@@ -35,15 +32,13 @@
         <div class="form-group row">
             <div class="col-md-12">
                 <label>@Html.DisplayNameFor(item => Model.ThuMuon)</label>
-                @Html.EditorFor(model => Model.ThuMuon, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                @Html.EditorFor(model => Model.ThuMuon, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tên văn bản" } })
                 @Html.ValidationMessageFor(model => Model.ThuMuon, "", new { @class = "text-danger" })
-
             </div>
         </div>
         <button style="display:none" data-pro-id="" class="btn btn-danger" id="delete" onclick="return confirm(" Bạn Có Chắc Muốn Xóa Phiếu Mượn Này?");" title="Xóa"><i class="fas fa-trash"></i></button>
         <div class="form-group">
             <input id="b" type="submit" value="Lưu" class="btn btn-success" />
-
         </div>
         <table class="table table-responsive-lg" id="table" style="display:none">
             <tr>
@@ -51,18 +46,15 @@
                 <th width="200">Vị Trí Lưu Trữ</th>
                 <th width="150">Tình Trạng</th>
                 <th width="150">Hoạt Động</th>
-
             </tr>
             <tbody></tbody>
         </table>
-
     </div>
 </div>
 
-
 @section scripts{
-      <div>
-          <script>
+    <div>
+        <script>
         $(function () {
             var successMessage = '@TempData["AlertMessage"]'
             if (successMessage != '')
@@ -71,8 +63,12 @@
 
       var url = "http://hethongluutru.somee.com/Muon/Index?tinhTrang=%C4%90ang%20M%C6%B0%E1%BB%A3n";
 
-
         $(document).ready(function () {
+
+            var arrayMuon = [];
+            var pval = "";
+            var url = $("#RedirectTo").val();
+
             $("#ThuMuon").autocomplete({
                 source: function (request, response) {
                     $.ajax({
@@ -111,27 +107,14 @@
             }).data("ui-autocomplete")._renderItem = function (ul, item) {
                 var str = '<div class = "row">';
                 str += '<div class="col-8">' + item.Text + "</div>" + '<div class="col-3">' + SetTinhTrangHTML(item.TinhTrang) + "</div>";
-                
+
                 str += '</div>';
-           
+
                 return $("<div>")
                     .append(str)
                     .appendTo(ul);
                 };
-        });
 
-        function SetTinhTrangHTML(tinhTrang) {
-            if (tinhTrang == 1)
-                return "<span class='badge badge-primary'>Trong Kho</span>";
-            if (tinhTrang == 2)
-                return "<span class='badge badge-warning'>Đang Mượn</span>";
-            if (tinhTrang == 3)
-                return "<span class='badge badge-secondary'>Đã Trả</span>";
-            if (tinhTrang ==  4)
-                return "<span class='badge badge-success'>Đã Gởi</span>";
-        }
-
-        $(document).ready(function () {
             $("#UserId").autocomplete({
                 source: function (request, response) {
                     $.ajax({
@@ -162,7 +145,7 @@
                         alert("Đã mượn tối đa 3 TLVB, vui lòng trả rồi mượn tiếp!");
                         location.href = url;
                     }
-                       
+
                     return false;
                 },
             }).data("ui-autocomplete")._renderItem = function (ul, item) {
@@ -174,7 +157,7 @@
                 str += '</tr>';
                 str += '<tbody>';
                 str += '<tr>';
-                str += "<td>" + item.Text + "</td>" + "<td>" + item.UserName + "</td>"+ "<td>" + item.SoLuongMuon + "</td>"
+                str += "<td>" + item.Text + "</td>" + "<td>" + item.UserName + "</td>" + "<td>" + item.SoLuongMuon + "</td>"
                 str += '</tr>';
                 str += '</tbody>';
                 str += '</table>';
@@ -182,10 +165,9 @@
                 return $("<table>")
                     .append(str)
                     .appendTo(ul);
-            };
-        });
+                };
 
-            $('input').blur( function (e) {
+            $('input').blur(function (e) {
                 var userId = $('#UserId').val();
                 var today = new Date();
                 var day = today.getDate();
@@ -211,31 +193,25 @@
                             var mo = m.replace(/^0+/, '');
                             if ((da <= day && mo <= month && y <= year) || (da >= day && mo < month && y <= year) || y < year) {
                                  alert("Bạn chưa trả TL/VB theo hạn trả, vui lòng trả rồi mượn tiếp");
+                                 location.href = url;
                             }
-                               
+
                         }
                     },
                 });
             });
 
-        function AddLeadingZeros(number, size) {
-            var s = "0000" + number;
-            return s.substr(s.length - size);
-        }
+            $("#ThuMuon").change(function () {
 
-        var arrayMuon = [];
-        var pval = "";
-        $("#ThuMuon").change(function () {
-
-            var inputText = $("#ThuMuon").val();
-            if (inputText.length > 1) {
-                arrayMuon.push(inputText);
-                var pval = "";
-                for (i = 0; i < arrayMuon.length; i++) {
-                    pval = pval + arrayMuon[i] + "<br/>";
+                var inputText = $("#ThuMuon").val();
+                if (inputText.length > 1) {
+                    arrayMuon.push(inputText);
+                    var pval = "";
+                    for (i = 0; i < arrayMuon.length; i++) {
+                        pval = pval + arrayMuon[i] + "<br/>";
+                    }
                 }
-            }
-        });
+            });
 
             $(document).on("click", '.delete', function () {
                 var arrayText = [];
@@ -251,49 +227,53 @@
                 $(this).parent().parent('tr').remove();
 
             });
-        
 
-              $("#NgayTra").change(function () {
-                  var d = new Date(),
-                      month = '' + AddLeadingZeros(d.getMonth() + 1, 2),
-                      day = '' + AddLeadingZeros(d.getDate(), 2),
-                      year = d.getFullYear();
-                  var ngayMuon = [year, month, day].join('-');
-                  var ngayTra = $("#NgayTra").val();
-                  if (ngayTra < ngayMuon)
-                      alert("Hạn Trả Phải Sau Ngày Mượn!");
-              });
+            $("#b").click(function () {
+                var token = $('input[name="__RequestVerificationToken"]').val();
+                var user = $('#UserId').val();
+                var ngayKT = $('#NgayTra').val();
+                if (arrayMuon.length > 3)
+                    alert("Bạn chỉ mượn tối đa được 3 TL/VB");
+                else {
+                    $.ajax({
+                        type: "POST",
+                        url: '/Muon/CreateOrUpdate',
+                        data: {
+                            userId: user,
+                            array: arrayMuon,
+                            ngayTra: ngayKT,
+                            __RequestVerificationToken: token
+                        },
+                        success: function (data) {
+                            location.href = url;
+                            TempData["AlertMessage"] = "Tạo Mới Thành Công";
+                        }
 
+                    });
+                }
 
-        $("#b").click(function () {
-            var token = $('input[name="__RequestVerificationToken"]').val();
-            var user = $('#UserId').val();
-            var ngayKT = $('#NgayTra').val();
-            if (arrayMuon.length > 3)
-                alert("Bạn chỉ mượn tối đa được 3 TL/VB");
-            else {
-                $.ajax({
-                    type: "POST",
-                    url: '/Muon/CreateOrUpdate',
-                    data: {
-                        userId: user,
-                        array: arrayMuon,
-                        ngayTra: ngayKT,
-                        __RequestVerificationToken: token
-                    },
-                    success: function (data) {
-                        location.href = url;
-                        TempData["AlertMessage"] = "Tạo Mới Thành Công";
-                    }
-
-                });
-            }
-            
+            });
         });
 
-   </script>
-      </div>
+            
+        function AddLeadingZeros(number, size) {
+            var s = "0000" + number;
+            return s.substr(s.length - size);
+        }
 
+
+        function SetTinhTrangHTML(tinhTrang) {
+            if (tinhTrang == 1)
+                return "<span class='badge badge-primary'>Trong Kho</span>";
+            if (tinhTrang == 2)
+                return "<span class='badge badge-warning'>Đang Mượn</span>";
+            if (tinhTrang == 3)
+                return "<span class='badge badge-secondary'>Đã Trả</span>";
+            if (tinhTrang ==  4)
+                return "<span class='badge badge-success'>Đã Gởi</span>";
+        }
+  
+        </script>
+    </div>
 }
-
 

@@ -20,14 +20,23 @@ namespace S3Train.WebHeThong.App_Start
             Mapper.CreateMap<HoSo, HoSoDto>();
             Mapper.CreateMap<HoSoDto, HoSo>();
 
-            Mapper.CreateMap<MuonTra, MuonTraDto>();
-            Mapper.CreateMap<MuonTraDto, MuonTra>();
+            Mapper.CreateMap<Hop, HopDto>();
+            Mapper.CreateMap<HopDto, Hop>();
+
+            Mapper.CreateMap<Ke, KeDto>();
+            Mapper.CreateMap<KeDto, Ke>();
+
+            Mapper.CreateMap<Tu, TuDto>();
+            Mapper.CreateMap<TuDto, Tu>();
 
             Mapper.CreateMap<ChiTietMuonTra, ChiTietMuonTraDto>();
             Mapper.CreateMap<ChiTietMuonTraDto, ChiTietMuonTra>();
 
-            Mapper.CreateMap<ApplicationUser, UserViewModel>();
-            Mapper.CreateMap<UserViewModel, ApplicationUser>();
+            Mapper.CreateMap<MuonTra, MuonTraDto>();
+            Mapper.CreateMap<MuonTraDto, MuonTra>();
+
+            Mapper.CreateMap<ApplicationUser, UserDto>();
+            Mapper.CreateMap<UserDto, ApplicationUser>();
         }
     }
 }

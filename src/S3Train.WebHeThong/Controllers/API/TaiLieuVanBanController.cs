@@ -50,6 +50,20 @@ namespace S3Train.WebHeThong.Controllers.API
             return Ok(taiLieuVanBanDtos);
         }
 
+        public IHttpActionResult GetByDang(string dang)
+        {
+            if (string.IsNullOrEmpty(dang))
+                return BadRequest();
+
+            var taiLieuVanBanDtos = _taiLieuVanBanService.Gets(p => p.TrangThai == true && p.Dang.Contains(dang),
+                p => p.OrderBy(c => c.NgayTao)).ToList().Select(Mapper.Map<TaiLieuVanBan, TaiLieuVanBanDto>);
+
+            if (taiLieuVanBanDtos == null)
+                return NotFound();
+
+            return Ok(taiLieuVanBanDtos);
+        }
+
         public IHttpActionResult GetById(string id)
         {
             if (string.IsNullOrEmpty(id))

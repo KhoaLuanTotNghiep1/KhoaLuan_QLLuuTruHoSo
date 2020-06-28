@@ -21,7 +21,7 @@
             <div class="card-body" id="b">
                 <div class="row">
                     <div class="col-lg-4">
-                        <h6 class="m-0 font-weight-bold text-primary">Đơn Vị/Người Trả</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Người Trả</h6>
                         @if (muon.User.Id == muon.MuonTra.UserId)
                         {
                             <p id="SoLuong">@Html.DisplayFor(item => muon.MuonTra.User.FullName)</p>
@@ -29,16 +29,12 @@
 
                     </div>
                     <div class="col-lg-4">
-                        <h6 class="m-0 font-weight-bold text-primary">Tl/VB Trả</h6>
-                        @if (muon.TaiLieuVanBan.Id == muon.TaiLieuVanBanId)
-                        {
-                            <p>@Html.DisplayFor(item => muon.TaiLieuVanBan.Ten)</p>
-                        }
-
+                        <h6 class="m-0 font-weight-bold text-primary">Tài Khoản</h6>
+                        <p>@Html.DisplayFor(item => muon.User.UserName)</p>
                     </div>
                     <div class="col-lg-4">
                         <h6 class="m-0 font-weight-bold text-primary">Số Lượng Trả</h6>
-                        <p>@Html.DisplayFor(item => muon.SoLuong)</p>
+                        <p>@Html.DisplayFor(item => muon.SoLuong) văn bản</p>
                         <input value="@muon.SoLuong" type="hidden" />
                     </div>
                 </div>
@@ -57,6 +53,17 @@
                         <p>@Html.DisplayFor(item => muon.MuonTra.NgayTra)</p>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-lg col-md">
+                        <h6 class="m-0 font-weight-bold text-primary">Văn Bản Trả</h6>
+                        @if (muon.TaiLieuVanBan.Id == muon.TaiLieuVanBanId)
+                        {
+                            <p>@Html.DisplayFor(item => muon.TaiLieuVanBan.Ten)</p>
+                        }
+
+                    </div>
+                </div>
             </div>
                 
 
@@ -72,10 +79,6 @@
                             <div class="col">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">Trạng Thái</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", Model.First().MuonTra.TrangThai)</div>
-                                <div class="mt-2 mb-0 text-muted text-xs">
-                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                    <span>Since last month</span>
-                                </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-primary"></i>
@@ -94,10 +97,6 @@
                             <div class="col">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">Tình Trạng</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", Model.First().MuonTra.TinhTrang)</div>
-                                <div class="mt-2 mb-0 text-muted text-xs">
-                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                    <span>Since last month</span>
-                                </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-primary"></i>

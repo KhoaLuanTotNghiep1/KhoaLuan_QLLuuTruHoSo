@@ -1,12 +1,10 @@
 ﻿@using S3Train.WebHeThong.Models
 @model IList<ChiTietMuonTraViewModel>
-
 @{
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
     int stt = 1;
 }
-
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Thông Tin Chi Tiết Phiếu Mượn</h1>
     <ol class="breadcrumb">
@@ -14,78 +12,83 @@
         <li class="breadcrumb-item active" aria-current="page">Detail</li>
     </ol>
 </div>
-
 <div class="row">
     <div class="col-lg-9">
         @using (Html.BeginForm("Create", "Tra", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
-        <div class="card mb-4">
-
-            @for (int i = 0; i < Model.Count(); i++)
-            {
-                if (Model[i].TrangThai == true)
+            <div class="card mb-4">
+                @for (int i = 0; i < Model.Count(); i++)
                 {
-                    <div class="card-body b">
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Người mượn</h6>
-                                @if (Model[i].User.Id == Model[i].MuonTra.UserId)
-                                {
-                                    @Html.HiddenFor(item => Model[i].MuonTra.UserId)
-                                    <p id="SoLuong">@Html.DisplayFor(item => Model[i].MuonTra.User.FullName)</p>
+                    if (Model[i].TrangThai == true)
+                    {
+                        <div class="card-body b">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <h6 class="m-0 font-weight-bold text-primary">Người mượn</h6>
+                                    @if (Model[i].User.Id == Model[i].MuonTra.UserId)
+                                    {
+                                        @Html.HiddenFor(item => Model[i].MuonTra.UserId)
+                                        <p id="SoLuong">@Html.DisplayFor(item => Model[i].MuonTra.User.FullName)</p>
 
-                                }
+                                    }
+                                </div>
+                                <div class="col-lg-4">
+                                    <h6 class="m-0 font-weight-bold text-primary">Tài Khoản</h6>
+                                    @Html.HiddenFor(item => Model[i].MuonTra.User.UserName)
+                                    <p>@Html.DisplayFor(item => Model[i].MuonTra.User.UserName)</p>
+                                </div>
+                                <div class="col-lg-4">
+                                    <h6 class="m-0 font-weight-bold text-primary">Chọn Trả</h6>
+                                    @Html.HiddenFor(item => Model[i].Id)
+                                    @Html.HiddenFor(item => Model[i].MuonTraId)
+                                    @Html.HiddenFor(item => Model[i].MuonTra.Id)
+                                    @Html.EditorFor(item => Model[i].Checkbox, new { htmlAttributes = new { @class = "check", @id = Model[i].Id } })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <h6 class="m-0 font-weight-bold text-primary">Văn Thư</h6>
+                                    @Html.HiddenFor(item => Model[i].MuonTra.VanThu)
+                                    <p>@Html.DisplayFor(item => Model[i].MuonTra.VanThu)</p>
+                                </div>
+                                <div class="col-lg-4">
+                                    <h6 class="m-0 font-weight-bold text-primary" id="NgayMuon">Ngày Mượn</h6>
+                                    @Html.HiddenFor(item => Model[i].MuonTra.NgayMuon)
+                                    <p>@Html.DisplayFor(item => Model[i].MuonTra.NgayMuon)</p>
+                                </div>
+                                <div class="col-lg-4">
+                                    <h6 class="m-0 font-weight-bold text-primary">Hạn Trả</h6>
+                                    <p>@Html.DisplayFor(item => Model[i].MuonTra.NgayTra)</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg">
+                                    <h6 class="m-0 font-weight-bold text-primary">Tl/VB mượn</h6>
+                                    @if (Model[i].TaiLieuVanBanId == Model[i].TaiLieuVanBan.Id)
+                                    {
+                                        @Html.HiddenFor(item => Model[i].TaiLieuVanBanId)
+                                        <p>@Html.DisplayFor(item => Model[i].TaiLieuVanBan.Ten)</p>
 
+                                    }
+                                </div>
                             </div>
-                            <div class="col-lg-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Văn Thư</h6>
-                                @Html.HiddenFor(item => Model[i].MuonTra.VanThu)
-                                <p>@Html.DisplayFor(item => Model[i].MuonTra.VanThu)</p>
-                            </div>
-                            <div class="col-lg-2">
-                                <h6 class="m-0 font-weight-bold text-primary" id="NgayMuon">Ngày Mượn</h6>
-                                @Html.HiddenFor(item => Model[i].MuonTra.NgayMuon)
-                                <p>@Html.DisplayFor(item => Model[i].MuonTra.NgayMuon)</p>
-                            </div>
-                            <div class="col-lg-2">
-                                <h6 class="m-0 font-weight-bold text-primary">Hạn Trả</h6>
-                                <p>@Html.DisplayFor(item => Model[i].MuonTra.NgayTra)</p>
-                            </div>
-                            <div class="col-lg-2">
-                                <h6 class="m-0 font-weight-bold text-primary">Chọn Trả</h6>
-                                @Html.HiddenFor(item => Model[i].Id)
-                                @Html.HiddenFor(item => Model[i].MuonTraId)
-                                @Html.HiddenFor(item => Model[i].MuonTra.Id)
-                                @Html.EditorFor(item => Model[i].Checkbox, new { htmlAttributes = new { @class = "check", @id = Model[i].Id } })
+                            <div class="row">
+                                <div class="col-lg">
+                                    <h6 class="m-0 font-weight-bold text-primary">Vị Trí Lưu Trữ</h6>
+                                    <p>@Html.DisplayFor(item => Model[i].ViTri)</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <h6 class="m-0 font-weight-bold text-primary">Vị Trí Lưu Trữ</h6>
-                                <p>@Html.DisplayFor(item => Model[i].ViTri)</p>
-                            </div>
-                            <div class="col-lg-6">
-                                <h6 class="m-0 font-weight-bold text-primary">Tl/VB mượn</h6>
-                                @if (Model[i].TaiLieuVanBanId == Model[i].TaiLieuVanBan.Id)
-                                {
-                                    @Html.HiddenFor(item => Model[i].TaiLieuVanBanId)
-                                    <p>@Html.DisplayFor(item => Model[i].TaiLieuVanBan.Ten)</p>
+                    }
 
-                                }
-                            </div>
-                        </div>
-
-                    </div>
                 }
-
-            }
-            <div class="col-lg-3">
-                <div class="form-group">
-                    <input type="submit" value="Trả TL/VB" class="btn btn-success" />
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <input type="submit" value="Trả TL/VB" class="btn btn-success" />
+                    </div>
                 </div>
             </div>
-        </div>
         }
     </div>
     <div class="col-lg-3">
@@ -97,10 +100,6 @@
                             <div class="col">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">Trạng Thái</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", Model.First().MuonTra.TrangThai)</div>
-                                <div class="mt-2 mb-0 text-muted text-xs">
-                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                    <span>Since last month</span>
-                                </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-primary"></i>
@@ -119,10 +118,6 @@
                             <div class="col">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">Tình Trạng</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Partial("~/Views/Shared/_PartialTinhTrangLuuTru.cshtml", Model.First().MuonTra.TinhTrang)</div>
-                                <div class="mt-2 mb-0 text-muted text-xs">
-                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                    <span>Since last month</span>
-                                </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-primary"></i>
@@ -152,12 +147,11 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                <tr>
-                                    <td>@stt</td>
-                                    <td>@Html.DisplayFor(m => item.TaiLieuVanBan.Ten)</td>
-                                    <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
-
-                                </tr>
+                                    <tr>
+                                        <td>@stt</td>
+                                        <td>@Html.DisplayFor(m => item.TaiLieuVanBan.Ten)</td>
+                                        <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
+                                    </tr>
 
                                     stt += 1;
                                 }
@@ -168,7 +162,6 @@
             </div>
         }
     }
-
 </div>
 @section  scripts{
     <script>
@@ -178,8 +171,7 @@
                 alertify.success(successMessage);
         });
 
-       
+
     </script>
 }
-
 

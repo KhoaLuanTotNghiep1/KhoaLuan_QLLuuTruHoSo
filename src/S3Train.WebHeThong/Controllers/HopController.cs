@@ -97,14 +97,6 @@ namespace S3Train.WebHeThong.Controllers
             var hop = string.IsNullOrEmpty(model.Id) ? new Hop { NgayCapNhat = DateTime.Now }
                 : _hopService.Get(m => m.Id == model.Id);
 
-            var checkName = _hopService.Get(m => m.ChuyenDe == model.ChuyenDe);
-
-            if(checkName != null)
-            {
-                TempData["AlertMessage"] = "Hộp Chuyên Đề Đã Tồn Tại";
-                return View(model);
-            }
-
             var autoList = AutoCompleteTextKes(GetKes());
             string userId = User.Identity.GetUserId();
             string chiTietHoatDong = "hộp: " + hop.ChuyenDe;
@@ -117,10 +109,24 @@ namespace S3Train.WebHeThong.Controllers
             hop.NgayBatDau = model.NgayBatDau;
             hop.NgayKetThuc = model.NgayKetThuc;
 
+            // create new
             if (string.IsNullOrEmpty(model.Id))
             {
+                DropDownList();
+
+                var checkName = _hopService.Get(m => m.ChuyenDe == model.ChuyenDe);
+
+                // check name
+                if (checkName != null)
+                {
+                    TempData["AlertMessage"] = "Hộp Chuyên Đề Đã Tồn Tại";
+                    return View(model);
+                }
+
                 hop.TinhTrang = EnumTinhTrang.TrongKho;
                 var result = UpdateTu_SoHopHienTai(hop.KeId, ActionWithObject.Update);
+
+                // check amout ke
                 if (!result)
                 {
                     TempData["AlertMessage"] = "Số Lượng Hộp Trong Kệ Bạn Chọn Đã Đầy";
@@ -132,7 +138,7 @@ namespace S3Train.WebHeThong.Controllers
 
                 TempData["AlertMessage"] = "Tạo Mới Thành Công";
             }
-            else
+            else // update
             {
                 _hopService.Update(hop);
 

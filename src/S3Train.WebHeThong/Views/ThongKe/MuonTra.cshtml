@@ -1,12 +1,11 @@
 ﻿@using S3Train.Domain
 @model Dictionary<string, List<ChiTietMuonTra>>
-
 @{
     ViewBag.Title = "MuonTra";
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
     int stt = 1;
+    var HetHans = ViewBag.UsersBorrowDocument as IEnumerable<MuonTra>;
 }
-
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Thống Kê</h1>
     <ol class="breadcrumb">
@@ -14,7 +13,6 @@
         <li class="breadcrumb-item active" aria-current="page">ThongKe</li>
     </ol>
 </div>
-
 <div class="card">
     <div class="card-body">
         @using (Html.BeginForm())
@@ -35,7 +33,6 @@
                         <input type="submit" value="Thống Kê" id="submit" class="btn btn-primary col-md-auto" />
                     </div>
                 </div>
-
                 <div class="col-md-8">
                     <div id="chartContainer" style="height: 370px; width: 100%;"></div>
                 </div>
@@ -43,13 +40,11 @@
 
             <div class="">
                 <a href="@Url.Action("ExportMuontra","ThongKe", new { type = "excel"})" class="btn btn-info">Xuất file exel</a>
-
                 <a class="btn btn-warning" href="@Url.Action("ExportMuontra","ThongKe", new { type = "csv"})">Xuất file CSV</a>
             </div>
         }
     </div>
 </div>
-
 @{
     if (Model.Count() > 0)
     {
@@ -68,7 +63,6 @@
                         </div>
                         <div class="col-md-4">
                             <a href="@Url.Action("ExportMuontra","ThongKe", new { type = "excel", dang = item.Key})" class="btn btn-info">Xuất file exel</a>
-
                             <a class="btn btn-warning" href="@Url.Action("ExportMuontra","ThongKe", new { type = "csv", dang = item.Key})">Xuất file CSV</a>
                         </div>
                     </div>
@@ -105,7 +99,7 @@
     }
 }
 <br />
-@if (ViewBag.UsersBorrowDocument != null)
+@if (HetHans.Count() > 0)
 {
     stt = 1;
     <h1 class="h3 mb-0 text-gray-800">Danh Sách Người Mượn Hết Hạn Mượn</h1>
@@ -125,7 +119,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var mt in ViewBag.UsersBorrowDocument as IEnumerable<MuonTra>)
+                    @foreach (var mt in HetHans)
                     {
                         <tr>
                             <td>@stt</td>
@@ -147,7 +141,6 @@
         </div>
     </div>
 }
-
 
 @section scripts{
     <script type="text/javascript">
@@ -174,4 +167,3 @@
         });
     </script>
 }
-

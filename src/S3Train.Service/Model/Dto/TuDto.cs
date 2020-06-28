@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace S3Train.Model.Dto
 {
-    public class HoSoDto : EntityBase
+    public class TuDto : EntityBase
     {
-        public string PhongLuuTru { get; set; }
-
-        public HopDto Hop { get; set; }
+        public string Ten { get; set; }
+        public string ViTri { get; set; }
+        public string NgươiQuanLy { get; set; }
     }
 }

@@ -6,7 +6,6 @@
     int soLuong = Model.SoLuongMax - Model.SoLuongHienTai;
     int stt = 1;
 }
-
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Thông tin Chi Tiết Tủ</h1>
     <ol class="breadcrumb">
@@ -14,7 +13,6 @@
         <li class="breadcrumb-item active" aria-current="page">Thong-Tin-Chi-Tiet</li>
     </ol>
 </div>
-
 <div class="row">
     <div class="col-lg-9">
         <div class="card mb-4">
@@ -93,7 +91,6 @@
             </div>
         </div>
     </div>
-
     @{
         if (Model.Kes.Count() > 1)
         {
@@ -118,7 +115,7 @@
                                     <tr>
                                         <td>@stt</td>
                                         <td>@Html.DisplayFor(m => ke.Ten)</td>
-                                         <td>@Html.Partial("~/Views/Shared/_PartialTinhTrang.cshtml", Convert.ToInt32(ke.SoHopToiDa - ke.SoHopHienTai))</td>
+                                        <td>@Html.Partial("~/Views/Shared/_PartialTinhTrang.cshtml", Convert.ToInt32(ke.SoHopToiDa - ke.SoHopHienTai))</td>
                                         <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", ke.TrangThai)</td>
                                         <td>
                                             <a href="@Url.Action("Detail","Ke", new { id=ke.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
@@ -133,7 +130,7 @@
                                         </td>
                                     </tr>
 
-                                    stt+= 1;
+                                    stt += 1;
                                 }
                             </tbody>
                         </table>
@@ -142,5 +139,4 @@
             </div>
         }
     }
-
 </div>

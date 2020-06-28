@@ -1,12 +1,10 @@
 ﻿@using S3Train.WebHeThong.Models
 @model HopViewModel
-
 @{
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
     int stt = 1;
 }
-
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Thông Tin Chi Tiết Hộp</h1>
     <ol class="breadcrumb">
@@ -14,7 +12,6 @@
         <li class="breadcrumb-item active" aria-current="page">Thong-Tin-Chi-Tiet</li>
     </ol>
 </div>
-
 <div class="row">
     <div class="col-lg-9">
         <div class="card mb-4">
@@ -97,7 +94,6 @@
             </div>
         </div>
     </div>
-
     @{
         if (Model.HoSos.Count() > 0)
         {
@@ -119,23 +115,23 @@
                             <tbody>
                                 @foreach (var hoso in Model.HoSos)
                                 {
-                                <tr>
-                                    <td>@stt</td>
-                                    <td>@Html.DisplayFor(item => hoso.PhongLuuTru)</td>
-                                    <td>@Html.DisplayFor(item => hoso.ThoiGianBaoQuan) tháng</td>
-                                    <td>@hoso.NgayTao.ToString("dd MMM yyyy")</td>
-                                    <td>
-                                        <a href="@Url.Action("Detail","HoSo", new { id=hoso.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
-                                            <i class="fas fa-info"></i>
-                                        </a>
-                                        <a href="@Url.Action("CreateOrUpdate","HoSo", new { id=hoso.Id})" class="btn btn-primary" title="Cập Nhật">
-                                            <i class="fas fa-sync"></i>
-                                        </a>
-                                        <a href="@Url.Action("Delete","HoSo", new { id=hoso.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @hoso.PhongLuuTru?');" title="Xóa">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>@stt</td>
+                                        <td>@Html.DisplayFor(item => hoso.PhongLuuTru)</td>
+                                        <td>@Html.DisplayFor(item => hoso.ThoiGianBaoQuan) tháng</td>
+                                        <td>@hoso.NgayTao.ToString("dd MMM yyyy")</td>
+                                        <td>
+                                            <a href="@Url.Action("Detail","HoSo", new { id=hoso.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
+                                                <i class="fas fa-info"></i>
+                                            </a>
+                                            <a href="@Url.Action("CreateOrUpdate","HoSo", new { id=hoso.Id})" class="btn btn-primary" title="Cập Nhật">
+                                                <i class="fas fa-sync"></i>
+                                            </a>
+                                            <a href="@Url.Action("Delete","HoSo", new { id=hoso.Id})" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa @hoso.PhongLuuTru?');" title="Xóa">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                     stt += 1;
                                 }
                             </tbody>
@@ -145,5 +141,4 @@
             </div>
         }
     }
-
 </div>

@@ -50,7 +50,6 @@
             <tbody></tbody>
         </table>
     </div>
-    @Html.Hidden("RedirectTo", Url.Action("Index", "Muon"));
 </div>
 
 @section scripts{
@@ -62,6 +61,7 @@
                 alertify.success(successMessage);
         });
 
+      var url = "http://hethongluutru.somee.com/Muon/Index?tinhTrang=%C4%90ang%20M%C6%B0%E1%BB%A3n";
 
         $(document).ready(function () {
 
@@ -192,8 +192,8 @@
                             var da = d.replace(/^0+/, '');
                             var mo = m.replace(/^0+/, '');
                             if ((da <= day && mo <= month && y <= year) || (da >= day && mo < month && y <= year) || y < year) {
-                                alert("Bạn chưa trả TL/VB theo hạn trả, vui lòng trả rồi mượn tiếp");
-                                location.href = url;
+                                 alert("Bạn chưa trả TL/VB theo hạn trả, vui lòng trả rồi mượn tiếp");
+                                 location.href = url;
                             }
 
                         }

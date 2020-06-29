@@ -35,7 +35,7 @@ namespace S3Train.WebHeThong.Controllers
             _userService = userService;
         }
         // GET: MuonTra
-        public ActionResult Index(int? pageIndex, int? pageSize, string searchString, string tinhTrang = GlobalConfigs.TINHTRANG_DANGMUON, bool active = true)
+        public ActionResult Index(int? pageIndex, int? pageSize, string searchString, bool active = true)
         {
             pageIndex = (pageIndex ?? 1);
             pageSize = pageSize ?? GlobalConfigs.DEFAULT_PAGESIZE;
@@ -135,32 +135,6 @@ namespace S3Train.WebHeThong.Controllers
             };
             return model;
         }
-       
-        public ActionResult Delete(string id)
-        {
-            var muontra = _muonTraService.Get(m => m.Id == id);
-            var chiTietMuonTra = _chiTietMuonTraService.GetAll();
-            foreach (var item in chiTietMuonTra)
-            {
-                if (item.MuonTraID == muontra.Id)
-                {
-                    var vanBan = _taiLieuVanBanService.GetAll();
-                    foreach (var vb in vanBan)
-                    {
-                        if (vb.Id == item.TaiLieuVanBanId)
-                        {
-                            vb.TinhTrang = EnumTinhTrang.TrongKho;
-                            _taiLieuVanBanService.Update(vb);
-                        }
-                    }
-                    _chiTietMuonTraService.Remove(item);
-                }
-            }
-            _muonTraService.Remove(muontra);
-            
-            TempData["AlertMessage"] = "Xóa Thành Công";
-            return RedirectToAction("Index");
-        }
         
         public ActionResult Detail(string id)
         {
@@ -188,18 +162,6 @@ namespace S3Train.WebHeThong.Controllers
                 }
             }
             return View(model);
-        }
-
-
-        public ActionResult ChangeActive(string id, bool active)
-        {
-            var model = _muonTraService.Get(m => m.Id == id);
-
-            model.TrangThai = active;
-            model.NgayCapNhat = DateTime.Now;
-
-            _muonTraService.Update(model);
-            return RedirectToAction("Index");
         }
         
         [HttpPost]

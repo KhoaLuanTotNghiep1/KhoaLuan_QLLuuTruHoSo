@@ -17,8 +17,6 @@
     </ol>
 </div>
 
-
-
 <div class="card">
     <div class="card-body">
         <div class="row">
@@ -61,12 +59,26 @@
                         <td>@Html.DisplayFor(m => item.NgayTra)</td>
                         <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
                         <td>
-                             <a href="@Url.Action("Detail", "Tra", new { id = item.Id })" class="btn btn-info" title="Thông Tin Chi Tiết">
+                            <a href="@Url.Action("Detail", "Tra", new { id = item.Id })" class="btn btn-info" title="Thông Tin Chi Tiết">
                                 <i class="fas fa-info"></i>
-                             </a>
-                             <a href="@Url.Action("Delete", "Tra", new { id = item.Id })" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa Phiếu Mượn Này?');" title="Xóa">
-                                <i class="fas fa-trash"></i>
-                             </a>
+                            </a>
+                            @{
+                                if (ViewBag.Active == true)
+                                {
+                                    <a href="@Url.Action("ChangeActive", "Tra", new { id = item.Id, active = false })" class="btn btn-danger" onclick="return confirm('Bạn Có Chắc Muốn Xóa Phiếu Mượn Này?');" title="Xóa">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("ChangeActive", "Tra", new { id = item.Id, active = true })" class="btn btn-warning" onclick="return confirm('Bạn muốn khôi phục item này không?');" title="Khôi phục">
+                                        <i class="fas fa-trash-restore"></i>
+                                    </a>
+                                    <a href="@Url.Action("Delete", "Tra", new { id=item.Id })" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa hoàn toàn item này không?');" title="Xóa">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                }
+                            }
                         </td>
                     </tr>
                     stt += 1;

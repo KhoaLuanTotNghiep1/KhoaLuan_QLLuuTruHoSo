@@ -4,6 +4,7 @@ using S3Train.Domain;
 using System.Data.Entity;
 using System.Linq.Expressions;
 using System;
+using System.Collections.Generic;
 
 namespace S3Train.Services
 {
@@ -30,9 +31,18 @@ namespace S3Train.Services
             return list;
         }
 
+        public MuonTra GetHaveJoinCTMTAndUser()
+        {
+            var muontra = EntityDbSet.Include(p => p.User)
+                               .Include(p => p.ChiTietMuonTras).FirstOrDefaultAsync().Result;
+            return muontra;
+        }
+
         public MuonTra GetHaveJoinUserAndCTMT(Expression<Func<MuonTra, bool>> predicate)
         {
             return EntityDbSet.Include(p => p.User).Include(p => p.ChiTietMuonTras).FirstOrDefault(predicate);
         }
+
+      
     }
 }

@@ -2,6 +2,7 @@
 using S3Train.Contract;
 using S3Train.Domain;
 using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace S3Train.Services
 {
@@ -17,5 +18,15 @@ namespace S3Train.Services
 
             return list;
         }
+
+        public IList<ChiTietMuonTra> GetHaveJoinMuonTraAndTLVB()
+        {
+            var chiTietMuonTra = EntityDbSet.Include(p => p.TaiLieuVanBan)
+                               .Include(p => p.MuonTra).ToList();
+            return chiTietMuonTra;
+        }
+        
+
+
     }
 }

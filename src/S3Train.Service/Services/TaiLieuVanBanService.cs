@@ -1,8 +1,10 @@
 ﻿using S3Train.Contract;
 using S3Train.Domain;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace S3Train.Services
 {
@@ -50,6 +52,13 @@ namespace S3Train.Services
                                .Include(p => p.User)
                                .Include(p => p.NoiBanHanh)
                                .FirstOrDefaultAsync(p => p.Id == id).Result;
+            return taiLieuVanBan;
+        }
+
+        public TaiLieuVanBan GetHaveJoinCTMT(Expression<Func<TaiLieuVanBan, bool>> predicate)
+        {
+            var taiLieuVanBan = EntityDbSet
+                               .Include(p => p.ChiTietMuonTras).FirstOrDefault(predicate);
             return taiLieuVanBan;
         }
 

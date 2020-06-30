@@ -138,32 +138,13 @@ namespace S3Train.WebHeThong.Controllers
         
         public ActionResult Detail(string id)
         {
-            var model = new List<ChiTietMuonTraViewModel>();
-            var chiTietMuonTras = _chiTietMuonTraService.GetAll();
-            var muonTra = GetMuonTra(_muonTraService.Get(m => m.Id == id));
-            var autoList = AutoCompleteTextHoSos(_taiLieuVanBanService.Gets(p => p.TrangThai == true, p => p.OrderBy(x => x.Ten)).ToList());
-            foreach (var item in chiTietMuonTras)
-            {
-                if (item.MuonTraID == id)
-                {
-                    var taiLieuVanBan = _taiLieuVanBanService.Get(m => m.Id == item.TaiLieuVanBanId);
-                    model.Add(new ChiTietMuonTraViewModel
-                    {
-                        Id = item.Id,
-                        MuonTra = muonTra,
-                        User = muonTra.User,
-                        MuonTraId = item.MuonTraID,
-                        TaiLieuVanBan = taiLieuVanBan,
-                        TaiLieuVanBanId = item.TaiLieuVanBanId,
-                        SoLuong = 1,
-                        ViTri = autoList.First().ViTri,
-                        TrangThai = item.TrangThai,
-                    });
-                }
-            }
+            var chiTietMuonTras = _chiTietMuonTraService.GetHaveJoinMuonTraAndTLVB().Where(n => n.MuonTraID == id);
+            var model = GetChiTietMuonTras(chiTietMuonTras);
             return View(model);
         }
-        
+
+      
+
         [HttpPost]
         public ActionResult AutoCompleteText(string pre)
         {
@@ -245,6 +226,31 @@ namespace S3Train.WebHeThong.Controllers
             };
             
             return model;
+        }
+
+        private List<ChiTietMuonTraViewModel> GetChiTietMuonTras(IEnumerable<ChiTietMuonTra> chiTietMuonTra)
+        {
+            var model = new List<ChiTietMuonTraViewModel>();
+            var muonTras = _muonTraService.GetHaveJoinCTMTAndUser();
+            var autoList = AutoCompleteTextHoSos(_taiLieuVanBanService.Gets(p => p.TrangThai == true, p => p.OrderBy(x => x.Ten)).ToList());
+            foreach (var item in chiTietMuonTra)
+            {
+                var taiLieuVBs = _taiLieuVanBanService.GetHaveJoinCTMT(m => m.Id == item.TaiLieuVanBanId);
+                model.Add(new ChiTietMuonTraViewModel
+                {
+                    Id = item.Id,
+                    MuonTra = muonTras,
+                    MuonTraId = item.MuonTraID,
+                    TaiLieuVanBan = taiLieuVBs,
+                    TaiLieuVanBanId = item.TaiLieuVanBanId,
+                    ViTri = autoList.First().ViTri,
+                    TrangThai = item.TrangThai,
+
+                }); 
+            }
+           return model;
+
+
         }
 
         private List<MuonTraViewModel> GetMuonTras(IList<MuonTra> muontras)

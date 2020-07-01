@@ -25,12 +25,18 @@ namespace S3Train.WebHeThong.Controllers.API
             _chiTietMuonTraService = chiTietMuonTraService;
         }
 
+        public IHttpActionResult GetAll()
+        {
+            var list = _chiTietMuonTraService.GetAll().ToList().Select(Mapper.Map<ChiTietMuonTra, ChiTietMuonTraDto>);
+            return Ok(list);
+        }
+
         public IHttpActionResult GetByMuonTraId(string muonTraId)
         {
             if (string.IsNullOrEmpty(muonTraId))
                 return BadRequest();
 
-            var chiTietMuonTras = _chiTietMuonTraService.Gets(p => p.MuonTraID == muonTraId).ToList().Select(Mapper.Map<ChiTietMuonTra, ChiTietMuonTraDto>);
+            var chiTietMuonTras = _chiTietMuonTraService.Gets(p => p.MuonTraID == muonTraId && p.TrangThai == true).ToList().Select(Mapper.Map<ChiTietMuonTra, ChiTietMuonTraDto>);
 
             if (chiTietMuonTras == null)
                 return NotFound();

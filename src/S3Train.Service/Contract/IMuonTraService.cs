@@ -12,6 +12,5 @@ namespace S3Train.Contract
         MuonTra GetHaveJoinUser(Expression<Func<MuonTra, bool>> predicate);
         MuonTra GetHaveJoinUserAndCTMT(Expression<Func<MuonTra, bool>> predicate);
         IQueryable<MuonTra> GetAllHaveJoinChiTietMuonTra();
-        MuonTra GetHaveJoinCTMTAndUser();
     }
 }

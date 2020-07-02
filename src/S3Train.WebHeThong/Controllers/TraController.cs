@@ -112,9 +112,10 @@ namespace S3Train.WebHeThong.Controllers
             else
             {
                 GiveBackOneOrTwo(model);
-            }    
-            
+            }
+
             return RedirectToAction("Index");
+        
         }
 
 

@@ -101,16 +101,18 @@ namespace S3Train.WebHeThong.Controllers
             {
                 var vanBan = _taiLieuVanBanService.Get(p => p.Id == item.TaiLieuVanBanId);
                 var muonTra = _muonTraService.Get(m => m.Id == item.MuonTra.Id);
-                if (model.Count() == dem)
-                {
-                    vanBan.TinhTrang = EnumTinhTrang.TrongKho;
-                    _taiLieuVanBanService.Update(vanBan);
+                //if (model.Count() == dem)
+                //{
+                //    vanBan.TinhTrang = EnumTinhTrang.TrongKho;
+                //    _taiLieuVanBanService.Update(vanBan);
 
-                    muonTra.TinhTrang = EnumTinhTrang.DaTra;
-                    _muonTraService.Update(muonTra);
-                }
-                else
-                {
+                //    muonTra.TinhTrang = EnumTinhTrang.DaTra;
+                //    _muonTraService.Update(muonTra);
+                //    _functionLichSuHoatDongService.Create(ActionWithObject.Create, User.Identity.GetUserId(), item.Id);
+                //    TempData["AlertMessage"] = "Trả Văn Bản Thành Công";
+                //}
+                //else
+                //{
                     if (item.Checkbox == true)
                     {
 
@@ -142,10 +144,11 @@ namespace S3Train.WebHeThong.Controllers
                         _taiLieuVanBanService.Update(vanBan);
 
                     }
-                    _functionLichSuHoatDongService.Create(ActionWithObject.Create, User.Identity.GetUserId(), item.Id);
-                    TempData["AlertMessage"] = "Trả Văn Bản Thành Công";
-                }
+                //}
+              
             }
+            //_functionLichSuHoatDongService.Create(ActionWithObject.Create, User.Identity.GetUserId(), item.Id);
+            TempData["AlertMessage"] = "Trả Văn Bản Thành Công";
             if (dem == 0)
                 TempData["AlertMessage"] = "Bạn Chưa Chọn TL/VB Để Trả";
             return RedirectToAction("Index");

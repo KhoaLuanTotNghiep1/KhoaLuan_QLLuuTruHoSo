@@ -231,10 +231,11 @@ namespace S3Train.WebHeThong.Controllers
         private List<ChiTietMuonTraViewModel> GetChiTietMuonTras(IEnumerable<ChiTietMuonTra> chiTietMuonTra)
         {
             var model = new List<ChiTietMuonTraViewModel>();
-            var muonTras = _muonTraService.GetHaveJoinCTMTAndUser();
+            
             var autoList = AutoCompleteTextHoSos(_taiLieuVanBanService.Gets(p => p.TrangThai == true, p => p.OrderBy(x => x.Ten)).ToList());
             foreach (var item in chiTietMuonTra)
             {
+                var muonTras = _muonTraService.GetHaveJoinUserAndCTMT(m => m.Id == item.MuonTraID);
                 var taiLieuVBs = _taiLieuVanBanService.GetHaveJoinCTMT(m => m.Id == item.TaiLieuVanBanId);
                 model.Add(new ChiTietMuonTraViewModel
                 {

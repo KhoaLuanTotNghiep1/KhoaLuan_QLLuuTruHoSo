@@ -103,19 +103,19 @@ namespace S3Train.WebHeThong.Controllers
             muontra.NgayMuon = DateTime.Now;
             muontra.NgayKetThuc = ngayTra;
             muontra.TinhTrang = EnumTinhTrang.DangMuon;
-          
+
             _muonTraService.Insert(muontra);
 
             for (int i = 0; i < array.Length; i++)
             {
                 var chitietmuontra = new ChiTietMuonTra();
                 var b = array[i];
-                var a = autoList.FirstOrDefault(p => p.Text == b).Id; 
+                var a = autoList.FirstOrDefault(p => p.Text == b).Id;
                 chitietmuontra.TaiLieuVanBanId = a;
                 chitietmuontra.MuonTraID = muontra.Id;
                 _chiTietMuonTraService.Insert(chitietmuontra);
                 var chiTietMuonTras = _chiTietMuonTraService.GetAll();
-                muontra.SoLuong = chiTietMuonTras.Count(m => m.MuonTraID == muontra.Id);    
+                muontra.SoLuong = chiTietMuonTras.Count(m => m.MuonTraID == muontra.Id);
                 _muonTraService.Update(muontra);
                 var vanBan = _taiLieuVanBanService.Get(m => m.Id == a);
                 vanBan.TinhTrang = EnumTinhTrang.DangMuon;

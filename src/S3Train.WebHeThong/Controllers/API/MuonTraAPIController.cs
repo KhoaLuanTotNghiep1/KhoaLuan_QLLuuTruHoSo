@@ -25,12 +25,18 @@ namespace S3Train.WebHeThong.Controllers.API
             _muonTraService = muonTraService;
         }
 
+        public IHttpActionResult GetAll()
+        {
+            var list = _muonTraService.GetAll().ToList().Select(Mapper.Map<MuonTra, MuonTraDto>);
+            return Ok(list);
+        }
+
         public IHttpActionResult GetByUserId(string userId, int tinhTrang)
         {
             if (string.IsNullOrEmpty(userId))
                 return BadRequest();
             EnumTinhTrang enumTinh = (EnumTinhTrang)tinhTrang;
-            var muontra = _muonTraService.Gets(p => p.UserId == userId && p.TinhTrang == enumTinh).ToList().Select(Mapper.Map<MuonTra, MuonTraDto>);
+            var muontra = _muonTraService.Gets(p => p.UserId == userId && p.TinhTrang == enumTinh && p.TrangThai == true).ToList().Select(Mapper.Map<MuonTra, MuonTraDto>);
 
             if (muontra == null)
                 return NotFound();
@@ -40,7 +46,7 @@ namespace S3Train.WebHeThong.Controllers.API
         public IHttpActionResult GetByTinhTrang(int tinhTrang)
         {
             EnumTinhTrang enumTinh = (EnumTinhTrang)tinhTrang;
-            var muontra = _muonTraService.Gets(p => p.TinhTrang == enumTinh).ToList().Select(Mapper.Map<MuonTra, MuonTraDto>);
+            var muontra = _muonTraService.Gets(p => p.TinhTrang == enumTinh && p.TrangThai == true).ToList().Select(Mapper.Map<MuonTra, MuonTraDto>);
 
             if (muontra == null)
                 return NotFound();

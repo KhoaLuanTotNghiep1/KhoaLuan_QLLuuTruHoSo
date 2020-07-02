@@ -19,4 +19,10 @@ namespace S3Train.Model.Dto
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
     }
+
+    public class UpdatePassWord
+    {
+        public string Id { get; set; }
+        public string PassWord { get; set; }
+    }
 }

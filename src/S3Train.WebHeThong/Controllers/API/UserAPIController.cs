@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
 using S3Train.Contract;
 using S3Train.Domain;
 using S3Train.Model.Dto;
 using S3Train.Model.User;
+using S3Train.WebHeThong.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -16,14 +19,14 @@ namespace S3Train.WebHeThong.Controllers.API
 {
     public class UserAPIController : ApiController
     {
-        private readonly IUserService _userService;   
+        private readonly IUserService _userService;     
 
         public UserAPIController()
         {
 
         }
 
-        public UserAPIController(IUserService userService)
+        public UserAPIController(IUserService userService, IAccountManager accountManager)
         {
             _userService = userService;
         }
@@ -109,6 +112,32 @@ namespace S3Train.WebHeThong.Controllers.API
             await _userService.Update(userUpdate);
 
             return Ok(userDto);
+        }
+
+        [HttpPut]
+        public async Task<IHttpActionResult> PutUpdatePassWord(UpdatePassWord model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var user = await _userService.GetUserById(model.Id);
+
+            if (user == null)
+                return NotFound();
+
+            var result = await _userService.UpdatePassword(user.Id, model.PassWord);
+            
+            if(result.Errors.Count() > 0)
+            {
+                string error = "";
+
+                foreach (var er in result.Errors)
+                    error += er.ToString();
+
+                return BadRequest(error);
+            }
+
+            return Ok(Mapper.Map<ApplicationUser, UserDto>(user));
         }
     }
 }

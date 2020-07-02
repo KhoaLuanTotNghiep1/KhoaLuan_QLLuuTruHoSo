@@ -96,7 +96,7 @@
                 select: function (event, ui) {
                     $("#ThuMuon").val(ui.item.Text);
                     var markup = "<tr>";
-                    markup += '<td class="name"> ' + ui.item.Text + "</td>" + "<td> " + ui.item.ViTri + "</td>" + "<td>" + ui.item.TinhTrang + "</td>";
+                    markup += '<td class="name"> ' + ui.item.Text + "</td>" + "<td> " + ui.item.ViTri + "</td>" + "<td>" + SetTinhTrangHTML(ui.item.TinhTrang) + "</td>";
                     markup += '<td> <button class="btn btn-danger delete"  value = "ui.item.Text"  onclick="return confirm("Bạn Có Chắc Muốn Xóa Phiếu Mượn Này?");" title="Xóa"><i class="fas fa-trash"></i></button>';
                     markup += '</tr>';
                     $("table").append(markup);

@@ -16,6 +16,38 @@
 
         protected override void Seed(ApplicationDbContext context)
         {
+            var vanBans = new List<TaiLieuVanBan>()
+            {
+                new TaiLieuVanBan
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserId = "4f1e5643-ed59-4c98-a600-9437930a7e34",
+                    Dang = "Văn Bản Đến",
+                    DuongDan="",
+                    GhiChu = "",
+                    HinhAnh = "",
+                    NgayBanHanh = DateTime.Now,
+                    Ten="Test Demo",
+                    SoKyHieu="",
+                    NoiNhan = "",
+                    TinhTrang = EnumTinhTrang.TrongKho,
+                    SoTo= 4 ,
+                    NoiDung="",
+                    NoiBanHanhId="44dfb8f3-21b7-407f-85d3-9709cf77aed4",
+                    HoSoId="85306916-f834-49fc-8178-0c9c0a69aa30",
+                    Loai = "Nghị Quyết",
+                    NguoiDuyet = "Nguyễn Văn B",
+                    NguoiKy = "Nguyễn Văn B",
+                    NguoiGuiHoacNhan="Lê Thị Hoa",
+                    TrangThai = true,
+                    NgayTao = DateTime.Now,
+                    
+                }
+            };
+            vanBans.ForEach(x => context.TaiLieuVanBans.AddOrUpdate(c => c.Ten, x));
+            context.SaveChanges();
+
+
             //var tus = new List<Tu>()
             //{
             //    new Tu

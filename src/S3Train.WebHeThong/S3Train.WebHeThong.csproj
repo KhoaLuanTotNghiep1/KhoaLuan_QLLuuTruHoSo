@@ -2738,6 +2738,7 @@
     <Content Include="Views\TaiLieuVanBan\Test.cshtml" />
     <Content Include="Views\User\ForgotPassword.cshtml" />
     <Content Include="Views\User\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\TaiLieuVanBan\TestAlgorithm.cshtml" />
     <None Include="Web.LocalConnectStrings.config">
       <SubType>Designer</SubType>
     </None>

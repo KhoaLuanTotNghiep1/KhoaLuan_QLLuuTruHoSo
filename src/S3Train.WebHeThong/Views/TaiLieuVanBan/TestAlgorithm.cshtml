@@ -1,0 +1,98 @@
+﻿@using S3Train.WebHeThong.Models
+@model TestAlgorithmModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="~/Content/img/logo/hufiicon.jpg" rel="icon">
+    <title>Đăng Nhập</title>
+    <link href="~/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/css/ruang-admin.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    @using (Html.BeginForm("TestAlgorithm", "TaiLieuVanBan", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Create a new account.</h4>
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Amount, new { @class = "col-md control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Amount, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Cluster, new { @class = "col-md control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Cluster, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name, new { @class = "col-md control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Submit" />
+            </div>
+        </div>
+    }
+
+
+    @{
+        if (Model.Centroids != null)
+        {
+            foreach (var item in Model.Centroids)
+            {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var doc in item.GroupedDocument)
+                        {
+                            <tr>
+                                <td>
+                                    @if (doc.Content == Model.DocumentNear)
+                                    {
+                                        <p class="text-danger" style="color:red">@doc.Content</p>
+                                    }
+                                    else
+                                    {
+                                        <p>@doc.Content</p>
+                                    }
+                                </td>
+                                <td></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div>-----------------------------------@item.GroupedDocument.Count()--------------------------------------</div>
+            }
+        }
+    }
+    <script src="~/Content/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/Scripts/js/ruang-admin.min.js"></script>
+</body>
+</html>

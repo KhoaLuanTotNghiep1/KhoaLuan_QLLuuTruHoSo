@@ -234,7 +234,7 @@ namespace S3Train.WebHeThong.Controllers
                         NgayTao = DateTime.Now,
                         TrangThai = true                    
                     };
-                    chiTietMuonTras.Add(ctmt);
+                    chiTietMuonTras.Add(chtmtNew);
                 }
                 muontraId = item.MuonTraId;
             }

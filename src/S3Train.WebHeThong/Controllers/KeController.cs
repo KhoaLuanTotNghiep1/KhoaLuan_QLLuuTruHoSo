@@ -92,6 +92,16 @@ namespace S3Train.WebHeThong.Controllers
             var ke = string.IsNullOrEmpty(model.Id) ? new Ke { NgayCapNhat = DateTime.Now }
                 : _keService.Get(m => m.Id == model.Id);
 
+            ViewBag.Tus = SelectListItemFromDomain.SelectListItem_Tu(_tuService.GetAll(m => m.OrderBy(t => t.Ten)));
+
+            var checkName = _keService.Get(m => m.Ten == model.Ten);
+
+            if (checkName != null)
+            {
+                TempData["AlertMessage"] = "Kệ Có Cùng Tên Đã Tồn Tại";
+                return View(model);
+            }
+
             var userId = User.Identity.GetUserId();
             var cthd = "kệ: " + model.Ten;
 
@@ -107,16 +117,6 @@ namespace S3Train.WebHeThong.Controllers
             if (string.IsNullOrEmpty(model.Id))
             {
                 ke.SoHopHienTai = 0;
-
-                ViewBag.Tus = SelectListItemFromDomain.SelectListItem_Tu(_tuService.GetAll(m => m.OrderBy(t => t.Ten)));
-
-                var checkName = _keService.Get(m => m.Ten == model.Ten);
-
-                if (checkName != null)
-                {
-                    TempData["AlertMessage"] = "Kệ Có Cùng Tên Đã Tồn Tại";
-                    return View(model);
-                }
 
                 var result = UpdateTu_SoLuongHienTai(model.Tuid, ActionWithObject.Update);
                 if (!result)

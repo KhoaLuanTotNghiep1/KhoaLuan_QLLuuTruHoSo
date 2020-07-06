@@ -23,12 +23,13 @@
             <div class="form-group row">
                 <div class="col-md-6">
                     <label>@Html.DisplayNameFor(item => Model.Ten)</label>
-                    @Html.EditorFor(model => model.Ten, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tên tủ" } })
+                    @Html.EditorFor(model => model.Ten, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tủ Lưu Trữ Số 1" } })
                     @Html.ValidationMessageFor(model => model.Ten, "", new { @class = "text-danger" })
                 </div>
+
                 <div class="col-md-6">
                     <label>@Html.DisplayNameFor(item => Model.NgươiQuanLy)</label>
-                    @Html.EditorFor(model => model.NgươiQuanLy, new { htmlAttributes = new { @class = "form-control", @placeholder = "Họ và tên người quản lý" } })
+                    @Html.EditorFor(model => model.NgươiQuanLy, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nguyễn Văn A" } })
                     @Html.ValidationMessageFor(model => model.NgươiQuanLy, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -36,7 +37,7 @@
             <div class="form-group row">
                 <div class="col-md-6">
                     <label>@Html.DisplayNameFor(item => Model.ViTri)</label>
-                    @Html.EditorFor(model => model.ViTri, new { htmlAttributes = new { @class = "form-control", @placeholder = "Địa chỉ tủ" } })
+                    @Html.EditorFor(model => model.ViTri, new { htmlAttributes = new { @class = "form-control", @placeholder = "7/6/2 Đường Linh Đông/Phường Linh Dông/Quận Thủ Đức" } })
                     @Html.ValidationMessageFor(model => model.ViTri, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -45,22 +46,23 @@
                 <div class="col-md-2">
                     <div class="row-cols-1 form-group">
                         <label>@Html.DisplayNameFor(item => Model.DonViTinh)</label>
-                        @Html.EditorFor(model => model.DonViTinh, new { htmlAttributes = new { @class = "form-control", @placeholder = "Đơn vị của tủ" } })
+                        @Html.EditorFor(model => model.DonViTinh, new { htmlAttributes = new { @class = "form-control", @placeholder = "Kệ" } })
                         @Html.ValidationMessageFor(model => model.DonViTinh, "", new { @class = "text-danger" })
                     </div>
                     <div class="row-cols-1 form-group">
                         <label>@Html.DisplayNameFor(item => Model.SoLuongMax)</label>
-                        @Html.EditorFor(model => model.SoLuongMax, new { htmlAttributes = new { @class = "form-control", @min = "1" } })
+                        @Html.EditorFor(model => model.SoLuongMax, new { htmlAttributes = new { @class = "form-control", @min = "0" } })
                         @Html.ValidationMessageFor(model => model.SoLuongMax, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
                 <div class="col-md-10">
                     <label>@Html.DisplayNameFor(item => Model.TinhTrang)</label>
-                    @Html.TextAreaFor(model => model.TinhTrang, new { @class = "form-control", placeholder = "Tình trạng hiện tại của tủ", rows = "5" })
+                    @Html.TextAreaFor(model => model.TinhTrang, new { @class = "form-control", placeholder = "Điều kiện hiện tại của kho", rows = "5" })
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Lưu" class="btn btn-success" />
+                <input type="submit" value="Lưu" class="btn btn-success"/>
             </div>
         }
     </div>
@@ -68,36 +70,31 @@
 @section scripts
 {
     <script>
-         $(function () {
-            var successMessage = '@TempData["AlertMessage"]'
-            if (successMessage != '')
-                alertify.success(successMessage);
-        });
-        //$(document).ready(function () {
-        //    $("#SoLuongHienTai").on("change", function () {
-        //        var max = parseInt($("#SoLuongMax").val());
-        //        var ht = parseInt($(this).val());
-        //        if (ht > max) {
-        //            alert("Số lượng hiện tại không được lớn hơn sức chứa");
-        //            $(this).addClass("is-invalid");
-        //        }
-        //        else {
-        //            $(this).addClass("is-valid");
-        //            $(this).removeClass("is-invalid");
-        //        }
-        //    });
+        $(document).ready(function () {
+            $("#SoLuongHienTai").on("change", function () {
+                var max = parseInt($("#SoLuongMax").val());
+                var ht = parseInt($(this).val());
+                if (ht > max) {
+                    alert("Số lượng hiện tại không được lớn hơn sức chứa");
+                    $(this).addClass("is-invalid");
+                }
+                else {
+                    $(this).addClass("is-valid");
+                    $(this).removeClass("is-invalid");
+                }
+            });
 
-        //    $("#SoLuongMax").on("change", function () {
-        //        var max = parseInt($("#SoLuongMax").val());
-        //        if (max <= 0) {
-        //            alert("Sức Chứa Phải Lớn Hơn 0");
-        //            $(this).addClass("is-invalid");
-        //        }
-        //        else {
-        //            $(this).addClass("is-valid");
-        //            $(this).removeClass("is-invalid");
-        //        }
-        //    });
-        // });
+            $("#SoLuongMax").on("change", function () {
+                var max = parseInt($("#SoLuongMax").val());
+                if (max <= 0) {
+                    alert("Sức Chứa Phải Lớn Hơn 0");
+                    $(this).addClass("is-invalid");
+                }
+                else {
+                    $(this).addClass("is-valid");
+                    $(this).removeClass("is-invalid");
+                }
+            });
+         });
     </script>
 }

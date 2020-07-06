@@ -30,7 +30,7 @@ namespace S3Train.WebHeThong.Models
         public bool Checkbox { get; set; }
         public string ViTri { get; set; }
         public ApplicationUser User { get; set; }
-        public MuonTra MuonTra { get; set; }
+        public MuonTraViewModel MuonTra { get; set; }
 
         public TaiLieuVanBan TaiLieuVanBan { get; set; }
         

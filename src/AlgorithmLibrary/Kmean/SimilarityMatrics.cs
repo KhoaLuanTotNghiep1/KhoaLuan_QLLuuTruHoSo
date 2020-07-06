@@ -53,19 +53,6 @@ namespace TAlgorithmLibrary.Kmeans
         }
         #endregion
 
-
-        public static float FindEuclideanDistance(float[] vecA, float[] vecB)
-        {
-            float euclideanDistance = 0;
-            for (var i = 0; i < vecA.Length; i++)
-            {
-                euclideanDistance += (float)Math.Pow((vecA[i] - vecB[i]), 2);
-            }
-
-            return (float)Math.Sqrt(euclideanDistance);
-
-        }
-
-
+        
     }
 }

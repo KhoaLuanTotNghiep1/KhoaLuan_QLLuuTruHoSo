@@ -2,11 +2,13 @@
 @using X.PagedList.Mvc.Common
 @using X.PagedList.Mvc
 @model S3Train.WebHeThong.Models.MuonTraIndexViewModel
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
     int stt = 1;
 }
+
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Mượn</h1>
     <ol class="breadcrumb">
@@ -14,6 +16,7 @@
         <li class="breadcrumb-item active" aria-current="page">Index</li>
     </ol>
 </div>
+
 <div class="card">
     <div class="card-body">
         <div class="row">
@@ -27,13 +30,14 @@
                 <i><span>Tìm kiếm: theo đơn vị/người mượn hoặc tên văn thư</span></i>
             </div>
         </div>
+
         <table class="table table-responsive-lg">
             <thead>
                 <tr>
                     <th>STT</th>
                     <th>Người Mượn</th>
-                    <th>Tài Khoản</th>
                     <th>Số Lượng</th>
+                    <th>Văn Thư</th>
                     <th>Ngày Mượn</th>
                     <th>Hạn Trả</th>
                     <th>Trạng Thái</th>
@@ -43,20 +47,20 @@
             <tbody>
                 @foreach (var item in Model.Items)
                 {
-                    <tr>
-                        <td>@stt</td>
-                        <td>@Html.DisplayFor(m => item.User.FullName)</td>
-                        <td>@Html.DisplayFor(m => item.User.UserName)</td>
-                        <td>@Html.DisplayFor(m => item.SoLuong) văn bản</td>
-                        <td>@Html.DisplayFor(m => item.NgayMuon)</td>
-                        <td>@Html.DisplayFor(m => item.NgayTra)</td>
-                        <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
-                        <td>
-                            <a href="@Url.Action("Detail","Muon", new { id=item.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
-                                <i class="fas fa-info"></i>
-                            </a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>@stt</td>
+                    <td>@Html.DisplayFor(m => item.User.FullName)</td>
+                    <td>@Html.DisplayFor(m => item.SoLuong) văn bản</td>
+                    <td>@Html.DisplayFor(m => item.VanThu)</td>
+                    <td>@Html.DisplayFor(m => item.NgayMuon)</td>
+                    <td>@Html.DisplayFor(m => item.NgayTra)</td>
+                    <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
+                    <td>
+                        <a href="@Url.Action("Detail","Muon", new { id=item.Id})" class="btn btn-info" title="Thông Tin Chi Tiết">
+                            <i class="fas fa-info"></i>
+                        </a>
+                    </td>
+                </tr>
                     stt += 1;
                 }
                 <tr class="pageging">
@@ -79,6 +83,7 @@
         </table>
     </div>
 </div>
+
 @section scripts{
     <script>
         $(function () {
@@ -88,3 +93,4 @@
         });
     </script>
 }
+

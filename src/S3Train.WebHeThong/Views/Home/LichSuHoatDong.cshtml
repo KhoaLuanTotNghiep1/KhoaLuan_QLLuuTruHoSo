@@ -41,8 +41,8 @@
                 <tr>
                     <th>STT</th>
                     <th>Hoạt Động</th>
-                    <th>Người Thực Hiện</th>
                     <th>Chi Tiết Hoạt Động</th>
+                    <th>Người Thực Hiện</th>
                     <th>Hoạt Động</th>
                 </tr>
             </thead>
@@ -52,7 +52,6 @@
                     <tr>
                         <td>@stt</td>
                         <td>@Html.DisplayFor(m => item.HoatDong)</td>
-                         <td>@Html.DisplayFor(m => item.User.FullName)</td>
                         <td style="width:50%; text-align:justify">
                             @Html.DisplayFor(m => item.ChiTietHoatDong)
 
@@ -67,6 +66,7 @@
                                 }
                             }
                         </td>
+                        <td>@Html.DisplayFor(m => item.User.FullName)</td>
                         <td>
                             <a href="@Url.Action("DeleteLichSuHoatDong","Home", new { id=item.Id })" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa hoàn toàn item này không?');" title="Xóa">
                                 <i class="fas fa-trash"></i>

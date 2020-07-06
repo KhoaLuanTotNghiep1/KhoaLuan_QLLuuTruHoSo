@@ -23,11 +23,10 @@ namespace S3Train.Model.Dto
         public string NguoiGuiHoacNhan { get; set; }
         public string NguoiKy { get; set; }
         public string NguoiDuyet { get; set; }
-        public string HinhAnh { get; set; }
         public DateTime NgayBanHanh { get; set; }
 
         public HoSoDto HoSo { get; set; }
         public NoiBanHanhDto NoiBanHanh { get; set; }
-        public UserDto User { get; set; }
+        public UserViewModel User { get; set; }
     }
 }

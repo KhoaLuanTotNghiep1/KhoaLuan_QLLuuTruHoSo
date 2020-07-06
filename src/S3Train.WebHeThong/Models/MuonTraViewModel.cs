@@ -12,15 +12,16 @@ namespace S3Train.WebHeThong.Models
         public string Id { get; set; }
 
         [Required(ErrorMessage = "Điền Tên")]
-        [Display(Name = "Người mượn")]
+        [Display(Name = "Đơn vị/Người mượn")]
         public string UserId { get; set; }
 
-        [Required(ErrorMessage = "Điền Văn Bản Mượn")]
-        [Display(Name = "Văn bản")]
+        [Required(ErrorMessage = "Điền  VB/TL mượn")]
+        [Display(Name = "Văn bản/Tài liệu")]
         public string ThuMuon { get; set; }
 
         public string VanThu { get; set; }
         
+        [Required(ErrorMessage = "Điền Ngày Mượn")]
         [Display(Name = "Ngày Mượn")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
@@ -30,6 +31,7 @@ namespace S3Train.WebHeThong.Models
         [Display(Name = "Số Lượng ")]
         public int SoLuong { get; set; }
 
+        [Required(ErrorMessage = "Điền Hạn Trả")]
         [Display(Name = "Hạn Trả")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
@@ -42,10 +44,9 @@ namespace S3Train.WebHeThong.Models
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime? NgayCapNhat { get; set; }
 
+
         [Display(Name = "Trạng Thái")]
         public bool TrangThai { get; set; }
-        public bool Checkbox { get; set; }
-        public string ViTri { get; set; }
 
         public ApplicationUser User { get; set; }
 

@@ -1,5 +1,4 @@
-﻿using AlgorithmLibrary.Kmeans;
-using S3Train.Domain;
+﻿using S3Train.Domain;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -99,14 +98,5 @@ namespace S3Train.WebHeThong.Models
     {
         public IPagedList<TaiLieuVanBan> Paged { get; set; }
         public List<TaiLieu_VanBanViewModel> Items { get; set; }
-    }
-
-    public class TestAlgorithmModel
-    {
-        public int Cluster { get; set; }
-        public string Name { get; set; }
-        public int Amount { get; set; }
-        public string DocumentNear { get; set; }
-        public List<Centroid> Centroids { get; set; }
     }
 }

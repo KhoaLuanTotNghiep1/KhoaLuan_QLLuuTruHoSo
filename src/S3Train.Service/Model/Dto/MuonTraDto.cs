@@ -18,6 +18,6 @@ namespace S3Train.Model.Dto
         public string VanThu { get; set; }
         public int SoLuong { get; set; }
 
-        public UserDto User { get; set; }
+        public UserViewModel User { get; set; }
     }
 }

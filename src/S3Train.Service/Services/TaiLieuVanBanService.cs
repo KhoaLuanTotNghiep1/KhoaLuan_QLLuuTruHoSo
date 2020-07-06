@@ -55,13 +55,6 @@ namespace S3Train.Services
             return taiLieuVanBan;
         }
 
-        public TaiLieuVanBan GetHaveJoinCTMT(Expression<Func<TaiLieuVanBan, bool>> predicate)
-        {
-            var taiLieuVanBan = EntityDbSet
-                               .Include(p => p.ChiTietMuonTras).FirstOrDefault(predicate);
-            return taiLieuVanBan;
-        }
-
         public IList<TaiLieuVanBan> GetAllHaveJoinAll()
         {
             var tailieuvanbans = EntityDbSet.Include(p => p.User)
@@ -71,5 +64,13 @@ namespace S3Train.Services
 
             return tailieuvanbans.ToList();
         }
+
+        public TaiLieuVanBan GetHaveJoinCTMT(Expression<Func<TaiLieuVanBan, bool>> predicate)
+        {
+            var taiLieuVanBan = EntityDbSet
+                               .Include(p => p.ChiTietMuonTras).FirstOrDefault(predicate);
+            return taiLieuVanBan;
+        }
+
     }
 }

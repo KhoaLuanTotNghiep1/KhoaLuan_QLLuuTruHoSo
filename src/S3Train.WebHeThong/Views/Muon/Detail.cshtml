@@ -20,10 +20,10 @@
         @using (Html.BeginForm("Create", "Tra", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
-            <div class="card mb-4">
-                @for (int i = 0; i < Model.Count(); i++)
-                {
-
+        <div class="card mb-4">
+             @for (int i = 0; i < Model.Count(); i++)
+             {
+                
                     <div class="card-body b">
                         <div class="row">
                             @if (Model[i].TrangThai == true)
@@ -65,9 +65,9 @@
 
                                 </div>
                             }
-
+                           
                         </div>
-
+                            
                         <div class="row">
                             <div class="col-lg-6">
                                 <h6 class="m-0 font-weight-bold text-primary">Tl/VB mượn</h6>
@@ -96,13 +96,13 @@
                         </div>
 
                     </div>
-                }
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <input id="tra" type="submit" value="Trả TL/VB" class="btn btn-success" />
-                    </div>
+            }
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <input id="tra" type="submit" value="Trả TL/VB" class="btn btn-success" />
                 </div>
             </div>
+        </div>
         }
     </div>
     <div class="col-lg-3">
@@ -169,12 +169,12 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
-                                        <td>@stt</td>
-                                        <td>@Html.DisplayFor(m => item.TaiLieuVanBan.Ten)</td>
-                                        <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
+                                <tr>
+                                    <td>@stt</td>
+                                    <td>@Html.DisplayFor(m => item.TaiLieuVanBan.Ten)</td>
+                                    <td>@Html.Partial("~/Views/Shared/_PartialTrangThai.cshtml", item.TrangThai)</td>
 
-                                    </tr>
+                                </tr>
 
                                     stt += 1;
                                 }

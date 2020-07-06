@@ -3,6 +3,8 @@ using S3Train.Contract;
 using S3Train.Domain;
 using System.Data.Entity;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+using System;
 
 namespace S3Train.Services
 {
@@ -25,8 +27,10 @@ namespace S3Train.Services
                                .Include(p => p.MuonTra).ToList();
             return chiTietMuonTra;
         }
-        
 
-
+        public ChiTietMuonTra GetHaveJoinMT(Expression<Func<ChiTietMuonTra, bool>> predicate)
+        {
+            return EntityDbSet.Include(p => p.MuonTra).FirstOrDefault(predicate);
+        }
     }
 }

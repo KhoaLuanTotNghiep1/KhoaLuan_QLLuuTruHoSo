@@ -25,7 +25,7 @@
             <div class="form-group row">
                 <div class="col-md">
                     <label>@Html.DisplayNameFor(item => Model.Ten)</label>
-                    @Html.EditorFor(model => model.Ten, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tên văn bản" } })
+                    @Html.EditorFor(model => model.Ten, new { htmlAttributes = new { @class = "form-control", @placeholder = "Thông Báo Đóng Học Phí Học Kỳ 2 Năm 2019-2020" } })
                     @Html.ValidationMessageFor(model => model.Ten, "", new { @class = "text-danger" })
                     <input type="hidden" id="Ten">
                 </div>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-md-3">
                     <label>@Html.DisplayNameFor(item => Model.SoKyHieu)</label>
-                    @Html.EditorFor(model => model.SoKyHieu, new { htmlAttributes = new { @class = "form-control", @placeholder = "Số ký hiệu của văn bản" } })
+                    @Html.EditorFor(model => model.SoKyHieu, new { htmlAttributes = new { @class = "form-control", @placeholder = "1052/TB-DCT" } })
                     @Html.ValidationMessageFor(model => model.SoKyHieu, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-md-3">
@@ -67,12 +67,12 @@
             <div class="form-group row">
                 <div class="col-md-6">
                     <label>@Html.DisplayNameFor(item => Model.NguoiKy)</label>
-                    @Html.EditorFor(model => model.NguoiKy, new { htmlAttributes = new { @class = "form-control", @placeholder = "Họ và tên người ký nhận văn bản" } })
+                    @Html.EditorFor(model => model.NguoiKy, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nguyễn Văn A" } })
                     @Html.ValidationMessageFor(model => model.NguoiKy, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-md-6">
                     <label>@Html.DisplayNameFor(item => Model.NguoiDuyet)</label>
-                    @Html.EditorFor(model => model.NguoiDuyet, new { htmlAttributes = new { @class = "form-control", @placeholder = "Họ và tên người duyệt văn bản" } })
+                    @Html.EditorFor(model => model.NguoiDuyet, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nguyễn Văn B" } })
                     @Html.ValidationMessageFor(model => model.NguoiDuyet, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -80,7 +80,7 @@
             <div class="form-group row">
                 <div class="col-md-6">
                     <label>Người Nhận</label>
-                    @Html.EditorFor(model => model.NguoiGuiHoacNhan, new { htmlAttributes = new { @class = "form-control", @placeholder = "Họ và tên người nhận văn bản" } })
+                    @Html.EditorFor(model => model.NguoiGuiHoacNhan, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
                     @Html.ValidationMessageFor(model => model.NguoiGuiHoacNhan, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-md-6">
@@ -105,21 +105,21 @@
             <div class="form-group row">
                 <div class="col-md">
                     <label>@Html.DisplayNameFor(item => Model.GhiChu)</label>
-                    @Html.TextAreaFor(model => model.GhiChu, new { @class = "form-control", rows = "5", @placeholder = "Ghi chú cho văn bản" })
+                    @Html.TextAreaFor(model => model.GhiChu, new { @class = "form-control", rows = "5" })
                 </div>
             </div>
 
             <div class="form-group row">
                 <div class="col-md">
                     <label>@Html.DisplayNameFor(item => Model.NoiDung)</label>
-                    @Html.TextAreaFor(model => model.NoiDung, new { @class = "form-control", rows = "5", @placeholder = "Nội dung văn bản" })
+                    @Html.TextAreaFor(model => model.NoiDung, new { @class = "form-control", rows = "5" })
                 </div>
             </div>
 
             <div class="form-group row">
                 <div class="col-md">
                     <label>Hồ Sơ Lưu Trữ</label>
-                    @Html.EditorFor(model => model.HoSoId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Vị trí lưu trữ văn bản" } })
+                    @Html.EditorFor(model => model.HoSoId, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
                     <i><span>Lưu ý: phải nhập đúng với kết quả được gợi ý</span></i>
                     @Html.ValidationMessageFor(model => model.HoSoId, "", new { @class = "text-danger" })
                 </div>
@@ -141,12 +141,6 @@
 
 @section  scripts{
     <script>
-         $(function () {
-            var successMessage = '@TempData["AlertMessage"]'
-            if (successMessage != '')
-                alertify.success(successMessage);
-        });
-
         $(document).ready(function () {
             $('#containerImage').hide();
             $('#Button1').click(function (e) {
@@ -213,6 +207,28 @@
                 /*Loading the dataurl to reader*/
                 readerFile.readAsDataURL(imgFile)
             })
+
+            $('input').blur(function (e) {
+                var ten = $("#Ten").val();
+                $.ajax({
+                    type: 'GET',
+                    url: "/TaiLieuVanBan/KiemTraTrungTen",
+                    data: {
+                        VanBan: ten
+                    },
+                    success: function (data) {
+                        for (i = 0; i < data.d.length; i++) {
+                            if (ten == data.d[i].Ten) {
+                                alert("TL/VB Đã Tồn Tại!");
+                                
+                            }
+                                
+                        }
+                    }
+                });
+             })
         });
+
+
     </script>
 }

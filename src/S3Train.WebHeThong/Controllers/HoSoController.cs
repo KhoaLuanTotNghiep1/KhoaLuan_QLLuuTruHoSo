@@ -98,6 +98,17 @@ namespace S3Train.WebHeThong.Controllers
             var hoSo = string.IsNullOrEmpty(model.Id) ? new HoSo { NgayCapNhat = DateTime.Now }
                 : _hoSoService.Get(m => m.Id == model.Id);
 
+            ViewBag.LoaiHoSos = SelectListItemFromDomain.SelectListItem_LoaiHoSo(_loaiHoSoService.GetAll(m => m.OrderBy(t => t.Ten)));
+            ViewBag.TapHoSos = SelectListItemFromDomain.SelectListItem_HoSo(_hoSoService.GetAll(m => m.OrderBy(t => t.PhongLuuTru)));
+
+            var checkName = _hoSoService.Get(m => m.PhongLuuTru == model.PhongLuuTru);
+
+            if (checkName != null)
+            {
+                TempData["AlertMessage"] = "Hồ Sơ Có Cùng Phông Lưu Trữ Đã Tồn Tại";
+                return View(model);
+            }
+
             var autoList = LocalHops(GetHops());
             var userId = User.Identity.GetUserId();
             var chiTietHoatDong = "hồ sơ: " + model.PhongLuuTru;
@@ -114,17 +125,6 @@ namespace S3Train.WebHeThong.Controllers
 
             if (string.IsNullOrEmpty(model.Id))
             {
-                var checkName = _hoSoService.Get(m => m.PhongLuuTru == model.PhongLuuTru);
-
-                if (checkName != null)
-                {
-                    ViewBag.LoaiHoSos = SelectListItemFromDomain.SelectListItem_LoaiHoSo(_loaiHoSoService.GetAll(m => m.OrderBy(t => t.Ten)));
-                    ViewBag.TapHoSos = SelectListItemFromDomain.SelectListItem_HoSo(_hoSoService.GetAll(m => m.OrderBy(t => t.PhongLuuTru)));
-
-                    TempData["AlertMessage"] = "Hồ Sơ Có Cùng Phông Lưu Trữ Đã Tồn Tại";
-                    return View(model);
-                }
-
                 _hoSoService.Insert(hoSo);
                 _functionLichSuHoatDongService.Create(ActionWithObject.Create, userId, chiTietHoatDong);
                 TempData["AlertMessage"] = "Tạo Mới Thành Công";

@@ -235,7 +235,7 @@ namespace AlgorithmLibrary.Kmeans
         {
             if (centroid != null)
             {
-                int countCenter = centroid.GroupedDocument.Count() - 1;
+                //int countCenter = centroid.GroupedDocument.Count() - 1;
                 float max = 0;
                 string doc = "";
                 // Tính độ tương tự của document với các center rồi add vào mảng similarityMeasure

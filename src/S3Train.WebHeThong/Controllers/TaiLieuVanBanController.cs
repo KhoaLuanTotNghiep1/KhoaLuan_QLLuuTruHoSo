@@ -318,6 +318,42 @@ namespace S3Train.WebHeThong.Controllers
             return View(resultSet);
         }
 
+        [HttpGet]
+        public ActionResult TestAlgorithm()
+        {
+            var model = new TestAlgorithmModel();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult TestAlgorithm(TestAlgorithmModel model)
+        {
+            var list = _taiLieuVanBanService.GetDocuments().Take(model.Amount).ToList();
+
+            list.Add(model.Name);
+
+            var docCollection = new DocumentCollection()
+            {
+                DocumentList = list
+            };
+
+            List<DocumentVector> vSpace = VectorSpaceModel.ProcessDocumentCollection(docCollection);
+            List<Centroid> resultSet = DocumnetClustering.DocumentCluster(model.Cluster, vSpace, model.Name);
+            string docNear = DocumnetClustering.FindClosestDocument();
+
+            var mode = new TestAlgorithmModel
+            {
+                Name = model.Name,
+                Amount = model.Amount,
+                Cluster = model.Cluster,
+                Centroids = resultSet,
+                DocumentNear = docNear
+            };
+
+            return View(mode);
+        }
+
 
         /// <summary>
         /// Upload file

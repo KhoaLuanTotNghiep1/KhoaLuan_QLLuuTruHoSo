@@ -1,4 +1,5 @@
-﻿using S3Train.Domain;
+﻿using AlgorithmLibrary.Kmeans;
+using S3Train.Domain;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -98,5 +99,24 @@ namespace S3Train.WebHeThong.Models
     {
         public IPagedList<TaiLieuVanBan> Paged { get; set; }
         public List<TaiLieu_VanBanViewModel> Items { get; set; }
+    }
+
+    public class TestAlgorithmModel
+    {
+        [Required(ErrorMessage = "Bạn Chưa nhập số nhóm")]
+        [Display(Name = "Số nhóm")]
+        public int Cluster { get; set; }
+
+        [Required(ErrorMessage = "Bạn Chưa nhập tên văn bản")]
+        [Display(Name = "Tên văn bản")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Bạn chưa nhập số lượng")]
+        [Display(Name = "Số lượng văn bản ")]
+        public int Amount { get; set; }
+
+        public string DocumentNear { get; set; }
+
+        public List<Centroid> Centroids { get; set; }
     }
 }

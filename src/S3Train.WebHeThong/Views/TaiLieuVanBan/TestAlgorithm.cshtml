@@ -2,6 +2,7 @@
 @model TestAlgorithmModel
 @{
     Layout = null;
+    int stt = 1;
 }
 
 <!DOCTYPE html>
@@ -26,24 +27,28 @@
     @using (Html.BeginForm("TestAlgorithm", "TaiLieuVanBan", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <h4>Create a new account.</h4>
+        <h4>Kiểm Tra Thuật Toán</h4>
         <hr />
         @Html.ValidationSummary("", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(m => m.Amount, new { @class = "col-md control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Amount, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Cluster, new { @class = "col-md control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Cluster, new { @class = "form-control" })
+            <div class="row">
+                <div class="col-2">
+                    @Html.LabelFor(m => m.Amount, new { @class = "col-md control-label" })
+                    <div class="col-md">
+                        @Html.TextBoxFor(m => m.Amount, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-2">
+                    @Html.LabelFor(m => m.Cluster, new { @class = "col-md control-label" })
+                    <div class="col-md">
+                        @Html.TextBoxFor(m => m.Cluster, new { @class = "form-control" })
+                    </div>
+                </div>
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Name, new { @class = "col-md control-label" })
-            <div class="col-md-10">
+            <div class="col-md">
                 @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
             </div>
         </div>
@@ -60,10 +65,10 @@
         {
             foreach (var item in Model.Centroids)
             {
-                <table class="table table-bordered">
+                <div class="text-primary">----------------------------------- Nhóm thứ @stt --------------------------------------</div>
+                <table class="table table-responsive">
                     <thead>
                         <tr>
-                            <th></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -81,12 +86,13 @@
                                         <p>@doc.Content</p>
                                     }
                                 </td>
-                                <td></td>
                             </tr>
                         }
                     </tbody>
                 </table>
-                <div>-----------------------------------@item.GroupedDocument.Count()--------------------------------------</div>
+                <div class="text-success">----------------------------------- Số lượng văn bản thuộc nhóm số @stt là @item.GroupedDocument.Count() văn bản --------------------------------------</div>
+                <br />
+                stt += 1;
             }
         }
     }
